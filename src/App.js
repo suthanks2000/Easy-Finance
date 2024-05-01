@@ -1,7 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
 import { Routes, BrowserRouter, Route } from "react-router-dom";
-
 import Login from "./Finance/Login";
 import Register from "./Finance/Register";
 import Category from "./Finance/Category";
