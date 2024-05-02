@@ -13,7 +13,7 @@ export const RegLogSlice = createSlice({
       Password: "",
     },
     userdata: {},
-    isLogin:false,
+    isLogin: false,
   },
   reducers: {
     setRegisterData: (state, action) => {
@@ -26,8 +26,8 @@ export const RegLogSlice = createSlice({
       state.userdata = action.payload;
     },
     setIsLogin: (state, action) => {
-      state.isLogin = action.payload
-    }
+      state.isLogin = action.payload;
+    },
   },
 });
 

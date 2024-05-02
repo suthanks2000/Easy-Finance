@@ -1,5 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
-import { setRegisterData, setuserdata, setIsLogin } from "../Redux-Toolkit/slices/RegLogCounter";
+import {
+  setRegisterData,
+  setuserdata,
+  setIsLogin,
+} from "../Redux-Toolkit/slices/RegLogCounter";
 import { auth } from "../FirebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +11,7 @@ import { Link } from "react-router-dom";
 
 export default function Register() {
   const regData = useSelector((state) => state.regisLogin.registerData);
-  const isLogin = useSelector((state) => state.regisLogin.isLogin)
+  const isLogin = useSelector((state) => state.regisLogin.isLogin);
   const dispatch = useDispatch();
   const Navigate = useNavigate();
 
@@ -17,7 +21,7 @@ export default function Register() {
         const user = userCredential.user;
         dispatch(setuserdata(user));
         console.log(user);
-        dispatch(setIsLogin(true))
+        dispatch(setIsLogin(true));
         alert("User Added");
         Navigate("/personalDetail");
       })
@@ -31,7 +35,6 @@ export default function Register() {
 
   return (
     <>
-
       <h1>Welcome to Register Page</h1>
       <div>
         <label>Name</label>

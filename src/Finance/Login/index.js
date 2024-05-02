@@ -5,12 +5,12 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   setLoginData,
   setuserdata,
-  setIsLogin
+  setIsLogin,
 } from "../Redux-Toolkit/slices/RegLogCounter";
 import { Link } from "react-router-dom";
 
 export default function Login() {
-  const isLogin = useSelector((state)=> state.regisLogin.isLogin)
+  const isLogin = useSelector((state) => state.regisLogin.isLogin);
   const logData = useSelector((state) => state.regisLogin.loginData);
   const dispatch = useDispatch();
   const Navigate = useNavigate();
@@ -21,7 +21,7 @@ export default function Login() {
         const user = userCredential.user;
         localStorage.setItem("user-token", user.accessToken);
         dispatch(setuserdata(user));
-        dispatch(setIsLogin(true))
+        dispatch(setIsLogin(true));
         console.log(user);
         alert("login success");
         Navigate("/personalDetail");
