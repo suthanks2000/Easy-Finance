@@ -21,17 +21,17 @@ function App() {
   const userdata = useSelector((state) => state.regisLogin.userdata);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    checkAuth();
-  }, []);
+  // useEffect(() => {
+  //   checkAuth();
+  // }, []);
 
-  const checkAuth = async () => {
-    await onAuthStateChanged(auth, (currentuser) => {
-      dispatch(setuserdata(currentuser));
-      dispatch(setIsLogin(true));
-      console.log(userdata);
-    });
-  };
+  // const checkAuth = async () => {
+  //   await onAuthStateChanged(auth, (currentuser) => {
+  //     dispatch(setuserdata(currentuser));
+  //     dispatch(setIsLogin(true));
+  //     console.log(userdata);
+  //   });
+  // };
 
   return (
     <div className="App">
