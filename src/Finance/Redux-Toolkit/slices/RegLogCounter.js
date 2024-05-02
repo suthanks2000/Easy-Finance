@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const RegLogSlice = createSlice({
-  name: "counter",
+  name: "regisLogin",
   initialState: {
     registerData: {
       Name: "",
@@ -13,6 +13,7 @@ export const RegLogSlice = createSlice({
       Password: "",
     },
     userdata: {},
+    isLogin:false,
   },
   reducers: {
     setRegisterData: (state, action) => {
@@ -24,10 +25,13 @@ export const RegLogSlice = createSlice({
     setuserdata: (state, action) => {
       state.userdata = action.payload;
     },
+    setIsLogin: (state, action) => {
+      state.isLogin = action.payload
+    }
   },
 });
 
-export const { setRegisterData, setLoginData, setuserdata } =
+export const { setRegisterData, setLoginData, setuserdata, setIsLogin } =
   RegLogSlice.actions;
 
 export default RegLogSlice.reducer;
