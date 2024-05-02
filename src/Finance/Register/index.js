@@ -10,19 +10,19 @@ export default function Register() {
   const dispatch = useDispatch();
   const Navigate = useNavigate();
 
-  const HandleCreate = async () => {
+  const handleCreate = async () => {
     await createUserWithEmailAndPassword(auth, regData.Email, regData.Password)
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
-        alert("useradded");
-        Navigate("/Login");
+        alert("User Added");
+        Navigate("/personalDetail");
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
-        alert("error");
+        alert("Error");
       });
   };
 
@@ -34,6 +34,7 @@ export default function Register() {
         <label>Name</label>
         <input
           type="text"
+          placeholder="Enter your Name"
           onKeyUp={(e) =>
             dispatch(setRegisterData({ ...regData, Name: e.target.value }))
           }
@@ -44,6 +45,7 @@ export default function Register() {
         <label>Email</label>
         <input
           type="email"
+          placeholder="Enter Your Email"
           onKeyUp={(e) =>
             dispatch(setRegisterData({ ...regData, Email: e.target.value }))
           }
@@ -54,6 +56,7 @@ export default function Register() {
         <label>Password</label>
         <input
           type="password"
+          placeholder="Enter your Password"
           onKeyUp={(e) =>
             dispatch(setRegisterData({ ...regData, Password: e.target.value }))
           }
@@ -61,13 +64,13 @@ export default function Register() {
       </div>
 
       <div>
-        <button type="button" onClick={HandleCreate}>
+        <button type="button" onClick={handleCreate}>
           Register
         </button>
       </div>
 
       <div>
-        Already have an account?<Link to={`/Login`}>LoginHere!</Link>
+        Already have an account?<Link to={`/login`}>LoginHere!</Link>
       </div>
     </>
   );
