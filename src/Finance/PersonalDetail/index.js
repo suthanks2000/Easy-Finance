@@ -14,6 +14,7 @@ export default function PersonalDetail() {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
+ 
 
   const handlePersonalDetail = async () => {
     if (
@@ -36,10 +37,18 @@ export default function PersonalDetail() {
         uid: userdata.uid,
       });
       alert("Personal datas successfully submitted");
+      console.log(personalInfo.maritalStatus)
       navigate("/category");
     }
   };
 
+
+  const handleSignout = async () =>{
+    await localStorage.getItem("user-token")
+    localStorage.removeItem("user-token")
+     navigate("/login")
+   }
+  
   return (
     <>
       <h1>Basic Information</h1>
@@ -101,36 +110,25 @@ export default function PersonalDetail() {
       <div>
         <label>Marital Status</label>
 
-        <select
-          onChange={(e) =>
-            dispatch(
-              setPersonalInfo({
-                ...personalInfo,
-                maritalStatus: e.target.value,
-              })
-            )
-          }
-        >
-          <option>Select marital status</option>
-          <option>Married</option>
-          <option>Unmarried</option>
-        </select>
+        <input type="radio" name="maritalStatus" value="married" onChange={(e)=>dispatch(setPersonalInfo({...personalInfo,
+             maritalStatus:e.target.value}))}/>Married
+
+       <input type="radio" name="maritalStatus" value="unmarried" onChange={(e)=>dispatch(setPersonalInfo({...personalInfo,
+             maritalStatus:e.target.value}))}/>Unmarried
+
+        
       </div>
 
-      <div>
+<div>
         <label>Gender</label>
 
-        <select
-          onChange={(e) =>
-            dispatch(
-              setPersonalInfo({ ...personalInfo, Gender: e.target.value })
-            )
-          }
-        >
-          <option>Select Gender</option>
-          <option>Male</option>
-          <option>Female</option>
-        </select>
+        <input type="radio" name="Gender" value="male" onChange={(e)=>dispatch(setPersonalInfo({...personalInfo,
+           Gender:e.target.value}))}/>Male
+
+       <input type="radio" name="Gender" value="female" onChange={(e)=>dispatch(setPersonalInfo({...personalInfo,
+             Gender:e.target.value}))}/>Female
+
+        
       </div>
 
       <div>
@@ -251,7 +249,14 @@ export default function PersonalDetail() {
         <button type="button" onClick={handlePersonalDetail}>
           Next
         </button>
+
+        <button type="button" onClick={handleSignout}>
+         Sign Out
+        </button>
       </div>
+
+        
+     
     </>
   );
 }
