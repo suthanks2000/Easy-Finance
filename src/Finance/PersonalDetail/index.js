@@ -178,7 +178,7 @@ export default function PersonalDetail() {
             )
           }
         >
-          <option>Select District</option>
+          <option>Select District</option>  
           <option>Ariyalur</option>
           <option>Chennai</option>
           <option>Coimbatore</option>
