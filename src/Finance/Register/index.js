@@ -19,6 +19,7 @@ export default function Register() {
     await createUserWithEmailAndPassword(auth, regData.Email, regData.Password)
       .then((userCredential) => {
         const user = userCredential.user;
+        localStorage.setItem("user-token",user.accessToken)
         dispatch(setuserdata(user));
         console.log(user);
         dispatch(setIsLogin(true));
