@@ -64,7 +64,7 @@ export default function PersonalDetail() {
               setPersonalInfo({ ...personalInfo, firstName: e.target.value })
             )
           }
-        ></input>
+        />
       </div>
 
       <div>
@@ -78,7 +78,7 @@ export default function PersonalDetail() {
               setPersonalInfo({ ...personalInfo, lastName: e.target.value })
             )
           }
-        ></input>
+        />
       </div>
 
       <div>
@@ -92,7 +92,7 @@ export default function PersonalDetail() {
               setPersonalInfo({ ...personalInfo, fatherName: e.target.value })
             )
           }
-        ></input>
+        />
       </div>
 
       <div>
@@ -104,7 +104,7 @@ export default function PersonalDetail() {
           onKeyUp={(e) =>
             dispatch(setPersonalInfo({ ...personalInfo, Age: e.target.value }))
           }
-        ></input>
+        />
       </div>
 
       <div>
@@ -142,7 +142,7 @@ export default function PersonalDetail() {
               setPersonalInfo({ ...personalInfo, Email: e.target.value })
             )
           }
-        ></input>
+        />
       </div>
 
       <div>
@@ -160,7 +160,7 @@ export default function PersonalDetail() {
             )
           }
         >
-          <option>Select District</option>
+          <option>Select District</option>  
           <option>Ariyalur</option>
           <option>Chennai</option>
           <option>Coimbatore</option>
@@ -213,7 +213,7 @@ export default function PersonalDetail() {
               })
             )
           }
-        ></input>
+        />
 
         <label>Pin code</label>
         <input
@@ -228,7 +228,7 @@ export default function PersonalDetail() {
               })
             )
           }
-        ></input>
+        />
       </div>
 
       <div>
@@ -242,7 +242,7 @@ export default function PersonalDetail() {
               setPersonalInfo({ ...personalInfo, Contact: e.target.value })
             )
           }
-        ></input>
+        />
       </div>
 
       <div>
