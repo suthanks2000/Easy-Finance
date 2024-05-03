@@ -44,9 +44,9 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          {isLogin == true ? (
+          {isLogin ? 
             <Route path="/personaldetail" element={<PersonalDetail />} />
-          ) : null}
+           : null}
           <Route path="/category" element={<Category />} />
           <Route path="/personalloandetail" element={<PersonalLoanDetail/>} />
           <Route path="/showresult" element={<ShowResult />} />
