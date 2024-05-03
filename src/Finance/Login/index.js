@@ -19,7 +19,7 @@ export default function Login() {
     signInWithEmailAndPassword(auth, logData.Email, logData.Password)
       .then((userCredential) => {
         const user = userCredential.user;
-        localStorage.setItem("user-token", user.accessToken);
+        localStorage.setItem("userToken", user.accessToken);
         dispatch(setuserdata(user));
         dispatch(setIsLogin(true));
         console.log(user);

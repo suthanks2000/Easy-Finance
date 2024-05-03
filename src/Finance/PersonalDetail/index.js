@@ -5,6 +5,20 @@ import { db } from "../FirebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 import { Firestore } from "firebase/firestore";
 import { setuserdata } from "../Redux-Toolkit/slices/RegLogCounter";
+import 'bootstrap/dist/css/bootstrap.min.css'; 
+
+import {
+  MDBNavbar,
+  MDBContainer,
+  MDBNavbarBrand,
+  MDBIcon,
+  MDBNavbarNav,
+  MDBNavbarItem,
+  MDBNavbarLink,
+  MDBNavbarToggler,
+  MDBCollapse
+} from 'mdb-react-ui-kit';
+
 
 export default function PersonalDetail() {
   const userdata = useSelector((state) => state.regisLogin.userdata);
@@ -44,13 +58,17 @@ export default function PersonalDetail() {
 
 
   const handleSignout = async () =>{
-    await localStorage.getItem("user-token")
-    localStorage.removeItem("user-token")
+    await localStorage.getItem("userToken")
+    localStorage.removeItem("userToken")
      navigate("/login")
    }
   
   return (
+
     <>
+
+
+
       <h1>Basic Information</h1>
 
       <div>
@@ -64,7 +82,7 @@ export default function PersonalDetail() {
               setPersonalInfo({ ...personalInfo, firstName: e.target.value })
             )
           }
-        ></input>
+        />
       </div>
 
       <div>
@@ -78,7 +96,7 @@ export default function PersonalDetail() {
               setPersonalInfo({ ...personalInfo, lastName: e.target.value })
             )
           }
-        ></input>
+        />
       </div>
 
       <div>
@@ -92,7 +110,7 @@ export default function PersonalDetail() {
               setPersonalInfo({ ...personalInfo, fatherName: e.target.value })
             )
           }
-        ></input>
+        />
       </div>
 
       <div>
@@ -104,7 +122,7 @@ export default function PersonalDetail() {
           onKeyUp={(e) =>
             dispatch(setPersonalInfo({ ...personalInfo, Age: e.target.value }))
           }
-        ></input>
+        />
       </div>
 
       <div>
@@ -142,7 +160,7 @@ export default function PersonalDetail() {
               setPersonalInfo({ ...personalInfo, Email: e.target.value })
             )
           }
-        ></input>
+        />
       </div>
 
       <div>
@@ -213,7 +231,7 @@ export default function PersonalDetail() {
               })
             )
           }
-        ></input>
+        />
 
         <label>Pin code</label>
         <input
@@ -228,7 +246,7 @@ export default function PersonalDetail() {
               })
             )
           }
-        ></input>
+        />
       </div>
 
       <div>
@@ -242,7 +260,7 @@ export default function PersonalDetail() {
               setPersonalInfo({ ...personalInfo, Contact: e.target.value })
             )
           }
-        ></input>
+        />
       </div>
 
       <div>

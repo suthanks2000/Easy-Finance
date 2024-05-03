@@ -24,14 +24,14 @@ function App() {
 
   useEffect(()=> {
     if(!isLogin){
-     if(localStorage.getItem("user-token")){
+     if(localStorage.getItem("userToken")){
        checkAuth()
      }}
    })
     
    const checkAuth = async () => {
        await onAuthStateChanged(auth, (currentuser) => {
-         localStorage.setItem("user-token",currentuser.accessToken)
+         localStorage.setItem("userToken",currentuser.accessToken)
          dispatch(setuserdata(currentuser))
          dispatch(setIsLogin(true))
        console.log(userdata)
