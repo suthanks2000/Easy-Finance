@@ -7,17 +7,7 @@ import { Firestore } from "firebase/firestore";
 import { setuserdata } from "../Redux-Toolkit/slices/RegLogCounter";
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 
-import {
-  MDBNavbar,
-  MDBContainer,
-  MDBNavbarBrand,
-  MDBIcon,
-  MDBNavbarNav,
-  MDBNavbarItem,
-  MDBNavbarLink,
-  MDBNavbarToggler,
-  MDBCollapse
-} from 'mdb-react-ui-kit';
+
 
 
 export default function PersonalDetail() {

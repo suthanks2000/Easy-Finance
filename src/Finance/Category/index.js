@@ -59,7 +59,7 @@ style={{display:"flex",gap:"170px"}}>
 </div>
 </Link>
 
-<Link to={"/financedetail"} style={{ textDecoration: 'none' }}>
+<Link to={"/vehicleloandetail"} style={{ textDecoration: 'none' }}>
 <div className="card text-bg-dark text-warning" style={{width:"200px"}}>
   <img src="category.png" className="card-img" alt="..." style={{width:"200px"}}/>
   <div className="card-img-overlay">

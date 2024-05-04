@@ -5,6 +5,7 @@ import Register from "./Finance/Register";
 import Category from "./Finance/Category";
 import PersonalDetail from "./Finance/PersonalDetail";
 import PersonalLoanDetail from "./Finance/FinanceDetail/PersonalLoanDetails";
+import VehicleLoanDetails from "./Finance/FinanceDetail/VehicleLoanDetails";
 import ShowResult from "./Finance/ShowResult";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
@@ -49,6 +50,7 @@ function App() {
            : null}
           <Route path="/category" element={<Category />} />
           <Route path="/personalloandetail" element={<PersonalLoanDetail/>} />
+          <Route path="/vehicleloandetail" element={<VehicleLoanDetails/>} />
           <Route path="/showresult" element={<ShowResult />} />
         </Routes>
       </BrowserRouter>
