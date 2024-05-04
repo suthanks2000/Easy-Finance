@@ -10,7 +10,6 @@ import {
 import { Link } from "react-router-dom";
 
 export default function Login() {
-  const isLogin = useSelector((state) => state.regisLogin.isLogin);
   const logData = useSelector((state) => state.regisLogin.loginData);
   const dispatch = useDispatch();
   const Navigate = useNavigate();
@@ -19,7 +18,7 @@ export default function Login() {
     signInWithEmailAndPassword(auth, logData.Email, logData.Password)
       .then((userCredential) => {
         const user = userCredential.user;
-        localStorage.setItem("user-token", user.accessToken);
+        localStorage.setItem("userToken", user.accessToken);
         dispatch(setuserdata(user));
         dispatch(setIsLogin(true));
         console.log(user);

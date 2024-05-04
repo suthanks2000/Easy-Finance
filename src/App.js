@@ -1,11 +1,10 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { Routes, BrowserRouter, Route } from "react-router-dom";
 import Login from "./Finance/Login";
 import Register from "./Finance/Register";
 import Category from "./Finance/Category";
 import PersonalDetail from "./Finance/PersonalDetail";
-import FinanceDetail from "./Finance/FinanceDetail";
+import PersonalLoanDetail from "./Finance/FinanceDetail/PersonalLoanDetails";
 import ShowResult from "./Finance/ShowResult";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
@@ -24,14 +23,14 @@ function App() {
 
   useEffect(()=> {
     if(!isLogin){
-     if(localStorage.getItem("user-token")){
+     if(localStorage.getItem("userToken")){
        checkAuth()
      }}
    })
     
    const checkAuth = async () => {
        await onAuthStateChanged(auth, (currentuser) => {
-         localStorage.setItem("user-token",currentuser.accessToken)
+         localStorage.setItem("userToken",currentuser.accessToken)
          dispatch(setuserdata(currentuser))
          dispatch(setIsLogin(true))
        console.log(userdata)
@@ -45,11 +44,11 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          {isLogin == true ? (
+          
             <Route path="/personaldetail" element={<PersonalDetail />} />
-          ) : null}
+           
           <Route path="/category" element={<Category />} />
-          <Route path="/financedetail" element={<FinanceDetail />} />
+          <Route path="/personalloandetail" element={<PersonalLoanDetail/>} />
           <Route path="/showresult" element={<ShowResult />} />
         </Routes>
       </BrowserRouter>
