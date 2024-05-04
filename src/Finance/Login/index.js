@@ -10,7 +10,6 @@ import {
 import { Link } from "react-router-dom";
 
 export default function Login() {
-  const isLogin = useSelector((state) => state.regisLogin.isLogin);
   const logData = useSelector((state) => state.regisLogin.loginData);
   const dispatch = useDispatch();
   const Navigate = useNavigate();

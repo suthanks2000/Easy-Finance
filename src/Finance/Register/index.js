@@ -11,7 +11,6 @@ import { Link } from "react-router-dom";
 
 export default function Register() {
   const regData = useSelector((state) => state.regisLogin.registerData);
-  const isLogin = useSelector((state) => state.regisLogin.isLogin);
   const dispatch = useDispatch();
   const Navigate = useNavigate();
 

@@ -1,10 +1,8 @@
 import { useSelector, useDispatch } from "react-redux";
 import { setPersonalInfo } from "../Redux-Toolkit/slices/PersonalDetailCounter";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { db } from "../FirebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
-import { Firestore } from "firebase/firestore";
-import { setuserdata } from "../Redux-Toolkit/slices/RegLogCounter";
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 
@@ -56,10 +54,54 @@ export default function PersonalDetail() {
   return (
 
     <>
+      <nav className="navbar sticky-top navbar-expand-lg  navbar-dark bg-dark">
+  <Link className="navbar-brand fs-3" href="#">Easy Finance</Link>
+  <button className="navbar-toggler shadow-none border-0" type="button" data-toggle="collapse" data-target="#myNavbar" aria-controls="myNavbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span className="navbar-toggler-icon"></span>
+  </button>
+  <div className="collapse navbar-collapse" id="myNavbar">
+    <ul className="navbar-nav justify-content-evenly flex-grow-1 pe-1">
+    <li className="nav-item">
+        <Link className="nav-link active " to={'/personaldetail'}>Personal Detail</Link>
+      </li>
+      <li className="nav-item">
+        <Link className="nav-link" to={'/category'}>category</Link>
+      </li>
+      <li className="nav-item">
+        <Link className="nav-link" href="#">EMI Calulator</Link>
+      </li>
+      <li class="nav-item dropdown">
+        <Link class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Loan List
+        </Link>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <Link class="dropdown-item disabled">Personal Loan</Link>
+          <Link class="dropdown-item disabled">Home  Loan</Link>
+          <Link class="dropdown-item disabled">Vehicle Loan</Link>
+        </div>
+      </li>
+      <li className="nav-item">
+        <Link className="nav-link" href="#">Help</Link>
+      </li>
+      <li className="nav-item">
+        <Link className="nav-link" href="#">Contact</Link>
+      </li>
+      <li className="nav-item">
+        <Link className="nav-link" href="#">Enquiries</Link>
+      </li>
+      <li className="nav-item">
+        <Link className="nav-link" href="#">About</Link>
+      </li>
+      
+    </ul>
+  </div>
+  <form className="d-flex">
+    <input type="text" className="form-control me-2" placeholder="Search"/>
+    <button type="button" className="btn btn-primary rounded-pill">Search</button>
+  </form>
+</nav>
 
-
-
-      <h1>Basic Information</h1>
+  <h1>Basic Information</h1>
 
       <div>
         <label>First Name</label>

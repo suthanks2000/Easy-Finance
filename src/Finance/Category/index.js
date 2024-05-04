@@ -5,46 +5,53 @@ import { Link } from 'react-router-dom';
 export default function Category (){
     return(
        <>
-   
-   <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div className='d-flex'>
-        <div>
-        {/* Brand/logo */}
-        <Link className="navbar-brand" to="/">Easy Finance</Link>
-        <Link className="navbar-brand" to="/">Personal Detail Data</Link>
-
-        {/* Toggler button for mobile */}
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
+      <nav className="navbar sticky-top navbar-expand-lg  navbar-dark bg-dark">
+  <Link className="navbar-brand fs-3" href="#">Easy Finance</Link>
+  <button className="navbar-toggler shadow-none border-0" type="button" data-toggle="collapse" data-target="#myNavbar" aria-controls="myNavbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span className="navbar-toggler-icon"></span>
+  </button>
+  <div className="collapse navbar-collapse" id="myNavbar">
+    <ul className="navbar-nav justify-content-evenly flex-grow-1 pe-1">
+    <li className="nav-item">
+        <Link className="nav-link" to={'/personaldetail'}>Personal Detail</Link>
+      </li>
+      <li className="nav-item">
+        <Link className="nav-link active" to={'/category'}>category</Link>
+      </li>
+      <li className="nav-item">
+        <Link className="nav-link" href="#">EMI Calulator</Link>
+      </li>
+      <li class="nav-item dropdown">
+        <Link class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Loan List
+        </Link>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <Link class="dropdown-item" to={'/personalloandetail'}>Personal Loan</Link>
+          <Link class="dropdown-item" to={'/personalloandetail'}>Home  Loan</Link>
+          <Link class="dropdown-item" to={'/personalloandetail'}>Vehicle Loan</Link>
         </div>
-
-        {/* Navbar links */}
-        <div className=" collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <Link className="nav-link" to="/">EMI calculator</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/about">Contact</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/services">Enquiries</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/contact">About</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/contact">Help</Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-        
-    </nav>
-
-
-       <h1 className='h1 mt-5'>Category</h1>
+      </li>
+      <li className="nav-item">
+        <Link className="nav-link" href="#">Help</Link>
+      </li>
+      <li className="nav-item">
+        <Link className="nav-link" href="#">Contact</Link>
+      </li>
+      <li className="nav-item">
+        <Link className="nav-link" href="#">Enquiries</Link>
+      </li>
+      <li className="nav-item">
+        <Link className="nav-link" href="#">About</Link>
+      </li>
+      
+    </ul>
+  </div>
+  <form className="d-flex">
+    <input type="text" className="form-control me-2" placeholder="Search"/>
+    <button type="button" className="btn btn-primary rounded-pill">Search</button>
+  </form>
+</nav>
+    <h1 className='h1 mt-5'>Category</h1>
    
 <div className="col d-flex justify-content-center mt-5"
 style={{display:"flex",gap:"170px"}}>
