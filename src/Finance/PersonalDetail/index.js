@@ -5,6 +5,20 @@ import { db } from "../FirebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 import { Firestore } from "firebase/firestore";
 import { setuserdata } from "../Redux-Toolkit/slices/RegLogCounter";
+import 'bootstrap/dist/css/bootstrap.min.css'; 
+
+import {
+  MDBNavbar,
+  MDBContainer,
+  MDBNavbarBrand,
+  MDBIcon,
+  MDBNavbarNav,
+  MDBNavbarItem,
+  MDBNavbarLink,
+  MDBNavbarToggler,
+  MDBCollapse
+} from 'mdb-react-ui-kit';
+
 
 export default function PersonalDetail() {
   const userdata = useSelector((state) => state.regisLogin.userdata);
@@ -44,13 +58,17 @@ export default function PersonalDetail() {
 
 
   const handleSignout = async () =>{
-    await localStorage.getItem("user-token")
-    localStorage.removeItem("user-token")
+    await localStorage.getItem("userToken")
+    localStorage.removeItem("userToken")
      navigate("/login")
    }
   
   return (
+
     <>
+
+
+
       <h1>Basic Information</h1>
 
       <div>

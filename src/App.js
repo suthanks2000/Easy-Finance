@@ -23,14 +23,14 @@ function App() {
 
   useEffect(()=> {
     if(!isLogin){
-     if(localStorage.getItem("user-token")){
+     if(localStorage.getItem("userToken")){
        checkAuth()
      }}
    })
     
    const checkAuth = async () => {
        await onAuthStateChanged(auth, (currentuser) => {
-         localStorage.setItem("user-token",currentuser.accessToken)
+         localStorage.setItem("userToken",currentuser.accessToken)
          dispatch(setuserdata(currentuser))
          dispatch(setIsLogin(true))
        console.log(userdata)
@@ -44,9 +44,9 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          {isLogin == true ? (
+          {isLogin ? 
             <Route path="/personaldetail" element={<PersonalDetail />} />
-          ) : null}
+           : null}
           <Route path="/category" element={<Category />} />
           <Route path="/personalloandetail" element={<PersonalLoanDetail/>} />
           <Route path="/showresult" element={<ShowResult />} />

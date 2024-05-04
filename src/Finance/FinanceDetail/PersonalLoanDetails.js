@@ -13,8 +13,8 @@ export default function PersonalLoanDetail() {
   const navigate = useNavigate();
 
   const handleSignout = async () => {
-    await localStorage.getItem("user-token");
-    localStorage.removeItem("user-token");
+    await localStorage.getItem("userToken");
+    localStorage.removeItem("userToken");
     navigate("/login");
   };
 
