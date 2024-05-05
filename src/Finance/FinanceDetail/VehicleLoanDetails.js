@@ -1,5 +1,5 @@
 import { useSelector,useDispatch } from "react-redux";
-import { setVehicleLoanDetail, setCarLoanView } from "../Redux-Toolkit/slices/VehicleLoanDetailCounter";
+import { setVehicleLoanDetail, setCarLoanView, setBikeLoanView, setCarTypeView } from "../Redux-Toolkit/slices/VehicleLoanDetailCounter";
 
 
 export default function VehicleLoanDetails(){
@@ -7,24 +7,75 @@ export default function VehicleLoanDetails(){
 
     const vehicleLoanDetail = useSelector((state) => state.vehicleLoan.vehicleLoanDetail);
     const carLoanView = useSelector((state)=> state.vehicleLoan.carLoanView)
+    const bikeLoanView = useSelector((state)=> state.vehicleLoan.bikeLoanView)
+    const carTypeView = useSelector((state)=> state.vehicleLoan.carTypeView)
     // const userdata = useSelector((state) => state.regisLogin.userdata)
     const dispatch = useDispatch()
 
     function handleVehicleLoanDetail (){
         alert("success")
         console.log(vehicleLoanDetail)
+        
     }
+
+
+    const handleCarTypeChange = (e) => {
+    
+      if (e.target.value === "Used Car") {
+         dispatch(setCarTypeView(true));
+      } else if(e.target.value === "New Car"){
+          dispatch(setCarTypeView(false));
+      }
+  };
+
+  const handleVehicleTypeChange = (e) => {
+    dispatch(setVehicleLoanDetail({ ...vehicleLoanDetail, vehicleType: e.target.value }));
+     
+      if (e.target.value === "Car") {
+      dispatch(setCarLoanView(true));
+    } else{
+        dispatch(setBikeLoanView(false));
+    }
+};
     return(
         <>
         <h1>Welcome to Vehicle Loan Details</h1>
         {JSON.stringify(vehicleLoanDetail)}
+
+       <div>
         <label>Vehicle Type</label>
+            <select onChange={(e) => {handleVehicleTypeChange(e);}}>
+
+                <option>Select Vehicle</option>  
+                <option>Car</option>
+                <option>Bike</option>
+            </select>
+            </div>
+        {/* <label>Vehicle Type</label>
         <select onChange={(e)=> dispatch(setVehicleLoanDetail({...vehicleLoanDetail,vehicleType:e.target.value}))}>
         <option>Select Vehicle</option>  
-          <option onClick={ dispatch(setCarLoanView(true))}>Car</option>
+          <option onClick={dispatch(setCarLoanView(true))}>Car</option>
           <option>Bike</option>
-          </select>
+          </select> */}
 
+          <>
+          { carLoanView === true ?
+          <>
+
+    <div>
+    <label>Car Type</label>
+            <select onChange={(e) => {handleCarTypeChange(e);}}>
+
+                <option>Select Vehicle</option>  
+                <option>New Car</option>
+                <option>Used Car</option>
+            </select>
+            </div>
+            </>
+            :null
+            }
+            </>
+          
           <div>
           <label>Employment Type</label>
           <input type="radio" name="EmploymentType" value="Salaried"  onChange={(e) =>
@@ -183,6 +234,7 @@ export default function VehicleLoanDetails(){
               }
           />
         </div>
+
         <div>
           <label>Monthly Expenses</label>
           <input
@@ -222,9 +274,114 @@ export default function VehicleLoanDetails(){
           />
           No
         </div>
+
+        <>
+        { carLoanView ?
+        <>
+
+        <div>
+          <label>Make & Model</label>
+          <input
+            type="text"
+            placeholder="Enter make and model"
+            required  onKeyUp={(e) =>
+                dispatch(
+                  setVehicleLoanDetail({ ...vehicleLoanDetail, makeAndModel: e.target.value })
+                )
+              }
+          />
+        </div>
+
+        <div>
+          <label>Variant</label>
+          <input
+            type="text"
+            placeholder="Enter variant"
+            required  onKeyUp={(e) =>
+                dispatch(
+                  setVehicleLoanDetail({ ...vehicleLoanDetail, variant: e.target.value })
+                )
+              }
+          />
+        </div>
+
+        <div>
+          <label>Registered Month</label>
+          <input
+            type="text"
+            placeholder="Enter registered month"
+            required  onKeyUp={(e) =>
+                dispatch(
+                  setVehicleLoanDetail({ ...vehicleLoanDetail, registeredMonth: e.target.value })
+                )
+              }
+          />
+        </div>
+
+        <div>
+          <label>Registered Year</label>
+          <input
+            type="text"
+            placeholder="Enter registered year"
+            required  onKeyUp={(e) =>
+                dispatch(
+                  setVehicleLoanDetail({ ...vehicleLoanDetail, registeredYear: e.target.value })
+                )
+              }
+          />
+        </div>
+
+       
+
+        <div>
+          <label>Full price of vehicle</label>
+          <input
+            type="text"
+            placeholder="Enter full price of vehicle"
+            required  onKeyUp={(e) =>
+                dispatch(
+                  setVehicleLoanDetail({ ...vehicleLoanDetail, fullPriceOfVehicle: e.target.value })
+                )
+              }
+          />
+        </div>
+        </>
+        :
+        null
+
+
+}
+
+
+
+</>
+
+
+<>
+        { carTypeView ? 
+        <>
+
+        <div>
+          <label>Second car condition</label>
+          <input
+            type="text"
+            placeholder="Enter second car condition"
+            required  onKeyUp={(e) =>
+                dispatch(
+                  setVehicleLoanDetail({ ...vehicleLoanDetail, secondCarCondition: e.target.value })
+                )
+              }
+          />
+        </div>
+
+        </>
+        : 
+        null 
+            } 
+            </>
+      
       
 
-     
         <div>
           <label>Loan Amount</label>
           <input
@@ -297,11 +454,10 @@ export default function VehicleLoanDetails(){
         </div>
 
         <div>
-            
+
+        <button type="button" onClick={handleVehicleLoanDetail}>VehicleLoanDataSubmit</button> 
         </div>
 
-        <button type="button" onClick={handleVehicleLoanDetail}>VehicleLoanDataSubmit</button>
-      
         </>
     )
 }
