@@ -4,8 +4,9 @@ export const VehicleLoanDetailSlice = createSlice({
   name: "vehicleLoan",
   initialState: {
     vehicleLoanDetail: {
-        vehicleType:"",
-        uId:"",
+      vehicleType:"",
+      carType:"",
+      uId:"",
       employmentType: "",
       placeOfWork: "",
       jobTitle: "",
@@ -20,7 +21,12 @@ export const VehicleLoanDetailSlice = createSlice({
       monthlyNetIncome: null,
       monthlyExpenses: null,
       civilIssue: "",
-      purposeOfPersonalLoan: "",
+      makeAndModel:"",
+      variant:"",
+      registeredMonth:"",
+      registeredYear:"",
+      secondCarCondition:"",
+      fullPriceOfVehicle:"",
       loanAmount: null,
       interest: "",
       tenure: {
@@ -29,17 +35,29 @@ export const VehicleLoanDetailSlice = createSlice({
       },
       emi: null,
     },
-    carLoanView:false
+
+    carLoanView:false,
+
+    bikeLoanView:false,
+
+    carTypeView:false
+
 },
     reducers: {
         setVehicleLoanDetail: (state, action) => {
             state.vehicleLoanDetail = action.payload
         },
         setCarLoanView: (state, action) => {
-            state.carLoanView= action.payload
+            state.carLoanView = action.payload
         },
+        setBikeLoanView: (state, action) => {
+          state.bikeLoanView = action.payload
+        },
+        setCarTypeView: (state, action) => {
+          state.carTypeView = action.payload
+        }
     }
   })
 
-  export const { setVehicleLoanDetail, setCarLoanView } = VehicleLoanDetailSlice.actions;
+  export const { setVehicleLoanDetail, setCarLoanView, setBikeLoanView, setCarTypeView } = VehicleLoanDetailSlice.actions;
   export default VehicleLoanDetailSlice.reducer
