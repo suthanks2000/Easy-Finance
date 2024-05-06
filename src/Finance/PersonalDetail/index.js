@@ -92,13 +92,15 @@ export default function PersonalDetail() {
       <li className="nav-item">
         <Link className="nav-link" href="#">About</Link>
       </li>
-      
-    </ul>
-  </div>
-  <form className="d-flex">
+      <li>
+      <form className="d-flex">
     <input type="text" className="form-control me-2" placeholder="Search"/>
     <button type="button" className="btn btn-primary rounded-pill">Search</button>
   </form>
+      </li>
+    </ul>
+  </div>
+  
 </nav>
 
   <h1>Basic Information</h1>
