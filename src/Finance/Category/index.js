@@ -56,7 +56,7 @@ export default function Category (){
 <div className="col d-flex justify-content-center mt-5"
 style={{display:"flex",gap:"170px"}}>
     
-    <Link to={"/financedetail"} style={{ textDecoration: 'none' }}>
+    <Link to={"/personalloandetail"} style={{ textDecoration: 'none' }}>
 <div className="card text-bg-dark text-warning" style={{width:"200px"}}>
   <img src="category.png" className="card-img" alt="..." style={{width:"200px"}}/>
   <div className="card-img-overlay">

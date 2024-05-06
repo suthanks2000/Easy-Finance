@@ -9,6 +9,16 @@ export default function PersonalLoanDetail() {
     (state) => state.personelLoanDetail.plLoanInfo
   );
   const userdata = useSelector((state) => state.regisLogin.userdata);
+
+  const intr = plLoanInfo.interest / 1200;
+  const emiValue = plLoanInfo.tenure.months
+    ? Math.round(
+        (plLoanInfo.loanAmount * intr) /
+          (1 - Math.pow(1 / (1 + intr), plLoanInfo.tenure.months))
+      )
+    : 0;
+  console.log(emiValue);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -46,6 +56,7 @@ export default function PersonalLoanDetail() {
         uId: userdata.uid,
       });
       alert("Personal datas successfully submitted");
+      dispatch(setPlLoanInfo({ ...plLoanInfo, emi: emiValue }));
       console.log(plLoanInfo.LoanType);
       navigate("/showresult");
     }
@@ -54,6 +65,7 @@ export default function PersonalLoanDetail() {
   return (
     <>
       <div>
+        {JSON.stringify(plLoanInfo)}
         <h1>Welcome to Personal Loan</h1>
         <div>
           <label>EmploymentType:</label>
@@ -304,6 +316,8 @@ export default function PersonalLoanDetail() {
             type="number"
             placeholder="Enter your loan amount"
             required
+            max={200000}
+            min={99999}
             onKeyUp={(e) =>
               dispatch(
                 setPlLoanInfo({ ...plLoanInfo, loanAmount: e.target.value })
@@ -316,6 +330,8 @@ export default function PersonalLoanDetail() {
           <label>interest</label>
           <input
             type="text"
+            min={10}
+            max={24}
             placeholder="Enter your interest"
             required
             onKeyUp={(e) =>
@@ -347,6 +363,8 @@ export default function PersonalLoanDetail() {
 
           <input
             type="number"
+            min={11}
+            max={84}
             placeholder="Enter in months"
             required
             onKeyUp={(e) =>
@@ -367,8 +385,9 @@ export default function PersonalLoanDetail() {
           <label>EMI</label>
           <input
             type="number"
-            onKeyUp={(e) =>
-              dispatch(setPlLoanInfo({ ...plLoanInfo, emi: e.target.value }))
+            value={emiValue}
+            onChange={(e) =>
+              dispatch(setPlLoanInfo({ ...plLoanInfo, emi: emiValue }))
             }
           />
         </div>
@@ -383,6 +402,7 @@ export default function PersonalLoanDetail() {
           Sign Out
         </button>
       </div>
+      <div></div>
     </>
   );
 }
