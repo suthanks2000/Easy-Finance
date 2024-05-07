@@ -65,10 +65,6 @@ export default function PersonalLoanDetail() {
   };
 
 
-  
-
-  
-
   const handleLoanType = (e) => {
    
 
