@@ -63,6 +63,10 @@ export default function PersonalLoanDetail() {
       navigate("/showresult");
     }
   };
+useEffect(()=>{
+  dispatch(setPlLoanInfo({ ...plLoanInfo, emi: emiValue }))
+
+},[emiValue])
 
 
   const handleLoanType = (e) => {

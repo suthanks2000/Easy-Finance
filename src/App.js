@@ -10,6 +10,7 @@ import ShowResult from "./Finance/ShowResult";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./Finance/FirebaseConfig";
+import EmiCalculator from "./Finance/EmiCalculator";
 
 import {
   setuserdata,
@@ -50,6 +51,7 @@ function App() {
           <Route path="/loans/:loanName" element={<PersonalLoanDetail />} />
           <Route path="/vehicleloandetail" element={<VehicleLoanDetails />} />
           <Route path="/showresult" element={<ShowResult />} />
+          <Route path="/EmiCalculator" element={<EmiCalculator/>}/>
         </Routes>
       </BrowserRouter>
     </div>
