@@ -30,10 +30,8 @@ export default function PersonalLoanDetail() {
   };
 
   const handlePersonalLoanDetail = async () => {
-    if (Object.values(plLoanInfo).some(value => value == "")
-    ) {
-      alert("Please fill empty fields");
-    } else {
+
+    
       await addDoc(collection(db, "personelLoanDetails"), {
         ...plLoanInfo,
         uId: userdata.uid,
@@ -42,7 +40,7 @@ export default function PersonalLoanDetail() {
       dispatch(setPlLoanInfo({ ...plLoanInfo, emi: emiValue }));
       console.log(plLoanInfo.LoanType);
       navigate("/showresult");
-    }
+    
   };
 useEffect(()=>{
   dispatch(setPlLoanInfo({ ...plLoanInfo, emi: emiValue }))
