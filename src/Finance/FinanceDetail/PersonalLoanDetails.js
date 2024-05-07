@@ -3,6 +3,7 @@ import { setPlLoanInfo } from "../Redux-Toolkit/slices/PersonalLoanDetailCounter
 import { useNavigate } from "react-router-dom";
 import { db } from "../FirebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
+import { useEffect } from "react";
 
 export default function PersonalLoanDetail() {
   const plLoanInfo = useSelector(
@@ -43,6 +44,10 @@ export default function PersonalLoanDetail() {
       navigate("/showresult");
     }
   };
+useEffect(()=>{
+  dispatch(setPlLoanInfo({ ...plLoanInfo, emi: emiValue }))
+
+},[emiValue])
 
   return (
     <>
