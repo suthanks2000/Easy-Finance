@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const VehicleLoanDetailSlice = createSlice({
   name: "vehicleLoan",
   initialState: {
+    
     vehicleLoanDetail: {
       vehicleType:"",
       carType:"",

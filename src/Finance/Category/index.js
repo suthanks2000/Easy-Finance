@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 
 export default function Category (){
+  
     return(
        <>
   <nav className="navbar sticky-top navbar-expand-lg  navbar-dark bg-dark">
