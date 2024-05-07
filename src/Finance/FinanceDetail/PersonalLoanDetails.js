@@ -36,7 +36,6 @@ export default function PersonalLoanDetail() {
         ...plLoanInfo,
         uId: userdata.uid,
       });
-      alert("Personal datas successfully submitted");
       dispatch(setPlLoanInfo({ ...plLoanInfo, emi: emiValue }));
       console.log(plLoanInfo.LoanType);
       navigate("/showresult");
