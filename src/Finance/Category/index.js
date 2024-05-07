@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 export default function Category (){
     return(
        <>
-      <nav className="navbar sticky-top navbar-expand-lg  navbar-dark bg-dark">
+  <nav className="navbar sticky-top navbar-expand-lg  navbar-dark bg-dark">
   <Link className="navbar-brand fs-3" href="#">Easy Finance</Link>
   <button className="navbar-toggler shadow-none border-0" type="button" data-toggle="collapse" data-target="#myNavbar" aria-controls="myNavbar" aria-expanded="false" aria-label="Toggle navigation">
     <span className="navbar-toggler-icon"></span>
@@ -51,7 +51,9 @@ export default function Category (){
     <button type="button" className="btn btn-primary rounded-pill">Search</button>
   </form>
 </nav>
+    <div>
     <h1 className='h1 mt-5'>Category</h1>
+    </div>
    
 <div className="col d-flex justify-content-center mt-5"
 style={{display:"flex",gap:"170px"}}>
