@@ -3,6 +3,7 @@ export const PersonalLoanDetailSlice = createSlice({
   name: "personelLoanDetail",
   initialState: {
     plLoanInfo: {
+      loanType:"",
         uId:"",
       employmentType: "",
       placeOfWork: "",
@@ -27,13 +28,17 @@ export const PersonalLoanDetailSlice = createSlice({
       },
       emi: null,
     },
+    personalLoanView:false,
   },
   reducers: {
     setPlLoanInfo: (state, action) => {
       state.plLoanInfo = action.payload;
     },
+    setPersonalLoanView: (state, action) => {
+      state.personalLoanView = action.payload
+    }
   },
 });
 
-export const { setPlLoanInfo } = PersonalLoanDetailSlice.actions;
+export const { setPlLoanInfo,setPersonalLoanView } = PersonalLoanDetailSlice.actions;
 export default PersonalLoanDetailSlice.reducer;

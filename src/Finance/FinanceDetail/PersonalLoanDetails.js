@@ -1,14 +1,17 @@
 import { useSelector, useDispatch } from "react-redux";
-import { setPlLoanInfo } from "../Redux-Toolkit/slices/PersonalLoanDetailCounter";
-import { useNavigate } from "react-router-dom";
+import { setPlLoanInfo, setPersonalLoanView } from "../Redux-Toolkit/slices/PersonalLoanDetailCounter";
+import { useNavigate ,useParams} from "react-router-dom";
 import { db } from "../FirebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
+import { useEffect } from "react";
 
 export default function PersonalLoanDetail() {
   const plLoanInfo = useSelector(
     (state) => state.personelLoanDetail.plLoanInfo
   );
+  const {loanName} = useParams()
   const userdata = useSelector((state) => state.regisLogin.userdata);
+  const personalLoanView = useSelector((state)=> state.personelLoanDetail.personalLoanView)
 
   const intr = plLoanInfo.interest / 1200;
   const emiValue = plLoanInfo.tenure.months
@@ -17,7 +20,6 @@ export default function PersonalLoanDetail() {
           (1 - Math.pow(1 / (1 + intr), plLoanInfo.tenure.months))
       )
     : 0;
-  console.log(emiValue);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -62,11 +64,45 @@ export default function PersonalLoanDetail() {
     }
   };
 
+
+  
+
+  
+
+  const handleLoanType = (e) => {
+   
+
+    if(e.target.value === "personalloan"){
+      dispatch(setPersonalLoanView(true))
+      dispatch(setPlLoanInfo({...plLoanInfo, loanType : e.target.value}))
+    
+        // setPersonalLoanView(personalLoanView(true))
+        // {dispatch(setPlLoanInfo({...plLoanInfo, loanType : e.target.value}))}}
+    }
+    else{
+      dispatch(setPersonalLoanView(false))
+      dispatch(setPlLoanInfo({...plLoanInfo, loanType : e.target.value}))
+    }
+  
+  }
+
+
   return (
     <>
       <div>
         {JSON.stringify(plLoanInfo)}
-        <h1>Welcome to Personal Loan</h1>
+        <h1>Welcome to {loanName}</h1>
+
+        <div>
+        <label>Loan Type</label>
+            <select onChange={(e) => {handleLoanType(e);}}>
+
+                <option>Select loantype</option>  
+                <option>{loanName}</option>
+
+            </select>
+            </div>
+       
         <div>
           <label>EmploymentType:</label>
           <input
@@ -92,6 +128,7 @@ export default function PersonalLoanDetail() {
           />
           SelfEmployed
         </div>
+
         <div>
           <label>PlaceOfWork:</label>
           <input
@@ -105,6 +142,7 @@ export default function PersonalLoanDetail() {
             }
           />
         </div>
+
         <div>
           <label>JobTitle:</label>
           <input
@@ -244,6 +282,7 @@ export default function PersonalLoanDetail() {
             }
           />
         </div>
+        
         <div>
           <label>monthlyExpenses</label>
           <input
@@ -287,6 +326,12 @@ export default function PersonalLoanDetail() {
           No
         </div>
 
+        <>
+
+        { personalLoanView == true ?
+
+        <>
+
         <div>
           <label>purposeOfPersonalLoan</label>
           <select
@@ -299,7 +344,7 @@ export default function PersonalLoanDetail() {
               )
             }
           >
-            <option>selectPerposeofLoan</option>
+            <option>selectPurposeofLoan</option>
             <option>Travel</option>
             <option>Medical</option>
             <option>TakeOverExistingPersonelLoan</option>
@@ -307,9 +352,19 @@ export default function PersonalLoanDetail() {
             <option>Other</option>
           </select>
         </div>
-      </div>
+    
 
-      <div>
+      </>
+
+      :
+
+      null
+
+      }
+
+      </>
+
+    
         <div>
           <label>loanAmount</label>
           <input
@@ -402,7 +457,8 @@ export default function PersonalLoanDetail() {
           Sign Out
         </button>
       </div>
-      <div></div>
+      
     </>
   );
-}
+
+  }

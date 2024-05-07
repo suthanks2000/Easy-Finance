@@ -47,7 +47,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/personaldetail" element={<PersonalDetail />} />
           <Route path="/category" element={<Category />} />
-          <Route path="/personalloandetail" element={<PersonalLoanDetail />} />
+          <Route path="/loans/:loanName" element={<PersonalLoanDetail />} />
           <Route path="/vehicleloandetail" element={<VehicleLoanDetails />} />
           <Route path="/showresult" element={<ShowResult />} />
         </Routes>

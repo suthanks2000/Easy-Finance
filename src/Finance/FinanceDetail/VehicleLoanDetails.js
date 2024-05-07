@@ -19,6 +19,7 @@ export default function VehicleLoanDetails(){
       }
       else if(vehicleLoanDetail.vehicleType == "Bike" || vehicleLoanDetail.employmentType == "" || vehicleLoanDetail.placeOfWork == "" || vehicleLoanDetail.jobTitle == "" || vehicleLoanDetail.propertyStatus == "" || vehicleLoanDetail.durationOfStayCurrentAddress.months == "" || vehicleLoanDetail.durationOfStayCurrentAddress.years == "" || vehicleLoanDetail.addressProof == "" || vehicleLoanDetail.OHPFavorOf == "" || vehicleLoanDetail.yearsEmployed == "" || vehicleLoanDetail.monthlyNetIncome == "" || vehicleLoanDetail.monthlyExpenses == "" || vehicleLoanDetail.civilIssue == "" || vehicleLoanDetail.makeAndModel == "" || vehicleLoanDetail.variant == "" || vehicleLoanDetail.registeredMonth == "" || vehicleLoanDetail.registeredYear == "" || vehicleLoanDetail.secondCarCondition == "" || vehicleLoanDetail.fullPriceOfVehicle == "" || vehicleLoanDetail.loanAmount == "" || vehicleLoanDetail.interest == "" || vehicleLoanDetail.tenure.years == "" || vehicleLoanDetail.tenure.months == "" || vehicleLoanDetail.emi == ""){
           alert("Please fill empty fields")
+          
       }
         else{
         alert("success")
