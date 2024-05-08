@@ -4,7 +4,7 @@ import Login from "./Finance/Login";
 import Register from "./Finance/Register";
 import Category from "./Finance/Category";
 import PersonalDetail from "./Finance/PersonalDetail";
-import PersonalLoanDetail from "./Finance/FinanceDetail/PersonalLoanDetails";
+import SecuredLoansDetails from "./Finance/FinanceDetail/SecuredLoansDetails";
 import VehicleLoanDetails from "./Finance/FinanceDetail/VehicleLoanDetails";
 import ShowResult from "./Finance/ShowResult";
 import { useEffect } from "react";
@@ -48,7 +48,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/personaldetail" element={<PersonalDetail />} />
           <Route path="/category" element={<Category />} />
-          <Route path="/loans/:loanName" element={<PersonalLoanDetail />} />
+          <Route path="/loans/:loanName" element={<SecuredLoansDetails />} />
           <Route path="/vehicleloandetail" element={<VehicleLoanDetails />} />
           <Route path="/showresult" element={<ShowResult />} />
           <Route path="/EmiCalculator" element={<EmiCalculator/>}/>

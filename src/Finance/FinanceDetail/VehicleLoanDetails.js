@@ -1,14 +1,11 @@
 import { useSelector,useDispatch } from "react-redux";
 import { setVehicleLoanDetail, setCarLoanView, setBikeLoanView, setCarTypeView } from "../Redux-Toolkit/slices/VehicleLoanDetailCounter";
-import { setuserdata } from "../Redux-Toolkit/slices/RegLogCounter";
+
 
 export default function VehicleLoanDetails(){
 
 
-    const vehicleLoanDetail = useSelector((state) => state.vehicleLoan.vehicleLoanDetail);
-    const carLoanView = useSelector((state)=> state.vehicleLoan.carLoanView)
-    const bikeLoanView = useSelector((state)=> state.vehicleLoan.bikeLoanView)
-    const carTypeView = useSelector((state)=> state.vehicleLoan.carTypeView)
+    const { vehicleLoanDetail, carLoanView, bikeLoanView, carTypeView } = useSelector((state) => state.vehicleLoan);
     const userdata = useSelector((state) => state.regisLogin.userdata)
     const dispatch = useDispatch()
 

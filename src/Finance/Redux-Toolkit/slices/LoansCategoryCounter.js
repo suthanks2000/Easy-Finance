@@ -7,6 +7,7 @@ export const LoansCategorySlice = createSlice({
          
         }
     },
+
     reducers: {
         setLoansCategory: (state, action) => {
             state.loansCategory = action.payload

@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-export const PersonalLoanDetailSlice = createSlice({
-  name: "personelLoanDetail",
+export const SecuredLoansSlice = createSlice({
+  name: "securedLoans",
   initialState: {
-    plLoanInfo: {
+    securedLoansInfo: {
       loanType:"",
         uId:"",
       employmentType: "",
@@ -19,7 +19,7 @@ export const PersonalLoanDetailSlice = createSlice({
       monthlyNetIncome: null,
       monthlyExpenses: null,
       civilIssue: "",
-      purposeOfPersonalLoan: "",
+      // purposeOfPersonalLoan: "",
       loanAmount: null,
       interest: "",
       tenure: {
@@ -28,17 +28,21 @@ export const PersonalLoanDetailSlice = createSlice({
       },
       emi: null,
     },
+    purposeOfPersonalLoan: "",
     personalLoanView:false,
   },
   reducers: {
-    setPlLoanInfo: (state, action) => {
-      state.plLoanInfo = action.payload;
+    setSecuredLoansInfo: (state, action) => {
+      state.securedLoansInfo = action.payload;
     },
     setPersonalLoanView: (state, action) => {
       state.personalLoanView = action.payload
+    },
+    setPurposeOfPersonalLoan: (state, action) => {
+      state.purposeOfPersonalLoan = action.payload
     }
   },
 });
 
-export const { setPlLoanInfo,setPersonalLoanView } = PersonalLoanDetailSlice.actions;
-export default PersonalLoanDetailSlice.reducer;
+export const { setSecuredLoansInfo,setPersonalLoanView, setPurposeOfPersonalLoan } = SecuredLoansSlice.actions;
+export default SecuredLoansSlice.reducer;
