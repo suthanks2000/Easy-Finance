@@ -3,8 +3,8 @@ export const SecuredLoansSlice = createSlice({
   name: "securedLoans",
   initialState: {
     securedLoansInfo: {
-      loanType:"",
-        uId:"",
+      loanType: "",
+      uId: "",
       employmentType: "",
       placeOfWork: "",
       jobTitle: "",
@@ -19,7 +19,6 @@ export const SecuredLoansSlice = createSlice({
       monthlyNetIncome: null,
       monthlyExpenses: null,
       civilIssue: "",
-      // purposeOfPersonalLoan: "",
       loanAmount: null,
       interest: "",
       tenure: {
@@ -29,20 +28,24 @@ export const SecuredLoansSlice = createSlice({
       emi: null,
     },
     purposeOfPersonalLoan: "",
-    personalLoanView:false,
+    personalLoanView: false,
   },
   reducers: {
     setSecuredLoansInfo: (state, action) => {
       state.securedLoansInfo = action.payload;
     },
     setPersonalLoanView: (state, action) => {
-      state.personalLoanView = action.payload
+      state.personalLoanView = action.payload;
     },
     setPurposeOfPersonalLoan: (state, action) => {
-      state.purposeOfPersonalLoan = action.payload
-    }
+      state.purposeOfPersonalLoan = action.payload;
+    },
   },
 });
 
-export const { setSecuredLoansInfo,setPersonalLoanView, setPurposeOfPersonalLoan } = SecuredLoansSlice.actions;
+export const {
+  setSecuredLoansInfo,
+  setPersonalLoanView,
+  setPurposeOfPersonalLoan,
+} = SecuredLoansSlice.actions;
 export default SecuredLoansSlice.reducer;
