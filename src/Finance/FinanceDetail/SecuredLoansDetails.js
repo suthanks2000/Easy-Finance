@@ -58,8 +58,7 @@ export default function SecuredLoansDetails() {
       securedLoansInfo.loanAmount == "" ||
       securedLoansInfo.interest == "" ||
       securedLoansInfo.tenure.years == "" ||
-      securedLoansInfo.tenure.months == "" ||
-      securedLoansInfo.emi == ""
+      securedLoansInfo.tenure.months == "" 
     ) {
       alert("Please fill empty fields");
     } else {
