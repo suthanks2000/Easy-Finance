@@ -59,7 +59,7 @@ export default function Category (){
 <div className="col d-flex justify-content-center mt-5"
 style={{display:"flex",gap:"170px"}}>
     
-    <Link to={"/personalloandetail"} style={{ textDecoration: 'none' }}>
+    <Link to={"/loans/personalloan"} style={{ textDecoration: 'none' }}>
 <div className="card text-bg-dark text-warning" style={{width:"200px"}}>
   <img src="category.png" className="card-img" alt="..." style={{width:"200px"}}/>
   <div className="card-img-overlay">
@@ -81,7 +81,7 @@ style={{display:"flex",gap:"170px"}}>
 </div>
 
 <div className="col d-flex justify-content-center mt-5" style={{display:"flex",gap:"170px"}}>
-<Link to={"/financedetail"} style={{ textDecoration: 'none' }}>
+<Link to={"/loans/homeloan"} style={{ textDecoration: 'none' }}>
 <div className="card text-bg-dark text-warning" style={{width:"200px"}}>
   <img src="category.png" className="card-img" alt="..." style={{width:"200px"}}/>
   <div className="card-img-overlay">
@@ -91,7 +91,7 @@ style={{display:"flex",gap:"170px"}}>
 </div>
 </Link>
 
-<Link to={"/financedetail"} style={{ textDecoration: 'none' }}>
+<Link to={"/loans/businessloan"} style={{ textDecoration: 'none' }}>
 <div className="card text-bg-dark text-warning" style={{width:"200px"}}>
   <img src="category.png" className="card-img" alt="..." style={{width:"200px"}}/>
   <div className="card-img-overlay">

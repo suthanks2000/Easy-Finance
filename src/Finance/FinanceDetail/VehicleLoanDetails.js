@@ -1,3 +1,6 @@
+import { useSelector,useDispatch } from "react-redux";
+import { setVehicleLoanDetail, setCarLoanView, setBikeLoanView, setCarTypeView } from "../Redux-Toolkit/slices/VehicleLoanDetailCounter";
+
 import { useSelector, useDispatch } from "react-redux";
 import {
   setVehicleLoanDetail,
@@ -10,158 +13,27 @@ import { useEffect } from "react";
 
 export default function VehicleLoanDetails() {
 
-  const {vehicleLoanDetail,carLoanView,bikeLoanView,carTypeView} = useSelector((state) => state.vehicleLoan );
-  const userdata = useSelector((state) => state.regisLogin.userdata);
-  const dispatch = useDispatch();
 
-  // useEffect(()=>{
-  //   dispatch(setVehicleLoanDetail({
-  //     vehicleType:"",
-  //     carType:"",
-  //     uId:"",
-  //     employmentType: "",
-  //     placeOfWork: "",
-  //     jobTitle: "",
-  //     propertyStatus: "",
-  //     durationOfStayCurrentAddress: {
-  //       months: null,
-  //       years: null,
-  //     },
-  //     addressProof: "",
-  //     OHPFavorOf: "",
-  //     yearsEmployed: null,
-  //     monthlyNetIncome: null,
-  //     monthlyExpenses: null,
-  //     civilIssue: "",
-  //     makeAndModel:"",
-  //     variant:"",
-  //     registeredMonth:"",
-  //     registeredYear:"",
-  //     secondCarCondition:"",
-  //     fullPriceOfVehicle:"",
-  //     loanAmount: null,
-  //     interest: "",
-  //     tenure: {
-  //       years: null,
-  //       months: null,
-  //     },
-  //     emi: null,
-  //   }))
-  // },[])
-  // function handleVehicleLoanDetail() {
-  //   if (
-  //     vehicleLoanDetail.vehicleType == "" ||
-  //     vehicleLoanDetail.carType == "" ||
-  //     vehicleLoanDetail.employmentType == "" ||
-  //     vehicleLoanDetail.placeOfWork == "" ||
-  //     vehicleLoanDetail.jobTitle == "" ||
-  //     vehicleLoanDetail.propertyStatus == "" ||
-  //     vehicleLoanDetail.durationOfStayCurrentAddress.months == "" ||
-  //     vehicleLoanDetail.durationOfStayCurrentAddress.years == "" ||
-  //     vehicleLoanDetail.addressProof == "" ||
-  //     vehicleLoanDetail.OHPFavorOf == "" ||
-  //     vehicleLoanDetail.yearsEmployed == "" ||
-  //     vehicleLoanDetail.monthlyNetIncome == "" ||
-  //     vehicleLoanDetail.monthlyExpenses == "" ||
-  //     vehicleLoanDetail.civilIssue == "" ||
-  //     vehicleLoanDetail.makeAndModel == "" ||
-  //     vehicleLoanDetail.variant == "" ||
-  //     vehicleLoanDetail.registeredMonth == "" ||
-  //     vehicleLoanDetail.registeredYear == "" ||
-  //     vehicleLoanDetail.secondCarCondition == "" ||
-  //     vehicleLoanDetail.fullPriceOfVehicle == "" ||
-  //     vehicleLoanDetail.loanAmount == "" ||
-  //     vehicleLoanDetail.interest == "" ||
-  //     vehicleLoanDetail.tenure.years == "" ||
-  //     vehicleLoanDetail.tenure.months == "" ||
-  //     vehicleLoanDetail.emi == ""
-  //   ) {
-  //     alert("Please fill empty fields");
-  //   } else if (
-  //     vehicleLoanDetail.vehicleType == "Bike" ||
-  //     vehicleLoanDetail.employmentType == "" ||
-  //     vehicleLoanDetail.placeOfWork == "" ||
-  //     vehicleLoanDetail.jobTitle == "" ||
-  //     vehicleLoanDetail.propertyStatus == "" ||
-  //     vehicleLoanDetail.durationOfStayCurrentAddress.months == "" ||
-  //     vehicleLoanDetail.durationOfStayCurrentAddress.years == "" ||
-  //     vehicleLoanDetail.addressProof == "" ||
-  //     vehicleLoanDetail.OHPFavorOf == "" ||
-  //     vehicleLoanDetail.yearsEmployed == "" ||
-  //     vehicleLoanDetail.monthlyNetIncome == "" ||
-  //     vehicleLoanDetail.monthlyExpenses == "" ||
-  //     vehicleLoanDetail.civilIssue == "" ||
-  //     vehicleLoanDetail.makeAndModel == "" ||
-  //     vehicleLoanDetail.variant == "" ||
-  //     vehicleLoanDetail.registeredMonth == "" ||
-  //     vehicleLoanDetail.registeredYear == "" ||
-  //     vehicleLoanDetail.secondCarCondition == "" ||
-  //     vehicleLoanDetail.fullPriceOfVehicle == "" ||
-  //     vehicleLoanDetail.loanAmount == "" ||
-  //     vehicleLoanDetail.interest == "" ||
-  //     vehicleLoanDetail.tenure.years == "" ||
-  //     vehicleLoanDetail.tenure.months == "" ||
-  //     vehicleLoanDetail.emi == ""
-  //   ) {
-  //     alert("Please fill empty fields");
-  //   } else {
-  //     dispatch(
-  //       setVehicleLoanDetail({ ...vehicleLoanDetail, uId: userdata.uid })
-  //     );
-  //     console.log("uid", vehicleLoanDetail);
-  //     alert("success");
-  //     // console.log(vehicleLoanDetail)
-  //   }
-  // }
+    const vehicleLoanDetail = useSelector((state) => state.vehicleLoan.vehicleLoanDetail);
+    const carLoanView = useSelector((state)=> state.vehicleLoan.carLoanView)
+    const bikeLoanView = useSelector((state)=> state.vehicleLoan.bikeLoanView)
+    const carTypeView = useSelector((state)=> state.vehicleLoan.carTypeView)
+    const userdata = useSelector((state) => state.regisLogin.userdata)
+    const dispatch = useDispatch()
 
- function handleVehicleLoanDetail(){
-    if(vehicleLoanDetail.vehicleType == "" ||
-      vehicleLoanDetail.employmentType == "" ||
-        vehicleLoanDetail.placeOfWork == "" ||
-        vehicleLoanDetail.jobTitle == "" ||
-        vehicleLoanDetail.propertyStatus == "" ||
-        vehicleLoanDetail.durationOfStayCurrentAddress.months == "" ||
-        vehicleLoanDetail.durationOfStayCurrentAddress.years == "" ||
-        vehicleLoanDetail.addressProof == "" ||
-        vehicleLoanDetail.OHPFavorOf == "" ||
-         vehicleLoanDetail.yearsEmployed == "" ||
-         vehicleLoanDetail.monthlyNetIncome == "" ||
-         vehicleLoanDetail.monthlyExpenses == "" ||
-         vehicleLoanDetail.civilIssue == "" ||
-         vehicleLoanDetail.makeAndModel == "" ||
-         vehicleLoanDetail.variant == "" ||
-         vehicleLoanDetail.registeredMonth == "" ||
-        vehicleLoanDetail.registeredYear == "" ||
-        vehicleLoanDetail.fullPriceOfVehicle == "" ){
-          alert("Please fill empty fields");
-        }
-   if(vehicleLoanDetail.vehicleType === "car" ){
-      if(vehicleLoanDetail.carType == "" ||
-      vehicleLoanDetail.secondCarCondition == "" ||
-      vehicleLoanDetail.registeredMonth == "" ||
-        vehicleLoanDetail.registeredYear == "" 
-      ){
-        alert("Please fill empty fields");
+    function handleVehicleLoanDetail (){
+
+      if (vehicleLoanDetail.vehicleType == "" || vehicleLoanDetail.carType == "" || vehicleLoanDetail.employmentType == "" || vehicleLoanDetail.placeOfWork == "" || vehicleLoanDetail.jobTitle == "" || vehicleLoanDetail.propertyStatus == "" || vehicleLoanDetail.durationOfStayCurrentAddress.months == "" || vehicleLoanDetail.durationOfStayCurrentAddress.years == "" || vehicleLoanDetail.addressProof == "" || vehicleLoanDetail.OHPFavorOf == "" || vehicleLoanDetail.yearsEmployed == "" || vehicleLoanDetail.monthlyNetIncome == "" || vehicleLoanDetail.monthlyExpenses == "" || vehicleLoanDetail.civilIssue == "" || vehicleLoanDetail.makeAndModel == "" || vehicleLoanDetail.variant == "" || vehicleLoanDetail.registeredMonth == "" || vehicleLoanDetail.registeredYear == "" || vehicleLoanDetail.secondCarCondition == "" || vehicleLoanDetail.fullPriceOfVehicle == "" || vehicleLoanDetail.loanAmount == "" || vehicleLoanDetail.interest == "" || vehicleLoanDetail.tenure.years == "" || vehicleLoanDetail.tenure.months == "" || vehicleLoanDetail.emi == ""){
+        alert("Please fill empty fields")
       }
-      else{
-        // last day work till begin
-        
-        dispatch(
-                setVehicleLoanDetail({ ...vehicleLoanDetail, uId: userdata.uid })
-              );
-              console.log(vehicleLoanDetail)
-              alert("car detail filled")
+      else if(vehicleLoanDetail.vehicleType == "Bike" || vehicleLoanDetail.employmentType == "" || vehicleLoanDetail.placeOfWork == "" || vehicleLoanDetail.jobTitle == "" || vehicleLoanDetail.propertyStatus == "" || vehicleLoanDetail.durationOfStayCurrentAddress.months == "" || vehicleLoanDetail.durationOfStayCurrentAddress.years == "" || vehicleLoanDetail.addressProof == "" || vehicleLoanDetail.OHPFavorOf == "" || vehicleLoanDetail.yearsEmployed == "" || vehicleLoanDetail.monthlyNetIncome == "" || vehicleLoanDetail.monthlyExpenses == "" || vehicleLoanDetail.civilIssue == "" || vehicleLoanDetail.makeAndModel == "" || vehicleLoanDetail.variant == "" || vehicleLoanDetail.registeredMonth == "" || vehicleLoanDetail.registeredYear == "" || vehicleLoanDetail.secondCarCondition == "" || vehicleLoanDetail.fullPriceOfVehicle == "" || vehicleLoanDetail.loanAmount == "" || vehicleLoanDetail.interest == "" || vehicleLoanDetail.tenure.years == "" || vehicleLoanDetail.tenure.months == "" || vehicleLoanDetail.emi == ""){
+          alert("Please fill empty fields")
       }
-    }
-   else if(vehicleLoanDetail.vehicleType === "Bike" ){
-      if(vehicleLoanDetail.carType == "" ||
-      vehicleLoanDetail.secondCarCondition == "" || vehicleLoanDetail.registeredMonth == "" ||
-      vehicleLoanDetail.registeredYear == "" ){
-        const {carType,secondCarCondition,registeredMonth,registeredYear,...restOfData}=vehicleLoanDetail
-       dispatch(
-          setVehicleLoanDetail({ ...restOfData, uId: userdata.uid })
-        );
-        console.log({ ...restOfData, uId: userdata.uid })
+        else{
+        alert("success")
+        // dispatch(setVehicleLoanDetail({...vehicleLoanDetail,
+        //   uId:userdata.uid}))
+          console.log("uid",vehicleLoanDetail.uId)
         console.log(vehicleLoanDetail)
         alert("bike detail filled")
         console.log(restOfData)
