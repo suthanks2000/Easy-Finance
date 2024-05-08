@@ -32,13 +32,39 @@ export default function PersonalLoanDetail() {
   const handlePersonalLoanDetail = async () => {
 
     
+    if (
+      plLoanInfo.employmentType == "" ||
+      plLoanInfo.placeOfWork == "" ||
+      plLoanInfo.jobTitle == "" ||
+      plLoanInfo.propertyStatus == "" ||
+      plLoanInfo.durationOfStayCurrentAddress.months == "" ||
+      plLoanInfo.durationOfStayCurrentAddress.years == "" ||
+      plLoanInfo.addressProof == "" ||
+      plLoanInfo.OHPFavorOf == "" ||
+      plLoanInfo.yearsEmployed == "" ||
+      plLoanInfo.monthlyNetIncome == "" ||
+      plLoanInfo.monthlyExpenses == "" ||
+      plLoanInfo.civilIssue == "" ||
+      plLoanInfo.purposeOfPersonalLoan == "" ||
+      plLoanInfo.loanAmount == "" ||
+      plLoanInfo.interest == "" ||
+      plLoanInfo.tenure.years == "" ||
+      plLoanInfo.tenure.months == "" ||
+      plLoanInfo.emi == ""
+    ) {
+      alert("Please fill empty fields");
+    } else {
       await addDoc(collection(db, "personelLoanDetails"), {
         ...plLoanInfo,
         uId: userdata.uid,
       });
+      alert("Personal datas successfully submitted");
       dispatch(setPlLoanInfo({ ...plLoanInfo, emi: emiValue }));
       console.log(plLoanInfo.LoanType);
       navigate("/showresult");
+    }
+  
+
     
   };
 useEffect(()=>{
