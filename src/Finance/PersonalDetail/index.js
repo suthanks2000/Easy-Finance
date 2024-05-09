@@ -7,7 +7,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
-
 export default function PersonalDetail() {
   const userdata = useSelector((state) => state.regisLogin.userdata);
   const personalInfo = useSelector(
@@ -245,7 +244,7 @@ export default function PersonalDetail() {
           <option>Tiruppur</option>
           <option>Tiruvallur</option>
           <option>Tiruvannamalai</option>
-          <option>Tiruvannamalai</option>
+        
           <option>Tiruvarur</option>
           <option>Vellore</option>
           <option>Viluppuram</option>

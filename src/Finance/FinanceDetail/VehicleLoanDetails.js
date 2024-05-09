@@ -73,9 +73,9 @@ export default function VehicleLoanDetails(){
 
     <div>
     <label>Car Type</label>
-            <select onChange={(e) => {handleCarTypeChange(e);}}>
+            <select onChange={(e) => {handleCarTypeChange(e);}} >
 
-                <option>Select Vehicle</option>  
+                <option placeholder="select car type">Select Vehicle</option>  
                 <option>New Car</option>
                 <option>Used Car</option>
             </select>
