@@ -14,6 +14,8 @@ export default function EmiCalculator() {
     },
   });
   const intr = emiDATA.interest / 1200;
+  const TenureYear=emiDATA.tenure.months/12
+ 
   const emiValue = emiDATA.tenure.months
     ? Math.round(
         (emiDATA.loanAmount * intr) /
@@ -69,28 +71,30 @@ export default function EmiCalculator() {
 
         <div>
           <label> Tenure</label>
-          <input
-            type="number"
-            placeholder="Enter in years"
-            required
-            onKeyUp={(e) =>
-              setEmiData({
-                ...emiDATA,
-                tenure: { ...emiDATA.tenure, years: e.target.value },
-              })
-            }
-          />
+
 
           <input
             type="number"
-            min={11}
-            max={84}
+           
             placeholder="Enter in months"
             required
             onKeyUp={(e) =>
               setEmiData({
                 ...emiDATA,
                 tenure: { ...emiDATA.tenure, months: e.target.value },
+              })
+            }
+          />
+
+          <input
+            type="number"
+            placeholder="Enter in years"
+            value={TenureYear}
+            required
+            onKeyUp={(e) =>
+              setEmiData({
+                ...emiDATA,
+                tenure: { ...emiDATA.tenure, years: e.target.value },
               })
             }
           />
@@ -111,6 +115,27 @@ export default function EmiCalculator() {
           <input type="number" value={TotalInterest} />
         </div>
 
+        <div>
+        <table border={12}>
+          <thead border={10}>
+            <th>loanAmount</th>
+            <th>Interest</th>
+            <th>Emi</th>
+            <th>ToatalAmount</th>
+            <th>ToatalInterest</th>
+          </thead>
+          <tbody border={2}>
+            <tr>
+              <td>{emiDATA.loanAmount}</td>
+              <td>{emiDATA.interest}</td>
+              <td>{emiValue}</td>
+              <td>{totalAmt}</td>
+              <td>{TotalInterest}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
         <Pie
           data={{
             labels: ["Total Interest", "Total Amount"],
@@ -125,6 +150,7 @@ export default function EmiCalculator() {
           height={200}
         />
       </div>
+
     </>
   );
 }

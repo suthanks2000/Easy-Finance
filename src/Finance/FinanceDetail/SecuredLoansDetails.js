@@ -119,7 +119,7 @@ export default function SecuredLoansDetails() {
 
   useEffect(() => {
     loanType();
-  }, [loanName]); 
+  }, [loanName]);
 
   function loanType() {
     if (loanName === "personalloan") {
