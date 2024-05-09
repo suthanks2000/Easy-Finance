@@ -1,6 +1,3 @@
-import { useSelector,useDispatch } from "react-redux";
-import { setVehicleLoanDetail, setCarLoanView, setBikeLoanView, setCarTypeView } from "../Redux-Toolkit/slices/VehicleLoanDetailCounter";
-
 import { useSelector, useDispatch } from "react-redux";
 import {
   setVehicleLoanDetail,
@@ -12,33 +9,77 @@ import { setuserdata } from "../Redux-Toolkit/slices/RegLogCounter";
 import { useEffect } from "react";
 
 export default function VehicleLoanDetails() {
+  const { vehicleLoanDetail, carLoanView, bikeLoanView, carTypeView } =
+    useSelector((state) => state.vehicleLoan);
+  const userdata = useSelector((state) => state.regisLogin.userdata);
+  const dispatch = useDispatch();
 
-
-    const { vehicleLoanDetail, carLoanView, bikeLoanView, carTypeView } = useSelector((state) => state.vehicleLoan);
-    const userdata = useSelector((state) => state.regisLogin.userdata)
-    const dispatch = useDispatch()
-
-    function handleVehicleLoanDetail (){
-
-      if (vehicleLoanDetail.vehicleType == "" || vehicleLoanDetail.carType == "" || vehicleLoanDetail.employmentType == "" || vehicleLoanDetail.placeOfWork == "" || vehicleLoanDetail.jobTitle == "" || vehicleLoanDetail.propertyStatus == "" || vehicleLoanDetail.durationOfStayCurrentAddress.months == "" || vehicleLoanDetail.durationOfStayCurrentAddress.years == "" || vehicleLoanDetail.addressProof == "" || vehicleLoanDetail.OHPFavorOf == "" || vehicleLoanDetail.yearsEmployed == "" || vehicleLoanDetail.monthlyNetIncome == "" || vehicleLoanDetail.monthlyExpenses == "" || vehicleLoanDetail.civilIssue == "" || vehicleLoanDetail.makeAndModel == "" || vehicleLoanDetail.variant == "" || vehicleLoanDetail.registeredMonth == "" || vehicleLoanDetail.registeredYear == "" || vehicleLoanDetail.secondCarCondition == "" || vehicleLoanDetail.fullPriceOfVehicle == "" || vehicleLoanDetail.loanAmount == "" || vehicleLoanDetail.interest == "" || vehicleLoanDetail.tenure.years == "" || vehicleLoanDetail.tenure.months == "" || vehicleLoanDetail.emi == ""){
-        alert("Please fill empty fields")
-      }
-      else if(vehicleLoanDetail.vehicleType == "Bike" || vehicleLoanDetail.employmentType == "" || vehicleLoanDetail.placeOfWork == "" || vehicleLoanDetail.jobTitle == "" || vehicleLoanDetail.propertyStatus == "" || vehicleLoanDetail.durationOfStayCurrentAddress.months == "" || vehicleLoanDetail.durationOfStayCurrentAddress.years == "" || vehicleLoanDetail.addressProof == "" || vehicleLoanDetail.OHPFavorOf == "" || vehicleLoanDetail.yearsEmployed == "" || vehicleLoanDetail.monthlyNetIncome == "" || vehicleLoanDetail.monthlyExpenses == "" || vehicleLoanDetail.civilIssue == "" || vehicleLoanDetail.makeAndModel == "" || vehicleLoanDetail.variant == "" || vehicleLoanDetail.registeredMonth == "" || vehicleLoanDetail.registeredYear == "" || vehicleLoanDetail.secondCarCondition == "" || vehicleLoanDetail.fullPriceOfVehicle == "" || vehicleLoanDetail.loanAmount == "" || vehicleLoanDetail.interest == "" || vehicleLoanDetail.tenure.years == "" || vehicleLoanDetail.tenure.months == "" || vehicleLoanDetail.emi == ""){
-          alert("Please fill empty fields")
-          
-      }
-        else{
-        alert("success")
-        // dispatch(setVehicleLoanDetail({...vehicleLoanDetail,
-        //   uId:userdata.uid}))
-          console.log("uid",vehicleLoanDetail.uId)
-        console.log(vehicleLoanDetail)
-        alert("bike detail filled")
-        console.log(restOfData)
-        
-      }
+  function handleVehicleLoanDetail() {
+    if (
+      vehicleLoanDetail.vehicleType == "" ||
+      vehicleLoanDetail.carType == "" ||
+      vehicleLoanDetail.employmentType == "" ||
+      vehicleLoanDetail.placeOfWork == "" ||
+      vehicleLoanDetail.jobTitle == "" ||
+      vehicleLoanDetail.propertyStatus == "" ||
+      vehicleLoanDetail.durationOfStayCurrentAddress.months == "" ||
+      vehicleLoanDetail.durationOfStayCurrentAddress.years == "" ||
+      vehicleLoanDetail.addressProof == "" ||
+      vehicleLoanDetail.OHPFavorOf == "" ||
+      vehicleLoanDetail.yearsEmployed == "" ||
+      vehicleLoanDetail.monthlyNetIncome == "" ||
+      vehicleLoanDetail.monthlyExpenses == "" ||
+      vehicleLoanDetail.civilIssue == "" ||
+      vehicleLoanDetail.makeAndModel == "" ||
+      vehicleLoanDetail.variant == "" ||
+      vehicleLoanDetail.registeredMonth == "" ||
+      vehicleLoanDetail.registeredYear == "" ||
+      vehicleLoanDetail.secondCarCondition == "" ||
+      vehicleLoanDetail.fullPriceOfVehicle == "" ||
+      vehicleLoanDetail.loanAmount == "" ||
+      vehicleLoanDetail.interest == "" ||
+      vehicleLoanDetail.tenure.years == "" ||
+      vehicleLoanDetail.tenure.months == "" ||
+      vehicleLoanDetail.emi == ""
+    ) {
+      alert("Please fill empty fields");
+    } else if (
+      vehicleLoanDetail.vehicleType == "Bike" ||
+      vehicleLoanDetail.employmentType == "" ||
+      vehicleLoanDetail.placeOfWork == "" ||
+      vehicleLoanDetail.jobTitle == "" ||
+      vehicleLoanDetail.propertyStatus == "" ||
+      vehicleLoanDetail.durationOfStayCurrentAddress.months == "" ||
+      vehicleLoanDetail.durationOfStayCurrentAddress.years == "" ||
+      vehicleLoanDetail.addressProof == "" ||
+      vehicleLoanDetail.OHPFavorOf == "" ||
+      vehicleLoanDetail.yearsEmployed == "" ||
+      vehicleLoanDetail.monthlyNetIncome == "" ||
+      vehicleLoanDetail.monthlyExpenses == "" ||
+      vehicleLoanDetail.civilIssue == "" ||
+      vehicleLoanDetail.makeAndModel == "" ||
+      vehicleLoanDetail.variant == "" ||
+      vehicleLoanDetail.registeredMonth == "" ||
+      vehicleLoanDetail.registeredYear == "" ||
+      vehicleLoanDetail.secondCarCondition == "" ||
+      vehicleLoanDetail.fullPriceOfVehicle == "" ||
+      vehicleLoanDetail.loanAmount == "" ||
+      vehicleLoanDetail.interest == "" ||
+      vehicleLoanDetail.tenure.years == "" ||
+      vehicleLoanDetail.tenure.months == "" ||
+      vehicleLoanDetail.emi == ""
+    ) {
+      alert("Please fill empty fields");
+    } else {
+      alert("success");
+      // dispatch(setVehicleLoanDetail({...vehicleLoanDetail,
+      //   uId:userdata.uid}))
+      console.log("uid", vehicleLoanDetail.uId);
+      console.log(vehicleLoanDetail);
+      alert("bike detail filled");
     }
   }
+
   const handleCarTypeChange = (e) => {
     if (e.target.value === "Used Car") {
       dispatch(
@@ -72,30 +113,28 @@ export default function VehicleLoanDetails() {
 
   const jsnd = [
     {
-      label:"v_typ"
+      label: "v_typ",
     },
     {
-      label:"add"
-    }
-  ]
-let a = []
-  jsnd.forEach((e)=>{
-
+      label: "add",
+    },
+  ];
+  let a = [];
+  jsnd.forEach((e) => {
     let c = "";
 
-    
-    a.push(<input type="text" />)
-  })
+    a.push(<input type="text" />);
+  });
   return (
     <>
       <div>
-      <h1>Welcome to Vehicle Loan Details</h1>
+        <h1>Welcome to Vehicle Loan Details</h1>
       </div>
       {JSON.stringify(vehicleLoanDetail)}
       <>
         <div>
-{a}
-         
+          {a}
+
           <label>Vehicle Type</label>
           <select
             onChange={(e) => {
@@ -108,10 +147,9 @@ let a = []
           </select>
         </div>
         <div>
-          {carLoanView ? 
-            
+          {carLoanView ? (
+            <div>
               <div>
-                <div>
                 <label>Car Type</label>
                 <select
                   onChange={(e) => {
@@ -122,187 +160,185 @@ let a = []
                   <option>New Car</option>
                   <option>Used Car</option>
                 </select>
-                </div>
-                <div>
-                  <label>Variant</label>
-                  <input
-                    type="text"
-                    placeholder="Enter variant"
-                    required
-                    onKeyUp={(e) =>
-                      dispatch(
-                        setVehicleLoanDetail({
-                          ...vehicleLoanDetail,
-                          variant: e.target.value,
-                        })
-                      )
-                    }
-                  />
-                </div>
-                <div>
-                  <label>Registered Month</label>
-                  <input
-                    type="text"
-                    placeholder="Enter registered month"
-                    required
-                    onKeyUp={(e) =>
-                      dispatch(
-                        setVehicleLoanDetail({
-                          ...vehicleLoanDetail,
-                          registeredMonth: e.target.value,
-                        })
-                      )
-                    }
-                  />
-                </div>
-                <div>
-                  <label>Registered Year</label>
-                  <input
-                    type="text"
-                    placeholder="Enter registered year"
-                    required
-                    onKeyUp={(e) =>
-                      dispatch(
-                        setVehicleLoanDetail({
-                          ...vehicleLoanDetail,
-                          registeredYear: e.target.value,
-                        })
-                      )
-                    }
-                  />
-                </div>
-                <div>
-                  <label>Full price of vehicle</label>
-                  <input
-                    type="text"
-                    placeholder="Enter full price of vehicle"
-                    required
-                    onKeyUp={(e) =>
-                      dispatch(
-                        setVehicleLoanDetail({
-                          ...vehicleLoanDetail,
-                          fullPriceOfVehicle: e.target.value,
-                        })
-                      )
-                    }
-                  />
-                </div>
               </div>
-              
-            
-           : null}
+              <div>
+                <label>Variant</label>
+                <input
+                  type="text"
+                  placeholder="Enter variant"
+                  required
+                  onKeyUp={(e) =>
+                    dispatch(
+                      setVehicleLoanDetail({
+                        ...vehicleLoanDetail,
+                        variant: e.target.value,
+                      })
+                    )
+                  }
+                />
+              </div>
+              <div>
+                <label>Registered Month</label>
+                <input
+                  type="text"
+                  placeholder="Enter registered month"
+                  required
+                  onKeyUp={(e) =>
+                    dispatch(
+                      setVehicleLoanDetail({
+                        ...vehicleLoanDetail,
+                        registeredMonth: e.target.value,
+                      })
+                    )
+                  }
+                />
+              </div>
+              <div>
+                <label>Registered Year</label>
+                <input
+                  type="text"
+                  placeholder="Enter registered year"
+                  required
+                  onKeyUp={(e) =>
+                    dispatch(
+                      setVehicleLoanDetail({
+                        ...vehicleLoanDetail,
+                        registeredYear: e.target.value,
+                      })
+                    )
+                  }
+                />
+              </div>
+              <div>
+                <label>Full price of vehicle</label>
+                <input
+                  type="text"
+                  placeholder="Enter full price of vehicle"
+                  required
+                  onKeyUp={(e) =>
+                    dispatch(
+                      setVehicleLoanDetail({
+                        ...vehicleLoanDetail,
+                        fullPriceOfVehicle: e.target.value,
+                      })
+                    )
+                  }
+                />
+              </div>
+            </div>
+          ) : null}
         </div>
         <div>
-        {bikeLoanView ? 
-          <div>
+          {bikeLoanView ? (
             <div>
-              <label>Make & Model</label>
-              <input
-                type="text"
-                placeholder="Enter make and model"
-                required
-                onKeyUp={(e) =>
-                  dispatch(
-                    setVehicleLoanDetail({
-                      ...vehicleLoanDetail,
-                      makeAndModel: e.target.value,
-                    })
-                  )
-                }
-              />
-            </div>
+              <div>
+                <label>Make & Model</label>
+                <input
+                  type="text"
+                  placeholder="Enter make and model"
+                  required
+                  onKeyUp={(e) =>
+                    dispatch(
+                      setVehicleLoanDetail({
+                        ...vehicleLoanDetail,
+                        makeAndModel: e.target.value,
+                      })
+                    )
+                  }
+                />
+              </div>
 
-            <div>
-              <label>Variant</label>
-              <input
-                type="text"
-                placeholder="Enter variant"
-                required
-                onKeyUp={(e) =>
-                  dispatch(
-                    setVehicleLoanDetail({
-                      ...vehicleLoanDetail,
-                      variant: e.target.value,
-                    })
-                  )
-                }
-              />
-            </div>
+              <div>
+                <label>Variant</label>
+                <input
+                  type="text"
+                  placeholder="Enter variant"
+                  required
+                  onKeyUp={(e) =>
+                    dispatch(
+                      setVehicleLoanDetail({
+                        ...vehicleLoanDetail,
+                        variant: e.target.value,
+                      })
+                    )
+                  }
+                />
+              </div>
 
-            <div>
-              <label>Registered Month</label>
-              <input
-                type="text"
-                placeholder="Enter registered month"
-                required
-                onKeyUp={(e) =>
-                  dispatch(
-                    setVehicleLoanDetail({
-                      ...vehicleLoanDetail,
-                      registeredMonth: e.target.value,
-                    })
-                  )
-                }
-              />
-            </div>
+              <div>
+                <label>Registered Month</label>
+                <input
+                  type="text"
+                  placeholder="Enter registered month"
+                  required
+                  onKeyUp={(e) =>
+                    dispatch(
+                      setVehicleLoanDetail({
+                        ...vehicleLoanDetail,
+                        registeredMonth: e.target.value,
+                      })
+                    )
+                  }
+                />
+              </div>
 
-            <div>
-              <label>Registered Year</label>
-              <input
-                type="text"
-                placeholder="Enter registered year"
-                required
-                onKeyUp={(e) =>
-                  dispatch(
-                    setVehicleLoanDetail({
-                      ...vehicleLoanDetail,
-                      registeredYear: e.target.value,
-                    })
-                  )
-                }
-              />
-            </div>
+              <div>
+                <label>Registered Year</label>
+                <input
+                  type="text"
+                  placeholder="Enter registered year"
+                  required
+                  onKeyUp={(e) =>
+                    dispatch(
+                      setVehicleLoanDetail({
+                        ...vehicleLoanDetail,
+                        registeredYear: e.target.value,
+                      })
+                    )
+                  }
+                />
+              </div>
 
-            <div>
-              <label>Full price of vehicle</label>
-              <input
-                type="text"
-                placeholder="Enter full price of vehicle"
-                required
-                onKeyUp={(e) =>
-                  dispatch(
-                    setVehicleLoanDetail({
-                      ...vehicleLoanDetail,
-                      fullPriceOfVehicle: e.target.value,
-                    })
-                  )
-                }
-              />
+              <div>
+                <label>Full price of vehicle</label>
+                <input
+                  type="text"
+                  placeholder="Enter full price of vehicle"
+                  required
+                  onKeyUp={(e) =>
+                    dispatch(
+                      setVehicleLoanDetail({
+                        ...vehicleLoanDetail,
+                        fullPriceOfVehicle: e.target.value,
+                      })
+                    )
+                  }
+                />
+              </div>
             </div>
-          </div>
-         : null}
+          ) : null}
         </div>
         <div>
-        {carTypeView ? 
-          <>
-            <label>Second car condition</label>
-            <select
-              onChange={(e) =>
-                dispatch(
-                  setVehicleLoanDetail({
-                    ...vehicleLoanDetail,
-                    secondCarCondition: e.target.value,
-                  })
-                )
-              }
-            >
-              <option>Select second car condition</option>
-              <option>Good</option>
-              <option>Average</option>
-              <option>Poor</option>
-            </select>
-          </>
-         : null}
+          {carTypeView ? (
+            <>
+              <label>Second car condition</label>
+              <select
+                onChange={(e) =>
+                  dispatch(
+                    setVehicleLoanDetail({
+                      ...vehicleLoanDetail,
+                      secondCarCondition: e.target.value,
+                    })
+                  )
+                }
+              >
+                <option>Select second car condition</option>
+                <option>Good</option>
+                <option>Average</option>
+                <option>Poor</option>
+              </select>
+            </>
+          ) : null}
         </div>
         <div>
           <label>Employment Type</label>
@@ -643,7 +679,7 @@ let a = []
           />
         </div>
       </div>
-  
+
       <div>
         <button type="button" onClick={handleVehicleLoanDetail}>
           Submit

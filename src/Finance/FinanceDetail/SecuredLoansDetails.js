@@ -10,18 +10,18 @@ import { collection, addDoc } from "firebase/firestore";
 import { useEffect } from "react";
 
 export default function SecuredLoansDetails() {
-  const { securedLoansInfo, personalLoanView, purposeOfPersonalLoan } =
+  const { securedLoansInfo, personalLoanView, purposeOfPersonalLoan,inputInfo } =
     useSelector((state) => state.securedLoans);
   const { loanName } = useParams();
   const userdata = useSelector((state) => state.regisLogin.userdata);
 
-  const intr = securedLoansInfo.interest / 1200;
-  const emiValue = securedLoansInfo.tenure.months
-    ? Math.round(
-        (securedLoansInfo.loanAmount * intr) /
-          (1 - Math.pow(1 / (1 + intr), securedLoansInfo.tenure.months))
-      )
-    : 0;
+  // const intr = securedLoansInfo.interest / 1200;
+  // const emiValue = securedLoansInfo.tenure.months
+  //   ? Math.round(
+  //       (securedLoansInfo.loanAmount * intr) /
+  //         (1 - Math.pow(1 / (1 + intr), securedLoansInfo.tenure.months))
+  //     )
+  //   : 0;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -32,117 +32,146 @@ export default function SecuredLoansDetails() {
     navigate("/login");
   };
 
-  function handleSecuredLoanDetails() {
-    if (loanName === "personalloan") {
-      personalLoanDetails();
-    } else {
-      homeBusinessDetails();
-    }
-  }
+  const viewLoanInput = []
+  
+  
+    inputInfo.forEach((ele,i)=>{
+      if(ele.inputType == "text" || ele.inputType == "number"){
+        
+          viewLoanInput.push(<div key={i}>
+            <label>{ele.inputLabel}</label>
+            <input type={ele.inputType} name={ele.inputName} placeholder={ele.inputPlaceholder}  onChange={(e)=>dispatch(setSecuredLoansInfo({...securedLoansInfo,[e.target.name]:e.target.value}))}/>
+          </div>)
+        
+      }
+      if(ele.inputType == "radio"){
 
-  const personalLoanDetails = async () => {
-    if (
-      securedLoansInfo.employmentType == "" ||
-      securedLoansInfo.placeOfWork == "" ||
-      securedLoansInfo.jobTitle == "" ||
-      securedLoansInfo.propertyStatus == "" ||
-      securedLoansInfo.durationOfStayCurrentAddress.months == "" ||
-      securedLoansInfo.durationOfStayCurrentAddress.years == "" ||
-      securedLoansInfo.addressProof == "" ||
-      securedLoansInfo.OHPFavorOf == "" ||
-      securedLoansInfo.yearsEmployed == "" ||
-      securedLoansInfo.monthlyNetIncome == "" ||
-      securedLoansInfo.monthlyExpenses == "" ||
-      securedLoansInfo.civilIssue == "" ||
-      purposeOfPersonalLoan == "" ||
-      securedLoansInfo.loanAmount == "" ||
-      securedLoansInfo.interest == "" ||
-      securedLoansInfo.tenure.years == "" ||
-      securedLoansInfo.tenure.months == "" 
-    ) {
-      alert("Please fill empty fields");
-    } else {
-      await addDoc(collection(db, "securedLoans"), {
-        ...securedLoansInfo,
-        purposeOfPersonalLoan,
+          viewLoanInput.push(<div key={i} style={{display:"inline-block"}}>
+            <label>{ele.inputLabel}</label>
+            {<input type={ele.inputType} name={ele.inputName} value={ele.inputValue} onChange={(e)=>dispatch(setSecuredLoansInfo({...securedLoansInfo,[e.target.name]:e.target.value}))}/>}
+            <label>{ele.inputValue}</label>
+          </div>)
+        
+      }  
+      if (ele.inputType == "dropdown"){
+        viewLoanInput.push(<div>
+          <label>{ele.inputLabel}</label>
+          <select name={ele.inputName} onChange={(e)=>dispatch(setSecuredLoansInfo({...securedLoansInfo,[e.target.name]:e.target.value}))}>
+            {ele.dropValue.map((e)=><option>{e}</option>)}
+          </select>
+        </div>
+        )
+      }
+    })
+  
 
-        uId: userdata.uid,
-      });
-      alert("Personal datas successfully submitted");
-      dispatch(setSecuredLoansInfo({ ...securedLoansInfo, emi: emiValue }));
-      console.log(securedLoansInfo.LoanType);
-      console.log(securedLoansInfo);
+   
+  // const personalLoanDetails = async () => {
+  //   if (
+  //     securedLoansInfo.employmentType == "" ||
+  //     securedLoansInfo.placeOfWork == "" ||
+  //     securedLoansInfo.jobTitle == "" ||
+  //     securedLoansInfo.propertyStatus == "" ||
+  //     securedLoansInfo.durationOfStayCurrentAddress.months == "" ||
+  //     securedLoansInfo.durationOfStayCurrentAddress.years == "" ||
+  //     securedLoansInfo.addressProof == "" ||
+  //     securedLoansInfo.OHPFavorOf == "" ||
+  //     securedLoansInfo.yearsEmployed == "" ||
+  //     securedLoansInfo.monthlyNetIncome == "" ||
+  //     securedLoansInfo.monthlyExpenses == "" ||
+  //     securedLoansInfo.civilIssue == "" ||
+  //     purposeOfPersonalLoan == "" ||
+  //     securedLoansInfo.loanAmount == "" ||
+  //     securedLoansInfo.interest == "" ||
+  //     securedLoansInfo.tenure.years == "" ||
+  //     securedLoansInfo.tenure.months == "" 
+  //   ) {
+  //     alert("Please fill empty fields");
+  //   } else {
+  //     await addDoc(collection(db, "securedLoans"), {
+  //       ...securedLoansInfo,
+  //       purposeOfPersonalLoan,
 
-      navigate("/showresult");
-    }
-  };
+  //       uId: userdata.uid,
+  //     });
+  //     alert("Personal datas successfully submitted");
+  //     dispatch(setSecuredLoansInfo({ ...securedLoansInfo, emi: emiValue }));
+  //     console.log(securedLoansInfo.LoanType);
+  //     console.log(securedLoansInfo);
 
-  const homeBusinessDetails = async () => {
-    if (
-      securedLoansInfo.employmentType == "" ||
-      securedLoansInfo.placeOfWork == "" ||
-      securedLoansInfo.jobTitle == "" ||
-      securedLoansInfo.propertyStatus == "" ||
-      securedLoansInfo.durationOfStayCurrentAddress.months == "" ||
-      securedLoansInfo.durationOfStayCurrentAddress.years == "" ||
-      securedLoansInfo.addressProof == "" ||
-      securedLoansInfo.OHPFavorOf == "" ||
-      securedLoansInfo.yearsEmployed == "" ||
-      securedLoansInfo.monthlyNetIncome == "" ||
-      securedLoansInfo.monthlyExpenses == "" ||
-      securedLoansInfo.civilIssue == "" ||
-      securedLoansInfo.loanAmount == "" ||
-      securedLoansInfo.interest == "" ||
-      securedLoansInfo.tenure.years == "" ||
-      securedLoansInfo.tenure.months == "" ||
-      securedLoansInfo.emi == ""
-    ) {
-      alert("Please fill empty fields");
-    } else {
-      await addDoc(collection(db, "securedLoans"), {
-        ...securedLoansInfo,
+  //     navigate("/showresult");
+  //   }
+  // };
 
-        uId: userdata.uid,
-      });
+  // const homeBusinessDetails = async () => {
+  //   if (
+  //     securedLoansInfo.employmentType == "" ||
+  //     securedLoansInfo.placeOfWork == "" ||
+  //     securedLoansInfo.jobTitle == "" ||
+  //     securedLoansInfo.propertyStatus == "" ||
+  //     securedLoansInfo.durationOfStayCurrentAddress.months == "" ||
+  //     securedLoansInfo.durationOfStayCurrentAddress.years == "" ||
+  //     securedLoansInfo.addressProof == "" ||
+  //     securedLoansInfo.OHPFavorOf == "" ||
+  //     securedLoansInfo.yearsEmployed == "" ||
+  //     securedLoansInfo.monthlyNetIncome == "" ||
+  //     securedLoansInfo.monthlyExpenses == "" ||
+  //     securedLoansInfo.civilIssue == "" ||
+  //     securedLoansInfo.loanAmount == "" ||
+  //     securedLoansInfo.interest == "" ||
+  //     securedLoansInfo.tenure.years == "" ||
+  //     securedLoansInfo.tenure.months == "" ||
+  //     securedLoansInfo.emi == ""
+  //   ) {
+  //     alert("Please fill empty fields");
+  //   } else {
+  //     await addDoc(collection(db, "securedLoans"), {
+  //       ...securedLoansInfo,
 
-      console.log(securedLoansInfo);
+  //       uId: userdata.uid,
+  //     });
 
-      alert("Personal datas successfully submitted");
+  //     console.log(securedLoansInfo);
 
-      navigate("/showresult");
-    }
-  };
+  //     alert("Personal datas successfully submitted");
 
-  useEffect(() => {
-    dispatch(setSecuredLoansInfo({ ...securedLoansInfo, emi: emiValue }));
-  }, [emiValue]);
+  //     navigate("/showresult");
+  //   }
+  // };
 
-  useEffect(() => {
-    loanType();
-  }, [loanName]);
+  // useEffect(() => {
+  //   dispatch(setSecuredLoansInfo({ ...securedLoansInfo, emi: emiValue }));
+  // }, [emiValue]);
 
-  function loanType() {
-    if (loanName === "personalloan") {
-      dispatch(setPersonalLoanView(true));
-      dispatch(
-        setSecuredLoansInfo({ ...securedLoansInfo, loanType: loanName })
-      );
-    } else {
-      dispatch(setPersonalLoanView(false));
+  // useEffect(() => {
+  //   loanType();
+  // }, [loanName]);
 
-      dispatch(
-        setSecuredLoansInfo({ ...securedLoansInfo, loanType: loanName })
-      );
-    }
-  }
+  // function loanType() {
+  //   if (loanName === "personalloan") {
+  //     dispatch(setPersonalLoanView(true));
+  //     dispatch(
+  //       setSecuredLoansInfo({ ...securedLoansInfo, loanType: loanName })
+  //     );
+  //   } else {
+  //     dispatch(setPersonalLoanView(false));
+
+  //     dispatch(
+  //       setSecuredLoansInfo({ ...securedLoansInfo, loanType: loanName })
+  //     );
+  //   }
+  // }
 
   return (
     <>
-      <div>
+      
         {JSON.stringify(securedLoansInfo)}
         <h1>Welcome to {loanName}</h1>
-
-        <div>
+          <div>
+            {viewLoanInput}
+          </div>
+          
+        {/* <div>
           <label>Loan Type</label>
           <select>
             <option>{loanName}</option>
@@ -517,10 +546,10 @@ export default function SecuredLoansDetails() {
             }
           />
         </div>
-      </div>
+      </div> */}
 
       <div>
-        <button type="button" onClick={handleSecuredLoanDetails}>
+        <button type="button">
           ShowResult
         </button>
 
