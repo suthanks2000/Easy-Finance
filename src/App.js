@@ -51,7 +51,7 @@ function App() {
           <Route path="/loans/:loanName" element={<SecuredLoansDetails />} />
           <Route path="/vehicleloandetail" element={<VehicleLoanDetails />} />
           <Route path="/showresult" element={<ShowResult />} />
-          <Route path="/EmiCalculator" element={<EmiCalculator/>}/>
+          <Route path="/emicalculator" element={<EmiCalculator/>}/>
         </Routes>
       </BrowserRouter>
     </div>
