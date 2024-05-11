@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import {
   setSecuredLoansInfo,
+  setInputInfo,
   setPersonalLoanView,
   setPurposeOfPersonalLoan,
 } from "../Redux-Toolkit/slices/SecuredLoansCounter";
@@ -8,23 +9,29 @@ import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../FirebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 import { useEffect } from "react";
+import InputRadio from "../InputComponents/inputRadio";
+import InputDropdown from "../InputComponents/inputDropdown";
+import InputTextAndNumber from "../InputComponents/inputText&Number";
 
 export default function SecuredLoansDetails() {
-  const { securedLoansInfo, personalLoanView, purposeOfPersonalLoan,inputInfo } =
+  const { securedLoansInfo,inputInfo } =
     useSelector((state) => state.securedLoans);
   const { loanName } = useParams();
   const userdata = useSelector((state) => state.regisLogin.userdata);
 
-  // const intr = securedLoansInfo.interest / 1200;
-  // const emiValue = securedLoansInfo.tenure.months
-  //   ? Math.round(
-  //       (securedLoansInfo.loanAmount * intr) /
-  //         (1 - Math.pow(1 / (1 + intr), securedLoansInfo.tenure.months))
-  //     )
-  //   : 0;
+  const intr = securedLoansInfo.interest / 1200; // Convert annual interest rate to monthly
+  const emiValue = securedLoansInfo.tenureMonth
+    ? Math.round(
+        (securedLoansInfo.loanAmount * intr) /
+          (1 - Math.pow(1 / (1 + intr), securedLoansInfo.tenureMonth))
+      )
+    : 0;
+    console.log(emiValue)
+
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const viewLoanInput = [];
 
   const handleSignout = async () => {
     await localStorage.getItem("userToken");
@@ -32,38 +39,58 @@ export default function SecuredLoansDetails() {
     navigate("/login");
   };
 
-  const viewLoanInput = []
-  
-  
-    inputInfo.forEach((ele,i)=>{
-      if(ele.inputType == "text" || ele.inputType == "number"){
-        
-          viewLoanInput.push(<div key={i}>
-            <label>{ele.inputLabel}</label>
-            <input type={ele.inputType} name={ele.inputName} placeholder={ele.inputPlaceholder}  onChange={(e)=>dispatch(setSecuredLoansInfo({...securedLoansInfo,[e.target.name]:e.target.value}))}/>
-          </div>)
-        
-      }
-      if(ele.inputType == "radio"){
 
-          viewLoanInput.push(<div key={i} style={{display:"inline-block"}}>
-            <label>{ele.inputLabel}</label>
-            {<input type={ele.inputType} name={ele.inputName} value={ele.inputValue} onChange={(e)=>dispatch(setSecuredLoansInfo({...securedLoansInfo,[e.target.name]:e.target.value}))}/>}
-            <label>{ele.inputValue}</label>
-          </div>)
-        
-      }  
-      if (ele.inputType == "dropdown"){
-        viewLoanInput.push(<div>
-          <label>{ele.inputLabel}</label>
-          <select name={ele.inputName} onChange={(e)=>dispatch(setSecuredLoansInfo({...securedLoansInfo,[e.target.name]:e.target.value}))}>
-            {ele.dropValue.map((e)=><option>{e}</option>)}
-          </select>
-        </div>
-        )
-      }
-    })
+ useEffect(() => {
+    dispatch(setSecuredLoansInfo({ ...securedLoansInfo, emi: emiValue }));
+  }, [emiValue]);
+
   
+ useEffect(()=>{
+
+  dispatch(setSecuredLoansInfo({}))
+ },[])
+
+ 
+
+  
+ inputInfo.forEach((ele)=>{
+
+      
+  if(ele.loanType.includes(loanName)){
+    // if(ele.vehicleType.includes("bike")){
+      
+
+    if(ele.inputType === "text" || ele.inputType === "number"){
+        viewLoanInput.push(<InputTextAndNumber ele={ele}/>)
+        
+    }
+    if(ele.inputType === "radio"){
+        viewLoanInput.push(<InputRadio ele={ele}/>)
+    }  
+    if (ele.inputType === "dropdown"){  
+      viewLoanInput.push(<InputDropdown ele={ele} vech={ele.vehicleType}/>)
+    }
+  // }
+  
+}
+
+})
+
+
+const handleSetLoanData = async () => {
+  const filteredInputNames = inputInfo.filter(e => e.loanType.includes(loanName)).map(ele => ele.inputName);
+  console.log(filteredInputNames);
+
+  if(filteredInputNames.some(name => !securedLoansInfo[name])){
+    alert("sss")
+  }
+  else{
+    // await addDoc(collection(db, "securedLoans"), {
+    //         ...securedLoansInfo,uId: userdata.uid,loanType:loanName});
+    alert("submiited")
+    console.log(securedLoansInfo)
+  }
+}
 
    
   // const personalLoanDetails = async () => {
@@ -169,7 +196,15 @@ export default function SecuredLoansDetails() {
         <h1>Welcome to {loanName}</h1>
           <div>
             {viewLoanInput}
-          </div>
+            <div>
+          <label>EMI</label>
+          <input
+            type="number"
+            value={emiValue}
+          />
+        </div>
+      </div>
+          
           
         {/* <div>
           <label>Loan Type</label>
@@ -549,7 +584,7 @@ export default function SecuredLoansDetails() {
       </div> */}
 
       <div>
-        <button type="button">
+        <button type="button" onClick={handleSetLoanData}>
           ShowResult
         </button>
 
