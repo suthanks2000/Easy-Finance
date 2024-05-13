@@ -22,6 +22,9 @@ export default function Category (){
       <li className="nav-item">
         <Link className="nav-link" href="#">EMI Calulator</Link>
       </li>
+      <li className="nav-item">
+        <Link className="nav-link" to={'/personaldatas'}>Your Datas</Link>
+      </li>
       <li class="nav-item dropdown">
         <Link class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Loan List

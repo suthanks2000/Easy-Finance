@@ -294,7 +294,7 @@ export const SecuredLoansSlice = createSlice({
     //   // },
     //   // emi: null,
     // },
-    purposeOfPersonalLoan: "",
+    // purposeOfPersonalLoan: "",
     personalLoanView: false,
   },
   reducers: {
@@ -304,16 +304,16 @@ export const SecuredLoansSlice = createSlice({
     setPersonalLoanView: (state, action) => {
       state.personalLoanView = action.payload;
     },
-    setPurposeOfPersonalLoan: (state, action) => {
-      state.purposeOfPersonalLoan = action.payload;
-    },
+    // setPurposeOfPersonalLoan: (state, action) => {
+    //   state.purposeOfPersonalLoan = action.payload;
+    // },
   },
 });
 
 export const {
   setSecuredLoansInfo,
   setPersonalLoanView,
-  setPurposeOfPersonalLoan,
+ 
   inputInfo
 } = SecuredLoansSlice.actions;
 export default SecuredLoansSlice.reducer;
