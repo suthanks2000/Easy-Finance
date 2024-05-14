@@ -4,13 +4,10 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import InputText from "../Register/InputComponents/InputText";
-import InputDropdown from "../Register/InputComponents/InputDropdown";
-import InputRadio from "../Register/InputComponents/InputRadio";
-import { setPersonalInfo, setInputInfo } from "../Redux-Toolkit/slices/PersonalDetailCounter";
+
 import { Button } from "react-bootstrap";
 
-const Swal = require('sweetalert2')
+
 
 
 export default function PersonalDatas(){
@@ -44,14 +41,6 @@ const fetchData = async () => {
   console.log(userdata.uid)
 };
    
-  //  function editUserData (userid)  {
-  //  const d= usersData.filter((e)=>e.id == userid)[0]
-  //  console.log(d)
-  //  setFilterData(d)
-    
-  //   console.log(editData)
-
-  //  }
 
 
    function editUserData(userid) {
@@ -66,43 +55,16 @@ const fetchData = async () => {
     }
   }
 
- const add = (e)=>{
-        setFilterData({...filterData,[e.target.name]:e.target.value})
+ const add = (ele)=>{
+  if(ele.target.value == "Select District"){
+    alert("Please select others")
+  }
+  else{setFilterData({...filterData,[ele.target.name]:ele.target.value})
+}
+        
        
  }
 
-  // inputInfo.forEach((ele,i)=> {
-
-  //   if(ele.inputType == "text" || ele.inputType == "number" || ele.inputType == "email"){
-  //     // personalDetailInput.push(<InputText ele={ele}/>)
-  //        personalDetailInput.push(<div key={i}>
-  //          <label>{ele.inputLabel}</label>
-  //          <input type={ele.inputType} name={ele.inputName} placeholder={ele.inputPlaceholder} onChange={(e)=>dispatch(setPersonalInfo({...personalInfo,[e.target.name]:e.target.value}))}/>
-  //        </div>)
-  // }
-    
-  //   if(ele.inputType == "dropdown"){
-  //     // personalDetailInput.push(<InputDropdown ele={ele}/>)
-  //      personalDetailInput.push(<div>
-  //      <label>{ele.inputLabel}</label>
-  //      <select name={ele.inputName} onChange={(e)=>dispatch(setPersonalInfo({...personalInfo,[e.target.name]:e.target.value}))}>
-  //        {ele.dropValue.map((e)=><option>{e}</option>)}
-  //        </select>
-       
-  //    </div>
-  //   }
-
-  //   if(ele.inputType == "radio"){
-  //     // personalDetailInput.push(<InputRadio ele={ele}/>)
-  //       personalDetailInput.push(<div>
-  //    personalDetailInput.push(<div key={i} style={{display:"inline-block"}}>
-  //      <label>{ele.inputLabel}</label>
-  //      {<input type={ele.inputType} name={ele.inputName} value={ele.inputValue} onChange={(e)=>dispatch(setPersonalInfo({...personalInfo,[e.target.name]:e.target.value}))}/>}
-  //      <label>{ele.inputValue}</label>
-  //    </div>)
-  //   }
- 
-  // })
 
   function exitFromEdit(){
     setEditData(false)
@@ -110,69 +72,7 @@ const fetchData = async () => {
 
 
 
-// const handleUpdateDetail = async () => {
-  // const requiredFields = ['firstName', 'lastName', 'fatherName', 'age', 'maritalStatus', 'gender', 'email', 'district', 'city', 'pincode', 'contact'];
-  
 
-  // const hasAllRequiredFields = requiredFields.every(field => personalInfo[field]);
-  
-  // if (!hasAllRequiredFields) {
-  //   Swal.fire({
-  //     icon: "error",
-  //     title: "Something went wrong!",
-  //     text: "Please fill in all required fields.",
-  //   });
-  //   console.log("Failed: Missing required fields");
-  //   return; 
-  // }
-
-  // try {
-  
-  //   const q = query(collection(db, "personalDetails"), where("uid", "==", userdata.uid));
-  //   const querySnapshot = await getDocs(q);
-
-    
-  //   if (!querySnapshot.empty) {
-  //     const docRef = doc(db, "personalDetails", querySnapshot.docs[0].id);
-
-  //     console.log(docRef)
-  //     await updateDoc(docRef, personalInfo);
-
-     
-  //     Swal.fire({
-  //       title: "Success!",
-  //       text: "Personal details updated successfully.",
-  //       icon: "success"
-  //     });
-  //     console.log("Success: Personal details updated");
-  //   } else {
-  //     console.log("Document not found for user:", userdata.uid);
-  //     Swal.fire({
-  //       icon: "error",
-  //       title: "Error",
-  //       text: "No document found to update. Please check your data."
-  //     });
-  //   }
-  // } catch (error) {
-    
-  //   console.error("Error updating personal details:", error);
-  //   Swal.fire({
-  //     icon: "error",
-  //     title: "Error",
-  //     text: "An error occurred while updating personal details. Please try again later."
-  //   });
-  //   console.log("Failed: Error updating personal details");
-  // }
-
-  // const handleUpdateDetail = async () => {
-       
-  //     const docRef = doc(db, "personalDetails", filterData.id)
-  //     await updateDoc(docRef, filterData)
-  //     setEditData(false)
-  //     alert("success")
-  //     console.log("personalInfo",personalInfo)
-  //    console.log("filterData",filterData)
-  // }
   const handleUpdateDetail = async() => {
     // Create a reference to the document in Firestore
     const docRef = doc(db, "personalDetails", filterData.id);
@@ -180,6 +80,7 @@ const fetchData = async () => {
     // Update the document with the data from filterData
     await updateDoc(docRef, filterData)
         .then(() => {
+          
             // Update the UI state to exit edit mode
             setEditData(false);
 
@@ -198,40 +99,7 @@ const fetchData = async () => {
 };
 
 
-  // const handleUpdateDetail = async () => {
-  //   try {
-  //     const docRef = doc(db, "personalDetails", filterData.id);
-  //     await updateDoc(docRef, filterData);
-  //     setEditData(false);
-  //     alert("Success: Personal details updated successfully");
-  //   } catch (error) {
-  //     console.error("Error updating personal details:", error);
-  //     alert("Error: Failed to update personal details");
-  //   }
-  // };
   
-
-//   const handleUpdateDetail = async () => {
-//     try {
-//         console.log("filterData", filterData);
-
-//         // Create a reference to the document in Firestore
-//         const docRef = doc(db, "personalDetails", filterData.id);
-
-//         // Update the document with the data from filterData
-//         await updateDoc(docRef, filterData);
-
-//         // Update the UI state
-//         setEditData(false);
-
-//         // Show a success message to the user
-//         alert("Success: Personal details updated successfully");
-//     } catch (error) {
-//         // Handle any errors that occur during the update process
-//         console.error("Error updating personal details:", error);
-//         alert("Error: Failed to update personal details");
-//     }
-// };
 
   inputInfo.forEach((ele, i) => {
     if (ele.inputType === "text" || ele.inputType === "number" || ele.inputType === "email") {
@@ -286,7 +154,7 @@ const fetchData = async () => {
                       <td>{user.firstName} {user.lastName}</td>
                       <td>{user.contact}</td>
                       <td>
-                      {/* <button type="button" onClick={() => { setEditData(true); editUserData(user.id); }}>Edit</button> */}
+                    
                       <button type="button" onClick={() => editUserData(user.id)}>Edit</button>
                       </td>
                     </tr>
@@ -338,7 +206,7 @@ const fetchData = async () => {
              </div>
             
             <div>  
-           <label>Email</label>
+           <label>Email Address</label>
             <input type="email" defaultValue={filterData.email} onChange={(e)=>add(e)}/>
             </div>
 
@@ -353,7 +221,7 @@ const fetchData = async () => {
             <div>
               <label>District</label>
               <select name="district" defaultValue={filterData.district} onChange={(e)=>add(e)}>
-                <option value="">Select your district</option>
+                <option>Select District</option>
                 <option>Ariyalur</option>
                 <option>Chengalpattu</option>
                 <option>Chennai</option>
@@ -405,7 +273,7 @@ const fetchData = async () => {
             </div>
 
             <div>  
-           <label>Contact</label>
+           <label>Contact Number</label>
             <input type="text" defaultValue={filterData.contact} onChange={(e)=>add(e)}/>
             </div>
            

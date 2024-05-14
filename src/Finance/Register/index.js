@@ -14,7 +14,7 @@ import InputRadio from "./InputComponents/InputRadio";
 import InputText from "./InputComponents/InputText";
 import { Modal } from "react-bootstrap";
 import { Button } from "react-bootstrap";
-import Spinner from 'react-bootstrap/Spinner';
+
 
 import { db } from "../FirebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
@@ -35,7 +35,7 @@ export default function Register() {
 
 
   
-  inputInfo.forEach((ele,i)=> {
+  inputInfo.forEach((ele)=> {
 
     if(ele.inputType == "text" || ele.inputType == "number" || ele.inputType == "email"){
       personalDetailInput.push(<InputText ele={ele}/>)

@@ -7,7 +7,7 @@ const InputRadio = (props) => {
     const dispatch = useDispatch()
 
   return (
-    <div>
+    <div style={{display:"inline-block"}}>
          <label>{props.ele.inputLabel}</label>
        {<input type={props.ele.inputType} name={props.ele.inputName} value={props.ele.inputValue} onChange={(e)=>dispatch(setPersonalInfo({...personalInfo,[e.target.name]:e.target.value}))}/>}
        <label>{props.ele.inputValue}</label>

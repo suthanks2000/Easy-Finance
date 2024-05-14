@@ -61,7 +61,7 @@ export const PersonalDetailSlice = createSlice({
           inputValue: "female"
         },
         {
-          inputLabel: "Email",
+          inputLabel: "Email Address",
           inputName: "email",
           inputType: "email",
           inputPlaceholder: "Enter email address",
@@ -138,7 +138,7 @@ export const PersonalDetailSlice = createSlice({
           inputValue: ""
         },
         {
-          inputLabel: "Contact",
+          inputLabel: "Contact Number",
           inputName: "contact",
           inputType: "text",
           inputPlaceholder: "Enter your contact number",
