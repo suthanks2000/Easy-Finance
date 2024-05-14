@@ -47,7 +47,6 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          {/* <Route path="/personaldetail" element={<PersonalDetail />} /> */}
           <Route path="/category" element={<Category />} />
           <Route path="/loans/:loanName" element={<SecuredLoansDetails />} />
           <Route path="/vehicleloandetail" element={<VehicleLoanDetails />} />
