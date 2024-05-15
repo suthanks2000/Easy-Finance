@@ -21,6 +21,7 @@ import { collection, addDoc } from "firebase/firestore";
 
 const Swal = require('sweetalert2')
 
+
 export default function Register() {
   
   const  userdata  = useSelector((state) => state.regisLogin.userdata);

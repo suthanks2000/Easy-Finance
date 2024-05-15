@@ -50,6 +50,7 @@ function App() {
           <Route path="/loans/:loanName" element={<SecuredLoansDetails />} />
           <Route path="/showresult" element={<ShowResult />} />
           <Route path="/emicalculator" element={<EmiCalculator/>}/>
+          <Route path="/personaldetail" element={<PersonalDetail/>}/>
         </Routes>
       </BrowserRouter>
     </div>

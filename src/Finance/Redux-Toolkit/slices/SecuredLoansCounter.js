@@ -65,6 +65,31 @@ export const SecuredLoansSlice = createSlice({
         loanType:["vehicleloan"]
       },
       {
+        inputLabel: "Registered Month",
+        inputName: "registeredMonth",
+        inputType: "number",
+        inputPlaceholder: "Enter registered month",
+        hidden:true,
+        parent:"usedCar",
+        inputValue: null,
+        statechange:true,
+        loanType:["vehicleloan"]
+      },
+      {
+        inputLabel: "Registered Year",
+        inputName: "registeredYear",
+        inputType: "number",
+        inputPlaceholder: "Enter registered year",  
+        vehicleType: [
+          "car","bike"
+        ],
+        parent:"usedCar",
+        hidden:true,
+        statechange:true,
+        inputValue:null,
+        loanType:["vehicleloan"]
+      },
+      {
         inputLabel: "Make & Model",
         inputName: "makeAndModel",
         inputType: "text",
@@ -88,69 +113,12 @@ export const SecuredLoansSlice = createSlice({
         loanType:["vehicleloan"]
       },
       {
-        inputLabel: "Registered Month",
-        inputName: "registeredMonth",
-        inputType: "number",
-        inputPlaceholder: "Enter registered month",
-        vehicleType: [
-          "car","bike"
-        ],
-        inputValue: "",
-        loanType:["vehicleloan"]
-      },
-      {
-        inputLabel: "Registered Year",
-        inputName: "registeredYear",
-        inputType: "number",
-        inputPlaceholder: "Enter registered year",
-        vehicleType: [
-          "car","bike"
-        ],
-        inputValue: "",
-        loanType:["vehicleloan"]
-      },
-      {
-        inputLabel: "Full price of Vehicle",
-        inputName: "fullPriceOfVehicle",
-        inputType: "number",
-        inputPlaceholder: "Enter full price of vehicle",
-        vehicleType: [
-          "car","bike"
-        ],
-        inputValue: "",
-        loanType:["vehicleloan"]
-      },
-      {
-        inputLabel:"Job Title",
-        inputName: "jobTitle",
-        inputType: "text",
-        loanType: [
-          "personalloan",
-          "homeloan",
-          "businessloan",
-          "vehicleloan"
-        ],
-        inputPlaceholder:"Your Job Title"
-      },
-      {
-        inputLabel:"Place Of Work",
-        inputName: "placeOfWork",
-        inputType: "text",
-        loanType: [
-          "personalloan",
-          "homeloan",
-          "businessloan",
-          "vehicleloan"
-        ],
-        inputPlaceholder:"Your Place Of Work"
-      },
-      {
         inputLabel: "Property Status",
         inputName: "propertyStatus",
         inputType: "dropdown",
         inputPlaceholder: "Enter propert status",
         loanType: [
-          "personalloan",
+          "personalloan", 
           "homeloan",
           "businessloan",
           "vehicleloan"
@@ -162,7 +130,8 @@ export const SecuredLoansSlice = createSlice({
           "rented",
           "other"
         ]
-      },{
+      },
+      {
         inputLabel: "Address Proof",
         inputName: "addressProof",
         inputType: "dropdown",
@@ -184,6 +153,42 @@ export const SecuredLoansSlice = createSlice({
           "gas bill",
           "water bill"
         ]
+      },
+      {
+        inputLabel: "Full price of Vehicle",
+        inputName: "fullPriceOfVehicle",
+        inputType: "number",
+        inputPlaceholder: "Enter full price of vehicle",
+        vehicleType: [
+          "car","bike"
+        ],
+        inputValue:null,
+        loanType:["vehicleloan"]
+      },
+      {
+        inputLabel:"Job Title",
+        inputValue:null,  
+        inputName: "jobTitle",
+        inputType: "text",
+        loanType: [
+          "personalloan",
+          "homeloan",
+          "businessloan",
+          "vehicleloan"
+        ],
+        inputPlaceholder:"Your Job Title"
+      },
+      {
+        inputLabel:"Place Of Work",
+        inputName: "placeOfWork",
+        inputType: "text",
+        loanType: [
+          "personalloan",
+          "homeloan",
+          "businessloan",
+          "vehicleloan"
+        ],
+        inputPlaceholder:"Your Place Of Work"
       },
       {
         inputLabel: "OHP Favor Of",
@@ -368,7 +373,7 @@ export const SecuredLoansSlice = createSlice({
     },
     
   ],
-    securedLoansInfo:{};
+    securedLoansInfo:{}
   },
   reducers: {
     
