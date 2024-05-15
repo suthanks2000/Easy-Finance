@@ -1,5 +1,6 @@
-import 'bootstrap/dist/css/bootstrap.min.css';  
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 import { Link } from 'react-router-dom';
+
 
 
 export default function Category (){
@@ -20,7 +21,7 @@ export default function Category (){
         <Link className="nav-link active" to={'/category'}>category</Link>
       </li>
       <li className="nav-item">
-        <Link className="nav-link" href="#">EMI Calulator</Link>
+        <Link className="nav-link" to={'/emicalculator'}>EMI Calulator</Link>
       </li>
       <li className="nav-item">
         <Link className="nav-link" to={'/personaldatas'}>Your Datas</Link>
@@ -72,7 +73,7 @@ style={{display:"flex",gap:"170px"}}>
 </div>
 </Link>
 
-<Link to={"/vehicleloandetail"} style={{ textDecoration: 'none' }}>
+<Link to={"/loans/vehicleloan"} style={{ textDecoration: 'none' }}>
 <div className="card text-bg-dark text-warning" style={{width:"200px"}}>
   <img src="category.png" className="card-img" alt="..." style={{width:"200px"}}/>
   <div className="card-img-overlay">

@@ -1,8 +1,149 @@
 import { createSlice } from "@reduxjs/toolkit";
+
 export const SecuredLoansSlice = createSlice({
   name: "securedLoans",
   initialState: {
     inputInfo:[
+      {
+        inputLabel: "Employment Type",
+        inputName: "employmentType",
+        inputType: "radio",
+        loanType: [
+          "personalloan",
+          "homeloan",
+          "businessloan",
+          "vehicleloan"
+        ],
+        inputValue:"Salaried"
+      },
+      {
+        inputName: "employmentType",
+        inputType: "radio",
+        loanType: [
+          "personalloan",
+          "homeloan",
+          "businessloan",
+          "vehicleloan"
+        ],
+        inputValue:"SelfEmployed"
+      },
+      {
+        inputLabel: "Vehicle Type",
+        inputName: "vehicleType",
+        inputType: "dropdown",
+        dropValue: [
+          "select","car","bike"
+        ],
+        loanType:["vehicleloan"]
+      },
+      {
+        inputLabel: "Car Type",
+        inputName: "carType",
+        inputType: "dropdown",
+        hidden:true,
+        parent:"car",
+        dropValue: [
+          "select",
+          "usedCar",
+          "newCar"
+        ],
+        loanType:["vehicleloan"]
+      },
+      {
+        inputLabel: "Second car condition",
+        inputName: "secondCarCondition",
+        inputType: "dropdown",
+        hidden:true,
+        parent:"usedCar",
+        dropValue: [
+          "select",
+          "good",
+          "average",
+          "poor"
+        ],
+        statechange:true,
+        loanType:["vehicleloan"]
+      },
+      {
+        inputLabel: "Make & Model",
+        inputName: "makeAndModel",
+        inputType: "text",
+        inputPlaceholder: "Enter make and model",
+        vehicleType: [
+          "car",
+          "bike"
+        ],
+        inputValue: "",
+        loanType:["vehicleloan"]
+      },
+      {
+        inputLabel: "Variant",
+        inputName: "variant",
+        inputType: "text",
+        inputPlaceholder: "Enter variant",
+        vehicleType: [
+          "car","bike"
+        ],
+        inputValue: "",
+        loanType:["vehicleloan"]
+      },
+      {
+        inputLabel: "Registered Month",
+        inputName: "registeredMonth",
+        inputType: "number",
+        inputPlaceholder: "Enter registered month",
+        vehicleType: [
+          "car","bike"
+        ],
+        inputValue: "",
+        loanType:["vehicleloan"]
+      },
+      {
+        inputLabel: "Registered Year",
+        inputName: "registeredYear",
+        inputType: "number",
+        inputPlaceholder: "Enter registered year",
+        vehicleType: [
+          "car","bike"
+        ],
+        inputValue: "",
+        loanType:["vehicleloan"]
+      },
+      {
+        inputLabel: "Full price of Vehicle",
+        inputName: "fullPriceOfVehicle",
+        inputType: "number",
+        inputPlaceholder: "Enter full price of vehicle",
+        vehicleType: [
+          "car","bike"
+        ],
+        inputValue: "",
+        loanType:["vehicleloan"]
+      },
+      {
+        inputLabel:"Job Title",
+        inputName: "jobTitle",
+        inputType: "text",
+        loanType: [
+          "personalloan",
+          "homeloan",
+          "businessloan",
+          "vehicleloan"
+        ],
+        inputPlaceholder:"Your Job Title"
+      },
+      {
+        inputLabel:"Place Of Work",
+        inputName: "placeOfWork",
+        inputType: "text",
+        loanType: [
+          "personalloan",
+          "homeloan",
+          "businessloan",
+          "vehicleloan"
+        ],
+        inputPlaceholder:"Your Place Of Work"
+      },
       {
         inputLabel: "Property Status",
         inputName: "propertyStatus",
@@ -11,7 +152,9 @@ export const SecuredLoansSlice = createSlice({
         loanType: [
           "personalloan",
           "homeloan",
-          "businessloan"
+          "businessloan",
+          "vehicleloan"
+          
         ],
         dropValue: [
           "select the propertyStatus",
@@ -27,10 +170,11 @@ export const SecuredLoansSlice = createSlice({
         loanType: [
           "personalloan",
           "homeloan",
-          "businessloan"
+          "businessloan",
+          "vehicleloan"
         ],
         dropValue: [
-          "SelectAddressProof",
+          "select One",
           "aadharcard",
           "passport",
           "voterId",
@@ -49,10 +193,11 @@ export const SecuredLoansSlice = createSlice({
         loanType: [
           "personalloan",
           "homeloan",
-          "businessloan"
+          "businessloan",
+          "vehicleloan"
         ],
         dropValue: [
-          "selectOHPFavourOf",
+          "select",
           "self",
           "spouse",
           "father",
@@ -70,11 +215,9 @@ export const SecuredLoansSlice = createSlice({
         inputPlaceholder: "Enter Purpose of personal Loan",
         loanType: [
           "personalloan",
-          "homeloan",
-          "businessloan"
         ],
         dropValue: [
-          "selectPurposeofLoan",
+          "select",
           "travel",
           "medical",
           "take over existing personal loan",
@@ -82,40 +225,6 @@ export const SecuredLoansSlice = createSlice({
           "other"
         ]
       },
-      {
-      inputLabel:"Place Of Work",
-      inputName: "placeOfWork",
-      inputType: "text",
-      loanType: [
-        "personalloan",
-        "homeloan",
-        "businessloan"
-      ],
-      inputPlaceholder:"Your Place Of Work"
-    },
-    {
-      inputLabel:"Job Title",
-      inputName: "jobTitle",
-      inputType: "text",
-      loanType: [
-        "personalloan",
-        "homeloan",
-        "businessloan"
-      ],
-      inputPlaceholder:"Your Job Title"
-    },
-    {
-      inputLabel:"Interest",
-      inputName: "interest",
-      inputType: "text",
-      loanType: [
-        "personalloan",
-        "homeloan",
-        "businessloan"
-      ],
-      inputValue:'',
-      inputPlaceholder:"Your Place Of Interset"
-    },
     {
       inputLabel: "Duration of Stay Current Address Year",
       inputName: "durationOfStayCurrentAddressYear",
@@ -124,30 +233,10 @@ export const SecuredLoansSlice = createSlice({
       loanType: [
         "personalloan",
         "homeloan",
-        "businessloan"
+        "businessloan",
+        "vehicleloan"
       ],
-      value: null
-    },
-    {
-      inputLabel: "Employment Type",
-      inputName: "employmentType",
-      inputType: "radio",
-      loanType: [
-        "personalloan",
-        "homeloan",
-        "businessloan"
-      ],
-      inputValue:"Salaried"
-    },
-    {
-      inputName: "employmentType",
-      inputType: "radio",
-      loanType: [
-        "personalloan",
-        "homeloan",
-        "businessloan"
-      ],
-      inputValue:"SelfEmployed"
+      inputValue: null
     },
     {
       inputLabel: "Duration of Stay Current Address Month",
@@ -157,9 +246,10 @@ export const SecuredLoansSlice = createSlice({
       loanType: [
         "personalloan",
         "homeloan",
-        "businessloan"
+        "businessloan",
+        "vehicleloan"
       ],
-      value: null
+      inputValue: null
     },
     {
       inputLabel: "Years Employed",
@@ -169,9 +259,10 @@ export const SecuredLoansSlice = createSlice({
       loanType: [
         "personalloan",
         "homeloan",
-        "businessloan"
+        "businessloan",
+        "vehicleloan"
       ],
-      value: null
+      inputValue: null
     },
     {
       inputLabel: "Monthly Net Income",
@@ -181,9 +272,10 @@ export const SecuredLoansSlice = createSlice({
       loanType: [
         "personalloan",
         "homeloan",
-        "businessloan"
+        "businessloan",
+        "vehicleloan"
       ],
-      value: null
+      inputValue: null
     },
     {
       inputLabel: "Monthly Expense",
@@ -193,28 +285,31 @@ export const SecuredLoansSlice = createSlice({
       loanType: [
         "personalloan",
         "homeloan",
-        "businessloan"
+        "businessloan",
+        "vehicleloan"
       ],
-      value: null
+      inputValue: null
     },
     {
       inputLabel: "Cibil Issue",
-      inputName: "Cibil Issue",
+      inputName: "CibilIssue",
       inputType: "radio",
       loanType: [
         "personalloan",
         "homeloan",
-        "businessloan"
+        "businessloan",
+        "vehicleloan"
       ],
       inputValue:"yes"
     },
     {
-      inputName: "Cibil Issue",
+      inputName: "CibilIssue",
       inputType: "radio",
       loanType: [
         "personalloan",
         "homeloan",
-        "businessloan"
+        "businessloan",
+        "vehicleloan"
       ],
       inputValue:"no"
     },
@@ -223,12 +318,27 @@ export const SecuredLoansSlice = createSlice({
       inputName: "loanAmount",
       inputType: "number",
       inputPlaceholder: "Enter loan amount",
+      min:"999",
       loanType: [
         "personalloan",
         "homeloan",
-        "businessloan"
+        "businessloan",
+        "vehicleloan"
       ],
-      value: null
+      inputValue: null
+    },
+    {
+      inputLabel:"Interest",
+      inputName: "interest",
+      inputType: "text",
+      loanType: [
+        "personalloan",
+        "homeloan",
+        "businessloan",
+        "vehicleloan"
+      ],
+      inputValue:'',
+      inputPlaceholder:"Your Place Of Interset"
     },
     {
       inputLabel: "Tenure Year",
@@ -238,9 +348,10 @@ export const SecuredLoansSlice = createSlice({
       loanType: [
         "personalloan",
         "homeloan",
-        "businessloan"
+        "businessloan",
+        "vehicleloan"
       ],
-      value: null
+      inputValue: null
     },
     {
       inputLabel: "Tenure Month",
@@ -250,70 +361,33 @@ export const SecuredLoansSlice = createSlice({
       loanType: [
         "personalloan",
         "homeloan",
-        "businessloan"
+        "businessloan",
+        "vehicleloan"
       ],
       value: null
     },
-    {
-      inputLabel: "EMI",
-      inputName: "emi",
-      inputType: "number",
-      inputPlaceholder: "EMI Amount",
-      loanType: [
-        "personalloan",
-        "homeloan",
-        "businessloan"
-      ],
-      value: null
-    }
     
   ],
-    securedLoansInfo:{},
-    // securedLoansInfo: {
-    //   // loanType: "",
-    //   // uId: "",
-    //   // employmentType: "",
-    //   // placeOfWork: "",
-    //   // jobTitle: "",
-    //   // propertyStatus: "",
-    //   // durationOfStayCurrentAddress: {
-    //   //   months: null,
-    //   //   years: null,
-    //   // },
-    //   // addressProof: "",
-    //   // OHPFavorOf: "",
-    //   // yearsEmployed: null,
-    //   // monthlyNetIncome: null,
-    //   // monthlyExpenses: null,
-    //   // civilIssue: "",
-    //   // loanAmount: null,
-    //   // interest: "",
-    //   // tenure: {
-    //   //   years: null,
-    //   //   months: null,
-    //   // },
-    //   // emi: null,
-    // },
-    // purposeOfPersonalLoan: "",
-    personalLoanView: false,
+    securedLoansInfo:{};
   },
   reducers: {
+    
+    setInputInfo: (state, action) => {
+      state.inputInfo = action.payload;
+    },
     setSecuredLoansInfo: (state, action) => {
       state.securedLoansInfo = action.payload;
-    },
-    setPersonalLoanView: (state, action) => {
-      state.personalLoanView = action.payload;
-    },
-    // setPurposeOfPersonalLoan: (state, action) => {
-    //   state.purposeOfPersonalLoan = action.payload;
-    // },
-  },
+
+    }
+  }
+
+ 
 });
 
 export const {
   setSecuredLoansInfo,
-  setPersonalLoanView,
- 
-  inputInfo
+
+  setInputInfo
+
 } = SecuredLoansSlice.actions;
 export default SecuredLoansSlice.reducer;

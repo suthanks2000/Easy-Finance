@@ -13,7 +13,7 @@ export default function Login() {
   const logData = useSelector((state) => state.regisLogin.loginData);
   const dispatch = useDispatch();
   const Navigate = useNavigate();
-
+ console.log(logData)
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, logData.Email, logData.Password)
       .then((userCredential) => {
