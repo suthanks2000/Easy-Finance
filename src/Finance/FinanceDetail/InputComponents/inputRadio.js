@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setSecuredLoansInfo } from '../Redux-Toolkit/slices/SecuredLoansCounter';
+import { setSecuredLoansInfo } from '../../Redux-Toolkit/slices/SecuredLoansCounter';
 
 const InputRadio = (props) => {
     const { securedLoansInfo } =
