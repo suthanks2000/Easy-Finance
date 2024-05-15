@@ -8,13 +8,40 @@ import { auth } from "../FirebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { db } from "../FirebaseConfig";
+import { collection,addDoc } from "firebase/firestore";
+
+
 
 export default function Register() {
   const regData = useSelector((state) => state.regisLogin.registerData);
   const dispatch = useDispatch();
   const Navigate = useNavigate();
+  
+  const registerFb=async()=>{
+    await addDoc(collection(db,"RegisterData"),{  
+        Email:regData.Email,
+        Password:regData.Password,
+        Name:regData.Name,
+        SecretKey:regData.SecretKey,
+        UserType:regData.UserType
+      
+    })
+  }
 
   const handleCreate = async () => {
+    if(regData.UserType=="Admin" && regData.SecretKey=="Agaram" && regData.UserType=="User"
+     && regData.Email!== ""&&
+      regData.Password!== ""&&
+      regData.Name!==""
+    ){  
+      registerFb()
+      // Navigate("/userdetails")  
+      
+    }else if(regData.UserType=="Admin" && regData.SecretKey!=="Agaram"){
+            alert("please fill the correct details")
+    }   
+    else{
     await createUserWithEmailAndPassword(auth, regData.Email, regData.Password)
       .then((userCredential) => {
         const user = userCredential.user;
@@ -29,13 +56,32 @@ export default function Register() {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
-        alert("Error");
-      });
+        alert("Please Enter the correct details");
+      })}
   };
 
   return (
     <>
       <h1>Welcome to Register Page</h1>
+      <div>
+        Register As
+        <input type="radio" name="UserType" value="User" onChange={(e)=>dispatch(setRegisterData({...regData,UserType:e.target.value}))}/>User
+        <input type="radio" name="UserType" value="Admin" onChange={(e)=>dispatch(setRegisterData({...regData,UserType:e.target.value}))}/>Admin
+
+      </div>
+
+      {regData.UserType=="Admin"?(
+      <div>
+        <label>Secret Key</label>
+        <input
+          type="text"
+          placeholder="Enter your SecretKey"
+          onKeyUp={(e) =>
+            dispatch(setRegisterData({ ...regData, SecretKey: e.target.value }))
+          }
+        />
+      </div>):null}
+
       <div>
         <label>Name</label>
         <input

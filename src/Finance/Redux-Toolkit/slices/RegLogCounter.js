@@ -7,6 +7,8 @@ export const RegLogSlice = createSlice({
       Name: "",
       Email: "",
       Password: "",
+      UserType:"",
+      SecretKey:""
     },
     loginData: {
       Email: "",

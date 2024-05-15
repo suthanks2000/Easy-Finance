@@ -1,3 +1,5 @@
+import { db } from "../FirebaseConfig";
+import { collection,getDocs } from "firebase/firestore";
 import { auth } from "../FirebaseConfig";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -8,29 +10,61 @@ import {
   setIsLogin,
 } from "../Redux-Toolkit/slices/RegLogCounter";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export default function Login() {
+  const[getRegister,setGetRegister]=useState([])
   const logData = useSelector((state) => state.regisLogin.loginData);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); 
   const Navigate = useNavigate();
 
+
+  useEffect(()=>{
+    getRegisterData()
+  },[]) 
+
+  
+const getRegisterData=async()=>{
+  const querySnapshot=await getDocs(collection(db,"RegisterData"))
+  const datas=[]
+ querySnapshot.forEach((e)=>{
+    datas.push(e.data())
+  })
+
+  setGetRegister(datas)
+}
+const checkEmail = getRegister.filter((e)=>e.Email==logData.Email && e.Password==logData.Password )[0]
+console.log(checkEmail)
+
   const handleLogin = () => {
-    signInWithEmailAndPassword(auth, logData.Email, logData.Password)
+
+  
+    if(checkEmail && logData.Email!=="" && logData.Password!==""){
+              Navigate("/userdetails")
+
+ }else{
+      signInWithEmailAndPassword(auth, logData.Email, logData.Password)
       .then((userCredential) => {
         const user = userCredential.user;
         localStorage.setItem("userToken", user.accessToken);
         dispatch(setuserdata(user));
         dispatch(setIsLogin(true));
-        console.log(user);
+        console.log(user); 
         alert("login success");
         Navigate("/personalDetail");
+        
+      
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
-        alert("Error");
+        alert("Please Enter the correct details");
       });
+      
+    }
+ 
+   
   };
 
   return (
