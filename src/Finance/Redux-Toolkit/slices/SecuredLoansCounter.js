@@ -368,7 +368,7 @@ export const SecuredLoansSlice = createSlice({
     },
     
   ],
-    securedLoansInfo:{};
+    securedLoansInfo:{}
   },
   reducers: {
     
