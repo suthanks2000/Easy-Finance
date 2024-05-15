@@ -186,6 +186,32 @@ export const SecuredLoansSlice = createSlice({
         ]
       },
       {
+        inputLabel: "Duration of Stay Current Address Year",
+        inputName: "durationOfStayCurrentAddressYear",
+        inputType: "number",
+        inputPlaceholder: "Enter in years",
+        loanType: [
+          "personalloan",
+          "homeloan",
+          "businessloan",
+          "vehicleloan"
+        ],
+        inputValue: null
+      },
+      {
+        inputLabel: "Duration of Stay Current Address Month",
+        inputName: "durationOfStayCurrentAddressMonth",
+        inputType: "number",
+        inputPlaceholder: "Enter in month",
+        loanType: [
+          "personalloan",
+          "homeloan",
+          "businessloan",
+          "vehicleloan"
+        ],
+        inputValue: null
+      },
+      {
         inputLabel: "OHP Favor Of",
         inputName: "OHPFavorOf",
         inputType: "dropdown",
@@ -225,32 +251,7 @@ export const SecuredLoansSlice = createSlice({
           "other"
         ]
       },
-    {
-      inputLabel: "Duration of Stay Current Address Year",
-      inputName: "durationOfStayCurrentAddressYear",
-      inputType: "number",
-      inputPlaceholder: "Enter in years",
-      loanType: [
-        "personalloan",
-        "homeloan",
-        "businessloan",
-        "vehicleloan"
-      ],
-      inputValue: null
-    },
-    {
-      inputLabel: "Duration of Stay Current Address Month",
-      inputName: "durationOfStayCurrentAddressMonth",
-      inputType: "number",
-      inputPlaceholder: "Enter in month",
-      loanType: [
-        "personalloan",
-        "homeloan",
-        "businessloan",
-        "vehicleloan"
-      ],
-      inputValue: null
-    },
+   
     {
       inputLabel: "Years Employed",
       inputName: "yearsEmployed",
@@ -340,19 +341,19 @@ export const SecuredLoansSlice = createSlice({
       inputValue:'',
       inputPlaceholder:"Your Place Of Interset"
     },
-    {
-      inputLabel: "Tenure Year",
-      inputName: "tenureYear",
-      inputType: "number",
-      inputPlaceholder: "Enter in tenure year",
-      loanType: [
-        "personalloan",
-        "homeloan",
-        "businessloan",
-        "vehicleloan"
-      ],
-      inputValue: null
-    },
+    // {
+    //   inputLabel: "Tenure Year",
+    //   inputName: "tenureYear",
+    //   inputType: "number",
+    //   inputPlaceholder: "Enter in tenure year",
+    //   loanType: [
+    //     "personalloan",
+    //     "homeloan",
+    //     "businessloan",
+    //     "vehicleloan"
+    //   ],
+    //   inputValue: {tenureYear}
+    // },
     {
       inputLabel: "Tenure Month",
       inputName: "tenureMonth",

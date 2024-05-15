@@ -16,7 +16,7 @@ import {
   setIsLogin,
 } from "./Finance/Redux-Toolkit/slices/RegLogCounter";
 import { useSelector, useDispatch } from "react-redux";
-import PersonalDatas from "./Finance/PersonalDatas";
+import LoanDatas from "./Finance/LoanDatas";
 
 function App() {
   const isLogin = useSelector((state) => state.regisLogin.isLogin);
@@ -51,7 +51,7 @@ function App() {
           <Route path="/showresult" element={<ShowResult />} />
           <Route path="/emicalculator" element={<EmiCalculator/>}/>
           <Route path="/personaldetail" element={<PersonalDetail/>}/>
-          <Route path="/loandatas" element={<PersonalDatas/>}/>
+          <Route path="/loandatas" element={<LoanDatas/>}/>
         </Routes>
       </BrowserRouter>
     </div>

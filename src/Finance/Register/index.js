@@ -171,7 +171,7 @@ export default function Register() {
           <Modal.Body>{personalDetailInput}</Modal.Body>
           <Modal.Footer>
             <Button className="btn btn-info" onClick={handlePersonalDetail}>Next</Button>
-            {/* <Button className="btn btn-info" onClick={handleSignout}>Sign Out</Button> */}
+         
           </Modal.Footer>
         </center>
       </Modal>

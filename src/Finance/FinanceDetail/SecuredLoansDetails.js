@@ -18,7 +18,9 @@ export default function SecuredLoansDetails() {
   const viewLoanInput = [];
 
   const intr = securedLoansInfo.interest / 1200; // Convert annual interest rate to monthly
+  const tenureYear = securedLoansInfo.tenureMonth / 12;
   const emiValue = securedLoansInfo.tenureMonth
+ 
     ? Math.round(
         (securedLoansInfo.loanAmount * intr) /
           (1 - Math.pow(1 / (1 + intr), securedLoansInfo.tenureMonth))
@@ -79,27 +81,31 @@ const handleSetLoanData = async () => {
   console.log(notElgAmount) 
 
  
+  if(filteredInputNames.some(name => !securedLoansInfo[name])){
+    alert("pls fill the inputs")
+  }
   
-  
-   if(securedLoansInfo.propertyStatus == "owned" && securedLoansInfo.CibilIssue == "no" && securedLoansInfo.monthlyNetIncome >= 25000 && elgAmount ) {
-   
+  else if(securedLoansInfo.propertyStatus == "owned" && securedLoansInfo.CibilIssue == "no" && securedLoansInfo.monthlyNetIncome >= 25000 && elgAmount ) {
+     await addDoc(collection(db, "securedLoans"), {
+             ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"A"});
+    
     alert("grade A")
   }
   else if(securedLoansInfo.CibilIssue == "no" && securedLoansInfo.monthlyNetIncome  > 15000 ){
-   
+    await addDoc(collection(db, "securedLoans"), {
+      ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"B"});
     alert("grade B")
   }
   else if(securedLoansInfo.propertyStatus == "rented" && securedLoansInfo.CibilIssue == "yes" && securedLoansInfo.monthlyNetIncome  > 0 ){
-   
+    await addDoc(collection(db, "securedLoans"), {
+      ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"C"});
     alert("grade C")
   }
-  else {
-    alert("submited")
+  // else {
+  //   alert("submited")
    
-    // await addDoc(collection(db, "securedLoans"), {
-    //         ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"A"});
-    
-  }
+   
+  // }
 }
 
   return (
@@ -110,6 +116,14 @@ const handleSetLoanData = async () => {
           <div>
             {viewLoanInput}
             <div>
+            <div>
+                <label>Tenure Year</label>
+                <input
+                placeholder="Your Tenure year"
+                type="number"
+                value={tenureYear}
+                />
+              </div>
               <div>
                 <label>EMI</label>
                 <input
