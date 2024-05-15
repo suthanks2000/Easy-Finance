@@ -23,7 +23,7 @@ export default function Login() {
         dispatch(setIsLogin(true));
         console.log(user);
         alert("login success");
-        Navigate("/personalDetail");
+        Navigate("/category");
       })
       .catch((error) => {
         const errorCode = error.code;

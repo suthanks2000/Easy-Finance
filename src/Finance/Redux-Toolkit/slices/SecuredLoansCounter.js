@@ -368,8 +368,7 @@ export const SecuredLoansSlice = createSlice({
     },
     
   ],
-    securedLoansInfo:{},
-  
+    securedLoansInfo:{};
   },
   reducers: {
     
@@ -378,12 +377,17 @@ export const SecuredLoansSlice = createSlice({
     },
     setSecuredLoansInfo: (state, action) => {
       state.securedLoansInfo = action.payload;
+
     }
   }
+
+ 
 });
 
 export const {
   setSecuredLoansInfo,
+
   setInputInfo
+
 } = SecuredLoansSlice.actions;
 export default SecuredLoansSlice.reducer;
