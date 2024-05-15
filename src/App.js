@@ -5,7 +5,6 @@ import Register from "./Finance/Register";
 import Category from "./Finance/Category";
 import PersonalDetail from "./Finance/PersonalDetail";
 import SecuredLoansDetails from "./Finance/FinanceDetail/SecuredLoansDetails";
-import VehicleLoanDetails from "./Finance/FinanceDetail/VehicleLoanDetails";
 import ShowResult from "./Finance/ShowResult";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
@@ -17,8 +16,7 @@ import {
   setIsLogin,
 } from "./Finance/Redux-Toolkit/slices/RegLogCounter";
 import { useSelector, useDispatch } from "react-redux";
-import UserDetails from "./Finance/Admin/userDetails";
-import AdminLogin from "./Finance/Admin/login";
+import PersonalDatas from "./Finance/PersonalDatas";
 
 function App() {
   const isLogin = useSelector((state) => state.regisLogin.isLogin);
@@ -48,10 +46,8 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/personaldetail" element={<PersonalDetail />} />
           <Route path="/category" element={<Category />} />
           <Route path="/loans/:loanName" element={<SecuredLoansDetails />} />
-          <Route path="/vehicleloandetail" element={<VehicleLoanDetails />} />
           <Route path="/showresult" element={<ShowResult />} />
           <Route path="/emicalculator" element={<EmiCalculator/>}/>
           <Route path="/adminlogin" element={<AdminLogin/>}/>

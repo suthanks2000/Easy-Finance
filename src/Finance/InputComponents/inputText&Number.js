@@ -10,7 +10,7 @@ const InputTextAndNumber = (props) => {
   return (
         <div>
             <label>{props.ele.inputLabel}</label>
-            <input type={props.ele.inputType} name={props.ele.inputName} defaultValue ={props.ele.inputValue} placeholder={props.ele.inputPlaceholder}  onChange={(e)=>dispatch(setSecuredLoansInfo({...securedLoansInfo,[e.target.name]:e.target.value}))}/>
+            <input type={props.ele.inputType} name={props.ele.inputName}  min={props.ele.min} defaultValue ={props.ele.inputValue} placeholder={props.ele.inputPlaceholder}  onChange={(e)=>dispatch(setSecuredLoansInfo({...securedLoansInfo,[e.target.name]:e.target.value}))}/>
         </div>
   )
 }

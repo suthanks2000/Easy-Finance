@@ -1,49 +1,116 @@
 import { useSelector, useDispatch } from "react-redux";
-import { setPersonalInfo } from "../Redux-Toolkit/slices/PersonalDetailCounter";
+import { setPersonalInfo, setInputInfo } from "../Redux-Toolkit/slices/PersonalDetailCounter";
 import { Link, useNavigate } from "react-router-dom";
 import { db } from "../FirebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 import 'bootstrap/dist/css/bootstrap.min.css'; 
+import { useEffect, useState } from "react";
+import InputDropdown from "../Register/InputComponents/InputDropdown";
+import InputRadio from "../Register/InputComponents/InputRadio";
+import InputText from "../Register/InputComponents/InputText";
+import { Modal } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 
+const Swal = require('sweetalert2')
 
 
 export default function PersonalDetail() {
-  const userdata = useSelector((state) => state.regisLogin.userdata);
-  const personalInfo = useSelector(
-    (state) => state.personalDetail.personalInfo
+
+
+  const [personalDetailPopup , setPersonalDetailPopup] = useState(false)
+  const  userdata  = useSelector((state) => state.regisLogin.userdata);
+  const { personalInfo, inputInfo } = useSelector(
+    (state) => state.personalDetail
   );
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
+
+const personalDetailInput = []
+
+inputInfo.forEach((ele,i)=> {
+
+  if(ele.inputType == "text" || ele.inputType == "number" || ele.inputType == "email"){
+    personalDetailInput.push(<InputText ele={ele}/>)
+        // personalDetailInput.push(<div key={i}>
+        //   <label>{ele.inputLabel}</label>
+        //   <input type={ele.inputType} name={ele.inputName} placeholder={ele.inputPlaceholder} onChange={(e)=>dispatch(setPersonalInfo({...personalInfo,[e.target.name]:e.target.value}))}/>
+        // </div>)
+  // }
+  // if(ele.inputType == "email") {
+  //   personalDetailInput.push(<InputText ele={ele}/>)
+    // personalDetailInput.push(<div key={i}>
+    //   <label>{ele.inputLabel}</label>
+    //   <input type={ele.inputType} name={ele.inputName} placeholder={ele.inputPlaceholder} onChange={(e)=>dispatch(setPersonalInfo({...personalInfo,[e.target.name]:e.target.value}))}/>
+    // </div>)
+}
+  if(ele.inputType == "dropdown"){
+    personalDetailInput.push(<InputDropdown ele={ele}/>)
+    // personalDetailInput.push(<div>
+    //   <label>{ele.inputLabel}</label>
+    //   <select name={ele.inputName} onChange={(e)=>dispatch(setPersonalInfo({...personalInfo,[e.target.name]:e.target.value}))}>
+    //     {ele.dropValue.map((e)=><option>{e}</option>)}
+    //     </select>
+       
+    // </div>
+    
+  }
+  if(ele.inputType == "radio"){
+    personalDetailInput.push(<InputRadio ele={ele}/>)
+    // personalDetailInput.push(<div>
+    // personalDetailInput.push(<div key={i} style={{display:"inline-block"}}>
+    //   <label>{ele.inputLabel}</label>
+    //   {<input type={ele.inputType} name={ele.inputName} value={ele.inputValue} onChange={(e)=>dispatch(setPersonalInfo({...personalInfo,[e.target.name]:e.target.value}))}/>}
+    //   <label>{ele.inputValue}</label>
+    // </div>)
+  }
  
+})
+
+
+
+useEffect(()=>{
+      dispatch(setPersonalInfo({}))
+},[])
+
+
+useEffect(()=>{
+  setPersonalDetailPopup(true)
+},[])
+
 
   const handlePersonalDetail = async () => {
-    if (
-      personalInfo.firstName == "" ||
-      personalInfo.lastName == "" ||
-      personalInfo.fatherName == "" ||
-      personalInfo.Age == "" ||
-      personalInfo.maritalStatus == "" ||
-      personalInfo.Gender == "" ||
-      personalInfo.Email == "" ||
-      personalInfo.Address.District == "" ||
-      personalInfo.Address.City == "" ||
-      personalInfo.Address.pinCode == "" ||
-      personalInfo.Contact == ""
-    ) {
-      alert("Please fill empty fields");
-    } else {
+    const requiredFields = ['firstName', 'lastName', 'fatherName', 'age', 'maritalStatus', 'gender', 'email', 'district', 'city', 'pincode', 'contact'];
+     
+    if (requiredFields.some(field => !personalInfo[field])) {
+    
+      Swal.fire({
+        icon: "error",
+        title: "Something went wrong!",
+        text: "Please Fill Empty Fields",
+       
+      });
+
+      console.log(personalInfo)
+     
+    } else{
       await addDoc(collection(db, "personalDetails"), {
         ...personalInfo,
-        uid: userdata.uid,
+           uid: userdata.uid,
+         });
+
+      Swal.fire({
+        title: "Good job!",
+        text: "Successfully sumbitted Personal Details",
+        icon: "success"
       });
-      alert("Personal datas successfully submitted");
-      console.log(personalInfo.maritalStatus)
-      navigate("/category");
+       navigate("/category");
+           
+      console.log(personalInfo)
+         
     }
   };
-
 
   const handleSignout = async () =>{
     await localStorage.getItem("userToken")
@@ -54,7 +121,7 @@ export default function PersonalDetail() {
   return (
 
     <>
-      <nav className="navbar sticky-top navbar-expand-lg  navbar-dark bg-dark">
+      {/* <nav className="navbar sticky-top navbar-expand-lg  navbar-dark bg-dark">
   <Link className="navbar-brand fs-3" href="#">Easy Finance</Link>
   <button className="navbar-toggler shadow-none border-0" type="button" data-toggle="collapse" data-target="#myNavbar" aria-controls="myNavbar" aria-expanded="false" aria-label="Toggle navigation">
     <span className="navbar-toggler-icon"></span>
@@ -69,6 +136,9 @@ export default function PersonalDetail() {
       </li>
       <li className="nav-item">
         <Link className="nav-link" href="#">EMI Calulator</Link>
+      </li>
+      <li className="nav-item">
+        <Link className="nav-link" to={'/personaldatas'}>Your Datas</Link>
       </li>
       <li class="nav-item dropdown">
         <Link class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -101,202 +171,41 @@ export default function PersonalDetail() {
     </ul>
   </div>
   
-</nav>
+</nav> */}
 
-  <h1>Basic Information</h1>
+{JSON.stringify(personalInfo)}
 
-      <div>
-        <label>First Name</label>
-        <input
-          type="text"
-          placeholder="Enter your first name"
-          required
-          onKeyUp={(e) =>
-            dispatch(
-              setPersonalInfo({ ...personalInfo, firstName: e.target.value })
-            )
-          }
-        />
-      </div>
+{ personalDetailPopup ? 
 
-      <div>
-        <label>Last Name</label>
-        <input
-          type="text"
-          placeholder="Enter your last name"
-          required
-          onKeyUp={(e) =>
-            dispatch(
-              setPersonalInfo({ ...personalInfo, lastName: e.target.value })
-            )
-          }
-        />
-      </div>
+<Modal>
+          <center>
+            <Modal.Header>
+              <Modal.Title>
+               
+              </Modal.Title>
+              <Button className="btn-close" ></Button>
+            </Modal.Header>
+            <Modal.Body>
 
-      <div>
-        <label>Father Name</label>
-        <input
-          type="text"
-          placeholder="Enter your father name"
-          required
-          onKeyUp={(e) =>
-            dispatch(
-              setPersonalInfo({ ...personalInfo, fatherName: e.target.value })
-            )
-          }
-        />
-      </div>
+  {personalDetailInput}
 
-      <div>
-        <label>Age</label>
-        <input
-          type="number"
-          placeholder="Enter your age"
-          required
-          onKeyUp={(e) =>
-            dispatch(setPersonalInfo({ ...personalInfo, Age: e.target.value }))
-          }
-        />
-      </div>
-
-      <div>
-        <label>Marital Status</label>
-
-        <input type="radio" name="maritalStatus" value="married" onChange={(e)=>dispatch(setPersonalInfo({...personalInfo,
-             maritalStatus:e.target.value}))}/>Married
-
-       <input type="radio" name="maritalStatus" value="unmarried" onChange={(e)=>dispatch(setPersonalInfo({...personalInfo,
-             maritalStatus:e.target.value}))}/>Unmarried
-
-        
-      </div>
-
-<div>
-        <label>Gender</label>
-
-        <input type="radio" name="Gender" value="male" onChange={(e)=>dispatch(setPersonalInfo({...personalInfo,
-           Gender:e.target.value}))}/>Male
-
-       <input type="radio" name="Gender" value="female" onChange={(e)=>dispatch(setPersonalInfo({...personalInfo,
-             Gender:e.target.value}))}/>Female
-
-        
-      </div>
-
-      <div>
-        <label>Email</label>
-        <input
-          type="email"
-          placeholder="Enter your email"
-          required
-          onKeyUp={(e) =>
-            dispatch(
-              setPersonalInfo({ ...personalInfo, Email: e.target.value })
-            )
-          }
-        />
-      </div>
-
-      <div>
-        <h5>Address</h5>
-
-        <label>District</label>
-
-        <select
-          onChange={(e) =>
-            dispatch(
-              setPersonalInfo({
-                ...personalInfo,
-                Address: { ...personalInfo.Address, District: e.target.value },
-              })
-            )
-          }
-        >
-          <option>Select District</option>  
-          <option>Ariyalur</option>
-          <option>Chennai</option>
-          <option>Coimbatore</option>
-          <option>Cuddalore</option>
-          <option>Dharmapuri</option>
-          <option>Dindigul</option>
-          <option>Erode</option>
-          <option>Kallakurichi</option>
-          <option>Kanchipuram</option>
-          <option>Kanyakumari</option>
-          <option>Karur</option>
-          <option>Krishnagiri</option>
-          <option>Madurai</option>
-          <option>Nagapattinam</option>
-          <option>Namakkal</option>
-          <option>Nilgiris</option>
-          <option>Perambalur</option>
-          <option>Pudukkottai</option>
-          <option>Ramanathapuram</option>
-          <option>Ranipet</option>
-          <option>Salem</option>
-          <option>Sivaganga</option>
-          <option>Tenkasi</option>
-          <option>Thanjavur</option>
-          <option>Theni</option>
-          <option>Thoothukudi</option>
-          <option>Tiruchirappalli</option>
-          <option>Tirunelveli</option>
-          <option>Tirupathur</option>
-          <option>Tiruppur</option>
-          <option>Tiruvallur</option>
-          <option>Tiruvannamalai</option>
-          <option>Tiruvannamalai</option>
-          <option>Tiruvarur</option>
-          <option>Vellore</option>
-          <option>Viluppuram</option>
-          <option>Virudhunagar</option>
-        </select>
-
-        <label>City</label>
-        <input
-          type="text"
-          placeholder="Enter your City"
-          required
-          onKeyUp={(e) =>
-            dispatch(
-              setPersonalInfo({
-                ...personalInfo,
-                Address: { ...personalInfo.Address, City: e.target.value },
-              })
-            )
-          }
-        />
-
-        <label>Pin code</label>
-        <input
-          type="text"
-          placeholder="Enter your Pincode"
-          required
-          onKeyUp={(e) =>
-            dispatch(
-              setPersonalInfo({
-                ...personalInfo,
-                Address: { ...personalInfo.Address, pinCode: e.target.value },
-              })
-            )
-          }
-        />
-      </div>
-
-      <div>
-        <label>Contact</label>
-        <input
-          type="text"
-          placeholder="Enter your contact number"
-          required
-          onKeyUp={(e) =>
-            dispatch(
-              setPersonalInfo({ ...personalInfo, Contact: e.target.value })
-            )
-          }
-        />
-      </div>
-
+              
+          
+           
+            </Modal.Body>
+            <Modal.Footer>
+              <Button className="btn btn-info" onClick={handlePersonalDetail}>Next</Button>
+              <Button className="btn btn-info" onClick={handleSignout}>Sign Out</Button>
+            </Modal.Footer>
+           
+         
+            </center>
+            </Modal>
+            :
+            null
+}
+  {/* <h1>Basic Information</h1>
+    {personalDetailInput}
       <div>
         <button type="button" onClick={handlePersonalDetail}>
           Next
@@ -305,10 +214,9 @@ export default function PersonalDetail() {
         <button type="button" onClick={handleSignout}>
          Sign Out
         </button>
-      </div>
+      </div> */}
 
-        
-     
+
     </>
   );
 }

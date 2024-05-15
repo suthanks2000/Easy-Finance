@@ -17,25 +17,7 @@ export default function Login() {
   const logData = useSelector((state) => state.regisLogin.loginData);
   const dispatch = useDispatch(); 
   const Navigate = useNavigate();
-
-
-  useEffect(()=>{
-    getRegisterData()
-  },[]) 
-
-  
-const getRegisterData=async()=>{
-  const querySnapshot=await getDocs(collection(db,"RegisterData"))
-  const datas=[]
- querySnapshot.forEach((e)=>{
-    datas.push(e.data())
-  })
-
-  setGetRegister(datas)
-}
-const checkEmail = getRegister.filter((e)=>e.Email==logData.Email && e.Password==logData.Password )[0]
-console.log(checkEmail)
-
+ console.log(logData)
   const handleLogin = () => {
 
   
@@ -51,9 +33,7 @@ console.log(checkEmail)
         dispatch(setIsLogin(true));
         console.log(user); 
         alert("login success");
-        Navigate("/personalDetail");
-        
-      
+        Navigate("/category");
       })
       .catch((error) => {
         const errorCode = error.code;
