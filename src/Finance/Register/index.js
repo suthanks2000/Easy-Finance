@@ -58,9 +58,7 @@ export default function Register() {
 
 
   const handleCreate = async () => {
-  
-      
-  
+
     await createUserWithEmailAndPassword(auth, regData.Email, regData.Password)
       .then((userCredential) => {
         const user = userCredential.user;

@@ -20,8 +20,7 @@ import { useSelector, useDispatch } from "react-redux";
 import PersonalDatas from "./Finance/PersonalDatas";
 
 function App() {
-  const isLogin = useSelector((state) => state.regisLogin.isLogin);
-  const userdata = useSelector((state) => state.regisLogin.userdata);
+  const {isLogin,userdata} = useSelector((state) => state.regisLogin);
   const dispatch = useDispatch();
 
   useEffect(() => {
