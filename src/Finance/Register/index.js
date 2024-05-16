@@ -76,7 +76,7 @@ export default function Register() {
 
 
   const handlePersonalDetail = async () => {
-    const requiredFields = ['firstName', 'lastName', 'fatherName', 'age', 'maritalStatus', 'gender', 'email', 'district', 'city', 'pincode', 'contact'];
+    const requiredFields = ['firstName', 'lastName', 'fatherName', 'Age', 'maritalStatus', 'Gender', 'Email', 'District', 'City', 'pinCode', 'Contact'];
      
     if (requiredFields.some(field => !personalInfo[field])) {
     
