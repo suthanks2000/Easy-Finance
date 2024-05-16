@@ -21,6 +21,7 @@ import { collection, addDoc } from "firebase/firestore";
 
 const Swal = require('sweetalert2')
 
+
 export default function Register() {
   
   const  userdata  = useSelector((state) => state.regisLogin.userdata);
@@ -81,7 +82,7 @@ export default function Register() {
 
 
   const handlePersonalDetail = async () => {
-    const requiredFields = ['firstName', 'lastName', 'fatherName', 'age', 'maritalStatus', 'gender', 'email', 'district', 'city', 'pincode', 'contact'];
+    const requiredFields = ['firstName', 'lastName', 'fatherName', 'Age', 'maritalStatus', 'Gender', 'Email', 'District', 'City', 'pinCode', 'Contact'];
      
     if (requiredFields.some(field => !personalInfo[field])) {
     

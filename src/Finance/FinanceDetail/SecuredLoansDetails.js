@@ -1,12 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
-import {setSecuredLoansInfo} from "../Redux-Toolkit/slices/SecuredLoansCounter";
+import {setInputInfo, setSecuredLoansInfo} from "../Redux-Toolkit/slices/SecuredLoansCounter";
 import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../FirebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 import { useEffect } from "react";
-import InputRadio from "../InputComponents/inputRadio";
-import InputDropdown from "../InputComponents/inputDropdown";
-import InputTextAndNumber from "../InputComponents/inputText&Number";
+import InputRadio from "./InputComponents/inputRadio";
+import InputDropdown from "./InputComponents/inputDropdown";
+import InputTextAndNumber from "./InputComponents/inputText&Number";
 
 export default function SecuredLoansDetails() {
   const dispatch = useDispatch();
@@ -37,9 +37,10 @@ useEffect(()=>{
 
 useEffect(()=>{
   if(securedLoansInfo.vehicleType  === "bike"){
-    const {carType,...rest} =securedLoansInfo
+    const {carType,secondCarCondition,registeredMonth,registeredYear,...rest} =securedLoansInfo
     console.log(rest)
     dispatch(setSecuredLoansInfo(rest))
+    dispatch(setInputInfo(inputInfo))
       
   }
 },[securedLoansInfo.vehicleType])

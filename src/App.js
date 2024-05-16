@@ -35,6 +35,7 @@ function App() {
   const checkAuth = async () => {
     await onAuthStateChanged(auth, (currentuser) => {
       localStorage.setItem("userToken", currentuser.accessToken);
+      console.log(currentuser)
       dispatch(setuserdata(currentuser));
       dispatch(setIsLogin(true));
       console.log(userdata);
@@ -51,10 +52,9 @@ function App() {
           <Route path="/loans/:loanName" element={<SecuredLoansDetails />} />
           <Route path="/showresult" element={<ShowResult />} />
           <Route path="/emicalculator" element={<EmiCalculator/>}/>
-          <Route path="/personaldetail" element={<PersonalDetail/>}/>
           <Route path="/admin" element={<Admin/>}/>
-
-
+          {isLogin? <Route path="/personaldetail" element={<PersonalDetail/>}/>:null}
+          <Route path="/loandatas" element={<PersonalDatas/>}/>
         </Routes>
       </BrowserRouter>
     </div>

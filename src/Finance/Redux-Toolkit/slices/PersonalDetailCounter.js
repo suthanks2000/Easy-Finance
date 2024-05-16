@@ -43,7 +43,7 @@ export const PersonalDetailSlice = createSlice({
         },
         {
           inputLabel: "Age",
-          inputName: "age",
+          inputName: "Age",
           inputType: "number",
           inputPlaceholder: "Enter your age",
           inputValue: null
@@ -51,18 +51,18 @@ export const PersonalDetailSlice = createSlice({
      
         {
           inputLabel: "Gender",
-          inputName: "gender",
+          inputName: "Gender",
           inputType: "radio",
           inputValue: "male"
         },
         {
-          inputName: "gender",
+          inputName: "Gender",
           inputType: "radio",
           inputValue: "female"
         },
         {
           inputLabel: "Email Address",
-          inputName: "email",
+          inputName: "Email",
           inputType: "email",
           inputPlaceholder: "Enter email address",
           inputValue: ""
@@ -81,7 +81,7 @@ export const PersonalDetailSlice = createSlice({
         },
         {
           inputLabel: "District",
-          inputName: "district",
+          inputName: "District",
           inputType: "dropdown",
           dropValue: [
             "Select District",
@@ -125,21 +125,21 @@ export const PersonalDetailSlice = createSlice({
         },
         {
           inputLabel: "City",
-          inputName: "city",
+          inputName: "City",
           inputType: "text",
           inputPlaceholder: "Enter your city",
           inputValue: ""
         },
         {
-          inputLabel: "Pin code",
-          inputName: "pincode",
+          inputLabel: "Pin Code",
+          inputName: "pinCode",
           inputType: "text",
           inputPlaceholder: "Enter your pincode",
           inputValue: ""
         },
         {
           inputLabel: "Contact Number",
-          inputName: "contact",
+          inputName: "Contact",
           inputType: "text",
           inputPlaceholder: "Enter your contact number",
           inputValue: ""
