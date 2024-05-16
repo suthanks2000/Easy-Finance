@@ -1,4 +1,5 @@
 import { db } from "../FirebaseConfig";
+import Spinner from 'react-bootstrap/Spinner';
 import { collection,getDocs } from "firebase/firestore";
 import { auth } from "../FirebaseConfig";
 import { useNavigate } from "react-router-dom";
@@ -13,18 +14,58 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 export default function Login() {
-  const[getRegister,setGetRegister]=useState([])
+  const[adminData,setAdminData]=useState([])
+  const[spinner,setSpinner]=useState(false)
+
   const logData = useSelector((state) => state.regisLogin.loginData);
   const dispatch = useDispatch(); 
   const Navigate = useNavigate();
- console.log(logData)
+  // console.log(adminData)
+
+  useEffect(()=>{
+
+    adminFbData()
+    dispatch(setLoginData({}))
+  },[])
+
+
+
+
+   const adminFbData=async()=>{
+    const querySnapShot=await getDocs(collection(db,"AdminId"))
+    const adData=[]
+    querySnapShot.forEach((e)=>{
+      adData.push(e.data())
+
+    })
+    setAdminData(adData)
+    setSpinner(true)
+   }
+   console.log(adminData)
+   const checkAdminData=adminData.filter((e)=>e.Email==logData.Email && e.Password==logData.Password)[0]
+
+   console.log(checkAdminData)
+
+   
+
+
   const handleLogin = () => {
 
-  
-    if(checkEmail && logData.Email!=="" && logData.Password!==""){
-              Navigate("/userdetails")
+    if(checkAdminData){
+        Navigate("/admin")
+        alert("login sucess")
+              
+    }
 
- }else{
+   else if(logData.Email==="" || logData.Password===""){
+      alert("please fill input fields")
+      
+      
+  }
+    
+    else{  
+    
+
       signInWithEmailAndPassword(auth, logData.Email, logData.Password)
       .then((userCredential) => {
         const user = userCredential.user;
@@ -41,14 +82,20 @@ export default function Login() {
         console.log(errorCode, errorMessage);
         alert("Please Enter the correct details");
       });
-      
+
     }
+      
+    
  
    
   };
 
   return (
     <>
+    {
+    spinner?
+     <>   
+      <p>{JSON.stringify(logData)}</p>
       <h1>Welcome to Login Pages</h1>
 
       <div>
@@ -81,6 +128,12 @@ export default function Login() {
       <div>
         Dont have an account?<Link to={"/register"}>RegisterHere!</Link>
       </div>
+      </>
+      : <Spinner animation="border" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </Spinner>
+    }
+
     </>
   );
 }

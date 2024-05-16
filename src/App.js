@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./Finance/FirebaseConfig";
 import EmiCalculator from "./Finance/EmiCalculator";
+import Admin from "./Finance/Admin";
 
 import {
   setuserdata,
@@ -50,8 +51,10 @@ function App() {
           <Route path="/loans/:loanName" element={<SecuredLoansDetails />} />
           <Route path="/showresult" element={<ShowResult />} />
           <Route path="/emicalculator" element={<EmiCalculator/>}/>
-          <Route path="/adminlogin" element={<AdminLogin/>}/>
-          <Route path="/userdetails" element={<UserDetails/>}/>
+          <Route path="/personaldetail" element={<PersonalDetail/>}/>
+          <Route path="/admin" element={<Admin/>}/>
+
+
         </Routes>
       </BrowserRouter>
     </div>

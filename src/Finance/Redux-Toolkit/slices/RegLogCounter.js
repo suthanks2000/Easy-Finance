@@ -3,17 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 export const RegLogSlice = createSlice({
   name: "regisLogin",
   initialState: {
-    registerData: {
-      Name: "",
-      Email: "",
-      Password: "",
-      UserType:"",
-      SecretKey:""
-    },
-    loginData: {
-      Email: "",
-      Password: "",
-    },
+    registerData: {},
+    loginData: {},
     userdata: {},
     isLogin: false,
   },
