@@ -56,16 +56,10 @@ export default function Login() {
         alert("login sucess")
               
     }
-
    else if(logData.Email==="" || logData.Password===""){
-      alert("please fill input fields")
-      
-      
+      alert("please fill input fields")  
   }
-    
     else{  
-    
-
       signInWithEmailAndPassword(auth, logData.Email, logData.Password)
       .then((userCredential) => {
         const user = userCredential.user;

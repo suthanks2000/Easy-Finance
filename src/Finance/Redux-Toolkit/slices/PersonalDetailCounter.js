@@ -2,23 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 export const PersonalDetailSlice = createSlice({
   name: "personalDetail",
   initialState: {
-    // personalInfo: {
-    //   firstName: "",
-    //   lastName: "",
-    //   uid: "",
-    //   fatherName: "",
-    //   Age: null,
-    //   maritalStatus: "",
-    //   Gender: "",
-    //   Email: "",
-    //   Address: {
-    //     District: "",
-    //     City: "",
-    //     pinCode: null,
-    //   },
-    //   Contact: "",
-    // },
-
   inputInfo: [
         {
           inputLabel: "First Name",
@@ -133,7 +116,7 @@ export const PersonalDetailSlice = createSlice({
         {
           inputLabel: "Pin Code",
           inputName: "pinCode",
-          inputType: "text",
+          inputType: "number",
           inputPlaceholder: "Enter your pincode",
           inputValue: ""
         },

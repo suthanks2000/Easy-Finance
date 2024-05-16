@@ -89,7 +89,7 @@ const handleSetLoanData = async () => {
   if(filteredInputNames.some(name => !securedLoansInfo[name])){
     alert("pls fill the inputs")
   }
-   if(securedLoansInfo.propertyStatus == "owned" && securedLoansInfo.CibilIssue == "no" && securedLoansInfo.monthlyNetIncome >= 25000 && elgAmount ) {
+  else if(securedLoansInfo.propertyStatus == "owned" && securedLoansInfo.CibilIssue == "no" && securedLoansInfo.monthlyNetIncome >= 25000 && elgAmount ) {
     await addDoc(collection(db, "securedLoans"), {
             ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"A"});
     alert("grade A")
