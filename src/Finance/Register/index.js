@@ -54,7 +54,13 @@ export default function Register() {
    
   })
 
+
+
+
   const handleCreate = async () => {
+  
+      
+  
     await createUserWithEmailAndPassword(auth, regData.Email, regData.Password)
       .then((userCredential) => {
         const user = userCredential.user;
@@ -118,6 +124,7 @@ export default function Register() {
     { !personalDetailPopup ? (
       <> 
       <h1>Welcome to Register Page</h1>
+
       <div>
         <label>Name</label>
         <input
@@ -189,3 +196,4 @@ export default function Register() {
   );
   
 }
+
