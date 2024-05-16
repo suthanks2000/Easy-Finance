@@ -176,14 +176,6 @@ export default function Register() {
         </center>
       </Modal>
       </>
-
-
-
-
-
-    
-
-
    
   );
   

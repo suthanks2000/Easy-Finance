@@ -341,19 +341,6 @@ export const SecuredLoansSlice = createSlice({
       inputValue:'',
       inputPlaceholder:"Your Place Of Interset"
     },
-    // {
-    //   inputLabel: "Tenure Year",
-    //   inputName: "tenureYear",
-    //   inputType: "number",
-    //   inputPlaceholder: "Enter in tenure year",
-    //   loanType: [
-    //     "personalloan",
-    //     "homeloan",
-    //     "businessloan",
-    //     "vehicleloan"
-    //   ],
-    //   inputValue: {tenureYear}
-    // },
     {
       inputLabel: "Tenure Month",
       inputName: "tenureMonth",

@@ -1,5 +1,6 @@
 import { db } from "../FirebaseConfig";
 import { collection, getDocs, query, where, doc } from "firebase/firestore";
+import Spinner from 'react-bootstrap/Spinner';
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -9,6 +10,7 @@ export default function LoanDatas(){
   const { personalInfo, inputInfo } = useSelector((state) => state.personalDetail)
   const dispatch = useDispatch()
 const [usersData, setUsersData] = useState([]);
+const [spinner, setSpinner] = useState(true)
 
 const [ filterData, setFilterData ] = useState({})
 
@@ -32,6 +34,7 @@ const fetchData = async () => {
   // Set state after loop completes
   console.log(data)
   setUsersData(data);
+  setSpinner(false)
   console.log(userdata.uid)
 };
    
@@ -39,6 +42,12 @@ const fetchData = async () => {
     return (
      
           <>
+          { spinner ?
+<>
+<Spinner animation="grow" variant="info" />
+</>
+:
+<>
             <h1>Welcome to Datas Page</h1>
             <table>
               <thead>
@@ -51,7 +60,7 @@ const fetchData = async () => {
                 {usersData.map((user, i) => {
                   return (
                     <tr key={i}>
-                      <td>{user.employmentType}</td>
+                      <td>{user.loanType}</td>
                       <td>{user.loanAmount}</td>
                    
                     </tr>
@@ -60,6 +69,8 @@ const fetchData = async () => {
               </tbody>
             </table>
           </>
+}
+</>
         ) 
     
         
