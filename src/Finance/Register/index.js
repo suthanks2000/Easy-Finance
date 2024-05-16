@@ -21,6 +21,7 @@ import { collection, addDoc } from "firebase/firestore";
 
 const Swal = require('sweetalert2')
 
+
 export default function Register() {
   
   const  userdata  = useSelector((state) => state.regisLogin.userdata);
@@ -53,7 +54,13 @@ export default function Register() {
    
   })
 
+
+
+
   const handleCreate = async () => {
+  
+      
+  
     await createUserWithEmailAndPassword(auth, regData.Email, regData.Password)
       .then((userCredential) => {
         const user = userCredential.user;
@@ -75,7 +82,7 @@ export default function Register() {
 
 
   const handlePersonalDetail = async () => {
-    const requiredFields = ['firstName', 'lastName', 'fatherName', 'age', 'maritalStatus', 'gender', 'email', 'district', 'city', 'pincode', 'contact'];
+    const requiredFields = ['firstName', 'lastName', 'fatherName', 'Age', 'maritalStatus', 'Gender', 'Email', 'District', 'City', 'pinCode', 'Contact'];
      
     if (requiredFields.some(field => !personalInfo[field])) {
     
@@ -117,6 +124,7 @@ export default function Register() {
     { !personalDetailPopup ? (
       <> 
       <h1>Welcome to Register Page</h1>
+
       <div>
         <label>Name</label>
         <input
@@ -180,3 +188,4 @@ export default function Register() {
   );
   
 }
+

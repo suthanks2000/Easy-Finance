@@ -1,12 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
-import {setSecuredLoansInfo} from "../Redux-Toolkit/slices/SecuredLoansCounter";
+import {setInputInfo, setSecuredLoansInfo} from "../Redux-Toolkit/slices/SecuredLoansCounter";
 import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../FirebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 import { useEffect } from "react";
-import InputRadio from "../InputComponents/inputRadio";
-import InputDropdown from "../InputComponents/inputDropdown";
-import InputTextAndNumber from "../InputComponents/inputText&Number";
+import InputRadio from "./InputComponents/inputRadio";
+import InputDropdown from "./InputComponents/inputDropdown";
+import InputTextAndNumber from "./InputComponents/inputText&Number";
 
 export default function SecuredLoansDetails() {
   const dispatch = useDispatch();
@@ -39,9 +39,10 @@ useEffect(()=>{
 
 useEffect(()=>{
   if(securedLoansInfo.vehicleType  === "bike"){
-    const {carType,...rest} =securedLoansInfo
+    const {carType,secondCarCondition,registeredMonth,registeredYear,...rest} =securedLoansInfo
     console.log(rest)
     dispatch(setSecuredLoansInfo(rest))
+    dispatch(setInputInfo(inputInfo))
       
   }
 },[securedLoansInfo.vehicleType])
@@ -85,24 +86,24 @@ const handleSetLoanData = async () => {
     alert("pls fill the inputs")
   }
   
-  else if(securedLoansInfo.propertyStatus == "owned" && securedLoansInfo.CibilIssue == "no" && securedLoansInfo.monthlyNetIncome >= 25000 && elgAmount ) {
-     await addDoc(collection(db, "securedLoans"), {
-             ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"A"});
-    
+  if(filteredInputNames.some(name => !securedLoansInfo[name])){
+    alert("pls fill the inputs")
+  }
+   if(securedLoansInfo.propertyStatus == "owned" && securedLoansInfo.CibilIssue == "no" && securedLoansInfo.monthlyNetIncome >= 25000 && elgAmount ) {
+    await addDoc(collection(db, "securedLoans"), {
+            ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"A"});
     alert("grade A")
   }
   else if(securedLoansInfo.CibilIssue == "no" && securedLoansInfo.monthlyNetIncome  > 15000 ){
-    await addDoc(collection(db, "securedLoans"), {
-      ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"B"});
+   
     alert("grade B")
   }
   else if(securedLoansInfo.propertyStatus == "rented" && securedLoansInfo.CibilIssue == "yes" && securedLoansInfo.monthlyNetIncome  > 0 ){
-    await addDoc(collection(db, "securedLoans"), {
-      ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"C"});
+   
     alert("grade C")
   }
-  // else {
-  //   alert("submited")
+  else {
+    alert("submited")
    
    
   // }
