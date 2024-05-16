@@ -114,11 +114,6 @@ export default function Register() {
     }
   };
 
-  function exitFromPersonalDetail(){
-    setPersonalDetailPopup(false)
-  }
-
-
    return (
     <>
     { !personalDetailPopup ? (
@@ -174,8 +169,7 @@ export default function Register() {
         <center>
           <Modal.Header>
             <Modal.Title>Personal Details</Modal.Title>
-            <Button className="btn-close" onClick={exitFromPersonalDetail}></Button>
-          </Modal.Header>
+           </Modal.Header>
           <Modal.Body>{personalDetailInput}</Modal.Body>
           <Modal.Footer>
             <Button className="btn btn-info" onClick={handlePersonalDetail}>Next</Button>

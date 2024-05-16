@@ -54,7 +54,7 @@ function App() {
           <Route path="/emicalculator" element={<EmiCalculator/>}/>
           <Route path="/admin" element={<Admin/>}/>
           {isLogin? <Route path="/personaldetail" element={<PersonalDetail/>}/>:null}
-          <Route path="/loandatas" element={<PersonalDatas/>}/>
+          <Route path="/loandatas" element={<LoanDatas/>}/>
         </Routes>
       </BrowserRouter>
     </div>

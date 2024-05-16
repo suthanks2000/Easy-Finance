@@ -95,10 +95,13 @@ const handleSetLoanData = async () => {
     alert("grade A")
   }
   else if(securedLoansInfo.CibilIssue == "no" && securedLoansInfo.monthlyNetIncome  > 15000 ){
-   
+    await addDoc(collection(db, "securedLoans"), {
+      ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"B"});
     alert("grade B")
   }
   else if(securedLoansInfo.propertyStatus == "rented" && securedLoansInfo.CibilIssue == "yes" && securedLoansInfo.monthlyNetIncome  > 0 ){
+    await addDoc(collection(db, "securedLoans"), {
+      ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"C"});
    
     alert("grade C")
   }
@@ -106,7 +109,7 @@ const handleSetLoanData = async () => {
     alert("submited")
    
    
-  // }
+  }
 }
 
   return (

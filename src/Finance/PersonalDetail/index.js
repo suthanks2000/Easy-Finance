@@ -18,7 +18,6 @@ const [ spinner, setSpinner] = useState(true)
 
 useEffect(() => {
     fetchData();
-
 }, []);
 
 
@@ -58,21 +57,18 @@ const fetchData = async () => {
   }
 
   const handleUpdateDetail = async() => { // update btn function
-    // Create a reference to the document in Firestore
+   
     const docRef = doc(db, "personalDetails", filterData.id);
 
     await updateDoc(docRef, filterData)
     alert("Success: Personal details updated successfully");
     fetchData();
     setEditData(false);
-    
-    
 };
-
 
     return (
       <>
-        {!editData ? (
+        {!editData ? 
           <>
             <h1>Welcome to Personal Detail Page</h1>
             { usersData.map((user,i) => {
@@ -95,8 +91,8 @@ const fetchData = async () => {
             })}
 
           </>
-        ) : null}
-    
+        : null}
+          <>
           <Modal show= {editData}>
           <center>
               <Modal.Header>
@@ -214,7 +210,7 @@ const fetchData = async () => {
             </center>
             </Modal>
           </>
-      )}
+      
   </>
 );
 }
