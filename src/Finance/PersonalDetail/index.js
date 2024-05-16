@@ -1,314 +1,217 @@
-import { useSelector, useDispatch } from "react-redux";
-import { setPersonalInfo } from "../Redux-Toolkit/slices/PersonalDetailCounter";
-import { Link, useNavigate } from "react-router-dom";
 import { db } from "../FirebaseConfig";
-import { collection, addDoc } from "firebase/firestore";
-import 'bootstrap/dist/css/bootstrap.min.css'; 
+import { collection, getDocs, query, where, addDoc, updateDoc, doc } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { Modal } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { Button } from "react-bootstrap";
 
-
-
-
-export default function PersonalDetail() {
+export default function PersonalDetail(){
   const userdata = useSelector((state) => state.regisLogin.userdata);
-  const personalInfo = useSelector(
-    (state) => state.personalDetail.personalInfo
-  );
-  const dispatch = useDispatch();
-
-  const navigate = useNavigate();
- 
-
-  const handlePersonalDetail = async () => {
-    if (
-      personalInfo.firstName == "" ||
-      personalInfo.lastName == "" ||
-      personalInfo.fatherName == "" ||
-      personalInfo.Age == "" ||
-      personalInfo.maritalStatus == "" ||
-      personalInfo.Gender == "" ||
-      personalInfo.Email == "" ||
-      personalInfo.Address.District == "" ||
-      personalInfo.Address.City == "" ||
-      personalInfo.Address.pinCode == "" ||
-      personalInfo.Contact == ""
-    ) {
-      alert("Please fill empty fields");
-    } else {
-      await addDoc(collection(db, "personalDetails"), {
-        ...personalInfo,
-        uid: userdata.uid,
-      });
-      alert("Personal datas successfully submitted");
-      console.log(personalInfo.maritalStatus)
-      navigate("/category");
-    }
-  };
+  const dispatch = useDispatch()
+const [usersData, setUsersData] = useState([]);
+const [ editData,setEditData ] = useState(false)
+const [ filterData, setFilterData ] = useState({})
 
 
-  const handleSignout = async () =>{
-    await localStorage.getItem("userToken")
-    localStorage.removeItem("userToken")
-     navigate("/login")
-   }
+useEffect(() => {
+    fetchData();
+}, []); // Trigger useEffect when userdata changes
+
+
+const fetchData = async () => {
+  const q = query(collection(db, "personalDetails"),where("uid", "==", userdata.uid));
+  const docSnap = await getDocs(q);
+  const data = [];
+
+  docSnap.forEach((doc) => {
+      // Accumulate data in an array
+      data.push({ ...doc.data(), id: doc.id });
+  });
+
+  // Set state after loop completes
+  setUsersData(data);
+  console.log(userdata.uid)
+};
+   
+   function handleEdit(user) {
+      setFilterData(user);
+      setEditData(true);
+  }
+
+ const handleOnkeyup = (ele)=>{
+  if(ele.target.value == "Select District"){
+    alert("Please select others")
+  }
+  else{setFilterData({...filterData,[ele.target.name]:ele.target.value})
+}
+        
+       
+ }
+
+
+  function exitFromEdit(){
+    setEditData(false)
+  }
+
+  const handleUpdateDetail = async() => { // update btn function
+    // Create a reference to the document in Firestore
+    const docRef = doc(db, "personalDetails", filterData.id);
+
+    // Update the document with the data from filterData
+    await updateDoc(docRef, filterData)
+    alert("Success: Personal details updated successfully");
+    fetchData();
+    setEditData(false);
+    
+    
+};
+
+
+    return (
+      <>
+        {!editData ? (
+          <>
+            <h1>Welcome to Personal Detail Page</h1>
+            { usersData.map((user,i) => {
+              return (
+                <div key={i}>
+                  <p>Full Name: { user.firstName } { user.lastName }</p>
+                  <p>Father Name: {user.fatherName}</p>
+                      <p>Age: {user.Age}</p>
+                      <p>Gender: {user.Gender}</p>
+                      <p>Marital status: {user.maritalStatus}</p>
+                      <p>Email: {user.Email}</p>
+                      <p>District: {user.District}</p>
+                      <p>City: {user.City}</p>
+                      <p>Pincode: {user.pinCode}</p>
+                      <p>Contact: {user.Contact}</p>
+
+                      <button type="button" onClick={() => handleEdit(user)}>Edit</button>
+                </div>
+              )
+            })}
+
+          </>
+        ) : null}
+    
+          <Modal show= {editData}>
+          <center>
+              <Modal.Header>
+                <Modal.Title>
+                  {filterData.firstName}  {filterData.lastName} 
+                </Modal.Title>
+                <Button className="btn-close" onClick={exitFromEdit}></Button>
+              </Modal.Header>
+              <Modal.Body>
+                {JSON.stringify(filterData)}
+              <h1>Edit Your Datas</h1>
+                
+            <div>  
+            <label>First Name</label>
+              <input type="text" name ='firstName' defaultValue={filterData.firstName} onChange={(e)=>handleOnkeyup(e)}/>
+              </div> 
+
+              <div>  
+            <label>Last Name</label>
+              <input type="text" name="lastName" defaultValue={filterData.lastName} onChange={(e)=>handleOnkeyup(e)}/>
+              </div>
+
+              <div>  
+            <label>Father Name</label>
+              <input type="text" name="fatherName" defaultValue={filterData.fatherName} onChange={(e)=>handleOnkeyup(e)}/>
+              </div>
+
+              <div>  
+            <label>Age</label>
+              <input type="number" name="Age" defaultValue={filterData.Age} onChange={(e)=>handleOnkeyup(e)}/>
+              </div>
+
+              <div>
+            <label>Gender</label>
+              <input type="radio" name="Gender" value="male" defaultChecked={filterData.Gender === "male"}  onChange={(e)=>handleOnkeyup(e)}/> Male
+              <input type="radio" name="Gender" value="female" defaultChecked={filterData.Gender === "female"} onChange={(e)=>handleOnkeyup(e)} /> Female
+              </div>
+              
+              <div>  
+            <label>Email Address</label>
+              <input type="email" name="Email" defaultValue={filterData.Email} onChange={(e)=>handleOnkeyup(e)}/>
+              </div>
+
+          
+              <div>
+            <label>Marital Status</label>
+              <input type="radio" name="maritalStatus" value="married" defaultChecked={filterData.maritalStatus === "married"} onChange={(e)=>handleOnkeyup(e)}/> Married
+              <input type="radio" name="maritalStatus" value="unmarried" defaultChecked={filterData.maritalStatus === "unmarried"} onChange={(e)=>handleOnkeyup(e)}/> Unmarried
+              </div>
   
-  return (
+              
+              <div>
+                <label>District</label>
+                <select name="District" defaultValue={filterData.District} onChange={(e)=>handleOnkeyup(e)}>
+                  <option>Select District</option>
+                  <option>Ariyalur</option>
+                  <option>Chengalpattu</option>
+                  <option>Chennai</option>
+                  <option>Coimbatore</option>
+                  <option>Cuddalore</option>
+                  <option>Dharmapuri</option>
+                  <option>Dindigul</option>
+                  <option>Erode</option>
+                  <option>Kallakurichi</option>
+                  <option>Kanchipuram</option>
+                  <option>Kanyakumari</option>
+                  <option>Karur</option>
+                  <option>Krishnagiri</option>
+                  <option>Madurai</option>
+                  <option>Nagapattinam</option>
+                  <option>Namakkal</option>
+                  <option>Nilgiris</option>
+                  <option>Perambalur</option>
+                  <option>Pudukkottai</option>
+                  <option>Ramanathapuram</option>
+                  <option>Ranipet</option>
+                  <option>Salem</option>
+                  <option>Sivaganga</option>
+                  <option>Tenkasi</option>
+                  <option>Thanjavur</option>
+                  <option>Theni</option>
+                  <option>Thoothukudi</option>
+                  <option>Tiruchirappalli</option>
+                  <option>Tirunelveli</option>
+                  <option>Tirupathur</option>
+                  <option>Tiruppur</option>
+                  <option>Tiruvallur</option>
+                  <option>Tiruvannamalai</option>
+                  <option>Tiruvarur</option>
+                  <option>Vellore</option>
+                  <option>Viluppuram</option>
+                  <option>Virudhunagar</option>
+                </select>
+              </div>
+              
+              <div>  
+            <label>City</label>
+              <input type="text" name="City" defaultValue={filterData.City} onChange={(e)=>handleOnkeyup(e)}/>
+              </div>
 
-    <>
-      <nav className="navbar sticky-top navbar-expand-lg  navbar-dark bg-dark">
-  <Link className="navbar-brand fs-3" href="#">Easy Finance</Link>
-  <button className="navbar-toggler shadow-none border-0" type="button" data-toggle="collapse" data-target="#myNavbar" aria-controls="myNavbar" aria-expanded="false" aria-label="Toggle navigation">
-    <span className="navbar-toggler-icon"></span>
-  </button>
-  <div className="collapse navbar-collapse" id="myNavbar">
-    <ul className="navbar-nav justify-content-evenly flex-grow-1 pe-1">
-    <li className="nav-item">
-        <Link className="nav-link active " to={'/personaldetail'}>Personal Detail</Link>
-      </li>
-      <li className="nav-item">
-        <Link className="nav-link" to={'/category'}>category</Link>
-      </li>
-      <li className="nav-item">
-        <Link className="nav-link" href="#">EMI Calulator</Link>
-      </li>
-      <li class="nav-item dropdown">
-        <Link class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Loan List
-        </Link>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <Link class="dropdown-item disabled">Personal Loan</Link>
-          <Link class="dropdown-item disabled">Home  Loan</Link>
-          <Link class="dropdown-item disabled">Vehicle Loan</Link>
-        </div>
-      </li>
-      <li className="nav-item">
-        <Link className="nav-link" href="#">Help</Link>
-      </li>
-      <li className="nav-item">
-        <Link className="nav-link" href="#">Contact</Link>
-      </li>
-      <li className="nav-item">
-        <Link className="nav-link" href="#">Enquiries</Link>
-      </li>
-      <li className="nav-item">
-        <Link className="nav-link" href="#">About</Link>
-      </li>
-      <li>
-      <form className="d-flex">
-    <input type="text" className="form-control me-2" placeholder="Search"/>
-    <button type="button" className="btn btn-primary rounded-pill">Search</button>
-  </form>
-      </li>
-    </ul>
-  </div>
-  
-</nav>
+              <div>  
+            <label>Pincode</label>
+              <input type="text" name="pinCode" defaultValue={filterData.pinCode} onChange={(e)=>handleOnkeyup(e)}/>
+              </div>
 
-  <h1>Basic Information</h1>
-
-      <div>
-        <label>First Name</label>
-        <input
-          type="text"
-          placeholder="Enter your first name"
-          required
-          onKeyUp={(e) =>
-            dispatch(
-              setPersonalInfo({ ...personalInfo, firstName: e.target.value })
-            )
-          }
-        />
-      </div>
-
-      <div>
-        <label>Last Name</label>
-        <input
-          type="text"
-          placeholder="Enter your last name"
-          required
-          onKeyUp={(e) =>
-            dispatch(
-              setPersonalInfo({ ...personalInfo, lastName: e.target.value })
-            )
-          }
-        />
-      </div>
-
-      <div>
-        <label>Father Name</label>
-        <input
-          type="text"
-          placeholder="Enter your father name"
-          required
-          onKeyUp={(e) =>
-            dispatch(
-              setPersonalInfo({ ...personalInfo, fatherName: e.target.value })
-            )
-          }
-        />
-      </div>
-
-      <div>
-        <label>Age</label>
-        <input
-          type="number"
-          placeholder="Enter your age"
-          required
-          onKeyUp={(e) =>
-            dispatch(setPersonalInfo({ ...personalInfo, Age: e.target.value }))
-          }
-        />
-      </div>
-
-      <div>
-        <label>Marital Status</label>
-
-        <input type="radio" name="maritalStatus" value="married" onChange={(e)=>dispatch(setPersonalInfo({...personalInfo,
-             maritalStatus:e.target.value}))}/>Married
-
-       <input type="radio" name="maritalStatus" value="unmarried" onChange={(e)=>dispatch(setPersonalInfo({...personalInfo,
-             maritalStatus:e.target.value}))}/>Unmarried
-
-        
-      </div>
-
-<div>
-        <label>Gender</label>
-
-        <input type="radio" name="Gender" value="male" onChange={(e)=>dispatch(setPersonalInfo({...personalInfo,
-           Gender:e.target.value}))}/>Male
-
-       <input type="radio" name="Gender" value="female" onChange={(e)=>dispatch(setPersonalInfo({...personalInfo,
-             Gender:e.target.value}))}/>Female
-
-        
-      </div>
-
-      <div>
-        <label>Email</label>
-        <input
-          type="email"
-          placeholder="Enter your email"
-          required
-          onKeyUp={(e) =>
-            dispatch(
-              setPersonalInfo({ ...personalInfo, Email: e.target.value })
-            )
-          }
-        />
-      </div>
-
-      <div>
-        <h5>Address</h5>
-
-        <label>District</label>
-
-        <select
-          onChange={(e) =>
-            dispatch(
-              setPersonalInfo({
-                ...personalInfo,
-                Address: { ...personalInfo.Address, District: e.target.value },
-              })
-            )
-          }
-        >
-          <option>Select District</option>  
-          <option>Ariyalur</option>
-          <option>Chennai</option>
-          <option>Coimbatore</option>
-          <option>Cuddalore</option>
-          <option>Dharmapuri</option>
-          <option>Dindigul</option>
-          <option>Erode</option>
-          <option>Kallakurichi</option>
-          <option>Kanchipuram</option>
-          <option>Kanyakumari</option>
-          <option>Karur</option>
-          <option>Krishnagiri</option>
-          <option>Madurai</option>
-          <option>Nagapattinam</option>
-          <option>Namakkal</option>
-          <option>Nilgiris</option>
-          <option>Perambalur</option>
-          <option>Pudukkottai</option>
-          <option>Ramanathapuram</option>
-          <option>Ranipet</option>
-          <option>Salem</option>
-          <option>Sivaganga</option>
-          <option>Tenkasi</option>
-          <option>Thanjavur</option>
-          <option>Theni</option>
-          <option>Thoothukudi</option>
-          <option>Tiruchirappalli</option>
-          <option>Tirunelveli</option>
-          <option>Tirupathur</option>
-          <option>Tiruppur</option>
-          <option>Tiruvallur</option>
-          <option>Tiruvannamalai</option>
-          <option>Tiruvannamalai</option>
-          <option>Tiruvarur</option>
-          <option>Vellore</option>
-          <option>Viluppuram</option>
-          <option>Virudhunagar</option>
-        </select>
-
-        <label>City</label>
-        <input
-          type="text"
-          placeholder="Enter your City"
-          required
-          onKeyUp={(e) =>
-            dispatch(
-              setPersonalInfo({
-                ...personalInfo,
-                Address: { ...personalInfo.Address, City: e.target.value },
-              })
-            )
-          }
-        />
-
-        <label>Pin code</label>
-        <input
-          type="text"
-          placeholder="Enter your Pincode"
-          required
-          onKeyUp={(e) =>
-            dispatch(
-              setPersonalInfo({
-                ...personalInfo,
-                Address: { ...personalInfo.Address, pinCode: e.target.value },
-              })
-            )
-          }
-        />
-      </div>
-
-      <div>
-        <label>Contact</label>
-        <input
-          type="text"
-          placeholder="Enter your contact number"
-          required
-          onKeyUp={(e) =>
-            dispatch(
-              setPersonalInfo({ ...personalInfo, Contact: e.target.value })
-            )
-          }
-        />
-      </div>
-
-      <div>
-        <button type="button" onClick={handlePersonalDetail}>
-          Next
-        </button>
-
-        <button type="button" onClick={handleSignout}>
-         Sign Out
-        </button>
-      </div>
-
-        
-     
-    </>
-  );
+              <div>  
+            <label>Contact Number</label>
+              <input type="text" name="Contact" defaultValue={filterData.Contact} onChange={(e)=>handleOnkeyup(e)}/>
+              </div>
+            
+              </Modal.Body>
+              <Modal.Footer>
+                <Button className="btn btn-info" onClick={handleUpdateDetail}>Update</Button>
+              </Modal.Footer>
+            </center>
+            </Modal>
+          </>
+      
+    );
 }
