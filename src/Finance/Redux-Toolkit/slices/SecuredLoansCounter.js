@@ -65,39 +65,10 @@ export const SecuredLoansSlice = createSlice({
         loanType:["vehicleloan"]
       },
       {
-        inputLabel: "Registered Month",
-        inputName: "registeredMonth",
-        inputType: "number",
-        inputPlaceholder: "Enter registered month",
-        hidden:true,
-        parent:"usedCar",
-        inputValue: null,
-        statechange:true,
-        loanType:["vehicleloan"]
-      },
-      {
-        inputLabel: "Registered Year",
-        inputName: "registeredYear",
-        inputType: "number",
-        inputPlaceholder: "Enter registered year",  
-        vehicleType: [
-          "car","bike"
-        ],
-        parent:"usedCar",
-        hidden:true,
-        statechange:true,
-        inputValue:null,
-        loanType:["vehicleloan"]
-      },
-      {
         inputLabel: "Make & Model",
         inputName: "makeAndModel",
         inputType: "text",
         inputPlaceholder: "Enter make and model",
-        vehicleType: [
-          "car",
-          "bike"
-        ],
         inputValue: "",
         loanType:["vehicleloan"]
       },
@@ -106,9 +77,6 @@ export const SecuredLoansSlice = createSlice({
         inputName: "variant",
         inputType: "text",
         inputPlaceholder: "Enter variant",
-        vehicleType: [
-          "car","bike"
-        ],
         inputValue: "",
         loanType:["vehicleloan"]
       },
@@ -153,6 +121,28 @@ export const SecuredLoansSlice = createSlice({
           "gas bill",
           "water bill"
         ]
+      },
+      {
+        inputLabel: "Registered Month",
+        inputName: "registeredMonth",
+        inputType: "number",
+        inputPlaceholder: "Enter registered month",
+        hidden:true,
+        parent:"usedCar",
+        inputValue: null,
+        statechange:true,
+        loanType:["vehicleloan"]
+      },
+      {
+        inputLabel: "Registered Year",
+        inputName: "registeredYear",
+        inputType: "number",
+        inputPlaceholder: "Enter registered year",  
+        parent:"usedCar",
+        hidden:true,
+        statechange:true,
+        inputValue:null,
+        loanType:["vehicleloan"]
       },
       {
         inputLabel: "Full price of Vehicle",

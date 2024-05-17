@@ -6,7 +6,7 @@ const InputDropdown = (props) => {
     useSelector((state) => state.securedLoans);
     const dispatch = useDispatch();
     
-    const handleDropdown = (e) => {
+const handleDropdown = (e) => {
       dispatch(setSecuredLoansInfo({...securedLoansInfo, [e.target.name]: e.target.value}));
     
       if(e.target.value === props.ele.dropValue[0]){
@@ -16,12 +16,13 @@ const InputDropdown = (props) => {
       if(e.target.value){
         const updatedInputInfo = inputInfo.map(item => {
           
-          if (item.parent === e.target.value &&  item.hasOwnProperty("hidden")  ) {
+          if (item.parent === e.target.value &&  item.hasOwnProperty("hidden")) {
             return { ...item, hidden: false };
-          }else if(item.inputName !== e.target.name &&  item.hasOwnProperty("hidden") && !props.ele.statechange){
+          }
+          else if(item.inputName !== e.target.name &&  item.hasOwnProperty("hidden")){
             return { ...item, hidden: true };
           }
-          else{
+          else {
               return item
           }
           
