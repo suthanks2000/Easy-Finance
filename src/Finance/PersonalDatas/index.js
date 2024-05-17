@@ -2,8 +2,7 @@ import { db } from "../FirebaseConfig";
 import { collection, getDocs, query, where, doc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 
 export default function PersonalDatas(){
   const userdata = useSelector((state) => state.regisLogin.userdata);
@@ -11,16 +10,17 @@ export default function PersonalDatas(){
   const dispatch = useDispatch()
 const [usersData, setUsersData] = useState([]);
 
-const [ filterData, setFilterData ] = useState({})
-
-const personalDetailInput = []
+const [ filterData, setFilterData ] = useState([])
+const prasedata = filterData[0]
+console.log(prasedata)
 
 useEffect(() => {
-    fetchData();
+    fetchPersoanlData();
+    fetchLoanData();
 }, []); // Trigger useEffect when userdata changes
 
 
-const fetchData = async () => {
+const fetchPersoanlData = async () => {// fetch personalDetail function
   const q = query(collection(db, "personalDetails"),where("uid", "==", userdata.uid));
   const docSnap = await getDocs(q);
   const data = [];
@@ -35,46 +35,28 @@ const fetchData = async () => {
   console.log("usersData",usersData); // This won't show the updated state immediately
   console.log(userdata.uid)
 };
-   
 
-  inputInfo.forEach((ele, i) => {
-    if (ele.inputType === "text" || ele.inputType === "number" || ele.inputType === "email") {
-      personalDetailInput.push(
-        <div key={i}>
-          <label>{ele.inputLabel}</label>
-          <input type={ele.inputType} name={ele.inputName} onChange={(e) => setFilterData({ ...filterData, [e.target.name]: e.target.value })} />
-        </div>
-      );
-    }
-  
-    if (ele.inputType === "dropdown") {
-      personalDetailInput.push(
-        <div key={i}>
-          <label>{ele.inputLabel}</label>
-          <select name={ele.inputName} onChange={(e) =>setFilterData({ ...filterData, [e.target.name]: e.target.value })}>
-            {ele.dropValue.map((e, index) => <option key={index}>{e}</option>)}
-          </select>
-        </div>
-      );
-    }
-  
-    if (ele.inputType === "radio") {
-      personalDetailInput.push(
-        <div key={i}>
-          <label>{ele.inputLabel}</label>
-          <input type={ele.inputType} name={ele.inputName} defaultValue={ele.inputValue} onChange={(e) => setFilterData({ ...filterData, [e.target.name]: e.target.value })} />
-          <label>{ele.inputValue}</label>
-        </div>
-      );
-    }
+const fetchLoanData = async () => {// fetch loans function
+  const q = query(collection(db, "securedLoans"),where("uId", "==", userdata.uid));
+  const docSnap = await getDocs(q);
+
+  const dataloan = [];
+  docSnap.forEach((doc) => {
+      // Accumulate data in an array
+      dataloan.push({ ...doc.data(), id: doc.id });
   });
+console.log(dataloan)
+setFilterData(dataloan)
+};
+console.log(filterData)
+
 
 
     return (
      
           <>
             <h1>Welcome to Datas Page</h1>
-            <table>
+            <table border={1}>
               <thead>
                 <tr>
                   <th>Name</th>
@@ -87,8 +69,8 @@ const fetchData = async () => {
                   return (
                     <tr key={i}>
                       <td>{user.firstName} {user.lastName}</td>
-                      <td>{user.contact}</td>
-                   
+                      <td>{prasedata.loanType}</td>
+                      <td>{prasedata.loanAmount}</td>
                     </tr>
                   );
                 })}
