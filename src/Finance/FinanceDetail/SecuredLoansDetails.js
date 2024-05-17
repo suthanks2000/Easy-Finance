@@ -51,7 +51,7 @@ useEffect(()=>{
   const handleSignout = async () => {
     await localStorage.getItem("userToken");
     localStorage.removeItem("userToken");
-    navigate("/login");
+    navigate("/");
   };
   
  inputInfo.forEach((ele)=>{
