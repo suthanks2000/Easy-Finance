@@ -32,7 +32,7 @@ export default function Register() {
   const personalDetailInput = []
   const { personalInfo, inputInfo } = useSelector(
     (state) => state.personalDetail
-  );
+  );  
 
 
   

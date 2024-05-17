@@ -22,7 +22,7 @@ export default function EmiCalculator() {
         (emiDATA.loanAmount * intr) /
           (1 - Math.pow(1 / (1 + intr), emiDATA.tenure.months))
       )
-    : 0;
+    : null;
 
   const totalAmt = emiDATA.tenure.months * emiValue;
 
@@ -148,7 +148,7 @@ export default function EmiCalculator() {
           <div>
             <label>interest</label>
             <input
-              type="text"
+              type="number"
               value={emiDATA.interest}
               placeholder="Enter your interest"
               required
@@ -244,8 +244,7 @@ export default function EmiCalculator() {
                   },
                 ],
               }}
-              // width={200}
-              // height={200}
+             
             />
           </div>
         </div>

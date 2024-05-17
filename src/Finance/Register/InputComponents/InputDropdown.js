@@ -27,6 +27,4 @@ const setDropdown = (ele) => {
        
          )
 }
-
-
 export default InputDropdown
