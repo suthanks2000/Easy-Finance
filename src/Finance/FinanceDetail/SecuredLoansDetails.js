@@ -81,11 +81,7 @@ const handleSetLoanData = async () => {
   const notElgAmount =(securedLoansInfo.monthlyNetIncome - securedLoansInfo.monthlyExpenses) <= securedLoansInfo.emi*3
   console.log(notElgAmount) 
 
- 
-  if(filteredInputNames.some(name => !securedLoansInfo[name])){
-    alert("pls fill the inputs")
-  }
-  
+
   if(filteredInputNames.some(name => !securedLoansInfo[name])){
     alert("pls fill the inputs")
   }
