@@ -7,6 +7,8 @@ import { useEffect } from "react";
 import InputRadio from "./InputComponents/inputRadio";
 import InputDropdown from "./InputComponents/inputDropdown";
 import InputTextAndNumber from "./InputComponents/inputText&Number";
+import 'bootstrap/dist/css/bootstrap.min.css'; 
+
 
 export default function SecuredLoansDetails() {
   const dispatch = useDispatch();
@@ -16,7 +18,7 @@ export default function SecuredLoansDetails() {
   const { loanName } = useParams();
   
   const viewLoanInput = [];
-
+const tyear = securedLoansInfo.tenureMonth?  securedLoansInfo.tenureMonth/12 : null
   const intr = securedLoansInfo.interest / 1200; // Convert annual interest rate to monthly
   const emiValue = securedLoansInfo.tenureMonth
     ? Math.round(
@@ -49,7 +51,7 @@ useEffect(()=>{
   const handleSignout = async () => {
     await localStorage.getItem("userToken");
     localStorage.removeItem("userToken");
-    navigate("/login");
+    navigate("/");
   };
   
  inputInfo.forEach((ele)=>{
@@ -58,7 +60,9 @@ useEffect(()=>{
 
     if(!ele?.hidden || ele?.hidden === false){
       if(ele.inputType === "text" || ele.inputType === "number"){
-          viewLoanInput.push(<InputTextAndNumber ele={ele}/>)
+        
+          viewLoanInput.push(<InputTextAndNumber ele={ele} value ={tyear}/>)
+
       }
       if(ele.inputType === "radio"){
           viewLoanInput.push(<InputRadio ele={ele}/>)
@@ -83,24 +87,25 @@ const handleSetLoanData = async () => {
 
   const missingInputs = filteredInputNames.filter(inputName => !securedLoansInfo[inputName]);
   console.log('Missing Inputs:', missingInputs);
-  
-  
+
   if(filteredInputNames.some(inputName => !securedLoansInfo[inputName])){
     alert("pls fill the inputs")
     dispatch(setSecuredLoansInfo({}))
 
   }
-  else if(securedLoansInfo.propertyStatus == "owned" && securedLoansInfo.CibilIssue == "no" && securedLoansInfo.monthlyNetIncome >= 25000 && elgAmount ) {
+  else if(securedLoansInfo.ownAnyProperty == "yes" && securedLoansInfo.CibilIssue == "no" && securedLoansInfo.monthlyNetIncome >= 25000 && elgAmount ) {
     await addDoc(collection(db, "securedLoans"), {
             ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"A"});
     alert("grade A")
   }
-  else if(securedLoansInfo.propertyStatus == "rented" && securedLoansInfo.CibilIssue == "no" && securedLoansInfo.monthlyNetIncome  > 25000 ){
+  else if(securedLoansInfo.ownAnyProperty == "no" && securedLoansInfo.CibilIssue == "no" && securedLoansInfo.monthlyNetIncome  > 25000 ){
+
     await addDoc(collection(db, "securedLoans"), {
             ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"B"});
     alert("grade B")
   }
-  else if(securedLoansInfo.propertyStatus == "rented" && securedLoansInfo.CibilIssue == "yes" && securedLoansInfo.monthlyNetIncome  > 15000 ){
+  else if(securedLoansInfo.ownAnyProperty == "no" && securedLoansInfo.CibilIssue == "yes" && securedLoansInfo.monthlyNetIncome  > 15000 ){
+
     await addDoc(collection(db, "securedLoans"), {
             ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"C"});
     alert("grade C")
@@ -123,12 +128,19 @@ const handleSetLoanData = async () => {
           <div>
             {viewLoanInput}
             <div>
+              
+              <div>
+                <label>Tenure year</label>
+                <input placeholder="tenure year" type="number" value={tyear} required disabled/>
+              </div>
               <div>
                 <label>EMI</label>
                 <input
                 placeholder="Your EMI Amount"
                 type="number"
                 value={emiValue}
+                required
+                disabled
                 />
               </div>
             </div>

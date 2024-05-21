@@ -1,12 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { setSecuredLoansInfo,setInputInfo } from '../../Redux-Toolkit/slices/SecuredLoansCounter';
+import 'bootstrap/dist/css/bootstrap.min.css'; 
+
 
 const InputDropdown = (props) => {
     const { securedLoansInfo,inputInfo } =
     useSelector((state) => state.securedLoans);
     const dispatch = useDispatch();
     
-    const handleDropdown = (e) => {
+const handleDropdown = (e) => {
       dispatch(setSecuredLoansInfo({...securedLoansInfo, [e.target.name]: e.target.value}));
     
       if(e.target.value === props.ele.dropValue[0]){
@@ -16,12 +18,13 @@ const InputDropdown = (props) => {
       if(e.target.value){
         const updatedInputInfo = inputInfo.map(item => {
           
-          if (item.parent === e.target.value &&  item.hasOwnProperty("hidden")  ) {
+          if (item.parent === e.target.value &&  item.hasOwnProperty("hidden")) {
             return { ...item, hidden: false };
-          }else if(item.inputName !== e.target.name &&  item.hasOwnProperty("hidden") && !props.ele.statechange){
+          }
+          else if((item.inputName) !== (e.target.name) &&  (item.hasOwnProperty("hidden"))){
             return { ...item, hidden: true };
           }
-          else{
+          else {
               return item
           }
           
@@ -35,7 +38,7 @@ const InputDropdown = (props) => {
     
     <div>
            <label>{props.ele.inputLabel}</label>
-           <select name={props.ele.inputName} onChange={(element)=>handleDropdown(element)}>
+           <select  name={props.ele.inputName} onChange={(element)=>handleDropdown(element)}>
              {props.ele.dropValue.map((e)=><option>{e}</option>)}
            </select>
     </div>

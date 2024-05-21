@@ -163,7 +163,7 @@ export default function Register() {
       </div>
   
       <div>
-        Already have an account? <Link to={"/login"}>Login Here!</Link>
+        Already have an account? <Link to={"/"}>Login Here!</Link>
       </div>
     </>) : null }
   

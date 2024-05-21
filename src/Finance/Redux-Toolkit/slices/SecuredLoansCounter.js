@@ -65,39 +65,10 @@ export const SecuredLoansSlice = createSlice({
         loanType:["vehicleloan"]
       },
       {
-        inputLabel: "Registered Month",
-        inputName: "registeredMonth",
-        inputType: "number",
-        inputPlaceholder: "Enter registered month",
-        hidden:true,
-        parent:"usedCar",
-        inputValue: null,
-        statechange:true,
-        loanType:["vehicleloan"]
-      },
-      {
-        inputLabel: "Registered Year",
-        inputName: "registeredYear",
-        inputType: "number",
-        inputPlaceholder: "Enter registered year",  
-        vehicleType: [
-          "car","bike"
-        ],
-        parent:"usedCar",
-        hidden:true,
-        statechange:true,
-        inputValue:null,
-        loanType:["vehicleloan"]
-      },
-      {
         inputLabel: "Make & Model",
         inputName: "makeAndModel",
         inputType: "text",
         inputPlaceholder: "Enter make and model",
-        vehicleType: [
-          "car",
-          "bike"
-        ],
         inputValue: "",
         loanType:["vehicleloan"]
       },
@@ -106,30 +77,8 @@ export const SecuredLoansSlice = createSlice({
         inputName: "variant",
         inputType: "text",
         inputPlaceholder: "Enter variant",
-        vehicleType: [
-          "car","bike"
-        ],
         inputValue: "",
         loanType:["vehicleloan"]
-      },
-      {
-        inputLabel: "Property Status",
-        inputName: "propertyStatus",
-        inputType: "dropdown",
-        inputPlaceholder: "Enter propert status",
-        loanType: [
-          "personalloan", 
-          "homeloan",
-          "businessloan",
-          "vehicleloan"
-          
-        ],
-        dropValue: [
-          "select the propertyStatus",
-          "owned",
-          "rented",
-          "other"
-        ]
       },
       {
         inputLabel: "Address Proof",
@@ -153,6 +102,53 @@ export const SecuredLoansSlice = createSlice({
           "gas bill",
           "water bill"
         ]
+      },
+      {
+        inputLabel: "You Own Any Property",
+        inputName: "ownAnyProperty",
+        inputType: "radio",
+        inputPlaceholder: "Enter propert status",
+        loanType: [
+          "personalloan", 
+          "homeloan",
+          "businessloan",
+          "vehicleloan"  
+        ],
+        inputValue:"yes"
+      },
+      {
+        inputName: "ownAnyProperty",
+        inputType: "radio",
+        inputPlaceholder: "Enter propert status",
+        loanType: [
+          "personalloan", 
+          "homeloan",
+          "businessloan",
+          "vehicleloan"  
+        ],
+        inputValue:"no"
+      },
+      {
+        inputLabel: "Registered Month",
+        inputName: "registeredMonth",
+        inputType: "number",
+        inputPlaceholder: "Enter registered month",
+        hidden:true,
+        parent:"usedCar",
+        inputValue: null,
+        statechange:true,
+        loanType:["vehicleloan"]
+      },
+      {
+        inputLabel: "Registered Year",
+        inputName: "registeredYear",
+        inputType: "number",
+        inputPlaceholder: "Enter registered year",  
+        parent:"usedCar",
+        hidden:true,
+        statechange:true,
+        inputValue:null,
+        loanType:["vehicleloan"]
       },
       {
         inputLabel: "Full price of Vehicle",
@@ -345,19 +341,19 @@ export const SecuredLoansSlice = createSlice({
       inputValue:'',
       inputPlaceholder:"Your Place Of Interset"
     },
-    {
-      inputLabel: "Tenure Year",
-      inputName: "tenureYear",
-      inputType: "number",
-      inputPlaceholder: "Enter in tenure year",
-      loanType: [
-        "personalloan",
-        "homeloan",
-        "businessloan",
-        "vehicleloan"
-      ],
-      inputValue: null
-    },
+    // {
+    //   inputLabel: "Tenure Year",
+    //   inputName: "tenureYear",
+    //   inputType: "number",
+    //   inputPlaceholder: "Enter in tenure year",
+    //   loanType: [
+    //     "personalloan",
+    //     "homeloan",
+    //     "businessloan",
+    //     "vehicleloan"
+    //   ],
+    //   inputValue: null
+    // },
     {
       inputLabel: "Tenure Month",
       inputName: "tenureMonth",
