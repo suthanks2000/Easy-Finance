@@ -17,8 +17,12 @@ import {
   setuserdata,
   setIsLogin,
 } from "./Finance/Redux-Toolkit/slices/RegLogCounter";
+import BankerLog from "./Finance/Banker/bankerLog";
+import BankerReg from "./Finance/Banker/bankerReg";
+
 import { useSelector, useDispatch } from "react-redux";
 import LoanDatas from "./Finance/LoanDatas";
+
 
 function App() {
   const {isLogin,userdata} = useSelector((state) => state.regisLogin);
@@ -47,6 +51,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
+          <Route path="/banker/login" element = {<BankerLog/>}/>
+          <Route path="/banker/register" element = {<BankerReg/>}/>
           <Route path="/register" element={<Register />} />
           <Route path="/category" element={<Category />} />
           <Route path="/loans/:loanName" element={<SecuredLoansDetails />} />

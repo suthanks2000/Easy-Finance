@@ -30,7 +30,7 @@ const InputTextAndNumber = (props) => {
   return (
         <div>
             <label>{props.ele.inputLabel}</label>
-            <input type={props.ele.inputType} name={props.ele.inputName}  min={props.ele.min} defaultValue ={props.ele.inputValue} placeholder={props.ele.inputPlaceholder}  onChange={(e)=>handleTextAndNum(e)}/>
+            <input  type={props.ele.inputType} name={props.ele.inputName}  min={props.ele.min} defaultValue ={props.ele.inputValue}  placeholder={props.ele.inputPlaceholder}  onChange={(e)=>handleTextAndNum(e)}/>
         </div>
   )
 }

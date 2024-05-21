@@ -102,7 +102,6 @@ const fetchData = async () => {
                 <Button className="btn-close" onClick={exitFromEdit}></Button>
               </Modal.Header>
               <Modal.Body>
-                {JSON.stringify(filterData)}
               <h1>Edit Your Datas</h1>
                 
             <div>  

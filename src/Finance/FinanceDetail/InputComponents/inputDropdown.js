@@ -1,5 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { setSecuredLoansInfo,setInputInfo } from '../../Redux-Toolkit/slices/SecuredLoansCounter';
+import 'bootstrap/dist/css/bootstrap.min.css'; 
+
 
 const InputDropdown = (props) => {
     const { securedLoansInfo,inputInfo } =
@@ -19,7 +21,7 @@ const handleDropdown = (e) => {
           if (item.parent === e.target.value &&  item.hasOwnProperty("hidden")) {
             return { ...item, hidden: false };
           }
-          else if(item.inputName !== e.target.name &&  item.hasOwnProperty("hidden")){
+          else if((item.inputName) !== (e.target.name) &&  (item.hasOwnProperty("hidden"))){
             return { ...item, hidden: true };
           }
           else {
@@ -36,7 +38,7 @@ const handleDropdown = (e) => {
     
     <div>
            <label>{props.ele.inputLabel}</label>
-           <select name={props.ele.inputName} onChange={(element)=>handleDropdown(element)}>
+           <select  name={props.ele.inputName} onChange={(element)=>handleDropdown(element)}>
              {props.ele.dropValue.map((e)=><option>{e}</option>)}
            </select>
     </div>

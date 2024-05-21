@@ -81,25 +81,6 @@ export const SecuredLoansSlice = createSlice({
         loanType:["vehicleloan"]
       },
       {
-        inputLabel: "Property Status",
-        inputName: "propertyStatus",
-        inputType: "dropdown",
-        inputPlaceholder: "Enter propert status",
-        loanType: [
-          "personalloan", 
-          "homeloan",
-          "businessloan",
-          "vehicleloan"
-          
-        ],
-        dropValue: [
-          "select the propertyStatus",
-          "owned",
-          "rented",
-          "other"
-        ]
-      },
-      {
         inputLabel: "Address Proof",
         inputName: "addressProof",
         inputType: "dropdown",
@@ -121,6 +102,31 @@ export const SecuredLoansSlice = createSlice({
           "gas bill",
           "water bill"
         ]
+      },
+      {
+        inputLabel: "You Own Any Property",
+        inputName: "ownAnyProperty",
+        inputType: "radio",
+        inputPlaceholder: "Enter propert status",
+        loanType: [
+          "personalloan", 
+          "homeloan",
+          "businessloan",
+          "vehicleloan"  
+        ],
+        inputValue:"yes"
+      },
+      {
+        inputName: "ownAnyProperty",
+        inputType: "radio",
+        inputPlaceholder: "Enter propert status",
+        loanType: [
+          "personalloan", 
+          "homeloan",
+          "businessloan",
+          "vehicleloan"  
+        ],
+        inputValue:"no"
       },
       {
         inputLabel: "Registered Month",
@@ -310,6 +316,19 @@ export const SecuredLoansSlice = createSlice({
       inputValue:'',
       inputPlaceholder:"Your Place Of Interset"
     },
+    // {
+    //   inputLabel: "Tenure Year",
+    //   inputName: "tenureYear",
+    //   inputType: "number",
+    //   inputPlaceholder: "Enter in tenure year",
+    //   loanType: [
+    //     "personalloan",
+    //     "homeloan",
+    //     "businessloan",
+    //     "vehicleloan"
+    //   ],
+    //   inputValue: null
+    // },
     {
       inputLabel: "Tenure Month",
       inputName: "tenureMonth",
