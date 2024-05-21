@@ -73,7 +73,7 @@ const fetchData = async () => {
             <h1>Welcome to Personal Detail Page</h1>
             { usersData.map((user,i) => {
               return (
-                <div key={i}>
+                <div key={i}>1
                   <p>Full Name: { user.firstName } { user.lastName }</p>
                   <p>Father Name: {user.fatherName}</p>
                       <p>Age: {user.Age}</p>

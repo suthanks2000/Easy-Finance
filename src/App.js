@@ -56,7 +56,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/category" element={<Category />} />
           <Route path="/loans/:loanName" element={<SecuredLoansDetails />} />
-          <Route path="/showresult" element={<ShowResult />} />
+          <Route path="/showresult/:loanId" element={<ShowResult />} />
           <Route path="/emicalculator" element={<EmiCalculator/>}/>
           <Route path="/admin" element={<Admin/>}/>
           {isLogin? <Route path="/personaldetail" element={<PersonalDetail/>}/>:null}
