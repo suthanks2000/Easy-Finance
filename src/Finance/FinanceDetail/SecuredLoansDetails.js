@@ -7,6 +7,8 @@ import { useEffect } from "react";
 import InputRadio from "./InputComponents/inputRadio";
 import InputDropdown from "./InputComponents/inputDropdown";
 import InputTextAndNumber from "./InputComponents/inputText&Number";
+import 'bootstrap/dist/css/bootstrap.min.css'; 
+
 
 export default function SecuredLoansDetails() {
   const dispatch = useDispatch();
@@ -16,9 +18,11 @@ export default function SecuredLoansDetails() {
   const { loanName } = useParams();
   
   const viewLoanInput = [];
-
+const tyear = securedLoansInfo.tenureMonth?  securedLoansInfo.tenureMonth/12 : null
   const intr = securedLoansInfo.interest / 1200; // Convert annual interest rate to monthly
+  const tenureYear = securedLoansInfo.tenureMonth / 12;
   const emiValue = securedLoansInfo.tenureMonth
+ 
     ? Math.round(
         (securedLoansInfo.loanAmount * intr) /
           (1 - Math.pow(1 / (1 + intr), securedLoansInfo.tenureMonth))
@@ -49,7 +53,7 @@ useEffect(()=>{
   const handleSignout = async () => {
     await localStorage.getItem("userToken");
     localStorage.removeItem("userToken");
-    navigate("/login");
+    navigate("/");
   };
   
  inputInfo.forEach((ele)=>{
@@ -58,7 +62,9 @@ useEffect(()=>{
 
     if(!ele?.hidden || ele?.hidden === false){
       if(ele.inputType === "text" || ele.inputType === "number"){
-          viewLoanInput.push(<InputTextAndNumber ele={ele}/>)
+        
+          viewLoanInput.push(<InputTextAndNumber ele={ele} value ={tyear}/>)
+
       }
       if(ele.inputType === "radio"){
           viewLoanInput.push(<InputRadio ele={ele}/>)
@@ -83,8 +89,7 @@ const handleSetLoanData = async () => {
 
   const missingInputs = filteredInputNames.filter(inputName => !securedLoansInfo[inputName]);
   console.log('Missing Inputs:', missingInputs);
-  
-  
+
   if(filteredInputNames.some(inputName => !securedLoansInfo[inputName])){
     alert("pls fill the inputs")
     dispatch(setSecuredLoansInfo({}))
@@ -151,12 +156,19 @@ alert("grade D")
           <div>
             {viewLoanInput}
             <div>
+              
+              <div>
+                <label>Tenure year</label>
+                <input placeholder="tenure year" type="number" value={tyear} required disabled/>
+              </div>
               <div>
                 <label>EMI</label>
                 <input
                 placeholder="Your EMI Amount"
                 type="number"
                 value={emiValue}
+                required
+                disabled
                 />
               </div>
             </div>

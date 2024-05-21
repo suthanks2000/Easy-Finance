@@ -9,28 +9,28 @@ const InputTextAndNumber = (props) => {
 
     const handleTextAndNum = (e) => {
       dispatch(setSecuredLoansInfo({...securedLoansInfo,[e.target.name]:e.target.value}))
-      if(e.target.value =="usedCar"){
-        const updatedInputInfo = inputInfo.map(item => {
+      // if(e.target.value =="usedCar"){
+      //   const updatedInputInfo = inputInfo.map(item => {
           
-          if (item.parent === e.target.value &&  item.hasOwnProperty("hidden")  ) {
+      //     if (item.parent === e.target.value &&  item.hasOwnProperty("hidden")  ) {
             
-            return { ...item, hidden: false };
-          }else if(item.inputName !== e.target.name &&  item.hasOwnProperty("hidden") && !props.ele.statechange){
-            return { ...item, hidden: true };
-          }
-          else{
-              return item
-          }
+      //       return { ...item, hidden: false };
+      //     }else if(item.inputName !== e.target.name &&  item.hasOwnProperty("hidden") && !props.ele.statechange){
+      //       return { ...item, hidden: true };
+      //     }
+      //     else{
+      //         return item
+      //     }
           
-        });
-        dispatch(setInputInfo(updatedInputInfo))
-        console.log(updatedInputInfo);
-      }
+      //   });
+      //   dispatch(setInputInfo(updatedInputInfo))
+      //   console.log(updatedInputInfo);
+      // }
     }
   return (
         <div>
             <label>{props.ele.inputLabel}</label>
-            <input type={props.ele.inputType} name={props.ele.inputName}  min={props.ele.min} defaultValue ={props.ele.inputValue} placeholder={props.ele.inputPlaceholder}  onChange={(e)=>handleTextAndNum(e)}/>
+            <input  type={props.ele.inputType} name={props.ele.inputName}  min={props.ele.min} defaultValue ={props.ele.inputValue}  placeholder={props.ele.inputPlaceholder}  onChange={(e)=>handleTextAndNum(e)}/>
         </div>
   )
 }

@@ -3,30 +3,28 @@ import React from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import { Link } from "react-router-dom";
+import { Table } from "react-bootstrap";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function EmiCalculator() {
-  const [emiDATA, setEmiData] = useState({
-    loanAmount: null,
-    interest: null,
-    tenure: {
-      years: null,
-      months: null,
-    },
-  });
-  const intr = emiDATA.interest / 1200;
-  const TenureYear = emiDATA.tenure.months / 12;
+  const [emiData, setEmiData] = useState({});
+  const intr = emiData.interest / 1200;
+  const TenureYear =emiData.tenureMonth? emiData.tenureMonth / 12 : null;
 
-  const emiValue = emiDATA.tenure.months
+  const emiValue = emiData.tenureMonth
     ? Math.round(
-        (emiDATA.loanAmount * intr) /
-          (1 - Math.pow(1 / (1 + intr), emiDATA.tenure.months))
+        (emiData.loanAmount * intr) /
+          (1 - Math.pow(1 / (1 + intr), emiData.tenureMonth))
       )
     : null;
 
-  const totalAmt = emiDATA.tenure.months * emiValue;
+  const totalAmt = emiValue? emiData.tenureMonth * emiValue :null ;
 
-  const TotalInterest = totalAmt - emiDATA.loanAmount;
+  const TotalInterest = emiValue? totalAmt - emiData.loanAmount :null;
+
+  const handleChange = (ele) => {
+    setEmiData({ ...emiData, [ele.target.name]: ele.target.value })
+  }
 
   return (
     <>
@@ -136,12 +134,11 @@ export default function EmiCalculator() {
             <input
               type="number"
               placeholder="Enter your loan amount"
+              name="loanAmount"
               required
               max={200000}
               min={99999}
-              onKeyUp={(e) =>
-                setEmiData({ ...emiDATA, loanAmount: e.target.value })
-              }
+              onKeyUp={(e) =>handleChange(e)}
             />
           </div>
 
@@ -149,21 +146,20 @@ export default function EmiCalculator() {
             <label>interest</label>
             <input
               type="number"
-              value={emiDATA.interest}
-              placeholder="Enter your interest"
+              value={emiData.interest}
+              placeholder="Your interest"
+              name="interest"
               required
-              onKeyUp={(e) =>
-                setEmiData({ ...emiDATA, interest: e.target.value })
-              }
+              onKeyUp={(e) =>handleChange(e)}
+              disabled
             />
             <input
               type="range"
               min="10"
+              name="interest"
               max="24"
               step="1"
-              onChange={(e) =>
-                setEmiData({ ...emiDATA, interest: e.target.value })
-              }
+              onChange={(e) =>handleChange(e)}
             />
           </div>
 
@@ -172,66 +168,61 @@ export default function EmiCalculator() {
 
             <input
               type="number"
-              placeholder="Enter in months"
+              placeholder="EMI in months"
+              name="tenureMonth"
               required
-              onKeyUp={(e) =>
-                setEmiData({
-                  ...emiDATA,
-                  tenure: { ...emiDATA.tenure, months: e.target.value },
-                })
-              }
+              onKeyUp={(e) =>handleChange(e)}
             />
 
             <input
               type="number"
-              placeholder="Enter in years"
-              value={TenureYear}
+              placeholder="EMI in years"
+              value={TenureYear }
+              name="tenureYears"
               required
-              onKeyUp={(e) =>
-                setEmiData({
-                  ...emiDATA,
-                  tenure: { ...emiDATA.tenure, years: e.target.value },
-                })
-              }
+              onKeyUp={(e) =>handleChange(e)}
+              disabled
             />
           </div>
 
           <div>
             <label>EMI</label>
-            <input type="number" value={emiValue} />
+            <input type="number" placeholder="Monthly EMI" value={emiValue} disabled />
           </div>
 
           <div>
             <label>TotalAmount</label>
-            <input type="number" value={totalAmt} />
+            <input type="number" placeholder="EMI Total Amount" value={totalAmt} disabled/>
           </div>
 
           <div>
             <label>TotalInterest</label>
-            <input type="number" value={TotalInterest} />
+            <input type="number" placeholder="EMI Total Interest" value={TotalInterest} disabled/>
           </div>
         </div>
 
         <div className="row">
           <div className="col-6">
-            <table border={12}>
+            <Table striped bordered hover variant="dark" size="sm">
               <thead>
-                <th>loanAmount</th>
-                <th>Interest</th>
-                <th>Emi</th>
-                <th>ToatalAmount</th>
-                <th>ToatalInterest</th>
+                <tr>
+                  <th>loanAmount</th>
+                  <th>Interest</th>
+                  <th>Emi</th>
+                  <th>ToatalAmount</th>
+                  <th>ToatalInterest</th>
+                </tr>
               </thead>
               <tbody border={2}>
                 <tr>
-                  <td>{emiDATA.loanAmount}</td>
-                  <td>{emiDATA.interest}</td>
-                  <td>{emiValue}</td>
+                  <td>Rs.{emiData.loanAmount}</td>
+                  <td>{emiData.interest}%</td>
+                  <td>₹{emiValue}</td>
                   <td>{totalAmt}</td>
                   <td>{TotalInterest}</td>
                 </tr>
               </tbody>
-            </table>
+            </Table>
           </div>
           <div className="col-6">
             <Pie
