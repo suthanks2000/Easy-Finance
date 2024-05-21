@@ -11,13 +11,12 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./Finance/FirebaseConfig";
 import EmiCalculator from "./Finance/EmiCalculator";
 import Admin from "./Finance/Admin";
-
-import {
-  setuserdata,
-  setIsLogin,
-} from "./Finance/Redux-Toolkit/slices/RegLogCounter";
+import BankerLog from "./Finance/Banker/bankerLog";
+import BankerReg from "./Finance/Banker/bankerReg";
+import {setuserdata,setIsLogin} from "./Finance/Redux-Toolkit/slices/RegLogCounter";
 import { useSelector, useDispatch } from "react-redux";
 import PersonalDatas from "./Finance/PersonalDatas";
+
 
 function App() {
   const {isLogin,userdata} = useSelector((state) => state.regisLogin);
@@ -46,6 +45,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
+          <Route path="/banker/login" element = {<BankerLog/>}/>
+          <Route path="/banker/register" element = {<BankerReg/>}/>
           <Route path="/register" element={<Register />} />
           <Route path="/category" element={<Category />} />
           <Route path="/loans/:loanName" element={<SecuredLoansDetails />} />
