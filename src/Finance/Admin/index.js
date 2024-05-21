@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react"
-import { Table } from "react-bootstrap"
+import { Table } from "react-bootstrap
 import { collection, getDocs, query, where, limit, doc } from "firebase/firestore";
 import { db } from "../FirebaseConfig";
+
 
 export default function Admin(){
     const[adminData,setAdminData]=useState({})
     const[loanData,setloanData]=useState([])
+
     const[viewLoanDatas,setViewLoanDatas]=useState(false)
 
 const fetchLoanData = async () => {
@@ -77,6 +79,7 @@ const handleSubmit = () => {
 
         <div>
             <button type="button" onClick={handleSubmit}>Submit</button>
+
         </div>
         <center>
         {viewLoanDatas ? <div>
