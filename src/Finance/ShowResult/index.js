@@ -3,26 +3,21 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Pie } from "react-chartjs-2";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function ShowResult() {
-//   const userdata = useSelector((state) => state.regisLogin.userdata);
   const [userData, setUsersData] = useState([]);
   const { loanId } = useParams();
   const navigate = useNavigate(); 
-  const add = userData[0]
-  const totalAmt= add.tenureMonth * add.emi
-  const TotalInterest = totalAmt - add.loanAmount
+
+  const totalAmt= userData.map((e)=>e.emi * e.tenureMonth)
+  const TotalInterest =userData.map((e)=>totalAmt - e.loanAmount )
  
   useEffect(() => {
-    
-      getFbData();
-    
-  }, []);
+      getFbData(); 
+  },[]);
 
   const getFbData = async () => {
-    
     const q = query(collection(db,"securedLoans"),where("id", "==", loanId));
     const docSnap = await getDocs(q)
     const data = [];
@@ -38,13 +33,16 @@ console.log(userData)
   return (
     <>
       <h1>Welcome to Result Page</h1>
-       
+      {
+        userData.map((user)=>{
+          return(
+            <>
             <div>
-                <p>LoanName:{add.loanType}</p>
-                <p>LoanAmount:₹{add.loanAmount}</p>
-                <p>Interest :{add.interest}%</p>
-                <p>Tenure in Months:{add.tenureMonth}</p>
-                <p>Emi:₹{add.emi}</p>
+                <p>LoanName:{user.loanType}</p>
+                <p>LoanAmount:₹{user.loanAmount}</p>
+                <p>Interest :{user.interest}%</p>
+                <p>Tenure in Months:{user.tenureMonth}</p>
+                <p>Emi:₹{user.emi}</p>
             </div>  
 
             <div>
@@ -63,9 +61,9 @@ console.log(userData)
               </thead>
               <tbody border={2}>
                 <tr>
-                  <td>{add.loanAmount}</td>
-                  <td>{add.interest}</td>
-                  <td>{add.emi}</td>
+                  <td>{user.loanAmount}</td>
+                  <td>{user.interest}</td>
+                  <td>{user.emi}</td>
                   <td>{totalAmt}</td>
                   <td>{TotalInterest}</td>
                 </tr>
@@ -86,7 +84,14 @@ console.log(userData)
               }}
              
             />
-          </div>                     
+          </div>  
+
+            </>
+          )
+        })
+      }
+       
+                   
             
             
 
