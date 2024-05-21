@@ -20,8 +20,7 @@ import { useSelector, useDispatch } from "react-redux";
 import PersonalDatas from "./Finance/PersonalDatas";
 
 function App() {
-  const isLogin = useSelector((state) => state.regisLogin.isLogin);
-  const userdata = useSelector((state) => state.regisLogin.userdata);
+  const {isLogin,userdata} = useSelector((state) => state.regisLogin);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -50,7 +49,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/category" element={<Category />} />
           <Route path="/loans/:loanName" element={<SecuredLoansDetails />} />
-          <Route path="/showresult" element={<ShowResult />} />
+          <Route path="/showresult/:loanId" element={<ShowResult />} />
           <Route path="/emicalculator" element={<EmiCalculator/>}/>
           <Route path="/admin" element={<Admin/>}/>
           {isLogin? <Route path="/personaldetail" element={<PersonalDetail/>}/>:null}
