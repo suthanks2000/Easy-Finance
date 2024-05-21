@@ -12,6 +12,7 @@ import { auth } from "./Finance/FirebaseConfig";
 import EmiCalculator from "./Finance/EmiCalculator";
 import Admin from "./Finance/Admin";
 
+
 import {
   setuserdata,
   setIsLogin,
@@ -54,6 +55,7 @@ function App() {
           <Route path="/admin" element={<Admin/>}/>
           {isLogin? <Route path="/personaldetail" element={<PersonalDetail/>}/>:null}
           <Route path="/loandatas" element={<LoanDatas/>}/>
+          
         </Routes>
       </BrowserRouter>
     </div>
