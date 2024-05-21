@@ -11,11 +11,17 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./Finance/FirebaseConfig";
 import EmiCalculator from "./Finance/EmiCalculator";
 import Admin from "./Finance/Admin";
+
+
+import {
+  setuserdata,
+  setIsLogin,
+} from "./Finance/Redux-Toolkit/slices/RegLogCounter";
 import BankerLog from "./Finance/Banker/bankerLog";
 import BankerReg from "./Finance/Banker/bankerReg";
-import {setuserdata,setIsLogin} from "./Finance/Redux-Toolkit/slices/RegLogCounter";
+
 import { useSelector, useDispatch } from "react-redux";
-import PersonalDatas from "./Finance/PersonalDatas";
+import LoanDatas from "./Finance/LoanDatas";
 
 
 function App() {
@@ -54,7 +60,8 @@ function App() {
           <Route path="/emicalculator" element={<EmiCalculator/>}/>
           <Route path="/admin" element={<Admin/>}/>
           {isLogin? <Route path="/personaldetail" element={<PersonalDetail/>}/>:null}
-          <Route path="/loandatas" element={<PersonalDatas/>}/>
+          <Route path="/loandatas" element={<LoanDatas/>}/>
+          
         </Routes>
       </BrowserRouter>
     </div>

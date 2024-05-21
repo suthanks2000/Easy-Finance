@@ -20,7 +20,9 @@ export default function SecuredLoansDetails() {
   const viewLoanInput = [];
 const tyear = securedLoansInfo.tenureMonth?  securedLoansInfo.tenureMonth/12 : null
   const intr = securedLoansInfo.interest / 1200; // Convert annual interest rate to monthly
+  const tenureYear = securedLoansInfo.tenureMonth / 12;
   const emiValue = securedLoansInfo.tenureMonth
+ 
     ? Math.round(
         (securedLoansInfo.loanAmount * intr) /
           (1 - Math.pow(1 / (1 + intr), securedLoansInfo.tenureMonth))
@@ -101,13 +103,14 @@ const handleSetLoanData = async () => {
   else if(securedLoansInfo.ownAnyProperty == "no" && securedLoansInfo.CibilIssue == "no" && securedLoansInfo.monthlyNetIncome  > 25000 ){
 
     await addDoc(collection(db, "securedLoans"), {
-            ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"B"});
+      ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"B"});
     alert("grade B")
   }
   else if(securedLoansInfo.ownAnyProperty == "no" && securedLoansInfo.CibilIssue == "yes" && securedLoansInfo.monthlyNetIncome  > 15000 ){
 
     await addDoc(collection(db, "securedLoans"), {
-            ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"C"});
+      ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"C"});
+   
     alert("grade C")
   }
   else {

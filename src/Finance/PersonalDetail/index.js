@@ -1,10 +1,11 @@
 import { db } from "../FirebaseConfig";
-import { collection, getDocs, query, where, addDoc, updateDoc, doc } from "firebase/firestore";
+import { collection, getDocs, query, where, updateDoc, doc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Button } from "react-bootstrap";
+import Spinner from 'react-bootstrap/Spinner';
 
 export default function PersonalDetail(){
   const userdata = useSelector((state) => state.regisLogin.userdata);
@@ -12,11 +13,13 @@ export default function PersonalDetail(){
 const [usersData, setUsersData] = useState([]);
 const [ editData,setEditData ] = useState(false)
 const [ filterData, setFilterData ] = useState({})
+const [ spinner, setSpinner] = useState(true)
 
 
 useEffect(() => {
     fetchData();
-}, []); // Trigger useEffect when userdata changes
+}, []);
+
 
 
 const fetchData = async () => {
@@ -25,11 +28,11 @@ const fetchData = async () => {
   const data = [];
 
   docSnap.forEach((doc) => {
-      // Accumulate data in an array
+    
       data.push({ ...doc.data(), id: doc.id });
   });
 
-  // Set state after loop completes
+
   setUsersData(data);
   console.log(userdata.uid)
 };
@@ -49,28 +52,23 @@ const fetchData = async () => {
        
  }
 
-
   function exitFromEdit(){
     setEditData(false)
   }
 
   const handleUpdateDetail = async() => { // update btn function
-    // Create a reference to the document in Firestore
+   
     const docRef = doc(db, "personalDetails", filterData.id);
 
-    // Update the document with the data from filterData
     await updateDoc(docRef, filterData)
     alert("Success: Personal details updated successfully");
     fetchData();
     setEditData(false);
-    
-    
 };
-
 
     return (
       <>
-        {!editData ? (
+        {!editData ? 
           <>
             <h1>Welcome to Personal Detail Page</h1>
             { usersData.map((user,i) => {
@@ -93,8 +91,8 @@ const fetchData = async () => {
             })}
 
           </>
-        ) : null}
-    
+        : null}
+          <>
           <Modal show= {editData}>
           <center>
               <Modal.Header>
@@ -212,5 +210,6 @@ const fetchData = async () => {
             </Modal>
           </>
       
-    );
+  </>
+);
 }

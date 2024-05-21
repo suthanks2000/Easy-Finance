@@ -226,32 +226,7 @@ export const SecuredLoansSlice = createSlice({
           "other"
         ]
       },
-    {
-      inputLabel: "Duration of Stay Current Address Year",
-      inputName: "durationOfStayCurrentAddressYear",
-      inputType: "number",
-      inputPlaceholder: "Enter in years",
-      loanType: [
-        "personalloan",
-        "homeloan",
-        "businessloan",
-        "vehicleloan"
-      ],
-      inputValue: null
-    },
-    {
-      inputLabel: "Duration of Stay Current Address Month",
-      inputName: "durationOfStayCurrentAddressMonth",
-      inputType: "number",
-      inputPlaceholder: "Enter in month",
-      loanType: [
-        "personalloan",
-        "homeloan",
-        "businessloan",
-        "vehicleloan"
-      ],
-      inputValue: null
-    },
+   
     {
       inputLabel: "Years Employed",
       inputName: "yearsEmployed",
