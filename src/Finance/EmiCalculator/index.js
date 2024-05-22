@@ -235,8 +235,7 @@ export default function EmiCalculator() {
                   },
                 ],
               }}
-              // width={200}
-              // height={200}
+             
             />
           </div>
         </div>

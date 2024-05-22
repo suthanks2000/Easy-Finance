@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {setInputInfo, setSecuredLoansInfo} from "../Redux-Toolkit/slices/SecuredLoansCounter";
 import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../FirebaseConfig";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, updateDoc, doc } from "firebase/firestore";
 import { useEffect } from "react";
 import InputRadio from "./InputComponents/inputRadio";
 import InputDropdown from "./InputComponents/inputDropdown";
@@ -30,7 +30,7 @@ const tyear = securedLoansInfo.tenureMonth?  securedLoansInfo.tenureMonth/12 : n
     : null;
     console.log(emiValue)
 
-useEffect(() => {
+useEffect(() => { 
   dispatch(setSecuredLoansInfo({ ...securedLoansInfo, emi: emiValue }));
 }, [emiValue]);
   
@@ -95,30 +95,55 @@ const handleSetLoanData = async () => {
     dispatch(setSecuredLoansInfo({}))
 
   }
-  else if(securedLoansInfo.ownAnyProperty == "yes" && securedLoansInfo.CibilIssue == "no" && securedLoansInfo.monthlyNetIncome >= 25000 && elgAmount ) {
-    await addDoc(collection(db, "securedLoans"), {
+  else if(securedLoansInfo.propertyStatus == "owned" && securedLoansInfo.CibilIssue == "no" && securedLoansInfo.monthlyNetIncome >= 25000 && elgAmount ) {
+   const loanRef= await addDoc(collection(db, "securedLoans"), {
             ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"A"});
+    const loanRefId=  loanRef.id   
+       await updateDoc(doc(db,"securedLoans",loanRefId),{
+        id:loanRefId,
+       }
+      )
     alert("grade A")
+    navigate(`/showresult/${loanRefId}`)
+    
   }
-  else if(securedLoansInfo.ownAnyProperty == "no" && securedLoansInfo.CibilIssue == "no" && securedLoansInfo.monthlyNetIncome  > 25000 ){
-
-    await addDoc(collection(db, "securedLoans"), {
+  else if(securedLoansInfo.propertyStatus == "rented" && securedLoansInfo.CibilIssue == "no" && securedLoansInfo.monthlyNetIncome  > 25000 ){
+    const loanRef= await addDoc(collection(db, "securedLoans"), {
       ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"B"});
+const loanRefId=  loanRef.id   
+ await updateDoc(doc(db,"securedLoans",loanRefId),{
+  id:loanRefId,
+ }
+)
     alert("grade B")
-  }
-  else if(securedLoansInfo.ownAnyProperty == "no" && securedLoansInfo.CibilIssue == "yes" && securedLoansInfo.monthlyNetIncome  > 15000 ){
+    navigate(`/showresult/${loanRefId}`)
 
-    await addDoc(collection(db, "securedLoans"), {
+  }
+  else if(securedLoansInfo.propertyStatus == "rented" && securedLoansInfo.CibilIssue == "yes" && securedLoansInfo.monthlyNetIncome  > 15000 ){
+    const loanRef= await addDoc(collection(db, "securedLoans"), {
       ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"C"});
-   
+const loanRefId=  loanRef.id   
+ await updateDoc(doc(db,"securedLoans",loanRefId),{
+  id:loanRefId,
+ }
+)
     alert("grade C")
+    navigate(`/showresult/${loanRefId}`)
+
   }
   else {
-    alert("grade D")
    
-    await addDoc(collection(db, "securedLoans"), {
-            ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"D"});
-    
+    const loanRef= await addDoc(collection(db, "securedLoans"), {
+      ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"D"});
+const loanRefId=  loanRef.id   
+ await updateDoc(doc(db,"securedLoans",loanRefId),{
+  id:loanRefId,
+ }
+)
+alert("grade D")
+
+            navigate(`/showresult/${loanRefId}`)
+
   }
 
 }
