@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Table, Modal, Button } from "react-bootstrap";
-import { collection, getDocs, query, where, limit } from "firebase/firestore";
+import { collection, getDocs, query, where, getDoc, doc, limit } from "firebase/firestore";
 import { db } from "../FirebaseConfig";
 import jsPDF from "jspdf";
 
 const Admin = () => {
-    const [adminData, setAdminData] = useState({});
-    const [loanData, setLoanData] = useState([]);
-    const [viewLoanDatas, setViewLoanDatas] = useState(false);
-    const [selectedLoan, setSelectedLoan] = useState(null);
-    const [showModal, setShowModal] = useState(false);
+    const [adminData, setAdminData] = useState({});   //Stores form data entered by the admin.
+    const [loanData, setLoanData] = useState([]);    //Stores the fetched loan data.
+    const [viewLoanDatas, setViewLoanDatas] = useState(false);    //Toggles the visibility of the loan data table
+    const [modalData, setModalData] = useState({ loanData: {}, personalData: {} });      //Stores data to be displayed in the modal (both loan and personal details)
+    const [showModal, setShowModal] = useState(false);     //Toggles the visibility of the modal
 
     const fetchLoanData = async () => {
         try {
@@ -44,8 +44,9 @@ const Admin = () => {
         setAdminData({ ...adminData, [e.target.name]: e.target.value });
     };
 
-    const handleRowClick = (loan) => {
-        setSelectedLoan(loan);
+    const handleRowClick = async (loan) => {
+        const data = await fetchLoanAndPersonalData(loan.id, loan.uId);
+        setModalData(data);
         setShowModal(true);
     };
 
@@ -53,32 +54,85 @@ const Admin = () => {
         setShowModal(false);
     };
 
-    const handleDownloadPDF = () => {
-        const doc = new jsPDF();
-        const pageWidth = doc.internal.pageSize.getWidth();
+    const fetchLoanAndPersonalData = async (loanId, userId) => {
+        try {
+            const loanDoc = await getDoc(doc(db, "securedLoans", loanId));
+            const personalDetailsQuery = query(
+                collection(db, "personalDetails"),
+                where("uid", "==", userId)
+            );
+            const personalDetailsSnapshot = await getDocs(personalDetailsQuery);
 
-        // Define the text content
-        const title = "Loan Details";
-        const loanType = `Loan Type: ${selectedLoan.loanType}`;
-        const employmentType = `Employment Type: ${selectedLoan.employmentType}`;
-        const jobTitle = `Job Title: ${selectedLoan.jobTitle}`;
-        const placeOfWork = `Place of Work: ${selectedLoan.placeOfWork}`;
-        const propertyStatus = `Property Status: ${selectedLoan.propertyStatus}`;
-        const addressProof = `Address Proof: ${selectedLoan.addressProof}`;
+            const personalDetails = personalDetailsSnapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }))[0];
 
-        // Center the text horizontally
-        doc.text(title, pageWidth / 2, 10, { align: 'center' });
-        doc.text(loanType, pageWidth / 2, 20, { align: 'center' });
-        doc.text(employmentType, pageWidth / 2, 30, { align: 'center' });
-        doc.text(jobTitle, pageWidth / 2, 40, { align: 'center' });
-        doc.text(placeOfWork, pageWidth / 2, 50, { align: 'center' });
-        doc.text(propertyStatus, pageWidth / 2, 60, { align: 'center' });
-        doc.text(addressProof, pageWidth / 2, 70, { align: 'center' });
-
-        doc.save(`${selectedLoan.id}.pdf`);
+            return { loanData: loanDoc.data(), personalData: personalDetails };
+        } catch (error) {
+            console.error("Error fetching data: ", error);
+        }
     };
 
 
+    const handleDownloadPDF = () => {
+        const { loanData, personalData } = modalData;
+        const doc = new jsPDF();
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const lineHeight = 10;
+    
+        const title = "Loan and Personal Details";
+        const loanDetails = [
+            `Loan Type: ${loanData.loanType}`,
+            `Employment Type: ${loanData.employmentType}`,
+            `Job Title: ${loanData.jobTitle}`,
+            `Place of Work: ${loanData.placeOfWork}`,
+            `Property Status: ${loanData.propertyStatus}`,
+            `Address Proof: ${loanData.addressProof}`
+        ];
+        const personalDetails = [
+            `Name: ${personalData.firstName} ${personalData.lastName}`,
+            `Father's Name: ${personalData.fatherName}`,
+            `Age: ${personalData.Age}`,
+            `Marital Status: ${personalData.maritalStatus}`,
+            `Gender: ${personalData.Gender}`,
+            `Email: ${personalData.Email}`,
+            `District: ${personalData.District}`,
+            `City: ${personalData.City}`,
+            `Pincode: ${personalData.pinCode}`,
+            `Contact: ${personalData.Contact}`
+        ];
+    
+        // Helper function to calculate the x-coordinate for center alignment
+        const getCenterX = (text) => {
+            const textWidth = doc.getStringUnitWidth(text) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+            return (pageWidth - textWidth) / 2;
+        };
+    
+        // Center align the title
+        doc.text(title, getCenterX(title), lineHeight);
+    
+        // Add spacing before loan details
+        doc.text("Loan Details:", getCenterX("Loan Details:"), lineHeight * 3);
+    
+        // Center-align each line of loan details
+        loanDetails.forEach((line, index) => {
+            doc.text(line, getCenterX(line), lineHeight * (4 + index));
+        });
+    
+        // Add spacing before personal details
+        doc.text("Personal Details:", getCenterX("Personal Details:"), lineHeight * (4 + loanDetails.length + 2));
+    
+        // Center-align each line of personal details
+        personalDetails.forEach((line, index) => {
+            doc.text(line, getCenterX(line), lineHeight * (5 + loanDetails.length + 2 + index));
+        });
+    
+        const filename = `${personalData.firstName}_${personalData.lastName}_${loanData.loanType}.pdf`;
+        doc.save(filename);
+    };
+    
+    
     return (
         <>
             {JSON.stringify(adminData)}
@@ -118,20 +172,22 @@ const Admin = () => {
                             <h4>User Loan Data Table</h4>
                             <button type="button" onClick={() => setViewLoanDatas(false)}>Hide table</button>
                         </div>
-                        <Table striped bordered hover variant="dark" size="sm">
+                        <Table striped bordered hover>
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Loan Type</th>
-                                    <th>Loan Amount</th>
+                                    <th>loanType</th>
+                                   
+                                    <th>jobTitle</th>
+                                    <th>loan amount</th>
                                     <th>Grade</th>
+                                  
                                 </tr>
                             </thead>
                             <tbody>
-                                {loanData.map((loan, i) => (
-                                    <tr key={i} onClick={() => handleRowClick(loan)}>
-                                        <td>{loan.jobTitle}</td>
+                                {loanData.map((loan) => (
+                                    <tr key={loan.id} onClick={() => handleRowClick(loan)}>
                                         <td>{loan.loanType}</td>
+                                        <td>{loan.jobTitle}</td>
                                         <td>{loan.loanAmount}</td>
                                         <td>{loan.grade}</td>
                                     </tr>
@@ -141,34 +197,40 @@ const Admin = () => {
                     </div>
                 )}
             </center>
-
-            {selectedLoan && (
-                <Modal show={showModal} onHide={handleCloseModal}>
-                    <center>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Loan Details</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <p><strong>Loan Type:</strong> {selectedLoan.loanType}</p>
-                        <p><strong>Employment Type:</strong> {selectedLoan.employmentType}</p>
-                        <p><strong>Job Title:</strong> {selectedLoan.jobTitle}</p>
-                        <p><strong>Place of Work:</strong> {selectedLoan.placeOfWork}</p>
-                        <p><strong>property Status:</strong> {selectedLoan.propertyStatus}</p>
-                        <p><strong>Address Proof:</strong> {selectedLoan.addressProof}</p>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleCloseModal}>
-                            Close
-                        </Button>
-                        <Button variant="primary" onClick={handleDownloadPDF}>
-                            Download as PDF
-                        </Button>
-                    </Modal.Footer>
-                    </center>
-                </Modal>
-            )}
+            <Modal show={showModal} onHide={handleCloseModal}>
+                <center>
+                <Modal.Header closeButton>
+                    <Modal.Title>Loan and Personal Details</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <h5>Loan Details:</h5>
+                    <p>Loan Type: {modalData.loanData.loanType}</p>
+                    <p>Employment Type: {modalData.loanData.employmentType}</p>
+                    <p>Job Title: {modalData.loanData.jobTitle}</p>
+                    <p>Place of Work: {modalData.loanData.placeOfWork}</p>
+                    <p>Property Status: {modalData.loanData.propertyStatus}</p>
+                    <p>Address Proof: {modalData.loanData.addressProof}</p>
+                    <h5>Personal Details:</h5>
+                    <p>Name: {modalData.personalData.firstName} {modalData.personalData.lastName}</p>
+                    <p>Father's Name: {modalData.personalData.fatherName}</p>
+                    <p>Age: {modalData.personalData.Age}</p>
+                    <p>Marital Status: {modalData.personalData.maritalStatus}</p>
+                    <p>Gender: {modalData.personalData.Gender}</p>
+                    <p>Email: {modalData.personalData.Email}</p>
+                    <p>District: {modalData.personalData.District}</p>
+                    <p>City: {modalData.personalData.City}</p>
+                    <p>Pincode: {modalData.personalData.pinCode}</p>
+                    <p>Contact: {modalData.personalData.Contact}</p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseModal}>Close</Button>
+                    <Button variant="primary" onClick={handleDownloadPDF}>Download PDF</Button>
+                </Modal.Footer>
+                </center>
+            </Modal>
         </>
     );
 };
 
 export default Admin;
+
