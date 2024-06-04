@@ -4,13 +4,13 @@ import { setRegisterData, setuserdata, setIsLogin } from "../Redux-Toolkit/slice
 import { auth, db } from "../FirebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
-import { Modal, Button, Form, Container, Row, Col, Alert, Card, Spinner } from "react-bootstrap";
+import { Modal, Button, Form, Container, Row, Col, Alert, Spinner } from "react-bootstrap";
 import { collection, addDoc } from "firebase/firestore";
 import Swal from "sweetalert2";
-
- import InputDropdown from "./InputComponents/InputDropdown";
- import InputRadio from "./InputComponents/InputRadio";
- import InputText from "./InputComponents/InputText";
+import './index.css';
+import InputDropdown from "./InputComponents/InputDropdown";
+import InputRadio from "./InputComponents/InputRadio";
+import InputText from "./InputComponents/InputText";
 
 export default function Register() {
   const userdata = useSelector((state) => state.regisLogin.userdata);
@@ -20,6 +20,7 @@ export default function Register() {
   const [personalDetailPopup, setPersonalDetailPopup] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({});
 
   const { personalInfo, inputInfo } = useSelector((state) => state.personalDetail);
 
@@ -40,6 +41,18 @@ export default function Register() {
     e.preventDefault();
     setLoading(true);
     setError("");
+    setFieldErrors({});
+
+    const newFieldErrors = {};
+    if (!regData.Name) newFieldErrors.Name = "Please fill out this field.";
+    if (!regData.Email) newFieldErrors.Email = "Please fill out this field.";
+    if (!regData.Password) newFieldErrors.Password = "Please fill out this field.";
+
+    if (Object.keys(newFieldErrors).length > 0) {
+      setFieldErrors(newFieldErrors);
+      setLoading(false);
+      return;
+    }
 
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, regData.Email, regData.Password);
@@ -51,7 +64,11 @@ export default function Register() {
       setPersonalDetailPopup(true);
     } catch (error) {
       setLoading(false);
-      setError(error.message);
+      if (error.code === "auth/email-already-in-use") {
+        setError("You are already a user. Please go and login.");
+      } else {
+        setError(error.message);
+      }
     }
   };
 
@@ -70,93 +87,98 @@ export default function Register() {
       "Contact"
     ];
 
-    if (requiredFields.some((field) => !personalInfo[field])) {
+    const newFieldErrors = {};
+    requiredFields.forEach(field => {
+      if (!personalInfo[field]) {
+        newFieldErrors[field] = "Please fill out this field.";
+      }
+    });
+
+    if (Object.keys(newFieldErrors).length > 0) {
+      setFieldErrors(newFieldErrors);
       Swal.fire({
         icon: "error",
         title: "Something went wrong!",
-        text: "Please Fill Empty Fields",
+        text: "Please fill out the highlighted fields.",
       });
-    } else {
-      await addDoc(collection(db, "personalDetails"), {
-        ...personalInfo,
-        uid: userdata.uid,
-      });
-
-      Swal.fire({
-        title: "Good job!",
-        text: "Successfully submitted Personal Details",
-        icon: "success",
-      });
-
-      navigate("/category");
+      return;
     }
+
+    await addDoc(collection(db, "personalDetails"), {
+      ...personalInfo,
+      uid: userdata.uid,
+    });
+
+    Swal.fire({
+      title: "Good job!",
+      text: "Successfully submitted Personal Details",
+      icon: "success",
+    });
+
+    navigate("/category");
   };
 
   return (
     <>
-      <Container className="d-flex justify-content-center align-items-center bg-light" style={{ minHeight: "100vh" }}>
-        <Row className="w-100">
-          <Col md={{ span: 6, offset: 3 }}>
-            <Card className="bg-white p-4">
-              <Card.Body>
-                <h2 className="text-center mb-4">Register</h2>
-                {error && <Alert variant="danger">{error}</Alert>}
-                <Form onSubmit={handleCreate}>
-                  <Form.Group className="mb-3 form-floating">
-                    <Form.Control
-                      type="text"
-                      placeholder="Name"
-                      required
-                      onChange={(e) => dispatch(setRegisterData({ ...regData, Name: e.target.value }))}
-                      isInvalid={!!error}
-                    />
-                    <Form.Label>Name</Form.Label>
-                    <Form.Control.Feedback type="invalid">{error && "Please provide a valid name."}</Form.Control.Feedback>
-                  </Form.Group>
-                  <Form.Group className="mb-3 form-floating">
-                    <Form.Control
-                      type="email"
-                      placeholder="Email"
-                      required
-                      onChange={(e) => dispatch(setRegisterData({ ...regData, Email: e.target.value }))}
-                      isInvalid={!!error}
-                    />
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control.Feedback type="invalid">{error && "Please provide a valid email."}</Form.Control.Feedback>
-                  </Form.Group>
-                  <Form.Group className="mb-3 form-floating">
-                    <Form.Control
-                      type="password"
-                      placeholder="Password"
-                      required
-                      onChange={(e) => dispatch(setRegisterData({ ...regData, Password: e.target.value }))}
-                      isInvalid={!!error}
-                    />
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control.Feedback type="invalid">{error && "Please provide a valid password."}</Form.Control.Feedback>
-                  </Form.Group>
-                  <Button className="w-100 mt-3" type="submit" disabled={loading}>
-                    {loading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : "Register"}
-                  </Button>
-                </Form>
-                <div className="w-100 text-center mt-3">
-                  Already have an account? <Link to="/">Login Here!</Link>
-                </div>
-              </Card.Body>
-            </Card>
+      <Container className="container-center">
+        <Row className="row-center">
+          <Col xs={12} sm={10} md={8} lg={6} xl={5} xxl={4} className="mx-auto">
+            <h2 className="form-title">Register</h2>
+            {error && <Alert variant="danger">{error}</Alert>}
+            <Form onSubmit={handleCreate}>
+              <div className="col-lg-12 form-input">
+              <label>Name:</label>
+                <input
+                  className="form-control p-lg-2"
+                  type="text"
+                  placeholder="Enter Your Name"
+                  onKeyUp={(e) => dispatch(setRegisterData({ ...regData, Name: e.target.value }))}
+                />
+                {fieldErrors.Name && <div className="text-danger">{fieldErrors.Name}</div>}
+              </div>
+              <div className="col-lg-12 form-input">
+              <label>Email:</label>
+                <input
+                  className="form-control p-lg-2"
+                  type="email"
+                  placeholder="Enter Your Email"
+                  onKeyUp={(e) => dispatch(setRegisterData({ ...regData, Email: e.target.value }))}
+                />
+                {fieldErrors.Email && <div className="text-danger">{fieldErrors.Email}</div>}
+              </div>
+              <div className="col-lg-12 form-input">
+              <label>Password:</label>
+                <input
+                  className="form-control p-lg-2"
+                  type="password"
+                  placeholder="Enter Your Password"
+                  onKeyUp={(e) => dispatch(setRegisterData({ ...regData, Password: e.target.value }))}
+                />
+                {fieldErrors.Password && <div className="text-danger">{fieldErrors.Password}</div>}
+              </div>
+              <Button className="btn-register" type="submit" disabled={loading}>
+                {loading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : "Register"}
+              </Button>
+            </Form>
+            <div className="text-center">
+              Already have an account? <Link to="/">Login Here!</Link>
+            </div>
           </Col>
         </Row>
       </Container>
 
-      <Modal show={personalDetailPopup}>
-        <Modal.Header>
+      <Modal show={personalDetailPopup} onHide={() => setPersonalDetailPopup(false)} centered>
+        <Modal.Header closeButton>
           <Modal.Title>Personal Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {personalDetailInput}
+          {Object.keys(fieldErrors).map(key => (
+            fieldErrors[key] && <div key={key} className="text-danger">{fieldErrors[key]}</div>
+          ))}
         </Modal.Body>
         <Modal.Footer>
-          <Button className="btn btn-info" onClick={handlePersonalDetail}>Next</Button>
+          <Button className="modal-footer-btn" onClick={handlePersonalDetail}>Next</Button>
         </Modal.Footer>
       </Modal>
     </>

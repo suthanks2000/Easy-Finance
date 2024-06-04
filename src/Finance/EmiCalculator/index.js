@@ -1,10 +1,12 @@
+import './EmiCal.css'
+
 import { useState } from "react";
 import React from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import { Link } from "react-router-dom";
-import { Table } from "react-bootstrap";
 ChartJS.register(ArcElement, Tooltip, Legend);
+
 
 export default function EmiCalculator() {
   const [emiData, setEmiData] = useState({});
@@ -28,8 +30,8 @@ export default function EmiCalculator() {
 
   return (
     <>
-      <div className="Grandparent">
-        <div className="grandparent1">
+      <div className="GrandParent row" >
+        {/* <div className="grandparent1">
           <header>
             <nav className="navbar sticky-top navbar-expand-lg  navbar-dark bg-dark">
               <Link className="navbar-brand fs-3" href="#">
@@ -124,11 +126,12 @@ export default function EmiCalculator() {
               </form>
             </nav>
           </header>
-        </div>
+        </div> */}
         <div>
           <h1>Welcome to EmiCalculator</h1>
         </div>
-        <div className="grandparent2">
+{/* grandparent1 */}
+        <div className="col-4">
           <div>
             <label>loanAmount</label>
             <input
@@ -201,30 +204,28 @@ export default function EmiCalculator() {
           </div>
         </div>
 
-        <div className="row">
-          <div className="col-6">
-            <Table striped bordered hover variant="dark" size="sm">
-              <thead>
-                <tr>
-                  <th>loanAmount</th>
-                  <th>Interest</th>
-                  <th>Emi</th>
-                  <th>ToatalAmount</th>
-                  <th>ToatalInterest</th>
-                </tr>
-              </thead>
-              <tbody border={2}>
-                <tr>
-                  <td>Rs.{emiData.loanAmount}</td>
-                  <td>{emiData.interest}%</td>
-                  <td>₹{emiValue}</td>
-                  <td>{totalAmt}</td>
-                  <td>{TotalInterest}</td>
-                </tr>
-              </tbody>
-            </Table>
+{/* Grandparent2 */}
+        <div className="col-4">
+          
+        
+            <div className="Parent2Child"> 
+                
+                   <label>loanAmount</label><h5>Rs.{emiData.loanAmount}</h5>
+                   <label>Interest</label><h5>{emiData.interest}%</h5>
+                   <label>Emi</label><h5>₹{emiValue}</h5>
+                   <label>ToatalAmount</label><h5>{totalAmt}</h5>
+                   <label>ToatalInterest</label><h5>{TotalInterest}</h5>
+                
+              
+                  </div> 
+                  
+              
+          
           </div>
-          <div className="col-6">
+ {/* Grandparent3          */}
+
+
+          <div className="col-4">
             <Pie
               data={{
                 labels: ["Total Interest", "Total Amount"],
@@ -237,8 +238,7 @@ export default function EmiCalculator() {
               }}
              
             />
-          </div>
-        </div>
+          </div>      
       </div>
     </>
   );
