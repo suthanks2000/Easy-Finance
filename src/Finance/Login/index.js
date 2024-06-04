@@ -8,7 +8,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { db, auth } from "../FirebaseConfig";
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';  
 import { setLoginData, setuserdata, setIsLogin } from "../Redux-Toolkit/slices/RegLogCounter";
-import "./index.css"; // Import your custom styles if any
+import "./index.css"; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -74,6 +74,7 @@ export default function Login() {
   };
 
   return (
+   
   <div className="2">
     <div  >
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
@@ -148,6 +149,6 @@ export default function Login() {
         </Col>
       </Row>
     </Container>
-
+</div>
   );
 }
