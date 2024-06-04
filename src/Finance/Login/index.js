@@ -1,133 +1,150 @@
-import { db } from "../FirebaseConfig";
-import Spinner from 'react-bootstrap/Spinner';
-import { collection,getDocs } from "firebase/firestore";
-import { auth } from "../FirebaseConfig";
-import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
+
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  setLoginData,
-  setuserdata,
-  setIsLogin,
-} from "../Redux-Toolkit/slices/RegLogCounter";
-import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { Form, Button, Card, Container, Row, Col, Alert, Spinner } from "react-bootstrap";
+import { collection, getDocs } from "firebase/firestore";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { db, auth } from "../FirebaseConfig";
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap';  
+import { setLoginData, setuserdata, setIsLogin } from "../Redux-Toolkit/slices/RegLogCounter";
+import "./index.css"; // Import your custom styles if any
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 export default function Login() {
-  const[adminData,setAdminData]=useState([])
-  const[spinner,setSpinner]=useState(false)
+  const [adminData, setAdminData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const logData = useSelector((state) => state.regisLogin.loginData);
-  const dispatch = useDispatch(); 
-  const Navigate = useNavigate();
-  // console.log(adminData)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  useEffect(()=>{
+  useEffect(() => {
+    fetchAdminData();
+    dispatch(setLoginData({}));
+  }, []);
 
-    adminFbData()
-    dispatch(setLoginData({}))
-  },[])
-
-
-
-
-   const adminFbData=async()=>{
-    const querySnapShot=await getDocs(collection(db,"AdminId"))
-    const adData=[]
-    querySnapShot.forEach((e)=>{
-      adData.push(e.data())
-
-    })
-    setAdminData(adData)
-    setSpinner(true)
-   }
-   console.log(adminData)
-   const checkAdminData=adminData.filter((e)=>e.Email==logData.Email && e.Password==logData.Password)[0]
-
-   console.log(checkAdminData)
-
-   
-
-
-  const handleLogin = () => {
-
-    if(checkAdminData){
-        Navigate("/admin")
-        alert("login sucess")
-              
+  const fetchAdminData = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "AdminId"));
+      const adData = [];
+      querySnapshot.forEach((doc) => {
+        adData.push(doc.data());
+      });
+      setAdminData(adData);
+    } catch (error) {
+      console.error("Error fetching admin data: ", error);
     }
-   else if(logData.Email==="" || logData.Password===""){
-      alert("please fill input fields")  
-  }
-    else{  
-      signInWithEmailAndPassword(auth, logData.Email, logData.Password)
-      .then((userCredential) => {
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    const checkAdminData = adminData.find(
+      (e) => e.Email === logData.Email && e.Password === logData.Password
+    );
+
+    if (checkAdminData) {
+      setLoading(false);
+      navigate("/admin");
+      alert("Login success");
+    } else if (!logData.Email || !logData.Password) {
+      setLoading(false);
+      setError("Please fill in all fields");
+    } else {
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, logData.Email, logData.Password);
         const user = userCredential.user;
         localStorage.setItem("userToken", user.accessToken);
         dispatch(setuserdata(user));
         dispatch(setIsLogin(true));
-        console.log(user); 
-        alert("login success");
-        Navigate("/category");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-        alert("Please Enter the correct details");
-      });
-
+        setLoading(false);
+        alert("Login success");
+        navigate("/category");
+      } catch (error) {
+        setLoading(false);
+        console.error("Error during login: ", error.code, error.message);
+        setError("Invalid login credentials");
+      }
     }
-      
-    
- 
-   
   };
 
   return (
-    <>
-    {
-    spinner?
-     <>   
-      <p>{JSON.stringify(logData)}</p>
-      <h1>Welcome to Login Pages</h1>
-
-      <div>
-        <label>Email</label>
-        <input
-          type="email"
-          placeholder="Enter Your Email"
-          onKeyUp={(e) =>
-            dispatch(setLoginData({ ...logData, Email: e.target.value }))
-          }
-        />
+  <div className="2">
+    <div  >
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+      <Link className="navbar-brand fs-3" to="/">Easy Finance</Link>
+      <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span className="navbar-toggler-icon"></span>
+      </button>
+      <div className="collapse navbar-collapse" id="navbarNav">
+        <ul className="navbar-nav justify-content-end flex-grow-1 pe-1 mb-2 mb-lg-0">
+          <li className="nav-item dropdown">
+            <Link className="nav-link dropdown-toggle" to="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Invite
+            </Link>
+            <ul className="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+              <li>
+                <Link className="dropdown-item text-capitalize text-white bg-dark" to="/banker/register">Request from banker</Link>
+              </li>
+            </ul>
+          </li>
+          <li className="nav-item">
+            {/* <button type="button" className="button mt-1 " onClick={()=>navigate('/register')}>signUp</button> */}
+            <Link className="nav-link " to="/register">Register</Link>
+          </li>
+        </ul>
       </div>
-
-      <div>
-        <label>Password</label>
-        <input
-          type="password"
-          placeholder="Enter Your Password"
-          onKeyUp={(e) =>
-            dispatch(setLoginData({ ...logData, Password: e.target.value }))
-          }
-        />
-      </div>
-      <div>
-        <button type="button" onClick={handleLogin}>
-          Login
-        </button>
-      </div>
-
-      <div>
-        Dont have an account?<Link to={"/register"}>RegisterHere!</Link>
-      </div>
-      </>
-      : <Spinner animation="border" role="status">
-      <span className="visually-hidden">Loading...</span>
-    </Spinner>
-    }
-
-    </>
+    </nav>
+    </div>
+    
+      <Container className="d-flex justify-content-center align-items-center " style={{ minHeight: "80vh" }}>
+        <Row className="w-100">
+          <Col md={{ span: 6, offset: 3 }}>
+            <Card className="bg-white p-4">
+              <Card.Body>
+                <h2 className="text-center mb-4">Login</h2>
+                {error && <Alert variant="danger">{error}</Alert>}
+                <Form onSubmit={handleLogin}>
+                  <Form.Group className="mb-3 form-floating">
+                    <Form.Control
+                      type="email"
+                      placeholder="Email"
+                      required
+                      onChange={(e) => dispatch(setLoginData({ ...logData, Email: e.target.value }))}
+                      isInvalid={!!error}
+                    />
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control.Feedback type="invalid">
+                      {error && "Please provide a valid email."}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                  <Form.Group className="mb-3 form-floating">
+                    <Form.Control
+                      type="password"
+                      placeholder="Password"
+                      required
+                      onChange={(e) => dispatch(setLoginData({ ...logData, Password: e.target.value }))}
+                      isInvalid={!!error}
+                    />
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control.Feedback type="invalid">
+                      {error && "Please provide a valid password."}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                  <Button className="w-100 mt-3" type="submit" disabled={loading}>
+                    {loading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : "Login"}
+                  </Button>
+                </Form>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+  </div>
   );
 }

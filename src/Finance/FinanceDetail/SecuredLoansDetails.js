@@ -1,24 +1,27 @@
 import { useSelector, useDispatch } from "react-redux";
-import {setInputInfo, setSecuredLoansInfo} from "../Redux-Toolkit/slices/SecuredLoansCounter";
+import {setRenderedInfo, setSecuredLoansInfo,setUpdatedInfo} from "../Redux-Toolkit/slices/SecuredLoansCounter";
 import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../FirebaseConfig";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, updateDoc, doc } from "firebase/firestore";
 import { useEffect } from "react";
 import InputRadio from "./InputComponents/inputRadio";
 import InputDropdown from "./InputComponents/inputDropdown";
 import InputTextAndNumber from "./InputComponents/inputText&Number";
+import 'bootstrap/dist/css/bootstrap.min.css'; 
+
 
 export default function SecuredLoansDetails() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { securedLoansInfo,inputInfo } = useSelector((state) => state.securedLoans);
+  const { securedLoansInfo,inputInfo, renderedInfo,updatedinfo } = useSelector((state) => state.securedLoans);
   const userdata = useSelector((state) => state.regisLogin.userdata);
   const { loanName } = useParams();
   
-  const viewLoanInput = [];
-
+const tyear = securedLoansInfo.tenureMonth?  securedLoansInfo.tenureMonth/12 : null
   const intr = securedLoansInfo.interest / 1200; // Convert annual interest rate to monthly
+  const tenureYear = securedLoansInfo.tenureMonth / 12;
   const emiValue = securedLoansInfo.tenureMonth
+ 
     ? Math.round(
         (securedLoansInfo.loanAmount * intr) /
           (1 - Math.pow(1 / (1 + intr), securedLoansInfo.tenureMonth))
@@ -26,9 +29,13 @@ export default function SecuredLoansDetails() {
     : null;
     console.log(emiValue)
 
-useEffect(() => {
+useEffect(() => { 
   dispatch(setSecuredLoansInfo({ ...securedLoansInfo, emi: emiValue }));
 }, [emiValue]);
+
+useEffect(() => { 
+  dispatch(setUpdatedInfo(inputInfo));
+}, [inputInfo]);
   
     
 useEffect(()=>{
@@ -40,7 +47,7 @@ useEffect(()=>{
     const {carType,secondCarCondition,registeredMonth,registeredYear,...rest} =securedLoansInfo
     console.log(rest)
     dispatch(setSecuredLoansInfo(rest))
-    dispatch(setInputInfo(inputInfo))
+    // dispatch(setInputInfo(inputInfo))
       
   }
 },[securedLoansInfo.vehicleType])
@@ -52,23 +59,32 @@ useEffect(()=>{
     navigate("/");
   };
   
- inputInfo.forEach((ele)=>{
-  
-  if(ele.loanType.includes(loanName)){
 
-    if(!ele?.hidden || ele?.hidden === false){
-      if(ele.inputType === "text" || ele.inputType === "number"){
-          viewLoanInput.push(<InputTextAndNumber ele={ele}/>)
-      }
-      if(ele.inputType === "radio"){
-          viewLoanInput.push(<InputRadio ele={ele}/>)
-      }  
-      if (ele.inputType === "dropdown"){  
-        viewLoanInput.push(<InputDropdown ele={ele} />)
-      }
+
+
+useEffect(()=>{
+  const viewLoanInput = [];
+  updatedinfo.forEach((ele)=>{
+  
+    if(ele.loanType?.includes(loanName)){
+  
+     
+        if(ele.inputType === "text" || ele.inputType === "number"){
+          
+            viewLoanInput.push(<InputTextAndNumber ele={ele} />)
+  
+        }
+        if(ele.inputType === "radio"){
+            viewLoanInput.push(<InputRadio ele={ele}/>)
+        }  
+        if (ele.inputType === "dropdown"){  
+          viewLoanInput.push(<InputDropdown ele={ele} />)
+        }
+  
   }
-}
-})
+  })
+  dispatch(setRenderedInfo(viewLoanInput))
+},[updatedinfo])
 
 
 const handleSetLoanData = async () => {
@@ -83,34 +99,61 @@ const handleSetLoanData = async () => {
 
   const missingInputs = filteredInputNames.filter(inputName => !securedLoansInfo[inputName]);
   console.log('Missing Inputs:', missingInputs);
-  
-  
+
   if(filteredInputNames.some(inputName => !securedLoansInfo[inputName])){
     alert("pls fill the inputs")
     dispatch(setSecuredLoansInfo({}))
 
   }
   else if(securedLoansInfo.propertyStatus == "owned" && securedLoansInfo.CibilIssue == "no" && securedLoansInfo.monthlyNetIncome >= 25000 && elgAmount ) {
-    await addDoc(collection(db, "securedLoans"), {
+   const loanRef= await addDoc(collection(db, "securedLoans"), {
             ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"A"});
+    const loanRefId=  loanRef.id   
+       await updateDoc(doc(db,"securedLoans",loanRefId),{
+        id:loanRefId,
+       }
+      )
     alert("grade A")
+    navigate(`/showresult/${loanRefId}`)
+    
   }
   else if(securedLoansInfo.propertyStatus == "rented" && securedLoansInfo.CibilIssue == "no" && securedLoansInfo.monthlyNetIncome  > 25000 ){
-    await addDoc(collection(db, "securedLoans"), {
-            ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"B"});
+    const loanRef= await addDoc(collection(db, "securedLoans"), {
+      ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"B"});
+const loanRefId=  loanRef.id   
+ await updateDoc(doc(db,"securedLoans",loanRefId),{
+  id:loanRefId,
+ }
+)
     alert("grade B")
+    navigate(`/showresult/${loanRefId}`)
+
   }
   else if(securedLoansInfo.propertyStatus == "rented" && securedLoansInfo.CibilIssue == "yes" && securedLoansInfo.monthlyNetIncome  > 15000 ){
-    await addDoc(collection(db, "securedLoans"), {
-            ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"C"});
+    const loanRef= await addDoc(collection(db, "securedLoans"), {
+      ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"C"});
+const loanRefId=  loanRef.id   
+ await updateDoc(doc(db,"securedLoans",loanRefId),{
+  id:loanRefId,
+ }
+)
     alert("grade C")
+    navigate(`/showresult/${loanRefId}`)
+
   }
   else {
-    alert("grade D")
    
-    await addDoc(collection(db, "securedLoans"), {
-            ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"D"});
-    
+    const loanRef= await addDoc(collection(db, "securedLoans"), {
+      ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"D"});
+const loanRefId=  loanRef.id   
+ await updateDoc(doc(db,"securedLoans",loanRefId),{
+  id:loanRefId,
+ }
+)
+alert("grade D")
+
+            navigate(`/showresult/${loanRefId}`)
+
   }
 
 }
@@ -121,14 +164,20 @@ const handleSetLoanData = async () => {
         {JSON.stringify(securedLoansInfo)}
         <h1>Welcome to {loanName}</h1>
           <div>
-            {viewLoanInput}
+            {renderedInfo}
             <div>
+              <div>
+                <label>Tenure year</label>
+                <input placeholder="tenure year" type="number" value={tyear} required disabled/>
+              </div>
               <div>
                 <label>EMI</label>
                 <input
                 placeholder="Your EMI Amount"
                 type="number"
                 value={emiValue}
+                required
+                disabled
                 />
               </div>
             </div>
