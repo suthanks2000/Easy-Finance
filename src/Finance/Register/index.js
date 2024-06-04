@@ -11,6 +11,7 @@ import './index.css';
 import InputDropdown from "./InputComponents/InputDropdown";
 import InputRadio from "./InputComponents/InputRadio";
 import InputText from "./InputComponents/InputText";
+import axios from "axios";
 
 export default function Register() {
   const userdata = useSelector((state) => state.regisLogin.userdata);
@@ -54,22 +55,34 @@ export default function Register() {
       return;
     }
 
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, regData.Email, regData.Password);
-      const user = userCredential.user;
-      localStorage.setItem("userToken", user.accessToken);
-      dispatch(setuserdata(user));
-      dispatch(setIsLogin(true));
-      setLoading(false);
-      setPersonalDetailPopup(true);
-    } catch (error) {
-      setLoading(false);
-      if (error.code === "auth/email-already-in-use") {
-        setError("You are already a user. Please go and login.");
-      } else {
-        setError(error.message);
-      }
-    }
+    let requestData=new FormData();
+    requestData.append('username',regData.Name)
+    requestData.append('useremail',regData.Email)
+    requestData.append('userpassword',regData.Password)
+
+    await axios.post("https://disondys.pythonanywhere.com/userRegister",requestData).then(
+               (res) =>{
+                   console.log(res.data)
+                   alert(res.data)
+               }
+           )
+  
+    // try {
+    //   const userCredential = await createUserWithEmailAndPassword(auth, regData.Email, regData.Password);
+    //   const user = userCredential.user;
+    //   localStorage.setItem("userToken", user.accessToken);
+    //   dispatch(setuserdata(user));
+    //   dispatch(setIsLogin(true));
+    //   setLoading(false);
+    //   setPersonalDetailPopup(true);
+    // } catch (error) {
+    //   setLoading(false);
+    //   if (error.code === "auth/email-already-in-use") {
+    //     setError("You are already a user. Please go and login.");
+    //   } else {
+    //     setError(error.message);
+    //   }
+    // }
   };
 
   const handlePersonalDetail = async () => {
@@ -104,10 +117,10 @@ export default function Register() {
       return;
     }
 
-    await addDoc(collection(db, "personalDetails"), {
-      ...personalInfo,
-      uid: userdata.uid,
-    });
+    // await addDoc(collection(db, "personalDetails"), {
+    //   ...personalInfo,
+    //   uid: userdata.uid,
+    // });
 
     Swal.fire({
       title: "Good job!",
