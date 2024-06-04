@@ -1,0 +1,86 @@
+body {
+  background-color: white;
+  color: black;
+}
+
+.category-item {
+  text-align: center;
+  position: relative; /* Ensure proper positioning for the overlay */
+  height: 300px; /* Set a fixed height for the category item */
+  border-radius: 8px; /* Add border radius */
+  padding: 20px; /* Add padding to the category item */
+}
+
+.category-image {
+  max-width: 90%;
+  aspect-ratio: 2/1;
+  height: 200px;
+  /* height: auto; */
+  transition: transform 0.3s ease; /* Smooth transition */
+  /* width: 100%;  */
+  border-radius: 8px; /* Add border radius to the image */
+}
+
+.category-item:hover .category-image {
+  transform: scale(1.1); /* Increase the size of the image on hover */  
+}
+
+.category-overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  color: white;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.3s ease; /* Smooth transition */
+}
+
+.category-item:hover .category-overlay {
+  opacity: 1; /* Show the overlay on hover */
+}
+
+.category-overlay h5 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.list {
+  list-style-type: none; /* Remove default list style */
+  padding-left: 0; /* Remove default left padding */
+  
+}
+
+.list li {
+  text-decoration: none; /* Remove text decoration (e.g., underlines) */
+}
+
+.accordion-body ul{
+  text-align: left;
+  list-style-type: none;
+  padding-left: 0; /* Optional: Remove default left padding */
+}
+
+.accordion-body strong {
+  text-align: left;
+  display: block; /* Ensures the strong tag takes full width */
+}
+
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .category-item {
+    height: auto; /* Allow the height to adjust based on content */
+    margin-bottom: 20px; /* Add some margin to separate the items */
+  }
+  
+  .category-image {
+    max-width: 100%; /* Allow the image to fill the container */
+    height: auto; /* Maintain aspect ratio */
+  }
+}
+
+
+
