@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import Navbar from '../Navbar';
+import Navbar from '../Navbar'; 
 import { Container, Row, Col } from 'react-bootstrap';
 import './index.css';
 
@@ -98,7 +98,6 @@ export default function Category() {
     </div>
   </div>
 </div>
-
       <Container className="mt-5">
         <Row className="justify-content-around">
        <Col xs={12} md={12} lg={12} className="mb-4">

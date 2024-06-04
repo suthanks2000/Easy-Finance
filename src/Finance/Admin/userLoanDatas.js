@@ -3,8 +3,9 @@ import { Table, Modal, Button } from "react-bootstrap";
 import { collection, getDocs, query, where, getDoc, doc, limit } from "firebase/firestore";
 import { db } from "../FirebaseConfig";
 import jsPDF from "jspdf";
+import AdminNavbar from "./adminNavbar";
 
-const Admin = () => {
+const UserLoanDatas = () => {
     const [adminData, setAdminData] = useState({});   //Stores form data entered by the admin.
     const [loanData, setLoanData] = useState([]);    //Stores the fetched loan data.
     const [viewLoanDatas, setViewLoanDatas] = useState(false);    //Toggles the visibility of the loan data table
@@ -135,9 +136,9 @@ const Admin = () => {
     
     return (
         <>
+            <AdminNavbar/>
             {JSON.stringify(adminData)}
             <h1>Welcome to Admin Page</h1>
-        
             <div>
                 <label>SelectLoanType</label>
                 <select name="SelectLoanType" type="dropdown" defaultValue="" onChange={handleAdminData}>
@@ -232,5 +233,5 @@ const Admin = () => {
     );
 };
 
-export default Admin;
+export default UserLoanDatas;
 
