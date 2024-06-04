@@ -6,15 +6,7 @@ export default function Category (){
       <>
            <Navbar/>
          <h1>Category</h1>
-    </>
-    )
-  }
-
-//     <div>
-//     <h1 className='h1 mt-5'>Category</h1>
-//     </div>
-   
-{/* <div className="col d-flex justify-content-center mt-5"
+         <div className="col d-flex justify-content-center mt-5"
 style={{display:"flex",gap:"170px"}}>
     
     <Link to={"/loans/personalloan"} style={{ textDecoration: 'none' }}>
@@ -58,6 +50,15 @@ style={{display:"flex",gap:"170px"}}>
   </div>
 </div>
 </Link>
-</div> */}
+</div> 
+    </>
+    )
+  }
+
+//     <div>
+//     <h1 className='h1 mt-5'>Category</h1>
+//     </div>
+   
+
 
 

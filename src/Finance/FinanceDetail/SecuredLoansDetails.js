@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import {setInputInfo, setSecuredLoansInfo} from "../Redux-Toolkit/slices/SecuredLoansCounter";
+import {setRenderedInfo, setSecuredLoansInfo,setUpdatedInfo} from "../Redux-Toolkit/slices/SecuredLoansCounter";
 import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../FirebaseConfig";
 import { collection, addDoc, updateDoc, doc } from "firebase/firestore";
@@ -13,11 +13,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export default function SecuredLoansDetails() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { securedLoansInfo,inputInfo } = useSelector((state) => state.securedLoans);
+  const { securedLoansInfo,inputInfo, renderedInfo,updatedinfo } = useSelector((state) => state.securedLoans);
   const userdata = useSelector((state) => state.regisLogin.userdata);
   const { loanName } = useParams();
   
-  const viewLoanInput = [];
 const tyear = securedLoansInfo.tenureMonth?  securedLoansInfo.tenureMonth/12 : null
   const intr = securedLoansInfo.interest / 1200; // Convert annual interest rate to monthly
   const tenureYear = securedLoansInfo.tenureMonth / 12;
@@ -33,6 +32,10 @@ const tyear = securedLoansInfo.tenureMonth?  securedLoansInfo.tenureMonth/12 : n
 useEffect(() => { 
   dispatch(setSecuredLoansInfo({ ...securedLoansInfo, emi: emiValue }));
 }, [emiValue]);
+
+useEffect(() => { 
+  dispatch(setUpdatedInfo(inputInfo));
+}, [inputInfo]);
   
     
 useEffect(()=>{
@@ -44,7 +47,7 @@ useEffect(()=>{
     const {carType,secondCarCondition,registeredMonth,registeredYear,...rest} =securedLoansInfo
     console.log(rest)
     dispatch(setSecuredLoansInfo(rest))
-    dispatch(setInputInfo(inputInfo))
+    // dispatch(setInputInfo(inputInfo))
       
   }
 },[securedLoansInfo.vehicleType])
@@ -56,25 +59,32 @@ useEffect(()=>{
     navigate("/");
   };
   
- inputInfo.forEach((ele)=>{
+
+
+
+useEffect(()=>{
+  const viewLoanInput = [];
+  updatedinfo.forEach((ele)=>{
   
-  if(ele.loanType.includes(loanName)){
-
-    if(!ele?.hidden || ele?.hidden === false){
-      if(ele.inputType === "text" || ele.inputType === "number"){
-        
-          viewLoanInput.push(<InputTextAndNumber ele={ele} value ={tyear}/>)
-
-      }
-      if(ele.inputType === "radio"){
-          viewLoanInput.push(<InputRadio ele={ele}/>)
-      }  
-      if (ele.inputType === "dropdown"){  
-        viewLoanInput.push(<InputDropdown ele={ele} />)
-      }
+    if(ele.loanType?.includes(loanName)){
+  
+     
+        if(ele.inputType === "text" || ele.inputType === "number"){
+          
+            viewLoanInput.push(<InputTextAndNumber ele={ele} />)
+  
+        }
+        if(ele.inputType === "radio"){
+            viewLoanInput.push(<InputRadio ele={ele}/>)
+        }  
+        if (ele.inputType === "dropdown"){  
+          viewLoanInput.push(<InputDropdown ele={ele} />)
+        }
+  
   }
-}
-})
+  })
+  dispatch(setRenderedInfo(viewLoanInput))
+},[updatedinfo])
 
 
 const handleSetLoanData = async () => {
@@ -154,9 +164,8 @@ alert("grade D")
         {JSON.stringify(securedLoansInfo)}
         <h1>Welcome to {loanName}</h1>
           <div>
-            {viewLoanInput}
+            {renderedInfo}
             <div>
-              
               <div>
                 <label>Tenure year</label>
                 <input placeholder="tenure year" type="number" value={tyear} required disabled/>

@@ -10,19 +10,13 @@ import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./Finance/FirebaseConfig";
 import EmiCalculator from "./Finance/EmiCalculator";
-import Admin from "./Finance/Admin";
-import Navbar from "./Finance/Navbar";
-
-
-import {
-  setuserdata,
-  setIsLogin,
-} from "./Finance/Redux-Toolkit/slices/RegLogCounter";
+import {setuserdata, setIsLogin} from "./Finance/Redux-Toolkit/slices/RegLogCounter";
 import BankerLog from "./Finance/Banker/bankerLog";
 import BankerReg from "./Finance/Banker/bankerReg";
-
 import { useSelector, useDispatch } from "react-redux";
 import LoanDatas from "./Finance/LoanDatas";
+import Dasborad from "./Finance/Admin/dasborad";
+import UserLoanDatas from "./Finance/Admin/userLoanDatas";
 
 
 function App() {
@@ -59,9 +53,11 @@ function App() {
           <Route path="/loans/:loanName" element={<SecuredLoansDetails />} />
           <Route path="/showresult/:loanId" element={<ShowResult />} />
           <Route path="/emicalculator" element={<EmiCalculator/>}/>
-          <Route path="/admin" element={<Admin/>}/>
+          <Route path="/admin/loandatas" element={<UserLoanDatas/>}/>
+          <Route path="/admin" element={<Dasborad/>}/>
           {isLogin? <Route path="/personaldetail" element={<PersonalDetail/>}/>:null}
           <Route path="/loandatas" element={<LoanDatas/>}/>
+          
         </Routes>
       </BrowserRouter>
     </div>
