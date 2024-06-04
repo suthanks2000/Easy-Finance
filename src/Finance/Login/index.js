@@ -74,8 +74,9 @@ export default function Login() {
   };
 
   return (
+    
   <div className="2">
-    <div  >
+    <div>
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
       <Link className="navbar-brand fs-3" to="/">Easy Finance</Link>
       <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -148,6 +149,6 @@ export default function Login() {
         </Col>
       </Row>
     </Container>
-
+    </div>
   );
 }
