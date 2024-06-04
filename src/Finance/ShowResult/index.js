@@ -5,6 +5,7 @@ import { Pie } from "react-chartjs-2";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
+
 export default function ShowResult() {
   const [userData, setUsersData] = useState([]);
   const { loanId } = useParams();
