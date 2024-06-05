@@ -70,7 +70,7 @@ export default function Login() {
     } else {
       await axios
         .get(
-          `https://disondys.pythonanywhere.com/userRegister?useremail=${logData.Email}`
+          `https://suthanks.pythonanywhere.com/userRegister?useremail=${logData.Email}`
         )
         .then((res) => {
           alert(res.data);
