@@ -60,7 +60,7 @@ export default function Register() {
     requestData.append('useremail',regData.Email)
     requestData.append('userpassword',regData.Password)
 
-    await axios.post("https://disondys.pythonanywhere.com/userRegister",requestData).then(
+    await axios.post("http://suthanks.pythonanywhere.com/userRegister",requestData).then(
                (res) =>{
                    console.log(res.data)
                    alert(res.data)
