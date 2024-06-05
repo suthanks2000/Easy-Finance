@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
-import { Form, Button, Card, Container, Row, Col, Alert, Spinner } from "react-bootstrap";
+import { Form, Card, Container, Row, Col, Alert, Spinner } from "react-bootstrap";
 import { collection, getDocs } from "firebase/firestore";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { db, auth } from "../FirebaseConfig";
@@ -10,6 +10,7 @@ import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { setLoginData, setuserdata, setIsLogin } from "../Redux-Toolkit/slices/RegLogCounter";
 import "./index.css"; 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button } from "@mui/material";
 
 
 export default function Login() {
@@ -136,9 +137,12 @@ export default function Login() {
                     {error && "Please provide a valid password."}
                   </Form.Control.Feedback>
                 </Form.Group>
-                <Button className="w-100 mt-3 col-sm-8 col-md-6 col-lg-4" type="submit" disabled={loading} onClick={() => { handleLogin(); }}>
-  {loading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : "Login"}
+                <Button variant="contained" color="success">
+  Success
 </Button>
+                {/* <Button className="w-100 mt-3 col-sm-8 col-md-6 col-lg-4" type="submit" disabled={loading} onClick={() => { handleLogin(); }}>
+  {loading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : "Login"}
+</Button> */}
 
               </Form>
               <div className="w-100 text-center mt-2">
