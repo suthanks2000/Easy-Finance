@@ -1,8 +1,11 @@
-.GrandParent{
+/* .GrandParent{
 display:flex;
 justify-content:space-between;
 margin: 0 auto;
 width: 80%;
+} */
+.container{
+ margin-top: 20px;   
 }
 
 
