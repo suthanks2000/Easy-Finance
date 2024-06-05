@@ -17,6 +17,7 @@ import { useSelector, useDispatch } from "react-redux";
 import LoanDatas from "./Finance/LoanDatas";
 import Dasborad from "./Finance/Admin/dasborad";
 import UserLoanDatas from "./Finance/Admin/userLoanDatas";
+import UserDatas from "./Finance/Admin/userDatas";
 
 
 function App() {
@@ -54,6 +55,7 @@ function App() {
           <Route path="/showresult/:loanId" element={<ShowResult />} />
           <Route path="/emicalculator" element={<EmiCalculator/>}/>
           <Route path="/admin/loandatas" element={<UserLoanDatas/>}/>
+          <Route path="/admin/userdatas" element={<UserDatas/>}/>
           <Route path="/admin" element={<Dasborad/>}/>
           {isLogin? <Route path="/personaldetail" element={<PersonalDetail/>}/>:null}
           <Route path="/loandatas" element={<LoanDatas/>}/>
