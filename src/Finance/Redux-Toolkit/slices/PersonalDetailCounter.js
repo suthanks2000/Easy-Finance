@@ -44,13 +44,6 @@ export const PersonalDetailSlice = createSlice({
           inputValue: "female"
         },
         {
-          inputLabel: "Email Address",
-          inputName: "Email",
-          inputType: "email",
-          inputPlaceholder: "Enter email address",
-          inputValue: ""
-        },
-        {
           inputLabel: "Marital Status",
           inputName: "maritalStatus",
           inputType: "radio",
