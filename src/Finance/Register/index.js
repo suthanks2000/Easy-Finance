@@ -61,7 +61,7 @@ export default function Register() {
               requestData.append('useremail', regData.Email);
               requestData.append('userpassword', regData.Password);
           
-              const response = await axios.post("https://PreethiJP.pythonanywhere.com/userRegister", requestData);
+              const response = await axios.post("https://disondys.pythonanywhere.com/userRegister", requestData);
               console.log(response.data);
               alert(response.data);
               
@@ -69,8 +69,9 @@ export default function Register() {
               setLoading(false);
               setPersonalDetailPopup(true);
 
-              const uidGet = await axios.get(`https://PreethiJP.pythonanywhere.com/userPersonalDetail?useremail=${regData.Email}`);
+              const uidGet = await axios.get(`https://disondys.pythonanywhere.com/userRegister?useremail=${regData.Email}`);
               setRegisterUserData(uidGet.data)
+
               localStorage.setItem("userId",JSON.stringify(uidGet.data.id))
               console.log(uidGet.data)
               alert(uidGet.data.id)
@@ -129,7 +130,7 @@ export default function Register() {
     personalData.append('contact',personalInfo.Contact)
     
 
-    await axios.post("https://PreethiJP.pythonanywhere.com/userPersonalDetail",personalData).then(
+    await axios.post("https://disondys.pythonanywhere.com/userPersonalDetail",personalData).then(
                (res) =>{
                    console.log(res.data)
                    alert(res.data)
