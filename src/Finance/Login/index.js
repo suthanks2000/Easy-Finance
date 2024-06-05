@@ -12,8 +12,6 @@ import {
   Spinner,
 } from "react-bootstrap";
 import { collection, getDocs } from "firebase/firestore";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { db, auth } from "../FirebaseConfig";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import {
   setLoginData,
@@ -55,28 +53,29 @@ export default function Login() {
     // e.preventDefault();
     setLoading(true);
     setError("");
-
-    // const checkAdminData = adminData.find(
-    //   (e) => e.Email === logData.Email && e.Password === logData.Password
-    // );
-
-    // if (checkAdminData) {
-    //   setLoading(false);
-    //   navigate("/admin");
-    //   alert("Login success");
     if (!logData.Email || !logData.Password) {
       setLoading(false);
       setError("Please fill in all fields");
-    } else {
-      await axios
-        .get(
-          `https://disondys.pythonanywhere.com/userRegister?useremail=${logData.Email}`
-        )
-        .then((res) => {
-          alert(res.data);
-        });
+    } 
+    else {
+    
+      await axios.get(`https://PreethiJP.pythonanywhere.com/userRegister?useremail=${logData.Email}&userpassword=${logData.Password}`)
+   .then((res) => { 
+       console.log(res.data);
+       if(res.data.message){
+        alert(res.data.message)
+        setLoading(false);
+       }
+       else{
+        alert("your are the authenticate user")
+        localStorage.setItem("loginUserId", JSON.stringify(res.data.id));
+       setLoading(false);
+       navigate("/category");
+       }
+       
+   })
+  }
     }
-  };
 
   return (
 

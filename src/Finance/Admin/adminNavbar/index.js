@@ -11,6 +11,9 @@ const AdminNavbar = () => {
 <div className="collapse navbar-collapse" id="myNavbar">
   <ul className="navbar-nav justify-content-end flex-grow-1 pe-1">
   <li className="nav-item">
+      <Link className="nav-link" to={'/admin/userdatas'}>UserDatas</Link>
+    </li>
+  <li className="nav-item">
       <Link className="nav-link" to={'/admin/loandatas'}>LoanDatas</Link>
     </li>
     <li className="nav-item">
