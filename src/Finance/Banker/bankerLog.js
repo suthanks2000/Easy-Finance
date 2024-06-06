@@ -1,80 +1,132 @@
-import { db } from "../FirebaseConfig";
-import Spinner from 'react-bootstrap/Spinner';
-import { collection,getDocs } from "firebase/firestore";
-import { auth } from "../FirebaseConfig";
-import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
+// import Spinner from 'react-bootstrap/Spinner';
+
+import { Form, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { setBankLogin } from "../Redux-Toolkit/slices/BankerReg&LogCounter";
-
+import { Button, TextField } from "@mui/material";
 
 export default function BankerLog() {
-//   const[adminData,setAdminData]=useState([])
-  const[spinner,setSpinner]=useState(false)
+  //   const[adminData,setAdminData]=useState([])
+  const [spinner, setSpinner] = useState(false);
 
-  const {bankLogin,bankRegister} = useSelector((state) => state.bankerRegLog);
-  const dispatch = useDispatch(); 
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  const { bankLogin, bankRegister } = useSelector(
+    (state) => state.bankerRegLog
+  );
+  const dispatch = useDispatch();
   const Navigate = useNavigate();
   // console.log(adminData)
 
-  useEffect(()=>{
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
 
+  const validateEmail = (email) => {
+    return emailRegex.test(email);
+  };
+
+  const validatePassword = (password) => {
+    return passwordRegex.test(password);
+  };
+
+  useEffect(() => {
     // adminFbData()
-    dispatch(setBankLogin({}))
+    dispatch(setBankLogin({}));
     // setSpinner(false)
-  },[])
+  }, []);
 
-const handleOnChange = (ele) => {
-    dispatch(setBankLogin({ ...bankLogin, [ele.target.name]: ele.target.value }))
-}
+  const handleOnChange = (ele) => {
+    dispatch(
+      setBankLogin({ ...bankLogin, [ele.target.name]: ele.target.value })
+    );
+    if (ele.target.name === "Email") {
+      setEmailError("");
+    } else if (ele.target.name === "Password") {
+      setPasswordError("");
+    }
+  };
 
-const handleBankerLogin = () => {
-    alert(1)
-}
+  const handleBankerLogin = (ele) => {
+    ele.preventDefault();
+    let valid = true;
+
+    if (!bankLogin.Email) {
+      setEmailError("Email is required");
+      valid = false;
+    } else if (!validateEmail(bankLogin.Email)) {
+      setEmailError("Invalid email format");
+      valid = false;
+    }
+
+    if (!bankLogin.Password) {
+      setPasswordError("password is required");
+      valid = false;
+    } else if (!validatePassword(bankLogin.Password)) {
+      setPasswordError(
+        "Password must be at least 8 characters, including a number and a letter"
+      );
+      valid = false;
+    }
+
+    if (valid) {
+      alert("Form is valid");
+    }
+  };
 
   return (
     <>
-    {/* {
+      {/* {
     spinner? */}
-     <>   
-      <p>{JSON.stringify(bankLogin)}</p>
-      <h1>Welcome to Login Pages</h1>
+      <>
+        <p>{JSON.stringify(bankLogin)}</p>
+        <h1>Welcome to Login Pages</h1>
 
-      <div>
-        <label>Email</label>
-        <input
-          type="email"
-          name="Email"
-          placeholder="Enter Your Email"
-          onKeyUp={(e) =>handleOnChange(e)}
-          required
-        />
-      </div>
+        <form handleBankerLogin>
+          <div>
+            <TextField
+              label="Email"
+              id="outlined-basic"
+              variant="outlined"
+              type="email"
+              name="Email"
+              // value={emiData.tenureMonth}
+              onChange={handleOnChange}
+              error={Boolean(emailError)}
+              helperText={emailError}
+            />
+          </div>
 
-      <div>
-        <label>Password</label>
-        <input
-          type="password"
-          name="Password"
-          placeholder="Enter Your Password"
-          onKeyUp={(e) =>handleOnChange(e)}
-          required
-        />
-      </div>
-      <div>
-        <button type="button" onClick={handleBankerLogin}>
-          Login
-        </button>
-      </div>
+          <div>
+            <TextField
+              label="Password"
+              variant="outlined"
+              type="password"
+              name="Password"
+              onChange={handleOnChange}
+              error={Boolean(passwordError)}
+              helperText={passwordError}
+            />
+          </div>
+
+          <div>
+            <Button
+              variant="contained"
+              color="success"
+              onClick={handleBankerLogin}
+            >
+              lOGIN
+            </Button>
+          </div>
+        </form>
       </>
-        {/* :
+      {/* :
         <Spinner animation="border" role="status">
         <span className="visually-hidden">Loading...</span>
         </Spinner>
         } */}
-
     </>
   );
 }

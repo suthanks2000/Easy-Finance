@@ -21,6 +21,7 @@ import {
 import "./index.css"; // Import your custom styles if any
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
+import { db } from "../FirebaseConfig";
 
 export default function Login() {
   const [adminData, setAdminData] = useState([]);
