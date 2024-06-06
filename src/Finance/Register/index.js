@@ -152,51 +152,6 @@ export default function Register() {
             }
           };
           
- 
-
-  // const handlePersonalDetail = async () => {
-  //   const requiredFields = [
-  //     "firstName",
-  //     "lastName",
-  //     "fatherName",
-  //     "Age",
-  //     "maritalStatus",
-  //     "Gender",
-  //     "District",
-  //     "City",
-  //     "pinCode",
-  //     "Contact"
-  //   ];
-
-  //   const newFieldErrors = {};
-  //   requiredFields.forEach(field => {
-  //     if (!personalInfo[field]) {
-  //       newFieldErrors[field] = "Please fill out this field.";
-  //     }
-  //   });
-
-  //   if (Object.keys(newFieldErrors).length > 0) {
-  //     setFieldErrors(newFieldErrors);
-  //     Swal.fire({
-  //       icon: "error",
-  //       title: "Something went wrong!",
-  //       text: "Please fill out the highlighted fields.",
-  //     });
-  //     return;
-  //   }
-    
-  //   let personalData=new FormData();
-  //   personalData.append('userid',registerUserData.id)
-  //   personalData.append('first_name',personalInfo.firstName)
-  //   personalData.append('last_name',personalInfo.lastName)
-  //   personalData.append('father_name',personalInfo.fatherName)
-  //   personalData.append('age',personalInfo.Age)
-  //   personalData.append('gender',personalInfo.Gender)
-  //   personalData.append('marital_status',personalInfo.maritalStatus)
-  //   personalData.append('district',personalInfo.District)
-  //   personalData.append('city',personalInfo.City)
-  //   personalData.append('pincode',personalInfo.pinCode)
-  //   personalData.append('contact',personalInfo.Contact)
 
 
   return (

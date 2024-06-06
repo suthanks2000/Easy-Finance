@@ -1,0 +1,18 @@
+.container-mt-4 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.text-field-container {
+    margin-bottom: 25px; 
+}
+
+.text-field-container .MuiFormControl-root {
+    width: 300px;
+}
+
+
+

@@ -36,18 +36,18 @@ export default function Login() {
   //   dispatch(setLoginData({}));
   // }, []);
 
-  const fetchAdminData = async () => {
-    try {
-      const querySnapshot = await getDocs(collection(db, "AdminId"));
-      const adData = [];
-      querySnapshot.forEach((doc) => {
-        adData.push(doc.data());
-      });
-      setAdminData(adData);
-    } catch (error) {
-      console.error("Error fetching admin data: ", error);
-    }
-  };
+  // const fetchAdminData = async () => {
+  //   try {
+  //     const querySnapshot = await getDocs(collection(db, "AdminId"));
+  //     const adData = [];
+  //     querySnapshot.forEach((doc) => {
+  //       adData.push(doc.data());
+  //     });
+  //     setAdminData(adData);
+  //   } catch (error) {
+  //     console.error("Error fetching admin data: ", error);
+  //   }
+  // };
 
   const handleLogin = async (e) => {
     // e.preventDefault();
