@@ -5,6 +5,9 @@ import React from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import { Link } from "react-router-dom";
+import {
+  TextField, Slider, Typography, Box, Container, Grid, Paper, Button, Divider
+} from '@mui/material';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 
@@ -30,106 +33,8 @@ export default function EmiCalculator() {
 
   return (
     <>
-      <div className="GrandParent row" >
-        {/* <div className="grandparent1">
-          <header>
-            <nav className="navbar sticky-top navbar-expand-lg  navbar-dark bg-dark">
-              <Link className="navbar-brand fs-3" href="#">
-                Easy Finance
-              </Link>
-              <button
-                className="navbar-toggler shadow-none border-0"
-                type="button"
-                data-toggle="collapse"
-                data-target="#myNavbar"
-                aria-controls="myNavbar"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-              >
-                <span className="navbar-toggler-icon"></span>
-              </button>
-              <div className="collapse navbar-collapse" id="myNavbar">
-                <ul className="navbar-nav justify-content-evenly flex-grow-1 pe-1">
-                  <li className="nav-item">
-                    <Link className="nav-link" to={"/personaldetail"}>
-                      Personal Detail
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="nav-link" to={"/category"}>
-                      category
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="nav-link active" href="#">
-                      EMI Calulator
-                    </Link>
-                  </li>
-                  <li class="nav-item dropdown">
-                    <Link
-                      class="nav-link dropdown-toggle"
-                      href="#"
-                      id="navbarDropdownMenuLink"
-                      role="button"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      Loan List
-                    </Link>
-                    <div
-                      class="dropdown-menu"
-                      aria-labelledby="navbarDropdownMenuLink"
-                    >
-                      <Link class="dropdown-item" to={"/personalloandetail"}>
-                        Personal Loan
-                      </Link>
-                      <Link class="dropdown-item" to={"/personalloandetail"}>
-                        Home Loan
-                      </Link>
-                      <Link class="dropdown-item" to={"/personalloandetail"}>
-                        Vehicle Loan
-                      </Link>
-                    </div>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="nav-link" href="#">
-                      Help
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="nav-link" href="#">
-                      Contact
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="nav-link" href="#">
-                      Enquiries
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="nav-link" href="#">
-                      About
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-              <form className="d-flex">
-                <input
-                  type="text"
-                  className="form-control me-2"
-                  placeholder="Search"
-                />
-                <button type="button" className="btn btn-primary rounded-pill">
-                  Search
-                </button>
-              </form>
-            </nav>
-          </header>
-        </div> */}
-        <div>
-          <h1>Welcome to EmiCalculator</h1>
-        </div>
+     
+    <Container className='container'>  
 {/* grandparent1 */}
         <div className="col-4">
           <div>
@@ -209,7 +114,8 @@ export default function EmiCalculator() {
           
         
             <div className="Parent2Child"> 
-                
+
+
                    <label>loanAmount</label><h5>Rs.{emiData.loanAmount}</h5>
                    <label>Interest</label><h5>{emiData.interest}%</h5>
                    <label>Emi</label><h5>₹{emiValue}</h5>
@@ -238,8 +144,9 @@ export default function EmiCalculator() {
               }}
              
             />
-          </div>      
-      </div>
+          </div>   
+          </Container>    
+      
     </>
   );
 }

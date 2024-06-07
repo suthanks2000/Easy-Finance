@@ -11,7 +11,6 @@ import InputText from "./InputComponents/InputText";
 import axios from "axios";
 import { TextField, Typography } from "@mui/material";
 
-
 export default function Register() {
   const userdata = useSelector((state) => state.regisLogin.userdata);
   const regData = useSelector((state) => state.regisLogin.registerData);
@@ -61,7 +60,7 @@ export default function Register() {
               requestData.append('useremail', regData.Email);
               requestData.append('userpassword', regData.Password);
           
-              const response = await axios.post("https://suthanks.pythonanywhere.com/userRegister", requestData);
+              const response = await axios.post("https://disondys.pythonanywhere.com/userRegister", requestData);
               console.log(response.data);
               alert(response.data);
               
@@ -69,8 +68,9 @@ export default function Register() {
               setLoading(false);
               setPersonalDetailPopup(true);
 
-              const uidGet = await axios.get(`https://suthanks.pythonanywhere.com/userRegister?useremail=${regData.Email}`);
+              const uidGet = await axios.get(`https://PreethiJP.pythonanywhere.com/userPersonalDetail?useremail=${regData.Email}`);
               setRegisterUserData(uidGet.data)
+
               localStorage.setItem("userId",JSON.stringify(uidGet.data.id))
               console.log(uidGet.data)
               alert(uidGet.data.id)
@@ -82,7 +82,7 @@ export default function Register() {
          
             }
           };
- 
+
 
   const handlePersonalDetail = async () => {
     const requiredFields = [
@@ -129,7 +129,7 @@ export default function Register() {
     personalData.append('contact',personalInfo.Contact)
     
 
-    await axios.post("https://suthanks.pythonanywhere.com/userPersonalDetail",personalData).then(
+    await axios.post("https://PreethiJP.pythonanywhere.com/userPersonalDetail",personalData).then(
                (res) =>{
                    console.log(res.data)
                    alert(res.data)
