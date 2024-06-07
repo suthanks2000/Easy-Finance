@@ -56,7 +56,7 @@ const fetchData = async () => {
     setEditData(false)
   }
 
-  const handleUpdateDetail = async() => { // update btn function
+  const handleUpdateDetail = async() => {
    
     const docRef = doc(db, "personalDetails", filterData.id);
 
