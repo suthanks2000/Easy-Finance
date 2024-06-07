@@ -3,7 +3,7 @@
 import { Form, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { setBankLogin } from "../Redux-Toolkit/slices/BankerReg&LogCounter";
 import { Button, TextField } from "@mui/material";
 
@@ -38,6 +38,7 @@ export default function BankerLog() {
     // setSpinner(false)
   }, []);
 
+  const data=useRef();
   const handleOnChange = (ele) => {
     dispatch(
       setBankLogin({ ...bankLogin, [ele.target.name]: ele.target.value })
@@ -52,7 +53,7 @@ export default function BankerLog() {
   const handleBankerLogin = (ele) => {
     ele.preventDefault();
     let valid = true;
-
+    // console.log("ref",data.current.value)
     if (!bankLogin.Email) {
       setEmailError("Email is required");
       valid = false;
@@ -84,7 +85,7 @@ export default function BankerLog() {
         <p>{JSON.stringify(bankLogin)}</p>
         <h1>Welcome to Login Pages</h1>
 
-        <form handleBankerLogin>
+        <form  handleBankerLogin >
           <div>
             <TextField
               label="Email"
