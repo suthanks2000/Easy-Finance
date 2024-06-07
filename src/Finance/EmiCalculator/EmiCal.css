@@ -8,6 +8,35 @@ width: 80%;
  margin-top: 20px;   
 }
 
+.Typography{
+ background-color: red; 
+ padding: 10px;  
+ border-radius: 5px;
+ margin-bottom: 20px;
+}
+
+.paper{
+    padding: 20px;
+    text-align: center;
+}
+
+.formControl{
+    margin: 10px 0;
+}
+
+.slider{
+    margin-top: 20px;
+}
+
+.piechart{
+    margin-top: 20px;
+    margin-bottom:50px;
+}
+
+.Typography{
+    background-color: lightgreen;
+}
+
 
 
 

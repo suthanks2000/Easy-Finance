@@ -1,4 +1,4 @@
-import './EmiCal.css'
+import "./EmiCal.css";
 
 import { useState } from "react";
 import React from "react";
@@ -6,15 +6,23 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import { Link } from "react-router-dom";
 import {
-  TextField, Slider, Typography, Box, Container, Grid, Paper, Button, Divider
-} from '@mui/material';
+  TextField,
+  Slider,
+  Typography,
+  Box,
+  Container,
+  Grid,
+  Paper,
+  Button,
+  Divider,
+} from "@mui/material";
+import Navbar from "../Navbar";
 ChartJS.register(ArcElement, Tooltip, Legend);
-
 
 export default function EmiCalculator() {
   const [emiData, setEmiData] = useState({});
   const intr = emiData.interest / 1200;
-  const TenureYear =emiData.tenureMonth? emiData.tenureMonth / 12 : null;
+  const TenureYear = emiData.tenureMonth ? emiData.tenureMonth / 12 : null;
 
   const emiValue = emiData.tenureMonth
     ? Math.round(
@@ -23,130 +31,150 @@ export default function EmiCalculator() {
       )
     : null;
 
-  const totalAmt = emiValue? emiData.tenureMonth * emiValue :null ;
+  const totalAmt = emiValue ? emiData.tenureMonth * emiValue : null;
 
-  const TotalInterest = emiValue? totalAmt - emiData.loanAmount :null;
+  const TotalInterest = emiValue ? totalAmt - emiData.loanAmount : null;
 
   const handleChange = (ele) => {
-    setEmiData({ ...emiData, [ele.target.name]: ele.target.value })
-  }
+    setEmiData({ ...emiData, [ele.target.name]: ele.target.value });
+  };
 
   return (
-    <>
-     
-    <Container className='container'>  
-{/* grandparent1 */}
-        <div className="col-4">
-          <div>
-            <label>loanAmount</label>
-            <input
-              type="number"
-              placeholder="Enter your loan amount"
-              name="loanAmount"
-              required
-              max={200000}
-              min={99999}
-              onKeyUp={(e) =>handleChange(e)}
-            />
-          </div>
+    <div className="GrandParent row">
+      <div className="grandparent1">
+        <header>
+          <Navbar />
+        </header>
+      </div>
 
-          <div>
-            <label>interest</label>
-            <input
-              type="number"
-              value={emiData.interest}
-              placeholder="Your interest"
-              name="interest"
-              required
-              onKeyUp={(e) =>handleChange(e)}
-              disabled
-            />
-            <input
-              type="range"
-              min="10"
-              name="interest"
-              max="24"
-              step="1"
-              onChange={(e) =>handleChange(e)}
-            />
-          </div>
+      <Container className="container">
+        {/* grandparent1 */}
+        <Typography variant="h4" className="Typography" gutterBottom>
+          EMI Calculator
+        </Typography>
 
-          <div>
-            <label> Tenure</label>
+        <Grid container spacing={4}>
+          <Grid item xs={12} sm={6} md={4}>
+            <Paper className="paper">
+              <Typography variant="h6" className="Typography">
+                Enter Loan Details
+              </Typography>
+              <Divider />
 
-            <input
-              type="number"
-              placeholder="EMI in months"
-              name="tenureMonth"
-              required
-              onKeyUp={(e) =>handleChange(e)}
-            />
+              <Box className="formControl">
+                <TextField
+                  fullWidth
+                  label="Loan Amount"
+                  variant="outlined"
+                  type="number"
+                  name="loanAmount"
+                  value={emiData.loanAmount}
+                  onChange={handleChange}
+                  inputProps={{ min: 100000, max: 200000 }}
+                />
+              </Box>
+              <Box className="formControl">
+                <Typography className="Typography">Interest Rate</Typography>
 
-            <input
-              type="number"
-              placeholder="EMI in years"
-              value={TenureYear }
-              name="tenureYears"
-              required
-              onKeyUp={(e) =>handleChange(e)}
-              disabled
-            />
-          </div>
+                <Slider
+                  className="slider"
+                  value={emiData.interest}
+                  name="interest"
+                  onChange={(e, value) =>
+                    handleChange({ target: { name: "interest", value } })
+                  }
+                  aria-labelledby="continuous-slider"
+                  valueLabelDisplay="auto"
+                  min={10}
+                  max={24}
+                  step={0.1}
+                />
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  type="number"
+                  name="interest"
+                  value={emiData.interest}
+                  onChange={handleChange}
+                  inputProps={{ min: 10, max: 24, step: 0.1 }}
+                />
+              </Box>
 
-          <div>
-            <label>EMI</label>
-            <input type="number" placeholder="Monthly EMI" value={emiValue} disabled />
-          </div>
+              <Box>
+                <TextField
+                  fullWidth
+                  label="Tenure (Months)"
+                  variant="outlined"
+                  type="number"
+                  name="tenureMonth"
+                  value={emiData.tenureMonth}
+                  onChange={handleChange}
+                />
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  type="number"
+                  value={TenureYear}
+                  disabled
+                />
+              </Box>
+            </Paper>
+          </Grid>
 
-          <div>
-            <label>TotalAmount</label>
-            <input type="number" placeholder="EMI Total Amount" value={totalAmt} disabled/>
-          </div>
+          {/* Grandparent2 */}
+          <Grid item xs={12} sm={6} md={4}>
+            <Paper className="paper">
+              <Typography variant="h6" className="Typography">
+                {" "}
+                Your EMI DETAILS
+              </Typography>
 
-          <div>
-            <label>TotalInterest</label>
-            <input type="number" placeholder="EMI Total Interest" value={TotalInterest} disabled/>
-          </div>
-        </div>
+              <Divider />
+              <br></br>
+              <br></br>
 
-{/* Grandparent2 */}
-        <div className="col-4">
-          
-        
-            <div className="Parent2Child"> 
+              <Box className="formControl">
+                <Typography variant="h5">Loan EMI: ₹{emiValue}</Typography>
+              </Box>
+              <br></br>
+              <br></br>
 
+              <Box className="formControl">
+                <Typography variant="h5">
+                  Total Interest Payable: ₹{TotalInterest}
+                </Typography>
+              </Box>
+              <br></br>
+              <br></br>
 
-                   <label>loanAmount</label><h5>Rs.{emiData.loanAmount}</h5>
-                   <label>Interest</label><h5>{emiData.interest}%</h5>
-                   <label>Emi</label><h5>₹{emiValue}</h5>
-                   <label>ToatalAmount</label><h5>{totalAmt}</h5>
-                   <label>ToatalInterest</label><h5>{TotalInterest}</h5>
-                
-              
-                  </div> 
-                  
-              
-          
-          </div>
- {/* Grandparent3          */}
+              <Box className="formControl">
+                <Typography variant="h5">Total Payment:₹{totalAmt}</Typography>
+              </Box>
+              <br></br>
+              <br></br>
+            </Paper>
+          </Grid>
+          {/* Grandparent3          */}
 
-
-          <div className="col-4">
-            <Pie
-              data={{
-                labels: ["Total Interest", "Total Amount"],
-                datasets: [
-                  {
-                    data: [TotalInterest, totalAmt],
-                    backgroundColor: ["red", "green"],
-                  },
-                ],
-              }}
-             
-            />
-          </div>   
-          </Container>    
-      
-    </>
+          <Grid item xs={12} sm={12} md={4}>
+            <Paper className="paper">
+              <div className="piechart">
+                <Pie
+                  data={{
+                    labels: ["Total Interest", "Total Amount"],
+                    datasets: [
+                      {
+                        data: [TotalInterest, totalAmt],
+                        backgroundColor: ["red", "green"],
+                      },
+                    ],
+                  }}
+                />
+              </div>
+            </Paper>
+          </Grid>
+        </Grid>
+      </Container>
+    </div>
   );
 }
