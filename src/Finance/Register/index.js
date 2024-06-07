@@ -11,7 +11,6 @@ import InputText from "./InputComponents/InputText";
 import axios from "axios";
 import { TextField, Typography } from "@mui/material";
 
-
 export default function Register() {
   const userdata = useSelector((state) => state.regisLogin.userdata);
   const regData = useSelector((state) => state.regisLogin.registerData);
@@ -68,9 +67,8 @@ export default function Register() {
               dispatch(setIsLogin(true));
               setLoading(false);
               setPersonalDetailPopup(true);
-              
-              const uidGet = await axios.get(`https://PreethiJP.pythonanywhere.com/userRegister?useremail=${regData.Email}&userpassword=${regData.Password}`);
 
+              const uidGet = await axios.get(`https://PreethiJP.pythonanywhere.com/userPersonalDetail?useremail=${regData.Email}`);
               setRegisterUserData(uidGet.data)
 
               localStorage.setItem("userId",JSON.stringify(uidGet.data.id))
@@ -86,118 +84,66 @@ export default function Register() {
           };
 
 
-          const handlePersonalDetail = async () => {
-            const requiredFields = [
-              "firstName",
-              "lastName",
-              "fatherName",
-              "Age",
-              "maritalStatus",
-              "Gender",
-              "District",
-              "City",
-              "pinCode",
-              "Contact"
-            ];
-          
-            const missingFields = requiredFields.filter(field => !personalInfo[field]);
-            if (missingFields.length > 0) {
-             
-              const errorMessage = `Please fill out the following fields: ${missingFields.join(", ")}`;
-              Swal.fire({
-                icon: "error",
-                title: "Missing Fields",
-                text: errorMessage,
-              });
-              return;
-            }
-            
-            
-            const personalData = new FormData();
-            personalData.append('userid', registerUserData.id);
-            personalData.append('first_name', personalInfo.firstName);
-            personalData.append('last_name', personalInfo.lastName);
-            personalData.append('father_name', personalInfo.fatherName);
-            personalData.append('age', personalInfo.Age);
-            personalData.append('gender', personalInfo.Gender);
-            personalData.append('marital_status', personalInfo.maritalStatus);
-            personalData.append('district', personalInfo.District);
-            personalData.append('city', personalInfo.City);
-            personalData.append('pincode', personalInfo.pinCode);
-            personalData.append('contact', personalInfo.Contact);
-            
-           
-            try {
-              const response = await axios.post("https://PreethiJP.pythonanywhere.com/userPersonalDetail", personalData);
-              console.log(response.data);
-              alert(response.data);
-              
-             
-              Swal.fire({
-                title: "Success",
-                text: "Personal details submitted successfully",
-                icon: "success",
-              });
-          
-              
-              navigate("/category");
-            } catch (error) {
-              console.error('Error:', error);
-             
-              Swal.fire({
-                title: "Error",
-                text: "An error occurred. Please try again later.",
-                icon: "error",
-              });
-            }
-          };
-          
- 
+  const handlePersonalDetail = async () => {
+    const requiredFields = [
+      "firstName",
+      "lastName",
+      "fatherName",
+      "Age",
+      "maritalStatus",
+      "Gender",
+      "District",
+      "City",
+      "pinCode",
+      "Contact"
+    ];
 
-  // const handlePersonalDetail = async () => {
-  //   const requiredFields = [
-  //     "firstName",
-  //     "lastName",
-  //     "fatherName",
-  //     "Age",
-  //     "maritalStatus",
-  //     "Gender",
-  //     "District",
-  //     "City",
-  //     "pinCode",
-  //     "Contact"
-  //   ];
+    const newFieldErrors = {};
+    requiredFields.forEach(field => {
+      if (!personalInfo[field]) {
+        newFieldErrors[field] = "Please fill out this field.";
+      }
+    });
 
-  //   const newFieldErrors = {};
-  //   requiredFields.forEach(field => {
-  //     if (!personalInfo[field]) {
-  //       newFieldErrors[field] = "Please fill out this field.";
-  //     }
-  //   });
-
-  //   if (Object.keys(newFieldErrors).length > 0) {
-  //     setFieldErrors(newFieldErrors);
-  //     Swal.fire({
-  //       icon: "error",
-  //       title: "Something went wrong!",
-  //       text: "Please fill out the highlighted fields.",
-  //     });
-  //     return;
-  //   }
+    if (Object.keys(newFieldErrors).length > 0) {
+      setFieldErrors(newFieldErrors);
+      Swal.fire({
+        icon: "error",
+        title: "Something went wrong!",
+        text: "Please fill out the highlighted fields.",
+      });
+      return;
+    }
     
-  //   let personalData=new FormData();
-  //   personalData.append('userid',registerUserData.id)
-  //   personalData.append('first_name',personalInfo.firstName)
-  //   personalData.append('last_name',personalInfo.lastName)
-  //   personalData.append('father_name',personalInfo.fatherName)
-  //   personalData.append('age',personalInfo.Age)
-  //   personalData.append('gender',personalInfo.Gender)
-  //   personalData.append('marital_status',personalInfo.maritalStatus)
-  //   personalData.append('district',personalInfo.District)
-  //   personalData.append('city',personalInfo.City)
-  //   personalData.append('pincode',personalInfo.pinCode)
-  //   personalData.append('contact',personalInfo.Contact)
+    let personalData=new FormData();
+    personalData.append('userid',registerUserData.id)
+    personalData.append('first_name',personalInfo.firstName)
+    personalData.append('last_name',personalInfo.lastName)
+    personalData.append('father_name',personalInfo.fatherName)
+    personalData.append('age',personalInfo.Age)
+    personalData.append('gender',personalInfo.Gender)
+    personalData.append('marital_status',personalInfo.maritalStatus)
+    personalData.append('district',personalInfo.District)
+    personalData.append('city',personalInfo.City)
+    personalData.append('pincode',personalInfo.pinCode)
+    personalData.append('contact',personalInfo.Contact)
+    
 
+    await axios.post("https://PreethiJP.pythonanywhere.com/userPersonalDetail",personalData).then(
+               (res) =>{
+                   console.log(res.data)
+                   alert(res.data)
+               }
+           )
+
+    Swal.fire({
+      title: "Good job!",
+      text: "Successfully submitted Personal Details",
+      icon: "success",
+    });
+
+    navigate("/category");
+  };
 
   return (
     <>
