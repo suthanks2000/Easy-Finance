@@ -22,7 +22,7 @@ export default function BankerLog() {
   // console.log(adminData)
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
+  const passwordRegex =/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/
 
   const validateEmail = (email) => {
     return emailRegex.test(email);
@@ -66,7 +66,7 @@ export default function BankerLog() {
       valid = false;
     } else if (!validatePassword(bankLogin.Password)) {
       setPasswordError(
-        "Password must be at least 8 characters, including a number and a letter"
+        "Password at least 6 characters"
       );
       valid = false;
     }
@@ -88,7 +88,6 @@ export default function BankerLog() {
           <div>
             <TextField
               label="Email"
-              id="outlined-basic"
               variant="outlined"
               type="email"
               name="Email"
