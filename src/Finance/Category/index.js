@@ -9,6 +9,7 @@ export default function Category() {
     <>
       <Navbar />
       <h4>Category Page</h4>
+      
         <p className='display-6 mt-5'>Choose your loan type</p>
       <Container className="mt-5">
      

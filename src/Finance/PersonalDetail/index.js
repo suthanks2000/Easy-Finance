@@ -6,37 +6,35 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Button } from "react-bootstrap";
 import Spinner from 'react-bootstrap/Spinner';
+import axios from "axios";
 
 export default function PersonalDetail(){
   const userdata = useSelector((state) => state.regisLogin.userdata);
   const dispatch = useDispatch()
-const [usersData, setUsersData] = useState([]);
+const [usersData, setUsersData] = useState({});
 const [ editData,setEditData ] = useState(false)
 const [ filterData, setFilterData ] = useState({})
 const [ spinner, setSpinner] = useState(true)
-
+const [editPersonalData, setEditPersonalData] = useState({})
+const uid = localStorage.getItem("loginUserId");
 
 useEffect(() => {
-    fetchData();
+  getEditData();
 }, []);
 
+  
+const getEditData = async () => {
 
-
-const fetchData = async () => {
-  const q = query(collection(db, "personalDetails"),where("uid", "==", userdata.uid));
-  const docSnap = await getDocs(q);
-  const data = [];
-
-  docSnap.forEach((doc) => {
-    
-      data.push({ ...doc.data(), id: doc.id });
-  });
-
-
-  setUsersData(data);
-  console.log(userdata.uid)
+  try {
+    const response = await axios.get(`https://PreethiJP.pythonanywhere.com/personalData/${uid}`);
+    setUsersData(response.data);
+    console.log(response.data, 'usersData');
+  } catch (error) {
+    console.error('Error fetching personal data:', error);
+  }
 };
-   
+
+
    function handleEdit(user) {
       setFilterData(user);
       setEditData(true);
@@ -56,96 +54,123 @@ const fetchData = async () => {
     setEditData(false)
   }
 
-  const handleUpdateDetail = async() => {
-   
-    const docRef = doc(db, "personalDetails", filterData.id);
 
-    await updateDoc(docRef, filterData)
-    alert("Success: Personal details updated successfully");
-    fetchData();
-    setEditData(false);
+const handleUpdateDetail = async () => {
+  try {
+    let formData = new FormData();
+
+  
+    formData.append("first_name", filterData.first_name);
+    formData.append("last_name", filterData.last_name);
+    formData.append("father_name", filterData.father_name);
+    formData.append("age", filterData.age);
+    formData.append("gender", filterData.gender);
+    formData.append("marital_status", filterData.marital_status);
+    formData.append("district", filterData.district);
+    formData.append("city", filterData.city);
+    formData.append("pincode", filterData.pincode);
+    formData.append("contact", filterData.contact);
+
+    await axios.put(`https://PreethiJP.pythonanywhere.com/personalData/${uid}`, formData);
+    console.log("Personal details updated successfully");
+    setEditData(false)
+    getEditData()
+  } catch (error) {
+    console.error("Error updating personal details:", error);
+  
+  }
 };
 
-    return (
-      <>
-        {!editData ? 
-          <>
-            <h1>Welcome to Personal Detail Page</h1>
-            { usersData.map((user,i) => {
-              return (
-                <div key={i}>1
-                  <p>Full Name: { user.firstName } { user.lastName }</p>
-                  <p>Father Name: {user.fatherName}</p>
-                      <p>Age: {user.Age}</p>
-                      <p>Gender: {user.Gender}</p>
-                      <p>Marital status: {user.maritalStatus}</p>
-                      <p>Email: {user.Email}</p>
-                      <p>District: {user.District}</p>
-                      <p>City: {user.City}</p>
-                      <p>Pincode: {user.pinCode}</p>
-                      <p>Contact: {user.Contact}</p>
-
-                      <button type="button" onClick={() => handleEdit(user)}>Edit</button>
-                </div>
-              )
-            })}
-
-          </>
-        : null}
-          <>
-          <Modal show= {editData}>
-          <center>
-              <Modal.Header>
-                <Modal.Title>
-                  {filterData.firstName}  {filterData.lastName} 
-                </Modal.Title>
-                <Button className="btn-close" onClick={exitFromEdit}></Button>
-              </Modal.Header>
-              <Modal.Body>
-              <h1>Edit Your Datas</h1>
-                
-            <div>  
+return (
+  <>
+  {!editData ? (
+    <>
+    <center>
+      <h1>Welcome to Personal Detail Page</h1>
+      <div>
+        <p>Full Name: {usersData.first_name} {usersData.last_name}</p>
+        <p>Father Name: {usersData.father_name}</p>
+        <p>Age: {usersData.age}</p>
+        <p>Gender: {usersData.gender}</p>
+        <p>Marital status: {usersData.marital_status}</p>
+        <p>District: {usersData.district}</p>
+        <p>City: {usersData.city}</p>
+        <p>Pincode: {usersData.pincode}</p>
+        <p>Contact: {usersData.contact}</p>
+        <button type="button" onClick={() => handleEdit(usersData)}>Edit</button>
+      </div>
+      </center>
+    </>
+  ) : null}
+  <>
+    <Modal show={editData}>
+      <center>
+        <Modal.Header>
+          <Modal.Title>
+            {filterData.first_name} {filterData.last_name}
+          </Modal.Title>
+          <Button className="btn-close" onClick={exitFromEdit}></Button>
+        </Modal.Header>
+        <Modal.Body>
+          <h1>Edit Your Data</h1>
+          <div>
             <label>First Name</label>
-              <input type="text" name ='firstName' defaultValue={filterData.firstName} onChange={(e)=>handleOnkeyup(e)}/>
-              </div> 
-
-              <div>  
+            <input type="text" name='first_name' defaultValue={filterData.first_name} onChange={(e) => handleOnkeyup(e)} />
+          </div>
+          <div>
             <label>Last Name</label>
-              <input type="text" name="lastName" defaultValue={filterData.lastName} onChange={(e)=>handleOnkeyup(e)}/>
-              </div>
-
-              <div>  
+            <input type="text" name="last_name" defaultValue={filterData.last_name} onChange={(e) => handleOnkeyup(e)} />
+          </div>
+          <div>
             <label>Father Name</label>
-              <input type="text" name="fatherName" defaultValue={filterData.fatherName} onChange={(e)=>handleOnkeyup(e)}/>
-              </div>
-
-              <div>  
+            <input type="text" name="father_name" defaultValue={filterData.father_name} onChange={(e) => handleOnkeyup(e)} />
+          </div>
+          <div>
             <label>Age</label>
-              <input type="number" name="Age" defaultValue={filterData.Age} onChange={(e)=>handleOnkeyup(e)}/>
-              </div>
-
+            <input type="number" name="age" defaultValue={filterData.age} onChange={(e) => handleOnkeyup(e)} />
+          </div>
               <div>
-            <label>Gender</label>
-              <input type="radio" name="Gender" value="male" defaultChecked={filterData.Gender === "male"}  onChange={(e)=>handleOnkeyup(e)}/> Male
-              <input type="radio" name="Gender" value="female" defaultChecked={filterData.Gender === "female"} onChange={(e)=>handleOnkeyup(e)} /> Female
-              </div>
-              
-              <div>  
-            <label>Email Address</label>
-              <input type="email" name="Email" defaultValue={filterData.Email} onChange={(e)=>handleOnkeyup(e)}/>
-              </div>
+                <label>Gender</label>
+                <input
+                  type="radio"
+                  name="gender"
+                  value="male"
+                  defaultChecked={filterData.gender === "male"}
+                  onChange={(e) => handleOnkeyup(e)}
+                />{" "}
+                Male
+                <input
+                  type="radio"
+                  name="gender"
+                  value="female"
+                  defaultChecked={filterData.gender === "female"}
+                  onChange={(e) => handleOnkeyup(e)}
+                />{" "}
+                Female
+              </div>   
+                <div>
+              <label>Marital Status</label>
+              <input
+                type="radio"
+                name="marital_status"
+                value="married"
+                defaultChecked={filterData.marital_status === "married"}
+                onChange={(e) => handleOnkeyup(e)}
+              />{" "}
+              Married
+              <input
+                type="radio"
+                name="marital_status"
+                value="unmarried"
+                defaultChecked={filterData.marital_status === "unmarried"}
+                onChange={(e) => handleOnkeyup(e)}
+              />{" "}
+              Unmarried
+            </div>
 
-          
-              <div>
-            <label>Marital Status</label>
-              <input type="radio" name="maritalStatus" value="married" defaultChecked={filterData.maritalStatus === "married"} onChange={(e)=>handleOnkeyup(e)}/> Married
-              <input type="radio" name="maritalStatus" value="unmarried" defaultChecked={filterData.maritalStatus === "unmarried"} onChange={(e)=>handleOnkeyup(e)}/> Unmarried
-              </div>
-  
-              
               <div>
                 <label>District</label>
-                <select name="District" defaultValue={filterData.District} onChange={(e)=>handleOnkeyup(e)}>
+                <select name="district" defaultValue={filterData.district} onChange={(e)=>handleOnkeyup(e)}>
                   <option>Select District</option>
                   <option>Ariyalur</option>
                   <option>Chengalpattu</option>
@@ -187,29 +212,25 @@ const fetchData = async () => {
                 </select>
               </div>
               
-              <div>  
-            <label>City</label>
-              <input type="text" name="City" defaultValue={filterData.City} onChange={(e)=>handleOnkeyup(e)}/>
-              </div>
-
-              <div>  
-            <label>Pincode</label>
-              <input type="text" name="pinCode" defaultValue={filterData.pinCode} onChange={(e)=>handleOnkeyup(e)}/>
-              </div>
-
-              <div>  
-            <label>Contact Number</label>
-              <input type="text" name="Contact" defaultValue={filterData.Contact} onChange={(e)=>handleOnkeyup(e)}/>
-              </div>
-            
-              </Modal.Body>
-              <Modal.Footer>
-                <Button className="btn btn-info" onClick={handleUpdateDetail}>Update</Button>
-              </Modal.Footer>
-            </center>
-            </Modal>
-          </>
-      
+              <div>
+              <label>City</label>
+              <input type="text" name="city" defaultValue={filterData.city} onChange={(e) => handleOnkeyup(e)} />
+            </div>
+            <div>
+              <label>Pincode</label>
+              <input type="text" name="pincode" defaultValue={filterData.pincode} onChange={(e) => handleOnkeyup(e)} />
+            </div>
+            <div>
+              <label>Contact Number</label>
+              <input type="text" name="contact" defaultValue={filterData.contact} onChange={(e) => handleOnkeyup(e)} />
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button className="btn btn-info" onClick={handleUpdateDetail}>Update</Button>
+          </Modal.Footer>
+        </center>
+      </Modal>
+    </>
   </>
 );
 }

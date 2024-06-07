@@ -71,7 +71,7 @@ export default function Register() {
               const uidGet = await axios.get(`https://PreethiJP.pythonanywhere.com/userPersonalDetail?useremail=${regData.Email}`);
               setRegisterUserData(uidGet.data)
 
-              localStorage.setItem("userId",JSON.stringify(uidGet.data.id))
+              localStorage.setItem("loginUserId",JSON.stringify(uidGet.data.id))
               console.log(uidGet.data)
               alert(uidGet.data.id)
               
