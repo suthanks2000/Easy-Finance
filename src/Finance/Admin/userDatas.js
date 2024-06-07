@@ -11,16 +11,29 @@ const UserDatas = () => {
        getUserDatas()
     },[])
 
-const getUserDatas = async () => {
-
-    try {
+//     const getUserDatas = async () => {
+//       try {
+//           const response = await axios.get("https://PreethiJP.pythonanywhere.com/adminUserData");
+//           console.log("userData", response.data); 
+//           setUserData(response.data);
+//       } catch (error) {
+//           console.error('Error fetching user data:', error); 
+//       }
+//   }
+  
+  const getUserDatas = async () => {
+  
         const response = await axios.get("https://PreethiJP.pythonanywhere.com/adminUserData");
-        setUserData(response.data);
-        console.log("userData",userData)
-        // alert("success")
-    } catch (error) {
-        console.error('Error fetching todos:', error);
-    }
+        console.log("userData", response.data); 
+        setUserData(response.data);  
+}
+
+
+const deleteUserRegData = async (id) => {
+    const deleteUser = await axios.delete(`https://PreethiJP.pythonanywhere.com/deleteUser/${id}`)
+    setUserData(deleteUser.data);
+    console.log(deleteUser)
+    console.log("id",id)
 }
 
   return (
@@ -37,10 +50,11 @@ const getUserDatas = async () => {
                 </thead>
                 <tbody>
                     {userData.map(user => (
-                        <tr key={user.id}>
+                        <tr key={user.uid}>
                            <td>{user.name}</td>
                             <td>{user.email}</td>
                             <td>{user.password}</td>
+                            <td><button onClick={deleteUserRegData(user.uid)}>Delete</button></td>
                         </tr>
                     ))}
                 </tbody>
