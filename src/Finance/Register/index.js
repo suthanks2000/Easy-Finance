@@ -11,7 +11,6 @@ import InputText from "./InputComponents/InputText";
 import axios from "axios";
 import { TextField, Typography } from "@mui/material";
 
-
 export default function Register() {
   const userdata = useSelector((state) => state.regisLogin.userdata);
   const regData = useSelector((state) => state.regisLogin.registerData);
@@ -68,9 +67,8 @@ export default function Register() {
               dispatch(setIsLogin(true));
               setLoading(false);
               setPersonalDetailPopup(true);
-              
-              const uidGet = await axios.get(`https://PreethiJP.pythonanywhere.com/userRegister?useremail=${regData.Email}&userpassword=${regData.Password}`);
 
+              const uidGet = await axios.get(`https://PreethiJP.pythonanywhere.com/userPersonalDetail?useremail=${regData.Email}`);
               setRegisterUserData(uidGet.data)
 
               localStorage.setItem("userId",JSON.stringify(uidGet.data.id))
@@ -84,7 +82,6 @@ export default function Register() {
          
             }
           };
-
 
           const handlePersonalDetail = async () => {
             const requiredFields = [
@@ -151,8 +148,7 @@ export default function Register() {
               });
             }
           };
-          
-
+    
 
   return (
     <>

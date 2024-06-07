@@ -5,6 +5,8 @@ const Dasborad = () => {
   return (
     <>
     <AdminNavbar/>
+    
+    <div>dasborad</div>
     </>
   )
 }

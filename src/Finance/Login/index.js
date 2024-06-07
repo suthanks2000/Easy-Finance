@@ -11,7 +11,6 @@ import {
   Alert,
   Spinner,
 } from "react-bootstrap";
-import { collection, getDocs } from "firebase/firestore";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import {
   setLoginData,
@@ -21,6 +20,7 @@ import {
 import "./index.css"; // Import your custom styles if any
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
+import { db } from "../FirebaseConfig";
 
 export default function Login() {
   const [adminData, setAdminData] = useState([]);
@@ -31,23 +31,6 @@ export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   fetchAdminData();
-  //   dispatch(setLoginData({}));
-  // }, []);
-
-  // const fetchAdminData = async () => {
-  //   try {
-  //     const querySnapshot = await getDocs(collection(db, "AdminId"));
-  //     const adData = [];
-  //     querySnapshot.forEach((doc) => {
-  //       adData.push(doc.data());
-  //     });
-  //     setAdminData(adData);
-  //   } catch (error) {
-  //     console.error("Error fetching admin data: ", error);
-  //   }
-  // };
 
   const handleLogin = async (e) => {
     // e.preventDefault();
