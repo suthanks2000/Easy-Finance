@@ -1,105 +1,185 @@
 import React, { useState } from 'react';
-import { TextField, Alert } from '@mui/material';
+import { TextField, Alert,Button} from '@mui/material';
 import './bankerReg.css'; 
+import axios from 'axios';
 
 const BankerReg = () => {
-  const [name, setName] = useState('');
-  const [company, setCompany] = useState('');
-  const [email, setEmail] = useState('');
-  const [district, setDistrict] = useState('');
-  const [city, setCity] = useState('');
-  const [pincode, setPincode] = useState('');
-  const [contact, setContact] = useState('');
-  const [alertField, setAlertField] = useState('');
+ 
 
-  const handleBlur = (inputValue, fieldName) => {
-    if (inputValue.trim() === '') {
-      setAlertField(fieldName)
-    } else {
-      setAlertField('');
+  const[bankerRegData,setBankerRegData]=useState({})
+  const[errors,setErrors]=useState({})
+
+  const handleOnChange=(e)=>{
+    setBankerRegData({...bankerRegData,[e.target.name]:e.target.value})
+  }
+
+  const validate=()=>{
+    let tempErrors={}
+    tempErrors.name=bankerRegData.name? "" : "This field is required";
+    tempErrors.email=bankerRegData.email?"":"This field is required";
+        tempErrors.company=bankerRegData.company?"":"This field is required";
+            tempErrors.district=bankerRegData.district?"":"This field is required";
+                tempErrors.city=bankerRegData.city?"":"This field is required";
+                    tempErrors.pincode=bankerRegData.pincode?"":"This field is required";
+                        tempErrors.contact=bankerRegData.contact?"":"This field is required";
+                        tempErrors.password=bankerRegData.password?"":"This field is required";
+
+                        setErrors(tempErrors)
+
+                  return Object.values(tempErrors).every(x => x === "");
+                     
+
+  }
+
+  const handleSubmit= async()=>{
+
+if(validate()){
+
+
+
+    const requestData=new FormData();
+    requestData.append('bankername',bankerRegData.name)
+    requestData.append('bankeremail',bankerRegData.email)
+    requestData.append('bankercompany',bankerRegData.company)
+    requestData.append('bankerdistrict',bankerRegData.district)
+    requestData.append('bankercity',bankerRegData.city)
+    requestData.append('bankerpincode',bankerRegData.pincode)
+    requestData.append('bankercontact',bankerRegData.contact)
+    requestData.append('bankerpassword',bankerRegData.password)
+
+
+
+
+try{
+   const response= await axios.post("https://disondys.pythonanywhere.com/bankerRegister",requestData);
+    console.log(response.data)
+    alert(response.data)
     }
-  };
+    catch(error){
+      console.errror(error)
+    }
+}
+  }
+
+
+
+
+
+
 
   return (
+   
     <div className='container-mt-4'>
+
+       {JSON.stringify(bankerRegData)}
+
       <h4>Banker Register</h4>
       <div className="text-field-container">
         <TextField
+        
           label="Name"
           id="outlined-size-small"
           size="small"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          onBlur={() => handleBlur(name, 'name')}
+          name='name'
+
+          onChange={handleOnChange}
+          error={Boolean(errors.name)}
+          helperText={errors.name}
         />
-        {alertField === '' && <Alert severity="error">Please fill this field</Alert>}
       </div>
       <div className="text-field-container">
         <TextField
+          name='company'
           label="Company/Bank Name"
           id="outlined-size-small"
           size="small"
-          value={company}
-          onChange={(e) => setCompany(e.target.value)}
-          onBlur={() => handleBlur(company, 'company')}
+          onChange={handleOnChange}
+          error={Boolean(errors.company)}
+          helperText={errors.company}
         />
-        {alertField === 'company' && <Alert severity="error">Please fill this field</Alert>}
       </div>
       <div className="text-field-container">
         <TextField
           label="Email Address"
           id="outlined-size-small"
           size="small"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          onBlur={() => handleBlur(email, 'email')}
+          name='email'
+          onChange={handleOnChange}
+          error={Boolean(errors.email)}
+          helperText={errors.email}
+          
         />
-        {alertField === 'email' && <Alert severity="error">Please fill this field</Alert>}
       </div>
+
+      <div className="text-field-container">
+        <TextField
+          label="password"
+          id="outlined-size-small"
+          size="small"
+          name='password'
+          onChange={handleOnChange}
+          error={Boolean(errors.password)}
+          helperText={errors.password}
+          
+        />
+      </div>
+
+
       <div className="text-field-container">
         <TextField
           label="District"
           id="outlined-size-small"
           size="small"
-          value={district}
-          onChange={(e) => setDistrict(e.target.value)}
-          onBlur={() => handleBlur(district, 'district')}
+          name='district'
+          onChange={handleOnChange}
+          error={Boolean(errors.district)}
+          helperText={errors.district}
+
         />
-        {alertField === 'district' && <Alert severity="error">Please fill this field</Alert>}
       </div>
       <div className="text-field-container">
         <TextField
           label="City"
           id="outlined-size-small"
           size="small"
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-          onBlur={() => handleBlur(city, 'city')}
+          name='city'
+          onChange={handleOnChange}
+          error={Boolean(errors.city)}
+          helperText={errors.city}
+
         />
-        {alertField === 'city' && <Alert severity="error">Please fill this field</Alert>}
       </div>
       <div className="text-field-container">
         <TextField
           label="Pincode"
           id="outlined-size-small"
           size="small"
-          value={pincode}
-          onChange={(e) => setPincode(e.target.value)}
-          onBlur={() => handleBlur(pincode, 'pincode')}
+          name='pincode'
+          onChange={handleOnChange}
+          error={Boolean(errors.pincode)}
+          helperText={errors.pincode}
+
         />
-        {alertField === 'pincode' && <Alert severity="error">Please fill this field</Alert>}
       </div>
       <div className="text-field-container">
         <TextField
           label="Contact"
           id="outlined-size-small"
           size="small"
-          value={contact}
-          onChange={(e) => setContact(e.target.value)}
-          onBlur={() => handleBlur(contact, 'contact')}
+          name='contact'
+          onChange={handleOnChange}
+          error={Boolean(errors.contact)}
+          helperText={errors.contact}
+
         />
-        {alertField === 'contact' && <Alert severity="error">Please fill this field</Alert>}
       </div>
+      <Button
+       varient='contained'
+       colour='sucess' 
+       onClick={handleSubmit}
+      >
+        Register
+      </Button>
     </div>
   );
 };

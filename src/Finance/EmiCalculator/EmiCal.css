@@ -1,41 +1,60 @@
-/* .GrandParent{
-display:flex;
-justify-content:space-between;
-margin: 0 auto;
-width: 80%;
-} */
-.container{
- margin-top: 20px;   
-}
 
-.Typography{
- background-color: red; 
- padding: 10px;  
- border-radius: 5px;
- margin-bottom: 20px;
-}
 
-.paper{
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+  }
+  
+.grandParent {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+
+  }
+  
+  .container {
+    flex-grow: 1;
+    margin-top: 20px;
+  }
+  
+  .gridContainer {
+    display: flex;
+  }
+  
+  .gridItem {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .paper {
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+  
+  .formControl {
+    margin-top: 10px;
+  }
+  
+  .piechart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  .h5{
     text-align: center;
-}
+  }
 
-.formControl{
-    margin: 10px 0;
-}
-
-.slider{
-    margin-top: 20px;
-}
-
-.piechart{
-    margin-top: 20px;
-    margin-bottom:50px;
-}
-
-.Typography{
+  .Typography{
     background-color: lightgreen;
-}
+
+  }
 
 
 

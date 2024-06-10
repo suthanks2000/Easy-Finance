@@ -58,7 +58,8 @@ function App() {
           <Route path="/loans/:loanName" element={<SecuredLoansDetails />} />
           <Route path="/showresult/:loanId" element={<ShowResult />} />
           <Route path="/emicalculator" element={<EmiCalculator/>}/>
-          {isLogin? <Route path="/personaldetail" element={<PersonalDetail/>}/>:null}
+          {/* {isLogin? <Route path="/personaldetail" element={<PersonalDetail/>}/>:null} */}
+          <Route path="/personaldetail" element={<PersonalDetail/>}/>
           <Route path="/loandatas" element={<LoanDatas/>}/>
           
           {/* banker routes */}

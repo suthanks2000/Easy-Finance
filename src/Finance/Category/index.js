@@ -1,57 +1,56 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../Navbar'; 
 import { Container, Row, Col } from 'react-bootstrap';
 import './index.css';
 
-
 export default function Category() {
   return (
     <>
       <Navbar />
-      <h4>Category Page</h4>
-        <p className='display-6 mt-5'>Choose your loan type</p>
-      <Container className="mt-5">
-     
-        <Row className="justify-content-around">
-        
-          <Col xs={12} sm={6} md={3} >
-          <Link to="/loans/personalloan" className='text-decoration-none'>
-            <div className="category-item">
-              <img src="personalloan.jpg" alt="Personal Loan" className=" category-image" />
-              <h5 className="text-center mt-2">Personal Loan</h5>
-            </div>
-            </Link>
-          </Col>
-      
-          <Col xs={12} sm={6} md={3} className="mb-4">
-          <Link to="/loans/homeloan" className='text-decoration-none'>
-            <div className="category-item">
-              <img src="homeloan12.jpg" alt="Home Loan" className="category-image" />
-              <h5 className="text-center mt-2">Home Loan</h5>
-            </div>
-            </Link>
-          </Col>
-          <Col xs={12} sm={6} md={3} className="mb-4">
-          <Link to="/loans/businessloan" className='text-decoration-none'>
-            <div className="category-item">
-              <img src="businessloan1.jpg" alt="Business Loan" className=" category-image" />
-              <h5 className="text-center mt-2">Business Loan</h5>
-            </div>
-            </Link>
-          </Col>
-          <Col xs={12} sm={6} md={3} className="mb-4">
-          <Link to="/loans/vehicleloan" className='text-decoration-none'>
-            <div className="category-item">
-              <img src="vehicleloan.jpg" alt="Vehicle Loan" className=" category-image" />
-              <h5 className="text-center mt-2">Vehicle Loan</h5>
-            </div>
-            </Link>
-          </Col>
-        </Row>
-      </Container>
+      <div className="app">
+        <div className="container">
+          <h4>We provide Loans</h4>
+        </div>
+        <div className="bottom-right-container">
+          <Row className="justify-content-around">
+            <Col xs={12} sm={6} md={3}>
+              <Link to="/loans/personalloan" className='text-decoration-none'>
+                <div className="category-item">
+                  <img src="personalloan.jpg" alt="Personal Loan" className="category-image" />
+                  <h5 className="text-center mt-2">Personal Loan</h5>
+                </div>
+              </Link>
+            </Col>
+            <Col xs={12} sm={6} md={3} className="mb-4">
+              <Link to="/loans/homeloan" className='text-decoration-none'>
+                <div className="category-item">
+                  <img src="homeloan12.jpg" alt="Home Loan" className="category-image" />
+                  <h5 className="text-center mt-2">Home Loan</h5>
+                </div>
+              </Link>
+            </Col>
+            <Col xs={12} sm={6} md={3} className="mb-4">
+              <Link to="/loans/businessloan" className='text-decoration-none'>
+                <div className="category-item">
+                  <img src="businessloan1.jpg" alt="Business Loan" className="category-image" />
+                  <h5 className="text-center mt-2">Business Loan</h5>
+                </div>
+              </Link>
+            </Col>
+            <Col xs={12} sm={6} md={3} className="mb-4">
+              <Link to="/loans/vehicleloan" className='text-decoration-none'>
+                <div className="category-item">
+                  <img src="vehicleloan.jpg" alt="Vehicle Loan" className="category-image" />
+                  <h5 className="text-center mt-2">Vehicle Loan</h5>
+                </div>
+              </Link>
+            </Col>
+          </Row>
+        </div>
+      </div>
 
-      
-<div className="container mt-5">
+      <div className="container mt-5">
   <div className="row">
     <div className="col-md-6">
       <div className="accordion" id="accordionPanelsStayOpenExample1">
@@ -120,3 +119,4 @@ export default function Category() {
 
 
 
+    

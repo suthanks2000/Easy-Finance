@@ -43,6 +43,7 @@ const deleteUserRegData = async (id) => {
     getUserDatas()
 }
 
+
   return (
    <>
    <AdminNavbar />
