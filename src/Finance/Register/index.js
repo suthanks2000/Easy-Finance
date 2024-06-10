@@ -60,7 +60,7 @@ export default function Register() {
               requestData.append('useremail', regData.Email);
               requestData.append('userpassword', regData.Password);
           
-              const response = await axios.post("https://disondys.pythonanywhere.com/userRegister", requestData);
+              const response = await axios.post("https://suthanks.pythonanywhere.com/userRegister", requestData);
               console.log(response.data);
               alert(response.data);
               
@@ -68,7 +68,7 @@ export default function Register() {
               setLoading(false);
               setPersonalDetailPopup(true);
 
-              const uidGet = await axios.get(`https://PreethiJP.pythonanywhere.com/userPersonalDetail?useremail=${regData.Email}`);
+              const uidGet = await axios.get(`https://suthanks.pythonanywhere.com/userPersonalDetail?useremail=${regData.Email}`);
               setRegisterUserData(uidGet.data)
 
               localStorage.setItem("userId",JSON.stringify(uidGet.data.id))
@@ -125,7 +125,7 @@ export default function Register() {
             
            
             try {
-              const response = await axios.post("https://PreethiJP.pythonanywhere.com/userPersonalDetail", personalData);
+              const response = await axios.post("https://suthanks.pythonanywhere.com/userPersonalDetail", personalData);
               console.log(response.data);
               alert(response.data);
               
@@ -186,7 +186,7 @@ export default function Register() {
       </Container>
 
       <Modal show={personalDetailPopup} onHide={() => setPersonalDetailPopup(false)} centered>
-        <Modal.Header closeButton>
+        <Modal.Header >
           <Modal.Title>Personal Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>

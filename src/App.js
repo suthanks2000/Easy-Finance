@@ -21,6 +21,8 @@ import UserDatas from "./Finance/Admin/userDatas";
 import BankerPayment from "./Finance/Banker/bankerPayment";
 import BankerDatas from "./Finance/Admin/banker/bankerDatas";
 import LogLinksent from "./Finance/Admin/banker/logLinksent";
+import Customerdata from "./Finance/Banker/datasdownload.js";
+import LandinngComponent from "./Finance/Banker/LandingPage/index.js";
 
 
 function App() {
@@ -63,6 +65,8 @@ function App() {
           <Route path="/banker/login" element = {<BankerLog/>}/>
           <Route path="/banker/register" element = {<BankerReg/>}/>
           <Route path="/banker/payment" element={<BankerPayment/>}/>
+          <Route path="/banker/customerdata" element = {<Customerdata/>}/>
+          <Route path="/banker/home" element = {<LandinngComponent/>}/>
           
           {/* admin routes */}
           <Route path="/admin/loandatas" element={<UserLoanDatas/>}/>
