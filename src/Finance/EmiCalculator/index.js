@@ -49,12 +49,12 @@ export default function EmiCalculator() {
 
       <Container className="container">
         {/* grandparent1 */}
-        <Typography variant="h4" className="Typography" gutterBottom>
+        <Typography variant="h5" className="h5" gutterBottom>
           EMI Calculator
         </Typography>
 
-        <Grid container spacing={4}>
-          <Grid item xs={12} sm={6} md={4}>
+        <Grid container spacing={4} className="gridContainer">
+          <Grid item xs={6} sm={6} md={4}>
             <Paper className="paper">
               <Typography variant="h6" className="Typography">
                 Enter Loan Details
@@ -67,6 +67,7 @@ export default function EmiCalculator() {
                   label="Loan Amount"
                   variant="outlined"
                   type="number"
+                  size="small"
                   name="loanAmount"
                   value={emiData.loanAmount}
                   onChange={handleChange}
@@ -79,6 +80,7 @@ export default function EmiCalculator() {
                 <Slider
                   className="slider"
                   value={emiData.interest}
+                  size="small"
                   name="interest"
                   onChange={(e, value) =>
                     handleChange({ target: { name: "interest", value } })
@@ -93,6 +95,11 @@ export default function EmiCalculator() {
                   fullWidth
                   variant="outlined"
                   type="number"
+                  size="small"
+                  label="INTEREST"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   name="interest"
                   value={emiData.interest}
                   onChange={handleChange}
@@ -106,13 +113,20 @@ export default function EmiCalculator() {
                   label="Tenure (Months)"
                   variant="outlined"
                   type="number"
+                  size="small"
                   name="tenureMonth"
                   value={emiData.tenureMonth}
                   onChange={handleChange}
                 />
                 <TextField
                   fullWidth
+                  label="Tenure (Years)"
+                  id="outlined-number"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   variant="outlined"
+                  size="small"
                   type="number"
                   value={TenureYear}
                   disabled
@@ -122,7 +136,7 @@ export default function EmiCalculator() {
           </Grid>
 
           {/* Grandparent2 */}
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid item xs={6} sm={6} md={4}>
             <Paper className="paper">
               <Typography variant="h6" className="Typography">
                 {" "}
@@ -130,28 +144,22 @@ export default function EmiCalculator() {
               </Typography>
 
               <Divider />
-              <br></br>
-              <br></br>
 
               <Box className="formControl">
                 <Typography variant="h5">Loan EMI: ₹{emiValue}</Typography>
               </Box>
-              <br></br>
-              <br></br>
 
               <Box className="formControl">
                 <Typography variant="h5">
                   Total Interest Payable: ₹{TotalInterest}
                 </Typography>
               </Box>
-              <br></br>
-              <br></br>
+             
 
               <Box className="formControl">
                 <Typography variant="h5">Total Payment:₹{totalAmt}</Typography>
               </Box>
-              <br></br>
-              <br></br>
+             
             </Paper>
           </Grid>
           {/* Grandparent3          */}
