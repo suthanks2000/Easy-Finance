@@ -1,10 +1,23 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setRegisterData, setuserdata, setIsLogin } from "../Redux-Toolkit/slices/RegLogCounter";
+import {
+  setRegisterData,
+  setuserdata,
+  setIsLogin,
+} from "../Redux-Toolkit/slices/RegLogCounter";
 import { useNavigate, Link } from "react-router-dom";
-import { Modal, Button, Form, Container, Row, Col, Alert, Spinner } from "react-bootstrap";
+import {
+  Modal,
+  Button,
+  Form,
+  Container,
+  Row,
+  Col,
+  Alert,
+  Spinner,
+} from "react-bootstrap";
 import Swal from "sweetalert2";
-import './index.css';
+import "./index.css";
 import InputDropdown from "./InputComponents/InputDropdown";
 import InputRadio from "./InputComponents/InputRadio";
 import InputText from "./InputComponents/InputText";
@@ -23,15 +36,16 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
-  const [ registerUserData,setRegisterUserData ] = useState({})
+  const [registerUserData, setRegisterUserData] = useState({});
 
 
   const { personalInfo, inputInfo } = useSelector((state) => state.personalDetail);
 
 
 
+
   const personalDetailInput = inputInfo.map((ele) => {
-    if (ele.inputType === "text" || ele.inputType === "number" ) {
+    if (ele.inputType === "text" || ele.inputType === "number") {
       return <InputText key={ele.id} ele={ele} />;
     }
     if (ele.inputType === "dropdown") {
@@ -53,7 +67,7 @@ export default function Register() {
     if (!regData.Name) newFieldErrors.Name = "Please fill out this field.";
     if (!regData.Email) newFieldErrors.Email = "Please fill out this field.";
     if (!regData.Password) newFieldErrors.Password = "Please fill out this field.";
-  
+
     if (Object.keys(newFieldErrors).length > 0) {
       setFieldErrors(newFieldErrors);
       setLoading(false);
@@ -69,7 +83,7 @@ export default function Register() {
       const response = await axios.post("https://PreethiJP.pythonanywhere.com/userRegister", requestData);
       console.log(response.data);
       alert(response.data);
-      
+
       dispatch(setIsLogin(true));
       setLoading(false);
       setPersonalDetailPopup(true);
@@ -77,6 +91,7 @@ export default function Register() {
       const uidGet = await axios.get(`https://PreethiJP.pythonanywhere.com/userPersonalDetail?useremail=${regData.Email}`);
       localStorage.setItem("loginUserId",JSON.stringify(uidGet.data.id));
       setPersonalDetailPopup(true);
+      alert(uidGet.data.id);
 
     } catch (error) {
       setLoading(false);
@@ -101,6 +116,7 @@ export default function Register() {
     const missingFields = requiredFields.filter(field => !personalInfo[field]);
     if (missingFields.length > 0) {
       const errorMessage = `Please fill out the following fields: ${missingFields.join(", ")}`;
+
       Swal.fire({
         icon: "error",
         title: "Missing Fields",
@@ -135,7 +151,6 @@ export default function Register() {
       navigate("/category");
     } catch (error) {
       console.error('Error:', error);
-     
       Swal.fire({
         title: "Error",
         text: "An error occurred. Please try again later.",
@@ -176,7 +191,11 @@ export default function Register() {
         </div>
       </div>
 
-      <Modal show={personalDetailPopup} onHide={() => setPersonalDetailPopup(false)} centered>
+      <Modal
+        show={personalDetailPopup}
+        onHide={() => setPersonalDetailPopup(false)}
+        centered
+      >
         <Modal.Header closeButton>
           <Modal.Title>Personal Details</Modal.Title>
         </Modal.Header>
@@ -185,9 +204,12 @@ export default function Register() {
           {Object.keys(fieldErrors).map(key => (
             fieldErrors[key] && <div key={key} className="error">{fieldErrors[key]}</div>
           ))}
+
         </Modal.Body>
         <Modal.Footer>
-          <Button className="modal-footer-btn" onClick={handlePersonalDetail}>Next</Button>
+          <Button className="modal-footer-btn" onClick={handlePersonalDetail}>
+            Next
+          </Button>
         </Modal.Footer>
       </Modal>
     </>
