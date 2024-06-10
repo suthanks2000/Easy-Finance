@@ -124,6 +124,7 @@ export default function Register() {
       });
       return;
     }
+
     
     const personalData = new FormData();
     personalData.append('userid', registerUserData.id);
