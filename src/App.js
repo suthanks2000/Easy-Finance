@@ -6,7 +6,7 @@ import Category from "./Finance/Category";
 import PersonalDetail from "./Finance/PersonalDetail";
 import SecuredLoansDetails from "./Finance/FinanceDetail/SecuredLoansDetails";
 import ShowResult from "./Finance/ShowResult";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./Finance/FirebaseConfig";
 import EmiCalculator from "./Finance/EmiCalculator";
@@ -23,11 +23,12 @@ import BankerDatas from "./Finance/Admin/banker/bankerDatas";
 import LogLinksent from "./Finance/Admin/banker/logLinksent";
 import Customerdata from "./Finance/Banker/datasdownload.js";
 import LandinngComponent from "./Finance/Banker/LandingPage/index.js";
-
+import BankerVerify from "./Finance/Admin/banker/BankerVerify.js";
 
 function App() {
   const {isLogin,userdata} = useSelector((state) => state.regisLogin);
   const dispatch = useDispatch();
+  const [emailVerify,setEmailVerify] = useState({})
 
   useEffect(() => {
     if (!isLogin) {
@@ -73,9 +74,10 @@ function App() {
           <Route path="/admin/loandatas" element={<UserLoanDatas/>}/>
           <Route path="/admin/userdatas" element={<UserDatas/>}/>
           <Route path="/admin" element={<Dasborad/>}/>
-          <Route path="/admin/banker/alldatas" element={<BankerDatas/>}/>
+          <Route path="/admin/banker/alldatas" element={<BankerDatas />}/>
           <Route path="/admin/banker/loglink" element={<LogLinksent/>}/>
           
+          <Route path="/verifiedEmail/:token" element={<BankerVerify/>}/>
           
         </Routes>
       </BrowserRouter>

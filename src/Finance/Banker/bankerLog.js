@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { setBankLogin } from "../Redux-Toolkit/slices/BankerReg&LogCounter";
 import { Button, TextField } from "@mui/material";
+import axios from "axios";
 
 export default function BankerLog() {
   //   const[adminData,setAdminData]=useState([])
@@ -50,31 +51,80 @@ export default function BankerLog() {
     }
   };
 
-  const handleBankerLogin = (ele) => {
+  // const handleBankerLogin = async (ele) => {
+  //   ele.preventDefault();
+  //   let valid = true;
+    // console.log("ref",data.current.value)
+    // if (!bankLogin.Email) {
+    //   setEmailError("Email is required");
+    //   valid = false;
+    // } 
+    // else if (!validateEmail(bankLogin.Email)) {
+    //   setEmailError("Invalid email format");
+    //   valid = false;
+    // }
+
+    // if (!bankLogin.Password) {
+    //   setPasswordError("password is required");
+    //   valid = false;
+    // } 
+    // else if (!validatePassword(bankLogin.Password)) {
+    //   setPasswordError(
+    //     "Password at least 6 characters"
+    //   );
+    //   valid = false;
+    // }
+  //   if (valid) {
+  //     try {
+  //         const res = await axios.get(`https://PreethiJP.pythonanywhere.com/allowBankerLogin?bankeremail=${bankLogin.Email}&bankerpassword=${bankLogin.Password}`);
+  //         console.log(res.data);
+  
+  //         if (res.data.message === "Banker not found") {
+  //             alert("Banker not found");
+  //         } else if (res.data.message === "Account not verified") {
+  //             alert("Your account is not verified");
+  //         } else {
+  //             alert("Verified successfully. Logging in...");
+  //             Navigate('/banker/home');
+  //         }
+  //     }
+  // }
+
+  const handleBankerLogin = async (ele) => {
     ele.preventDefault();
     let valid = true;
 
     if (!bankLogin.Email) {
-      setEmailError("Email is required");
-      valid = false;
-    } else if (!validateEmail(bankLogin.Email)) {
-      setEmailError("Invalid email format");
-      valid = false;
+        setEmailError("Email is required");
+        valid = false;
     }
 
     if (!bankLogin.Password) {
-      setPasswordError("password is required");
-      valid = false;
-    } else if (!validatePassword(bankLogin.Password)) {
-      setPasswordError("Password at least 6 characters");
-      valid = false;
+        setPasswordError("Password is required");
+        valid = false;
+
     }
 
     if (valid) {
-      alert("Form is valid");
-    }
-  };
+        try {
+            const res = await axios.get(`https://PreethiJP.pythonanywhere.com/allowBankerLogin?bankeremail=${bankLogin.Email}&bankerpassword=${bankLogin.Password}`);
+            console.log(res.data);
 
+            if (res.data.message === "Banker not found") {
+                alert("Banker not found");
+            } else if (res.data.message === "Account not verified") {
+                alert("Your account is not verified");
+            } else {
+                alert("Verified successfully. Logging in...");
+                Navigate('/banker/home');
+            }
+        } catch (error) {
+            console.error("Error during login:", error);
+            alert("Failed to login");
+        }
+    }
+};
+  
   return (
     <>
       {/* {

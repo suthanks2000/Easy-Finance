@@ -4,55 +4,59 @@ import "./bankerReg.css";
 import axios from "axios";
 
 const BankerReg = () => {
-  const [bankerRegData, setBankerRegData] = useState({});
-  const [errors, setErrors] = useState({});
+ 
 
-  const handleOnChange = (e) => {
-    setBankerRegData({ ...bankerRegData, [e.target.name]: e.target.value });
-  };
+  const[bankerRegData,setBankerRegData]=useState({})
+  const[errors,setErrors]=useState({})
 
-  const validate = () => {
-    let tempErrors = {};
-    tempErrors.name = bankerRegData.name ? "" : "This field is required";
-    tempErrors.email = bankerRegData.email ? "" : "This field is required";
-    tempErrors.company = bankerRegData.company ? "" : "This field is required";
-    tempErrors.district = bankerRegData.district
-      ? ""
-      : "This field is required";
-    tempErrors.city = bankerRegData.city ? "" : "This field is required";
-    tempErrors.pincode = bankerRegData.pincode ? "" : "This field is required";
-    tempErrors.contact = bankerRegData.contact ? "" : "This field is required";
-    tempErrors.password = bankerRegData.password? "": "This field is required";
+  const handleOnChange=(e)=>{
+    setBankerRegData({...bankerRegData,[e.target.name]:e.target.value})
+  }
 
-    setErrors(tempErrors);
+  const validate=()=>{
+    let tempErrors={}
+    tempErrors.name=bankerRegData.name? "" : "This field is required";
+    tempErrors.email=bankerRegData.email?"":"This field is required";
+        tempErrors.company=bankerRegData.company?"":"This field is required";
+            tempErrors.district=bankerRegData.district?"":"This field is required";
+                tempErrors.city=bankerRegData.city?"":"This field is required";
+                    tempErrors.pincode=bankerRegData.pincode?"":"This field is required";
+                        tempErrors.contact=bankerRegData.contact?"":"This field is required";
+                        tempErrors.password=bankerRegData.password?"":"This field is required";
 
-    return Object.values(tempErrors).every((x) => x === "");
-  };
+                        setErrors(tempErrors)
 
-  const handleSubmit = async () => {
-    if (validate()) {
-      const requestData = new FormData();
-      requestData.append("bankername", bankerRegData.name);
-      requestData.append("bankeremail", bankerRegData.email);
-      requestData.append("bankercompany", bankerRegData.company);
-      requestData.append("bankerdistrict", bankerRegData.district);
-      requestData.append("bankercity", bankerRegData.city);
-      requestData.append("bankerpincode", bankerRegData.pincode);
-      requestData.append("bankercontact", bankerRegData.contact);
-      requestData.append("bankerpassword", bankerRegData.password);
+                  return Object.values(tempErrors).every(x => x === "");
+                     
 
-      try {
-        const response = await axios.post(
-          "https://disondys.pythonanywhere.com/bankerRegister",
-          requestData
-        );
-        console.log(response.data);
-        alert(response.data);
-      } catch (error) {
-        console.errror(error);
-      }
+  }
+
+  const handleSubmit= async()=>{
+
+if(validate()){
+
+    const requestData=new FormData();
+    requestData.append('bankername',bankerRegData.name)
+    requestData.append('bankeremail',bankerRegData.email)
+    requestData.append('bankercompany',bankerRegData.company)
+    requestData.append('bankerdistrict',bankerRegData.district)
+    requestData.append('bankercity',bankerRegData.city)
+    requestData.append('bankerpincode',bankerRegData.pincode)
+    requestData.append('bankercontact',bankerRegData.contact)
+    requestData.append('bankerpassword',bankerRegData.password)
+
+try{
+   const response= await axios.post("https://PreethiJP.pythonanywhere.com/bankerRegister",requestData);
+    console.log(response.data)
+    alert(response.data)
     }
-  };
+    catch(error){
+      console.errror(error)
+    }
+}
+  }
+
+
 
   return (
     <div className="container-mt-4">
