@@ -6,7 +6,7 @@ import Category from "./Finance/Category";
 import PersonalDetail from "./Finance/PersonalDetail";
 import SecuredLoansDetails from "./Finance/FinanceDetail/SecuredLoansDetails";
 import ShowResult from "./Finance/ShowResult";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import EmiCalculator from "./Finance/EmiCalculator";
 import {setuserdata, setIsLogin} from "./Finance/Redux-Toolkit/slices/RegLogCounter";
 import BankerLog from "./Finance/Banker/bankerLog";
