@@ -1,87 +1,70 @@
-import React, { useState } from 'react';
-import { TextField, Alert,Button} from '@mui/material';
-import './bankerReg.css'; 
-import axios from 'axios';
+import React, { useState } from "react";
+import { TextField, Alert, Button } from "@mui/material";
+import "./bankerReg.css";
+import axios from "axios";
 
 const BankerReg = () => {
- 
+  const [bankerRegData, setBankerRegData] = useState({});
+  const [errors, setErrors] = useState({});
 
-  const[bankerRegData,setBankerRegData]=useState({})
-  const[errors,setErrors]=useState({})
+  const handleOnChange = (e) => {
+    setBankerRegData({ ...bankerRegData, [e.target.name]: e.target.value });
+  };
 
-  const handleOnChange=(e)=>{
-    setBankerRegData({...bankerRegData,[e.target.name]:e.target.value})
-  }
+  const validate = () => {
+    let tempErrors = {};
+    tempErrors.name = bankerRegData.name ? "" : "This field is required";
+    tempErrors.email = bankerRegData.email ? "" : "This field is required";
+    tempErrors.company = bankerRegData.company ? "" : "This field is required";
+    tempErrors.district = bankerRegData.district
+      ? ""
+      : "This field is required";
+    tempErrors.city = bankerRegData.city ? "" : "This field is required";
+    tempErrors.pincode = bankerRegData.pincode ? "" : "This field is required";
+    tempErrors.contact = bankerRegData.contact ? "" : "This field is required";
+    tempErrors.password = bankerRegData.password? "": "This field is required";
 
-  const validate=()=>{
-    let tempErrors={}
-    tempErrors.name=bankerRegData.name? "" : "This field is required";
-    tempErrors.email=bankerRegData.email?"":"This field is required";
-        tempErrors.company=bankerRegData.company?"":"This field is required";
-            tempErrors.district=bankerRegData.district?"":"This field is required";
-                tempErrors.city=bankerRegData.city?"":"This field is required";
-                    tempErrors.pincode=bankerRegData.pincode?"":"This field is required";
-                        tempErrors.contact=bankerRegData.contact?"":"This field is required";
-                        tempErrors.password=bankerRegData.password?"":"This field is required";
+    setErrors(tempErrors);
 
-                        setErrors(tempErrors)
+    return Object.values(tempErrors).every((x) => x === "");
+  };
 
-                  return Object.values(tempErrors).every(x => x === "");
-                     
+  const handleSubmit = async () => {
+    if (validate()) {
+      const requestData = new FormData();
+      requestData.append("bankername", bankerRegData.name);
+      requestData.append("bankeremail", bankerRegData.email);
+      requestData.append("bankercompany", bankerRegData.company);
+      requestData.append("bankerdistrict", bankerRegData.district);
+      requestData.append("bankercity", bankerRegData.city);
+      requestData.append("bankerpincode", bankerRegData.pincode);
+      requestData.append("bankercontact", bankerRegData.contact);
+      requestData.append("bankerpassword", bankerRegData.password);
 
-  }
-
-  const handleSubmit= async()=>{
-
-if(validate()){
-
-
-
-    const requestData=new FormData();
-    requestData.append('bankername',bankerRegData.name)
-    requestData.append('bankeremail',bankerRegData.email)
-    requestData.append('bankercompany',bankerRegData.company)
-    requestData.append('bankerdistrict',bankerRegData.district)
-    requestData.append('bankercity',bankerRegData.city)
-    requestData.append('bankerpincode',bankerRegData.pincode)
-    requestData.append('bankercontact',bankerRegData.contact)
-    requestData.append('bankerpassword',bankerRegData.password)
-
-
-
-
-try{
-   const response= await axios.post("https://disondys.pythonanywhere.com/bankerRegister",requestData);
-    console.log(response.data)
-    alert(response.data)
+      try {
+        const response = await axios.post(
+          "https://disondys.pythonanywhere.com/bankerRegister",
+          requestData
+        );
+        console.log(response.data);
+        alert(response.data);
+      } catch (error) {
+        console.errror(error);
+      }
     }
-    catch(error){
-      console.errror(error)
-    }
-}
-  }
-
-
-
-
-
-
+  };
 
   return (
-   
-    <div className='container-mt-4'>
-
-       {JSON.stringify(bankerRegData)}
+    <div className="container-mt-4">
+      {JSON.stringify(bankerRegData)}
 
       <h4>Banker Register</h4>
       <div className="text-field-container">
         <TextField
-        
           label="Name"
           id="outlined-size-small"
           size="small"
-          name='name'
-
+          name="name"
           onChange={handleOnChange}
           error={Boolean(errors.name)}
           helperText={errors.name}
@@ -89,7 +72,7 @@ try{
       </div>
       <div className="text-field-container">
         <TextField
-          name='company'
+          name="company"
           label="Company/Bank Name"
           id="outlined-size-small"
           size="small"
@@ -103,11 +86,10 @@ try{
           label="Email Address"
           id="outlined-size-small"
           size="small"
-          name='email'
+          name="email"
           onChange={handleOnChange}
           error={Boolean(errors.email)}
           helperText={errors.email}
-          
         />
       </div>
 
@@ -116,25 +98,22 @@ try{
           label="password"
           id="outlined-size-small"
           size="small"
-          name='password'
+          name="password"
           onChange={handleOnChange}
           error={Boolean(errors.password)}
           helperText={errors.password}
-          
         />
       </div>
-
 
       <div className="text-field-container">
         <TextField
           label="District"
           id="outlined-size-small"
           size="small"
-          name='district'
+          name="district"
           onChange={handleOnChange}
           error={Boolean(errors.district)}
           helperText={errors.district}
-
         />
       </div>
       <div className="text-field-container">
@@ -142,11 +121,10 @@ try{
           label="City"
           id="outlined-size-small"
           size="small"
-          name='city'
+          name="city"
           onChange={handleOnChange}
           error={Boolean(errors.city)}
           helperText={errors.city}
-
         />
       </div>
       <div className="text-field-container">
@@ -154,11 +132,10 @@ try{
           label="Pincode"
           id="outlined-size-small"
           size="small"
-          name='pincode'
+          name="pincode"
           onChange={handleOnChange}
           error={Boolean(errors.pincode)}
           helperText={errors.pincode}
-
         />
       </div>
       <div className="text-field-container">
@@ -166,18 +143,13 @@ try{
           label="Contact"
           id="outlined-size-small"
           size="small"
-          name='contact'
+          name="contact"
           onChange={handleOnChange}
           error={Boolean(errors.contact)}
           helperText={errors.contact}
-
         />
       </div>
-      <Button
-       varient='contained'
-       colour='sucess' 
-       onClick={handleSubmit}
-      >
+      <Button varient="contained" colour="sucess" onClick={handleSubmit}>
         Register
       </Button>
     </div>
