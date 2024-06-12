@@ -22,11 +22,13 @@ import LogLinksent from "./Finance/Admin/banker/logLinksent";
 import Customerdata from "./Finance/Banker/datasdownload.js";
 import LandinngComponent from "./Finance/Banker/LandingPage/index.js";
 import RegisterPersonalDetail from "./Finance/Register/RegisterPersonaldetail/index.js";
+import BankerVerify from "./Finance/Admin/banker/BankerVerify.js";
 
 
 function App() {
   const {isLogin,userdata} = useSelector((state) => state.regisLogin);
   const dispatch = useDispatch();
+  const [emailVerify,setEmailVerify] = useState({})
 
   // useEffect(() => {
   //   if (!isLogin) {
@@ -64,9 +66,10 @@ function App() {
           <Route path="/admin/loandatas" element={<UserLoanDatas/>}/>
           <Route path="/admin/userdatas" element={<UserDatas/>}/>
           <Route path="/admin" element={<Dasborad/>}/>
-          <Route path="/admin/banker/alldatas" element={<BankerDatas/>}/>
+          <Route path="/admin/banker/alldatas" element={<BankerDatas />}/>
           <Route path="/admin/banker/loglink" element={<LogLinksent/>}/>
           
+          <Route path="/verifiedEmail/:token" element={<BankerVerify/>}/>
           
         </Routes>
       </BrowserRouter>
