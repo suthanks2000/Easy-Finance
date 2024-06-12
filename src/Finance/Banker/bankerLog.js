@@ -23,7 +23,7 @@ export default function BankerLog() {
   // console.log(adminData)
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const passwordRegex =/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
 
   const validateEmail = (email) => {
     return emailRegex.test(email);
@@ -39,7 +39,7 @@ export default function BankerLog() {
     // setSpinner(false)
   }, []);
 
-  const data=useRef();
+  const data = useRef();
   const handleOnChange = (ele) => {
     dispatch(
       setBankLogin({ ...bankLogin, [ele.target.name]: ele.target.value })
@@ -102,6 +102,7 @@ export default function BankerLog() {
     if (!bankLogin.Password) {
         setPasswordError("Password is required");
         valid = false;
+
     }
 
     if (valid) {
@@ -132,7 +133,7 @@ export default function BankerLog() {
         <p>{JSON.stringify(bankLogin)}</p>
         <h1>Welcome to Login Pages</h1>
 
-        <form  handleBankerLogin >
+        <form handleBankerLogin>
           <div>
             <TextField
               label="Email"

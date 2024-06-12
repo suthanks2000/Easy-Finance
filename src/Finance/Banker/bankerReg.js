@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { TextField, Alert,Button} from '@mui/material';
-import './bankerReg.css'; 
-import axios from 'axios';
+import React, { useState } from "react";
+import { TextField, Alert, Button } from "@mui/material";
+import "./bankerReg.css";
+import axios from "axios";
 
 const BankerReg = () => {
  
@@ -57,21 +57,18 @@ try{
   }
 
 
-  return (
-   
-    <div className='container-mt-4'>
 
-       {JSON.stringify(bankerRegData)}
+  return (
+    <div className="container-mt-4">
+      {JSON.stringify(bankerRegData)}
 
       <h4>Banker Register</h4>
       <div className="text-field-container">
         <TextField
-        
           label="Name"
           id="outlined-size-small"
           size="small"
-          name='name'
-
+          name="name"
           onChange={handleOnChange}
           error={Boolean(errors.name)}
           helperText={errors.name}
@@ -79,7 +76,7 @@ try{
       </div>
       <div className="text-field-container">
         <TextField
-          name='company'
+          name="company"
           label="Company/Bank Name"
           id="outlined-size-small"
           size="small"
@@ -93,11 +90,10 @@ try{
           label="Email Address"
           id="outlined-size-small"
           size="small"
-          name='email'
+          name="email"
           onChange={handleOnChange}
           error={Boolean(errors.email)}
           helperText={errors.email}
-          
         />
       </div>
 
@@ -106,25 +102,22 @@ try{
           label="password"
           id="outlined-size-small"
           size="small"
-          name='password'
+          name="password"
           onChange={handleOnChange}
           error={Boolean(errors.password)}
           helperText={errors.password}
-          
         />
       </div>
-
 
       <div className="text-field-container">
         <TextField
           label="District"
           id="outlined-size-small"
           size="small"
-          name='district'
+          name="district"
           onChange={handleOnChange}
           error={Boolean(errors.district)}
           helperText={errors.district}
-
         />
       </div>
       <div className="text-field-container">
@@ -132,11 +125,10 @@ try{
           label="City"
           id="outlined-size-small"
           size="small"
-          name='city'
+          name="city"
           onChange={handleOnChange}
           error={Boolean(errors.city)}
           helperText={errors.city}
-
         />
       </div>
       <div className="text-field-container">
@@ -144,11 +136,10 @@ try{
           label="Pincode"
           id="outlined-size-small"
           size="small"
-          name='pincode'
+          name="pincode"
           onChange={handleOnChange}
           error={Boolean(errors.pincode)}
           helperText={errors.pincode}
-
         />
       </div>
       <div className="text-field-container">
@@ -156,18 +147,13 @@ try{
           label="Contact"
           id="outlined-size-small"
           size="small"
-          name='contact'
+          name="contact"
           onChange={handleOnChange}
           error={Boolean(errors.contact)}
           helperText={errors.contact}
-
         />
       </div>
-      <Button
-       varient='contained'
-       colour='sucess' 
-       onClick={handleSubmit}
-      >
+      <Button varient="contained" colour="sucess" onClick={handleSubmit}>
         Register
       </Button>
     </div>
