@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setPersonalInfo, setInputInfo } from '../../Redux-Toolkit/slices/PersonalDetailCounter'
 const InputText = (props) => {
   
-     const { personalInfo, inputInfo } = useSelector((state) => state.personalDetail)
+     const { personalInfo,temError } = useSelector((state) => state.personalDetail)
     const dispatch = useDispatch()
 
   return (

@@ -1,4 +1,5 @@
 import {React,useState} from 'react'
+import BankerNavbar from '../bankerNavbar'
 import {  Table } from 'react-bootstrap'
 import { useEffect } from 'react'
 import axios from 'axios'
@@ -89,9 +90,7 @@ const Customerdata = () => {
                     }
                 </tbody>
             </Table>
-           
-        
-          
+
             
     </>
   )
