@@ -22,7 +22,7 @@ const BankerNavbar = () => {
       <Link className="nav-link" to={'/category'}>category</Link>
     </li>
     <li className="nav-item">
-      <Link className="nav-link" to={'/admin/bankerreg'}>EMI Calulator</Link>
+      <Link className="nav-link" to={'/banker/payment'}>payment</Link>
     </li>
     <li className="nav-item">
       <button type='button' className="btn btn-danger"onClick={()=>Navigate('/banker/login')}>SignOut</button>

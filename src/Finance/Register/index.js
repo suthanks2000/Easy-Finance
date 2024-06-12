@@ -6,56 +6,42 @@ import {
   setIsLogin,
 } from "../Redux-Toolkit/slices/RegLogCounter";
 import { useNavigate, Link } from "react-router-dom";
-import {
-  Modal,
-  Button,
-  Form,
-  Container,
-  Row,
-  Col,
-  Alert,
-  Spinner,
-} from "react-bootstrap";
+import {Alert} from "react-bootstrap";
 import Swal from "sweetalert2";
-import "./index.css";
-import InputDropdown from "./InputComponents/InputDropdown";
-import InputRadio from "./InputComponents/InputRadio";
-import InputText from "./InputComponents/InputText";
 import axios from "axios";
-import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField, Typography, VisibilityOff, Visibility } from "@mui/material";
 import userImg from './userImg.png'
 import emailImg from './email.png'
 import passwordImg from './password.png'
+import "./index.css";
+
 
 export default function Register() {
   const userdata = useSelector((state) => state.regisLogin.userdata);
   const regData = useSelector((state) => state.regisLogin.registerData);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [personalDetailPopup, setPersonalDetailPopup] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
   const [registerUserData, setRegisterUserData] = useState({});
 
 
-  const { personalInfo, inputInfo } = useSelector((state) => state.personalDetail);
 
 
 
 
-  const personalDetailInput = inputInfo.map((ele) => {
-    if (ele.inputType === "text" || ele.inputType === "number") {
-      return <InputText key={ele.id} ele={ele} />;
-    }
-    if (ele.inputType === "dropdown") {
-      return <InputDropdown key={ele.id} ele={ele} />;
-    }
-    if (ele.inputType === "radio") {
-      return <InputRadio key={ele.id} ele={ele} />;
-    }
-    return null;
-  });
+  // const personalDetailInput = inputInfo.map((ele) => {
+  //   if (ele.inputType === "text" || ele.inputType === "number") {
+  //     return <InputText key={ele.id} ele={ele} />;
+  //   }
+  //   if (ele.inputType === "dropdown") {
+  //     return <InputDropdown key={ele.id} ele={ele} />;
+  //   }
+  //   if (ele.inputType === "radio") {
+  //     return <InputRadio key={ele.id} ele={ele} />;
+  //   }
+  //   return null;
+  // });
 
   const handleCreate = async (e) => {
     e.preventDefault();
@@ -86,11 +72,9 @@ export default function Register() {
 
       dispatch(setIsLogin(true));
       setLoading(false);
-      setPersonalDetailPopup(true);
 
       const uidGet = await axios.get(`https://PreethiJP.pythonanywhere.com/userPersonalDetail?useremail=${regData.Email}`);
       localStorage.setItem("loginUserId",JSON.stringify(uidGet.data.id));
-      setPersonalDetailPopup(true);
       alert(uidGet.data.id);
 
     } catch (error) {
@@ -99,66 +83,66 @@ export default function Register() {
     }
   };
 
-  const handlePersonalDetail = async () => {
-    const requiredFields = [
-      "firstName",
-      "lastName",
-      "fatherName",
-      "Age",
-      "maritalStatus",
-      "Gender",
-      "District",
-      "City",
-      "pinCode",
-      "Contact"
-    ];
+  // const handlePersonalDetail = async () => {
+  //   const requiredFields = [
+  //     "firstName",
+  //     "lastName",
+  //     "fatherName",
+  //     "Age",
+  //     "maritalStatus",
+  //     "Gender",
+  //     "District",
+  //     "City",
+  //     "pinCode",
+  //     "Contact"
+  //   ];
   
-    const missingFields = requiredFields.filter(field => !personalInfo[field]);
-    if (missingFields.length > 0) {
-      const errorMessage = `Please fill out the following fields: ${missingFields.join(", ")}`;
+  //   const missingFields = requiredFields.filter(field => !personalInfo[field]);
+  //   if (missingFields.length > 0) {
+  //     const errorMessage = `Please fill out the following fields: ${missingFields.join(", ")}`;
 
-      Swal.fire({
-        icon: "error",
-        title: "Missing Fields",
-        text: errorMessage,
-      });
-      return;
-    }
+  //     Swal.fire({
+  //       icon: "error",
+  //       title: "Missing Fields",
+  //       text: errorMessage,
+  //     });
+  //     return;
+  //   }
 
     
-    const personalData = new FormData();
-    personalData.append('userid', registerUserData.id);
-    personalData.append('first_name', personalInfo.firstName);
-    personalData.append('last_name', personalInfo.lastName);
-    personalData.append('father_name', personalInfo.fatherName);
-    personalData.append('age', personalInfo.Age);
-    personalData.append('gender', personalInfo.Gender);
-    personalData.append('marital_status', personalInfo.maritalStatus);
-    personalData.append('district', personalInfo.District);
-    personalData.append('city', personalInfo.City);
-    personalData.append('pincode', personalInfo.pinCode);
-    personalData.append('contact', personalInfo.Contact);
+  //   const personalData = new FormData();
+  //   personalData.append('userid', registerUserData.id);
+  //   personalData.append('first_name', personalInfo.firstName);
+  //   personalData.append('last_name', personalInfo.lastName);
+  //   personalData.append('father_name', personalInfo.fatherName);
+  //   personalData.append('age', personalInfo.Age);
+  //   personalData.append('gender', personalInfo.Gender);
+  //   personalData.append('marital_status', personalInfo.maritalStatus);
+  //   personalData.append('district', personalInfo.District);
+  //   personalData.append('city', personalInfo.City);
+  //   personalData.append('pincode', personalInfo.pinCode);
+  //   personalData.append('contact', personalInfo.Contact);
     
-    try {
-      const response = await axios.post("https://PreethiJP.pythonanywhere.com/userPersonalDetail", personalData);
-      console.log(response.data);
-      alert(response.data);
+  //   try {
+  //     const response = await axios.post("https://PreethiJP.pythonanywhere.com/userPersonalDetail", personalData);
+  //     console.log(response.data);
+  //     alert(response.data);
       
-      Swal.fire({
-        title: "Success",
-        text: "Personal details submitted successfully",
-        icon: "success",
-      });
-      navigate("/category");
-    } catch (error) {
-      console.error('Error:', error);
-      Swal.fire({
-        title: "Error",
-        text: "An error occurred. Please try again later.",
-        icon: "error",
-      });
-    }
-  };
+  //     Swal.fire({
+  //       title: "Success",
+  //       text: "Personal details submitted successfully",
+  //       icon: "success",
+  //     });
+  //     navigate("/category");
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //     Swal.fire({
+  //       title: "Error",
+  //       text: "An error occurred. Please try again later.",
+  //       icon: "error",
+  //     });
+  //   }
+  // };
 
   return (
     <>
@@ -192,7 +176,7 @@ export default function Register() {
         </div>
       </div>
 
-      <Modal
+      {/* <Modal
         show={personalDetailPopup}
         onHide={() => setPersonalDetailPopup(false)}
         centered
@@ -212,7 +196,7 @@ export default function Register() {
             Next
           </Button>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
     </>
   );
 }

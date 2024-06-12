@@ -121,8 +121,8 @@ export const PersonalDetailSlice = createSlice({
           inputValue: ""
         }
       ],
-
-      personalInfo:{}
+      personalInfo:{},
+      temError:"This field is required"
     
 
   },
