@@ -1,44 +1,98 @@
 import {React,useState} from 'react'
+import {  Table } from 'react-bootstrap'
+import { useEffect } from 'react'
+import axios from 'axios'
+import BankerNavbar from '../bankerNavbar'
 
 const Customerdata = () => {
-    const [loanData, setloanData] = useState({})
-    const handleinputChange = (e) => {
-            setloanData({...loanData,[e.target.name]:e.target.value})
-    }
+    const [loanData, setloanData] = useState([])
+    console.log(loanData)
 
-    const handleSubmit = () =>{
-        alert(loanData)
-    }
+    useEffect(()=>{
+
+    fetchdata()
+
+    },[])
+
+    const fetchdata=async()=>{
+    await axios.get('https://disondys.pythonanywhere.com/bankerPlan/13').then(
+            (res)=>{
+                setloanData(res.data)
+            console.log(res.data)
+            }
+        )
+            
+        }
+   
   return (
     <>
-    {JSON.stringify(loanData)}
-            <div>
-                <label>SelectLoanType</label>
-                <select name="SelectLoanType" type="dropdown" defaultValue=""  onChange={(e)=>handleinputChange(e)}>
-                    <option>SelectLoanType</option>
-                    <option value="personalloan">personalloan</option>
-                    <option value="businessloan">businessloan</option>
-                    <option value="homeloan">homeloan</option>
-                    <option value="vehicleloan">vehicleloan</option>
-                </select>
-            </div>
-            <div>
-                <label>Choose the Grade</label>
-                <select name="selectGrade" type="dropdown" defaultValue=""  onChange={(e)=>handleinputChange(e)}>
-                    <option>selectGrade</option>
-                    <option value="A">Grade A</option>
-                    <option value="B">Grade B</option>
-                    <option value="C">Grade C</option>
-                </select>
-            </div>
-            <div>
-                <label>Datas</label>
-                <input type="number" defaultValue="" name="dataCount" min="10" placeholder="no Of datas" onChange={(e)=>handleinputChange(e)} required></input>
-            </div>
+    <BankerNavbar/>
+    <Table striped bordered hover>
+                <thead>
+                    <tr>
+                        <th>Loan Type</th>
+                        <th>Employment Type</th>
+                        <th>Address Proof</th>
+                        <th>Own Any Property</th>
+                        <th>Job Title</th>
+                        <th>Place of Work</th>
+                        <th>Years Employed</th>
+                        <th>Monthly Net Income</th>
+                        <th>Monthly Expense</th>
+                        <th>OHP Favor Of</th>
+                        <th>CIBIL Issue</th>
+                        <th>Loan Amount</th>
+                        <th>Interest</th>
+                        <th>Tenure Year</th>
+                        <th>Tenure Month</th>
+                        <th>Purpose of Personal Loan</th>
+                        <th>Vehicle Type</th>
+                        <th>Car Type</th>
+                        <th>Second Hand Car Condition</th>
+                        <th>Registered Month</th>
+                        <th>Registered Year</th>
+                        <th>Make and Model</th>
+                        <th>Variant Type</th>
+                        <th>Full Price of Vehicle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        loanData.map((loan, index) => (
+                            <tr key={index}>
+                                <td>{loan.loan_type}</td>
+                                <td>{loan.employment_type}</td>
+                                <td>{loan.address_proof}</td>
+                                <td>{loan.you_own_any_property}</td>
+                                <td>{loan.job_title}</td>
+                                <td>{loan.place_of_work}</td>
+                                <td>{loan.years_employed}</td>
+                                <td>{loan.monthly_netincome}</td>
+                                <td>{loan.monthly_expense}</td>
+                                <td>{loan.ohp_favorof}</td>
+                                <td>{loan.cibil_issue}</td>
+                                <td>{loan.loan_amount}</td>
+                                <td>{loan.interest}</td>
+                                <td>{loan.tenure_year}</td>
+                                <td>{loan.tenure_month}</td>
+                                <td>{loan.purpose_of_personalloan}</td>
+                                <td>{loan.vechicle_type}</td>
+                                <td>{loan.car_type}</td>
+                                <td>{loan.second_hand_carcondition}</td>
+                                <td>{loan.registered_month}</td>
+                                <td>{loan.registered_year}</td>
+                                <td>{loan.make_and_model}</td>
+                                <td>{loan.varient_type}</td>
+                                <td>{loan.full_price_ofvechicle}</td>
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </Table>
+           
         
-            <div>
-                <button type="button" onClick={handleSubmit}>Submit</button>
-            </div>
+          
+            
     </>
   )
 }

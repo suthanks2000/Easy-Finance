@@ -13,7 +13,7 @@ const BankerNavbar = () => {
 <div className="collapse navbar-collapse align-items-center" id="myNavbar">
   <ul className="navbar-nav justify-content-center flex-grow-1 pe-1">
   <li className="nav-item">
-      <Link className="nav-link" to={'/admin/userdatas'}>UserDatas</Link>
+      <Link className="nav-link" to={'/banker/customerdata'}>UserDatas</Link>
     </li>
   <li className="nav-item">
       <Link className="nav-link" to={'/banker/customerdata'}>LoanDatas</Link>
