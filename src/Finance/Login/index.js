@@ -21,49 +21,60 @@ import "./index.css"; // Import your custom styles if any
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import { db } from "../FirebaseConfig";
+import emailImg from './email.png'
+import passwordImg from './password.png'
 
 export default function Login() {
   const [adminData, setAdminData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({});
 
   const logData = useSelector((state) => state.regisLogin.loginData);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
 
+  
   const handleLogin = async (e) => {
-    // e.preventDefault();
+      
     setLoading(true);
     setError("");
+    setFieldErrors({});
     if (!logData.Email || !logData.Password) {
       setLoading(false);
       setError("Please fill in all fields");
     } 
-    else {
-    
-      await axios.get(`https://PreethiJP.pythonanywhere.com/userRegister?useremail=${logData.Email}&userpassword=${logData.Password}`)
-   .then((res) => { 
-       console.log(res.data);
-       if(res.data.message){
-        alert(res.data.message)
-        setLoading(false);
-       }
-       else{
-        alert("your are the authenticate user")
-        localStorage.setItem("loginUserId", JSON.stringify(res.data.id));
-       setLoading(false);
-       navigate("/category");
-       }
-       
-   })
+  else{
+            const data=new FormData()
+
+            data.append("email",logData.Email)
+            data.append("password",logData.Password)
+            await axios.post("https://PreethiJP.pythonanywhere.com/loginUser",data).then((res)=>{
+              if(res.data.message){
+                      alert(res.data.message)
+                     
+                      setLoading(false);
+                     }
+                     else{
+                      alert("your are the authenticate user")
+                      alert(res.data.token)
+                      alert(res.data.uid)
+                      localStorage.setItem("Token",res.data.token)
+                      localStorage.setItem("loginUserId", JSON.stringify(res.data.uid));
+                      setLoading(false);
+                      navigate("/category");
+                     }
+            })
+            .catch((err)=>{
+              console.log(err)
+            })
   }
-    }
-
+  }
   return (
-
+<>
     <div className="2">
-      <div>
+     
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
           <Link className="navbar-brand fs-3" to="/">
             Easy Finance
@@ -116,81 +127,42 @@ export default function Login() {
           </div>
         </nav>
       </div>
-      <Container
-        className="d-flex justify-content-center align-items-center bg-white"
-        style={{ minHeight: "100vh" }}
-      >
-        <Row className="w-100">
-          <Col md={{ span: 6, offset: 3 }}>
-            <Card className="bg-white p-4">
-              <Card.Body>
-                <h2 className="text-center mb-4">Login</h2>
-                {error && <Alert variant="danger">{error}</Alert>}
-                <Form>
-                  <Form.Group className="mb-3 form-floating">
-                    <Form.Control
-                      type="email"
-                      placeholder="Email"
-                      required
-                      onChange={(e) =>
-                        dispatch(
-                          setLoginData({ ...logData, Email: e.target.value })
-                        )
-                      }
-                      isInvalid={!!error}
-                    />
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control.Feedback type="invalid">
-                      {error && "Please provide a valid email."}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                  <Form.Group className="mb-3 form-floating">
-                    <Form.Control
-                      type="password"
-                      placeholder="Password"
-                      required
-                      onChange={(e) =>
-                        dispatch(
-                          setLoginData({ ...logData, Password: e.target.value })
-                        )
-                      }
-                      isInvalid={!!error}
-                    />
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control.Feedback type="invalid">
-                      {error && "Please provide a valid password."}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                  <Button
-                    className="w-100 mt-3 col-sm-8 col-md-6 col-lg-4"
-                    type="submit"
-                    disabled={loading}
-                    onClick={() => {
-                      handleLogin();
-                    }}
-                  >
-                    {loading ? (
-                      <Spinner
-                        as="span"
-                        animation="border"
-                        size="sm"
-                        role="status"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      "Login"
-                    )}
-                  </Button>
-                </Form>
-                <div className="w-100 text-center mt-2">
-                  Don't have an account?{" "}
-                  <Link to="/register">Register here!</Link>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
+     
+     
+      <div className="login-container">
+      <div className="header">
+        <h2>Sign In</h2>
+      </div>
+      {error && <Alert variant="danger" className="error">{error}</Alert>}
+      <div className="inputs">
+        <div className="input">
+          <img src={emailImg} alt="Email" />
+          <input 
+            type="email" 
+            placeholder="Email Id" 
+            onChange={(e) => dispatch(setLoginData({ ...logData, Email: e.target.value }))} 
+          />
+        </div>
+        {fieldErrors.Email && <div className="error">{fieldErrors.Email}</div>}
+        <div className="input">
+          <img src={passwordImg} alt="Password" />
+          <input 
+            type="password" 
+            placeholder="Password" 
+            onChange={(e) => dispatch(setLoginData({ ...logData, Password: e.target.value }))} 
+          />
+        </div>
+        {fieldErrors.Password && <div className="error">{fieldErrors.Password}</div>}
+      </div>
+      <div className="text-center">
+        Don't have an account? <Link to="/register">Register Here!</Link>
+      </div>
+      <div className="submit-container">
+        <button onClick={handleLogin} disabled={loading}>
+          {loading ? 'Loading...' : 'Sign In'}
+        </button>
+      </div>
     </div>
-  );
+  </>
+);
 }

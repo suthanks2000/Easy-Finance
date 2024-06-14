@@ -25,26 +25,10 @@ export default function Register() {
   const [fieldErrors, setFieldErrors] = useState({});
   const [registerUserData, setRegisterUserData] = useState({});
 
+ 
 
-
-
-
-
-  // const personalDetailInput = inputInfo.map((ele) => {
-  //   if (ele.inputType === "text" || ele.inputType === "number") {
-  //     return <InputText key={ele.id} ele={ele} />;
-  //   }
-  //   if (ele.inputType === "dropdown") {
-  //     return <InputDropdown key={ele.id} ele={ele} />;
-  //   }
-  //   if (ele.inputType === "radio") {
-  //     return <InputRadio key={ele.id} ele={ele} />;
-  //   }
-  //   return null;
-  // });
-
-  const handleCreate = async (e) => {
-    e.preventDefault();
+  const handleCreate = async () => {
+    
     setLoading(true);
     setError("");
     setFieldErrors({});
@@ -60,89 +44,29 @@ export default function Register() {
       return;
     }
   
-    try {
       const requestData = new FormData();
       requestData.append('username', regData.Name);
       requestData.append('useremail', regData.Email);
       requestData.append('userpassword', regData.Password);
-  
-      const response = await axios.post("https://PreethiJP.pythonanywhere.com/userRegister", requestData);
-      console.log(response.data);
-      alert(response.data);
 
-      dispatch(setIsLogin(true));
-      setLoading(false);
 
-      const uidGet = await axios.get(`https://PreethiJP.pythonanywhere.com/userPersonalDetail?useremail=${regData.Email}`);
-      localStorage.setItem("loginUserId",JSON.stringify(uidGet.data.id));
-      alert(uidGet.data.id);
-
-    } catch (error) {
-      setLoading(false);
-      setError(error.message);
-    }
-  };
-
-  // const handlePersonalDetail = async () => {
-  //   const requiredFields = [
-  //     "firstName",
-  //     "lastName",
-  //     "fatherName",
-  //     "Age",
-  //     "maritalStatus",
-  //     "Gender",
-  //     "District",
-  //     "City",
-  //     "pinCode",
-  //     "Contact"
-  //   ];
-  
-  //   const missingFields = requiredFields.filter(field => !personalInfo[field]);
-  //   if (missingFields.length > 0) {
-  //     const errorMessage = `Please fill out the following fields: ${missingFields.join(", ")}`;
-
-  //     Swal.fire({
-  //       icon: "error",
-  //       title: "Missing Fields",
-  //       text: errorMessage,
-  //     });
-  //     return;
-  //   }
-
+      await axios.post("https://PreethiJP.pythonanywhere.com/userRegister",requestData).then((res)=>{
+        if(res.data.existing){
+          alert(res.data.existing)
+         
+          setLoading(false);
     
-  //   const personalData = new FormData();
-  //   personalData.append('userid', registerUserData.id);
-  //   personalData.append('first_name', personalInfo.firstName);
-  //   personalData.append('last_name', personalInfo.lastName);
-  //   personalData.append('father_name', personalInfo.fatherName);
-  //   personalData.append('age', personalInfo.Age);
-  //   personalData.append('gender', personalInfo.Gender);
-  //   personalData.append('marital_status', personalInfo.maritalStatus);
-  //   personalData.append('district', personalInfo.District);
-  //   personalData.append('city', personalInfo.City);
-  //   personalData.append('pincode', personalInfo.pinCode);
-  //   personalData.append('contact', personalInfo.Contact);
-    
-  //   try {
-  //     const response = await axios.post("https://PreethiJP.pythonanywhere.com/userPersonalDetail", personalData);
-  //     console.log(response.data);
-  //     alert(response.data);
-      
-  //     Swal.fire({
-  //       title: "Success",
-  //       text: "Personal details submitted successfully",
-  //       icon: "success",
-  //     });
-  //     navigate("/category");
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //     Swal.fire({
-  //       title: "Error",
-  //       text: "An error occurred. Please try again later.",
-  //       icon: "error",
-  //     });
-  //   }
-  // };
+        }
+        else if(res.data.Added){
+          alert(res.data.Added)
+          navigate("/register/personaldetail")
+        }
+      }).catch(((error)=>{
+        setLoading(false);
+        setError(error.message);
+      }))
+    };
+
 
   return (
     <>
@@ -175,28 +99,6 @@ export default function Register() {
           <button onClick={handleCreate}>Sign Up</button>
         </div>
       </div>
-
-      {/* <Modal
-        show={personalDetailPopup}
-        onHide={() => setPersonalDetailPopup(false)}
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Personal Details</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {personalDetailInput}
-          {Object.keys(fieldErrors).map(key => (
-            fieldErrors[key] && <div key={key} className="error">{fieldErrors[key]}</div>
-          ))}
-
-        </Modal.Body>
-        <Modal.Footer>
-          <Button className="modal-footer-btn" onClick={handlePersonalDetail}>
-            Next
-          </Button>
-        </Modal.Footer>
-      </Modal> */}
     </>
   );
 }
