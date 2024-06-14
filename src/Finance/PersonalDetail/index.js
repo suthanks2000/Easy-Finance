@@ -24,12 +24,16 @@ useEffect(() => {
 
   
 const getEditData = async () => {
-
+      const Token = localStorage.getItem("Token")
   try {
-    const response = await axios.get(`https://PreethiJP.pythonanywhere.com/personalData/${uid}`);
+    const headers = {'Authorization':`Bearer ${Token}`};
+
+    const response = await axios.get('https://suthanks.pythonanywhere.com/userpersonaldetail/10', { headers });
     setUsersData(response.data);
+    alert("success") 
     console.log(response.data, 'usersData');
   } catch (error) {
+    alert("error")
     console.error('Error fetching personal data:', error);
   }
 };

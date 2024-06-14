@@ -11,6 +11,9 @@ const AdminNavbar = () => {
     </button>
 <div className="collapse navbar-collapse align-items-center" id="myNavbar">
   <ul className="navbar-nav justify-content-center flex-grow-1 pe-1">
+  <li className="nav-item">
+      <Link className="nav-link" to={'/admin'}>Dasborad</Link>
+    </li>
   {/* <li className="nav-item">
       <Link className="nav-link" to={'/admin/userdatas'}>UserDatas</Link>
     </li>
@@ -45,13 +48,16 @@ const AdminNavbar = () => {
       </Link>
       <ul className="dropdown-menu bg-dark " aria-labelledby="navbarDropdown">
         <li>
-        <Link className="nav-link" to={'/admin/userdatas'}>BankerDatas</Link>
+        <Link className="nav-link" to={'/admin/userdatas'}>userLoanDatas</Link>
         </li>
         <li>
         <Link className="nav-link" to={'/admin/loandatas'}>bankerPayment</Link>
         </li>
         <li>
-        <Link className="nav-link" to={'/admin/banker/alldatas'}>userLoanDatas</Link>
+        <Link className="nav-link" to={'/admin/banker/alldatas'}>BankerDatas</Link>
+        </li>
+        <li>
+        <Link className="nav-link" to={'/admin/banker/plans'}>banker plans</Link>
         </li>
       </ul>
     </li>

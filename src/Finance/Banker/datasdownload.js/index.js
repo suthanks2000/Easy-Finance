@@ -3,7 +3,6 @@ import BankerNavbar from '../bankerNavbar'
 import {  Table } from 'react-bootstrap'
 import { useEffect } from 'react'
 import axios from 'axios'
-import BankerNavbar from '../bankerNavbar'
 
 const Customerdata = () => {
     const [loanData, setloanData] = useState([])

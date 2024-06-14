@@ -6,7 +6,7 @@ import Category from "./Finance/Category";
 import PersonalDetail from "./Finance/PersonalDetail";
 import SecuredLoansDetails from "./Finance/FinanceDetail/SecuredLoansDetails";
 import ShowResult from "./Finance/ShowResult";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import EmiCalculator from "./Finance/EmiCalculator";
 import {setuserdata, setIsLogin} from "./Finance/Redux-Toolkit/slices/RegLogCounter";
 import BankerLog from "./Finance/Banker/bankerLog";
@@ -14,15 +14,15 @@ import BankerReg from "./Finance/Banker/bankerReg";
 import { useSelector, useDispatch } from "react-redux";
 import LoanDatas from "./Finance/LoanDatas";
 import Dasborad from "./Finance/Admin/dasborad";
-import UserLoanDatas from "./Finance/Admin/userLoanDatas";
-import UserDatas from "./Finance/Admin/userDatas";
+import UserLoanDatas from "./Finance/Admin/user/userLoanDatas.js";
+import UserDatas from "./Finance/Admin/user/userDatas.js";
 import BankerPayment from "./Finance/Banker/bankerPayment";
 import BankerDatas from "./Finance/Admin/banker/bankerDatas";
-import LogLinksent from "./Finance/Admin/banker/logLinksent";
 import Customerdata from "./Finance/Banker/datasdownload.js";
 import LandinngComponent from "./Finance/Banker/LandingPage/index.js";
 import RegisterPersonalDetail from "./Finance/Register/RegisterPersonaldetail/index.js";
 import BankerVerify from "./Finance/Admin/banker/BankerVerify.js";
+import BankerPlans from "./Finance/Admin/banker/bankerPlans.js";
 
 
 function App() {
@@ -67,7 +67,7 @@ function App() {
           <Route path="/admin/userdatas" element={<UserDatas/>}/>
           <Route path="/admin" element={<Dasborad/>}/>
           <Route path="/admin/banker/alldatas" element={<BankerDatas />}/>
-          <Route path="/admin/banker/loglink" element={<LogLinksent/>}/>
+          <Route path="/admin/banker/plans" element={<BankerPlans />}/>
           
           <Route path="/verifiedEmail/:token" element={<BankerVerify/>}/>
           

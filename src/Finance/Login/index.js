@@ -59,6 +59,27 @@ export default function Login() {
    })
   }
     }
+    const logindata = async() => {
+      // e.preventDefault()
+      const data = new FormData();
+      data.append("email",logData.Email)
+      data.append("password",logData.Password)
+      await axios.post("https://suthanks.pythonanywhere.com/loginuser",data).then((res)=>{
+        if(res.data.message){
+          alert(res.data.message)
+        }
+        else{
+          alert(res.data)
+          console.log(res.data)
+          localStorage.setItem("Token",res.data.token)
+          navigate("/category")
+        }
+        
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
+    }
 
   return (
 
@@ -124,6 +145,7 @@ export default function Login() {
           <Col md={{ span: 6, offset: 3 }}>
             <Card className="bg-white p-4">
               <Card.Body>
+                {JSON.stringify(logData)}
                 <h2 className="text-center mb-4">Login</h2>
                 {error && <Alert variant="danger">{error}</Alert>}
                 <Form>
@@ -166,7 +188,7 @@ export default function Login() {
                     type="submit"
                     disabled={loading}
                     onClick={() => {
-                      handleLogin();
+                      logindata()
                     }}
                   >
                     {loading ? (
@@ -191,6 +213,7 @@ export default function Login() {
           </Col>
         </Row>
       </Container>
+      <button type="button" onClick={()=>logindata()}>log</button>
     </div>
   );
 }

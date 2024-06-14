@@ -21,11 +21,19 @@ const RegisterPersonalDetail = () => {
         }
         return null;
       });
+
+      const handlePer_detail = () => {
+        alert(1)
+      }
   return (
     <>
         <div>RegisterPersonalDetail</div>
+        {JSON.stringify(personalInfo)}
         <div>
             {personalDetailInput}
+        </div>
+        <div>
+          <button type='button' onClick={()=>handlePer_detail()}>Register your Data </button>
         </div>
     </>
   )
