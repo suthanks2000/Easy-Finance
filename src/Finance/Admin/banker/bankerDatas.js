@@ -87,7 +87,19 @@ const sendEmail = (tokenData) => {
         }
       );
   };
-    
+
+const handleplanApproval = async (plan) => {
+    const planData = new FormData();
+    planData.append('requestBanker',plan.id)
+
+    await axios.post('https://suthanks.pythonanywhere.com/approveplan',planData).then((res)=>{
+        console.log(res.data)
+        alert(res.data)
+    }).catch((err)=>{
+        alert(err)
+        console.log(err)
+    })
+}  
 
     return (
         <Container>
@@ -98,7 +110,7 @@ const sendEmail = (tokenData) => {
                             <th>Id</th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Action</th>
+                            <th>Email Verify</th>
                             <th>plan Approvel Buttons</th>
                             <th>request plan</th>
                             <th>Assign plan</th>
@@ -115,11 +127,11 @@ const sendEmail = (tokenData) => {
                                     <button className={data.Action=="approve"?'btn btn-warning btn-sm':'btn btn-success btn-sm'}  onClick={()=>tokenGenerate(data)}>{data.Action}</button>
                                 </td>
                                 <td>
-                                    <button className='btn btn-success btn-sm'>Accept</button><span> Or </span>
+                                    <button className='btn btn-success btn-sm' disabled={data.request_plan === "null"} onClick={()=>handleplanApproval(data)}>Accept</button><span> Or </span>
                                     <button className='btn btn-danger btn-sm'>Reject</button>
                                 </td>
-                                <td>{data.plan_id}</td>
-                                <td>{data.plan_id}</td>
+                                <td>{data.request_plan}</td>
+                                <td>{data.assign_plan}</td>
                                 <td>{data.plan_id}</td>
                             </tr>
                         ))}
