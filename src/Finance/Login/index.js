@@ -31,37 +31,34 @@ export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
   const handleLogin = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     setLoading(true);
     setError("");
     if (!logData.Email || !logData.Password) {
       setLoading(false);
       setError("Please fill in all fields");
-    } 
-    else {
-    
-      await axios.get(`https://PreethiJP.pythonanywhere.com/userRegister?useremail=${logData.Email}&userpassword=${logData.Password}`)
-   .then((res) => { 
-       console.log(res.data);
-       if(res.data.message){
-        alert(res.data.message)
-        setLoading(false);
-       }
-       else{
-        alert("your are the authenticate user")
-        localStorage.setItem("loginUserId", JSON.stringify(res.data.id));
-       setLoading(false);
-       navigate("/category");
-       }
-       
-   })
-  }
+    } else {
+      await axios
+        .get(
+          `https://disondys.pythonanywhere.com/userRegister?useremail=${logData.Email}&userpassword=${logData.Password}`
+        )
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.message) {
+            alert(res.data.message);
+            setLoading(false);
+          } else {
+            alert("your are the authenticate user");
+            localStorage.setItem("loginUserId", JSON.stringify(res.data.id));
+            setLoading(false);
+            navigate("/category");
+          }
+        });
     }
+  };
 
   return (
-
     <div className="2">
       <div>
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">

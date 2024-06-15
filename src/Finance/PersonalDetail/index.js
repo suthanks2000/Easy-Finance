@@ -19,10 +19,30 @@ const [editPersonalData, setEditPersonalData] = useState({})
 const uid = localStorage.getItem("loginUserId");
 
 useEffect(() => {
-  getEditData();
+  // getEditData();
+  getEditzdata()
 }, []);
 
-  
+
+// example for authenticate token
+const gettoken=localStorage.getItem("usertoken")
+const  getEditzdata = async ()=>{
+const headers ={'Authorization':`Bearer ${gettoken}`}
+
+
+
+   await axios.get('https://disondys.pythonanywhere.com/userpersonaldetail/22',{ headers }).then((res)=>{
+    setUsersData(res.data)
+    alert("sucess")
+    console.log(res.data)
+   }).catch((error)=>{
+    alert(error)
+    console.log(error)
+   })
+}
+
+
+
 const getEditData = async () => {
 
   try {
