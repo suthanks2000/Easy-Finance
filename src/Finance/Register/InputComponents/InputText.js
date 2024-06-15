@@ -9,7 +9,8 @@ const InputText = (props) => {
   return (
     <div>
          <label>{props.ele.inputLabel}</label>
-         <input type={props.ele.inputType} name={props.ele.inputName}  placeholder={props.ele.inputPlaceholder} onChange={(e)=>dispatch(setPersonalInfo({...personalInfo,[e.target.name]:e.target.value}))}/>
+         <input type={props.ele.inputType} name={props.ele.inputName}  placeholder={props.ele.inputPlaceholder} 
+         onChange={(e)=>dispatch(setPersonalInfo({...personalInfo,[e.target.name]:e.target.value}))}/>
          </div>
          )
 }

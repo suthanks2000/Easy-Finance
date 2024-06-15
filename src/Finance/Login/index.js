@@ -34,10 +34,8 @@ export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
   
   const handleLogin = async (e) => {
-      
     setLoading(true);
     setError("");
     setFieldErrors({});

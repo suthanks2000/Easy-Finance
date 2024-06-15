@@ -28,7 +28,6 @@ export default function Register() {
  
 
   const handleCreate = async () => {
-    
     setLoading(true);
     setError("");
     setFieldErrors({});
@@ -48,7 +47,6 @@ export default function Register() {
       requestData.append('username', regData.Name);
       requestData.append('useremail', regData.Email);
       requestData.append('userpassword', regData.Password);
-
 
       await axios.post("https://PreethiJP.pythonanywhere.com/userRegister",requestData).then((res)=>{
         if(res.data.existing){
