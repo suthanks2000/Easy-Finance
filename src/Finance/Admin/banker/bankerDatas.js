@@ -82,7 +82,6 @@ const sendEmail = (tokenData) => {
   };
     
 
-
     return (
         <>
             <center>

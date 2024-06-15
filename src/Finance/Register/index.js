@@ -25,15 +25,9 @@ export default function Register() {
   const [fieldErrors, setFieldErrors] = useState({});
   const [registerUserData, setRegisterUserData] = useState({});
 
-
-
-
-
-
  
 
-  const handleCreate = async (e) => {
-    e.preventDefault();
+  const handleCreate = async () => {
     setLoading(true);
     setError("");
     setFieldErrors({});
@@ -49,29 +43,27 @@ export default function Register() {
       return;
     }
   
-    try {
       const requestData = new FormData();
       requestData.append('username', regData.Name);
       requestData.append('useremail', regData.Email);
       requestData.append('userpassword', regData.Password);
-  
-      const response = await axios.post("https://PreethiJP.pythonanywhere.com/userRegister", requestData);
-      console.log(response.data);
-      alert(response.data);
 
-      dispatch(setIsLogin(true));
-      setLoading(false);
-
-      const uidGet = await axios.get(`https://PreethiJP.pythonanywhere.com/userPersonalDetail?useremail=${regData.Email}`);
-      localStorage.setItem("loginUserId",JSON.stringify(uidGet.data.id));
-      alert(uidGet.data.id);
-
-    } catch (error) {
-      setLoading(false);
-      setError(error.message);
-    }
-  };
-
+      await axios.post("https://PreethiJP.pythonanywhere.com/userRegister",requestData).then((res)=>{
+        if(res.data.existing){
+          alert(res.data.existing)
+         
+          setLoading(false);
+    
+        }
+        else if(res.data.Added){
+          alert(res.data.Added)
+          navigate("/register/personaldetail")
+        }
+      }).catch(((error)=>{
+        setLoading(false);
+        setError(error.message);
+      }))
+    };
 
 
   return (
@@ -105,7 +97,6 @@ export default function Register() {
           <button onClick={handleCreate}>Sign Up</button>
         </div>
       </div>
-
     </>
   );
 }
