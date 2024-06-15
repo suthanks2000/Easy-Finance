@@ -25,7 +25,7 @@ export default function Register() {
   const [fieldErrors, setFieldErrors] = useState({});
   const [registerUserData, setRegisterUserData] = useState({});
 
- 
+
 
   const handleCreate = async () => {
     setLoading(true);
@@ -36,34 +36,34 @@ export default function Register() {
     if (!regData.Name) newFieldErrors.Name = "Please fill out this field.";
     if (!regData.Email) newFieldErrors.Email = "Please fill out this field.";
     if (!regData.Password) newFieldErrors.Password = "Please fill out this field.";
-
+  
     if (Object.keys(newFieldErrors).length > 0) {
       setFieldErrors(newFieldErrors);
       setLoading(false);
       return;
     }
   
-      const requestData = new FormData();
-      requestData.append('username', regData.Name);
-      requestData.append('useremail', regData.Email);
-      requestData.append('userpassword', regData.Password);
-
-      await axios.post("https://PreethiJP.pythonanywhere.com/userRegister",requestData).then((res)=>{
-        if(res.data.existing){
-          alert(res.data.existing)
-         
-          setLoading(false);
-    
-        }
-        else if(res.data.Added){
-          alert(res.data.Added)
-          navigate("/register/personaldetail")
-        }
-      }).catch(((error)=>{
-        setLoading(false);
-        setError(error.message);
-      }))
-    };
+    const requestData = new FormData();
+    requestData.append('username', regData.Name);
+    requestData.append('useremail', regData.Email);
+    requestData.append('userpassword', regData.Password);
+  
+   
+      await axios.post("https://PreethiJP.pythonanywhere.com/userRegister", requestData).then((res)=>{
+  
+      if (res.data.existing) {
+        alert(res.data.existing);
+      } else if (res.data.uid && res.data.token) {
+        alert(`Registration successful. Your UID: ${res.data.uid}`);
+        alert(res.data.token)
+        localStorage.setItem("loginUserId", JSON.stringify(res.data.uid));
+        localStorage.setItem("Token",res.data.token)
+        navigate("/register/personaldetail");
+      }})
+     .catch ((error) => {
+      setError(error.message);
+      setLoading(false);
+  })}
 
 
   return (

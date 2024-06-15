@@ -22,43 +22,27 @@ const token = localStorage.getItem("Token");
      console.log(token)
 
 useEffect(() => {
-  // getEditData();
-  getEditzdata()
+  getUserPersonalData();
+  
 }, []);
 
-// example for authenticate token
-const gettoken=localStorage.getItem("usertoken")
-const  getEditzdata = async ()=>{
-const headers ={'Authorization':`Bearer ${gettoken}`}
 
+const getUserPersonalData = () => {
+  const headers = { 'Authorization': `Bearer ${token}` };
 
-
-   await axios.get('https://disondys.pythonanywhere.com/userpersonaldetail/22',{ headers }).then((res)=>{
-    setUsersData(res.data)
-    alert("sucess")
-    console.log(res.data)
-   }).catch((error)=>{
-    alert(error)
-    console.log(error)
-   })
-}
-
-
-
-const getEditData = async () => {
-     
-  try {
-    const headers = { 'Authorization':`Bearer ${token}`};
-    const response = await axios.get(`https://PreethiJP.pythonanywhere.com/personalDetail/${uid}`, { headers });
-    setUsersData(response.data);
-    alert("success") 
-    console.log(response.data, 'usersData');
-    alert("success")
-  } catch (error) {
-    alert("error")
-    console.error('Error fetching personal data:', error);
-  }
+  axios.get(`https://PreethiJP.pythonanywhere.com/personalDetail/${uid}`, { headers })
+    .then(response => {
+      setUsersData(response.data);
+      alert("Success");
+      console.log(response.data, 'usersData');
+      alert("Success");
+    })
+    .catch(error => {
+      alert("Error");
+      console.error('Error fetching personal data:', error);
+    });
 };
+
 
 
    function handleEdit(user) {
@@ -80,12 +64,9 @@ const getEditData = async () => {
     setEditData(false)
   }
 
-
-const handleUpdateDetail = async () => {
-  try {
-    const headers = { 'Authorization':`Bearer ${token}`};
+  const handleUpdateDetail = () => {
+    const headers = { 'Authorization': `Bearer ${token}` };
     let formData = new FormData();
-
   
     formData.append("first_name", filterData.first_name);
     formData.append("last_name", filterData.last_name);
@@ -97,20 +78,17 @@ const handleUpdateDetail = async () => {
     formData.append("city", filterData.city);
     formData.append("pincode", filterData.pincode);
     formData.append("contact", filterData.contact);
-
-    await axios.put(`https://PreethiJP.pythonanywhere.com/editPersonalData/${uid}`, formData,{headers});
-    console.log("Personal details updated successfully");
-    setEditData(false)
-    getEditData()
-  } catch (error) {
-    console.error("Error updating personal details:", error);
   
-  }
-};
-
-
-
-
+    axios.put(`https://PreethiJP.pythonanywhere.com/editPersonalData/${uid}`, formData, { headers })
+      .then(() => {
+        console.log("Personal details updated successfully");
+        setEditData(false);
+        getUserPersonalData();
+      })
+      .catch((error) => {
+        console.error("Error updating personal details:", error);
+      });
+  };
 
 return (
   <>

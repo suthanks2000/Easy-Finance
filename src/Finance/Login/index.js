@@ -17,7 +17,7 @@ import {
   setuserdata,
   setIsLogin,
 } from "../Redux-Toolkit/slices/RegLogCounter";
-import "./index.css"; // Import your custom styles if any
+import "./index.css"; 
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import { db } from "../FirebaseConfig";
@@ -34,41 +34,55 @@ export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  
-  const handleLogin = async (e) => {
+
+
+  const handleLogin = (e) => {
+    e.preventDefault(); 
     setLoading(true);
     setError("");
     setFieldErrors({});
+    
     if (!logData.Email || !logData.Password) {
       setLoading(false);
       setError("Please fill in all fields");
-    } 
-  else{
-            const data=new FormData()
+    } else {
+      const formData = new FormData();
+      formData.append("email", logData.Email);
+      formData.append("password", logData.Password);
+    
+      axios.post("https://PreethiJP.pythonanywhere.com/loginUser", formData)
+        .then(response => {
+          if (response.data.message) {
+            alert(response.data.message);
+            if (response.data.message === "Incomplete personal detail") {
+             
+              localStorage.setItem("Token", response.data.token);
+              localStorage.setItem("loginUserId", JSON.stringify(response.data.uid));
+              navigate("/register/personaldetail");
+            }
+            setLoading(false)
+          } else {
+            alert("You are authenticated!");
+            alert(`Token: ${response.data.token}`);
+            alert(`UID: ${response.data.uid}`);
+            
+            
+            localStorage.setItem("Token", response.data.token);
+            localStorage.setItem("loginUserId", JSON.stringify(response.data.uid));
+            
+            setLoading(false);
+            navigate("/category");
+          }
+        })
+        .catch(err => {
+          console.error("Login error:", err);
+          setLoading(false);
+        });
+    }
+};
 
-            data.append("email",logData.Email)
-            data.append("password",logData.Password)
-            await axios.post("https://PreethiJP.pythonanywhere.com/loginUser",data).then((res)=>{
-              if(res.data.message){
-                      alert(res.data.message)
-                     
-                      setLoading(false);
-                     }
-                     else{
-                      alert("your are the authenticate user")
-                      alert(res.data.token)
-                      alert(res.data.uid)
-                      localStorage.setItem("Token",res.data.token)
-                      localStorage.setItem("loginUserId", JSON.stringify(res.data.uid));
-                      setLoading(false);
-                      navigate("/category");
-                     }
-            })
-            .catch((err)=>{
-              console.log(err)
-            })
-  }
-  }
+  
+  
   return (
 <>
     <div className="2">
