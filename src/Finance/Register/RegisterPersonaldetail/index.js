@@ -58,12 +58,16 @@ const RegisterPersonalDetail = () => {
         return Object.keys(newErrors).length === 0;
     };
 
+    
     const handleSubmit =async (e) => {
+        const uid = localStorage.getItem("loginUserId")
+        const token = localStorage.getItem("Token")
+        // console.log("uidd",uid)
         e.preventDefault();
         if (validate()) {
             console.log("Form submitted successfully:", personalInfo); 
             const requestData = new FormData();
-            requestData.append('uid',7);
+            requestData.append('uid',uid);
             requestData.append('first_name', personalInfo.firstName);
             requestData.append('last_name', personalInfo.lastName);
             requestData.append('father_name', personalInfo.fatherName);
@@ -76,8 +80,8 @@ const RegisterPersonalDetail = () => {
             requestData.append('contact', personalInfo.Contact);
 
         
-            
-                await axios.post("https://disondys.pythonanywhere.com/userPersonalDetail", requestData).then((res)=>{
+                const headers ={'Authorization':`Bearer ${token}`}
+                await axios.post("https://disondys.pythonanywhere.com/userPersonalDetail", requestData, { headers }).then((res)=>{
                     console.log(res.data)
                     if(res.data.notFill){
                         alert(res.data.notFill)

@@ -1,7 +1,9 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Autocomplete, Button, MenuItem, TextField } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import BankerNavbar from '../bankerNavbar';
+import { Container, Table } from 'react-bootstrap';
+import axios from 'axios';
 
 
 const BankerPayment = () => {
@@ -9,31 +11,64 @@ const BankerPayment = () => {
   const [grade, setgrade] = useState("");
   const loanName =["personal Loan","homeLoan","bikeLoan","businessLoan"];
   const LoanGrade =["A","B","C","D"];
+  const [bankerPlans, setbankerPlans] = useState([])
 
+    useEffect(()=>{
+        fetchData()
+    },[])
+   async function fetchData () {
+        await axios.get("https://suthanks.pythonanywhere.com/getbankerplans").then((res)=>{
+           setbankerPlans(res.data) 
+           alert("fetch data success")
+           console.log(res.data)
+        }).catch((err)=>{
+            alert(err)
+            console.log(err)
+        })
+    }
+    const handleRequest = async (plan) => {
+      const planData = new FormData();
+      
+      planData.append('plan',plan.id)
+      await axios.post("https://suthanks.pythonanywhere.com/bankerRequestplan",planData).then((res)=>{
+        alert(res.data)
+        console.log(res.data)
+      }).catch((err)=>{
+        alert(err)
+        console.log(err)
+      })
+    }
   const Navigate=useNavigate();
-
-  const Handlesent = () => {
-    console.log("ji")
-    Navigate('/banker/customerdata')
-  }
   return (
     <>
     <BankerNavbar/>
     <div>BankerPayment</div>
-    {grade}
-    <form>
-            {/* <div>
-                <TextField
-                id="outlined-textarea"
-                label="Count"
-                name='Count'
-                placeholder="Count Of in Nums"
-                multiline
-                size="small"
-                margin="normal"
-                />
-            </div>*/}
-            <div>
+    <center>
+                <Container>
+                <Table striped bordered hover size="sm" variant="dark" responsive="sm">
+                    <thead>
+                        <tr>
+                            <th>Plan Name</th>
+                            <th>datas you get</th>
+                            <th>Request Plan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {bankerPlans.map((data,i) => (
+                            <tr key={i}>
+                                <td>{data.plan_name}</td>
+                                <td>datas you get is <b>{data.count}</b></td>
+                                <td>
+                                    <button type='button' className='btn btn-info btn-sm' onClick={()=>handleRequest(data)}>Request plan</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+                </Container>
+            </center>
+    {/* <form>
+        <div>
             <TextField
           id="outlined-select-currency"
           select
@@ -54,16 +89,6 @@ const BankerPayment = () => {
           ))}
         </TextField>
             </div> 
-            {/* <div>
-          <Autocomplete sx={{ width: 150 }}
-        id="free-solo-demo"
-        loans
-        size='small'
-        options={LoanGrade.map((option) => option)}
-        renderInput={(params) => <TextField {...params} label="loan Grade" />}
-        >
-        </Autocomplete>
-          </div> */}
             <div>
             <Button
               variant="contained"
@@ -74,7 +99,7 @@ const BankerPayment = () => {
               Request
             </Button>
           </div>
-        </form>
+        </form> */}
     </>
     
   )

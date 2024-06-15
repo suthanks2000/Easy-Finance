@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { useEffect } from 'react'
-import AdminNavbar from './adminNavbar'
+import AdminNavbar from '../adminNavbar'
 import { Table } from 'react-bootstrap'
 
 

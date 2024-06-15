@@ -10,7 +10,7 @@ import InputTextAndNumber from "./InputComponents/inputText&Number";
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 
-export default function SecuredLoansDetails() {
+export default function SecuredLoansDetails() { 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { securedLoansInfo,inputInfo, renderedInfo,updatedinfo } = useSelector((state) => state.securedLoans);
@@ -87,7 +87,7 @@ useEffect(()=>{
 },[updatedinfo])
 
 
-const handleSetLoanData = async () => {
+const handleSetLoanData = async () => { 
   const filteredInputNames = inputInfo.filter(e => e.loanType.includes(loanName) && (!e?.hidden || e?.hidden === false)).map(e => e.inputName);
   console.log(filteredInputNames);
 
@@ -160,7 +160,6 @@ alert("grade D")
 
   return (
     <>
-      
         {JSON.stringify(securedLoansInfo)}
         <h1>Welcome to {loanName}</h1>
           <div>
