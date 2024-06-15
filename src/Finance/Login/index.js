@@ -21,8 +21,8 @@ import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import { db } from "../FirebaseConfig";
-import emailImg from './email.png'
-import passwordImg from './password.png'
+import emailImg from "./email.png";
+import passwordImg from "./password.png";
 
 export default function Login() {
   const [adminData, setAdminData] = useState([]);
@@ -34,14 +34,12 @@ export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
-
   const handleLogin = (e) => {
-    e.preventDefault(); 
+    e.preventDefault(); // Prevent default form submission behavior
     setLoading(true);
     setError("");
     setFieldErrors({});
-    
+
     if (!logData.Email || !logData.Password) {
       setLoading(false);
       setError("Please fill in all fields");
@@ -49,6 +47,7 @@ export default function Login() {
       const formData = new FormData();
       formData.append("email", logData.Email);
       formData.append("password", logData.Password);
+
     
       axios.post("https://PreethiJP.pythonanywhere.com/loginUser", formData)
         .then(response => {
@@ -65,6 +64,7 @@ export default function Login() {
             alert("You are authenticated!");
             alert(`Token: ${response.data.token}`);
             alert(`UID: ${response.data.uid}`);
+
             
             
             localStorage.setItem("Token", response.data.token);
@@ -81,12 +81,9 @@ export default function Login() {
     }
 };
 
-  
-  
   return (
-<>
-    <div className="2">
-     
+    <>
+      <div className="2">
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
           <Link className="navbar-brand fs-3" to="/">
             Easy Finance
@@ -140,39 +137,51 @@ export default function Login() {
         </nav>
       </div>
       <div className="login-container">
-      <div className="header">
-        <h2>Sign In</h2>
-      </div>
-      {error && <Alert variant="danger" className="error">{error}</Alert>}
-      <div className="inputs">
-        <div className="input">
-          <img src={emailImg} alt="Email" />
-          <input 
-            type="email" 
-            placeholder="Email Id" 
-            onChange={(e) => dispatch(setLoginData({ ...logData, Email: e.target.value }))} 
-          />
+        <div className="header">
+          <h2>Sign In</h2>
         </div>
-        {fieldErrors.Email && <div className="error">{fieldErrors.Email}</div>}
-        <div className="input">
-          <img src={passwordImg} alt="Password" />
-          <input 
-            type="password" 
-            placeholder="Password" 
-            onChange={(e) => dispatch(setLoginData({ ...logData, Password: e.target.value }))} 
-          />
+        {error && (
+          <Alert variant="danger" className="error">
+            {error}
+          </Alert>
+        )}
+        <div className="inputs">
+          <div className="input">
+            <img src={emailImg} alt="Email" />
+            <input
+              type="email"
+              placeholder="Email Id"
+              onChange={(e) =>
+                dispatch(setLoginData({ ...logData, Email: e.target.value }))
+              }
+            />
+          </div>
+          {fieldErrors.Email && (
+            <div className="error">{fieldErrors.Email}</div>
+          )}
+          <div className="input">
+            <img src={passwordImg} alt="Password" />
+            <input
+              type="password"
+              placeholder="Password"
+              onChange={(e) =>
+                dispatch(setLoginData({ ...logData, Password: e.target.value }))
+              }
+            />
+          </div>
+          {fieldErrors.Password && (
+            <div className="error">{fieldErrors.Password}</div>
+          )}
         </div>
-        {fieldErrors.Password && <div className="error">{fieldErrors.Password}</div>}
+        <div className="text-center">
+          Don't have an account? <Link to="/register">Register Here!</Link>
+        </div>
+        <div className="submit-container">
+          <button onClick={handleLogin} disabled={loading}>
+            {loading ? "Loading..." : "Sign In"}
+          </button>
+        </div>
       </div>
-      <div className="text-center">
-        Don't have an account? <Link to="/register">Register Here!</Link>
-      </div>
-      <div className="submit-container">
-        <button onClick={handleLogin} disabled={loading}>
-          {loading ? 'Loading...' : 'Sign In'}
-        </button>
-      </div>
-    </div>
-  </>
-);
+    </>
+  );
 }

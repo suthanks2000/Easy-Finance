@@ -59,6 +59,7 @@ const RegisterPersonalDetail = () => {
         return Object.keys(newErrors).length === 0;
     };
 
+    
     const handleSubmit =async (e) => {
         const uid = localStorage.getItem("loginUserId")
         const token = localStorage.getItem("Token")
