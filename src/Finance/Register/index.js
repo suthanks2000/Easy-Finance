@@ -26,12 +26,6 @@ export default function Register() {
   const [registerUserData, setRegisterUserData] = useState({});
 
 
-
-
-
-
- 
-
   const handleCreate = async (e) => {
     e.preventDefault();
     setLoading(true);
