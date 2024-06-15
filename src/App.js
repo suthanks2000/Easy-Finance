@@ -23,6 +23,7 @@ import LandinngComponent from "./Finance/Banker/LandingPage/index.js";
 import RegisterPersonalDetail from "./Finance/Register/RegisterPersonaldetail/index.js";
 import BankerVerify from "./Finance/Admin/banker/BankerVerify.js";
 import BankerPlans from "./Finance/Admin/banker/bankerPlans.js";
+import BankerPlansCard from "./Finance/Banker/bankerPlanscard.js";
 
 
 function App() {
@@ -61,6 +62,7 @@ function App() {
           <Route path="/banker/payment" element={<BankerPayment/>}/>
           <Route path="/banker/customerdata" element = {<Customerdata/>}/>
           <Route path="/banker/home" element = {<LandinngComponent/>}/>
+          <Route path="/banker/referplan" element = {<BankerPlansCard/>}/>
           
           {/* admin routes */}
           <Route path="/admin/loandatas" element={<UserLoanDatas/>}/>

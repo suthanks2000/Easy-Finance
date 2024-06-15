@@ -120,7 +120,7 @@ export default function Login() {
                   <li>
                     <Link
                       className="dropdown-item text-capitalize text-white bg-dark"
-                      to="/banker/register"
+                      to="/banker/referplan"
                     >
                       Request from banker
                     </Link>
