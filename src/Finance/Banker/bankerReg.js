@@ -94,7 +94,7 @@ try{
           helperText={errors.plan}
         >
           {plan.map((each,i) => (
-            <MenuItem key={i} value={each.plan_name} >
+            <MenuItem key={i} value={each.id} >
               {each.plan_name.replace(/_/g, ' ').toUpperCase()}
             </MenuItem>
           ))}
@@ -126,6 +126,7 @@ try{
         <TextField
           label="Email Address"
           id="outlined-size-small"
+          type="email"
           size="small"
           name="email"
           onChange={handleOnChange}
@@ -201,6 +202,7 @@ try{
           id="outlined-size-small"
           size="small"
           name="pincode"
+          type="number"
           onChange={handleOnChange}
           error={Boolean(errors.pincode)}
           helperText={errors.pincode}
@@ -219,6 +221,7 @@ try{
       </div>
       <div className="text-field-container">
         <TextField
+        type="password"
           label="password"
           id="outlined-size-small"
           size="small"
