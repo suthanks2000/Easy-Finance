@@ -17,7 +17,7 @@ import {
   setuserdata,
   setIsLogin,
 } from "../Redux-Toolkit/slices/RegLogCounter";
-import "./index.css"; // Import your custom styles if any
+import "./index.css"; 
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import { db } from "../FirebaseConfig";
@@ -48,41 +48,39 @@ export default function Login() {
       formData.append("email", logData.Email);
       formData.append("password", logData.Password);
 
-      axios
-        .post("https://disondys.pythonanywhere.com/loginUser", formData)
-        .then((response) => {
+    
+      axios.post("https://PreethiJP.pythonanywhere.com/loginUser", formData)
+        .then(response => {
           if (response.data.message) {
             alert(response.data.message);
             if (response.data.message === "Incomplete personal detail") {
+             
               localStorage.setItem("Token", response.data.token);
-              localStorage.setItem(
-                "loginUserId",
-                JSON.stringify(response.data.uid)
-              );
+              localStorage.setItem("loginUserId", JSON.stringify(response.data.uid));
               navigate("/register/personaldetail");
             }
-            setLoading(false);
+            setLoading(false)
           } else {
             alert("You are authenticated!");
             alert(`Token: ${response.data.token}`);
             alert(`UID: ${response.data.uid}`);
 
+            
+            
             localStorage.setItem("Token", response.data.token);
-            localStorage.setItem(
-              "loginUserId",
-              JSON.stringify(response.data.uid)
-            );
-
+            localStorage.setItem("loginUserId", JSON.stringify(response.data.uid));
+            
             setLoading(false);
             navigate("/category");
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.error("Login error:", err);
           setLoading(false);
         });
     }
-  };
+};
+
   return (
     <>
       <div className="2">

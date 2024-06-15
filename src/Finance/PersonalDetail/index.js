@@ -20,49 +20,47 @@ export default function PersonalDetail() {
 
   const token = localStorage.getItem("Token");
   console.log(token);
+useEffect(() => {
+  getUserPersonalData();
+  
+}, []);
 
-  useEffect(() => {
-    getEditData();
-  }, []);
 
-  const getEditData = async () => {
-    try {
-      const headers = { Authorization: `Bearer ${token}` };
-      const response = await axios.get(
-        `https://disondys.pythonanywhere.com/personalDetail/${uid}`,
-        { headers }
-      );
+const getUserPersonalData = () => {
+  const headers = { 'Authorization': `Bearer ${token}` };
+
+  axios.get(`https://PreethiJP.pythonanywhere.com/personalDetail/${uid}`, { headers })
+    .then(response => {
       setUsersData(response.data);
-      alert("success");
-      console.log(response.data, "usersData");
-      alert("success");
-    } catch (error) {
-      alert("error");
-      console.error("Error fetching personal data:", error);
-    }
-  };
+      alert("Success");
+      console.log(response.data, 'usersData');
+      alert("Success");
+    })
+    .catch(error => {
+      alert("Error");
+      console.error('Error fetching personal data:', error);
+    });
+};
 
-  function handleEdit(user) {
-    setFilterData(user);
-    setEditData(true);
+
+
+   function handleEdit(user) {
+      setFilterData(user);
+      setEditData(true);
   }
-
-  const handleOnkeyup = (ele) => {
-    if (ele.target.value == "Select District") {
-      alert("Please select others");
-    } else {
-      setFilterData({ ...filterData, [ele.target.name]: ele.target.value });
-    }
-  };
 
   function exitFromEdit() {
     setEditData(false);
   }
 
-  const handleUpdateDetail = () => {
-    const headers = { Authorization: `Bearer ${token}` };
-    let formData = new FormData();
+  function exitFromEdit(){
+    setEditData(false)
+  }
 
+  const handleUpdateDetail = () => {
+    const headers = { 'Authorization': `Bearer ${token}` };
+    let formData = new FormData();
+  
     formData.append("first_name", filterData.first_name);
     formData.append("last_name", filterData.last_name);
     formData.append("father_name", filterData.father_name);
@@ -74,16 +72,12 @@ export default function PersonalDetail() {
     formData.append("pincode", filterData.pincode);
     formData.append("contact", filterData.contact);
 
-    axios
-      .put(
-        `https://disondys.pythonanywhere.com/editPersonalData/${uid}`,
-        formData,
-        { headers }
-      )
+  
+    axios.put(`https://PreethiJP.pythonanywhere.com/editPersonalData/${uid}`, formData, { headers })
       .then(() => {
         console.log("Personal details updated successfully");
         setEditData(false);
-        getEditData();
+        getUserPersonalData();
       })
       .catch((error) => {
         console.error("Error updating personal details:", error);
