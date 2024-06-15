@@ -134,7 +134,7 @@ try{
         />
       </div>
       <div className="text-field-container">
-        <TextField
+        {/* <TextField
           label="District"
           id="outlined-size-small"
           size="small"
@@ -142,7 +142,47 @@ try{
           onChange={handleOnChange}
           error={Boolean(errors.district)}
           helperText={errors.district}
-        />
+        /> */}<label>District</label>
+                <select name="district" onChange={handleOnChange}>
+                  <option>Select District</option>
+                  <option>Ariyalur</option>
+                  <option>Chengalpattu</option>
+                  <option>Chennai</option>
+                  <option>Coimbatore</option>
+                  <option>Cuddalore</option>
+                  <option>Dharmapuri</option>
+                  <option>Dindigul</option>
+                  <option>Erode</option>
+                  <option>Kallakurichi</option>
+                  <option>Kanchipuram</option>
+                  <option>Kanyakumari</option>
+                  <option>Karur</option>
+                  <option>Krishnagiri</option>
+                  <option>Madurai</option>
+                  <option>Nagapattinam</option>
+                  <option>Namakkal</option>
+                  <option>Nilgiris</option>
+                  <option>Perambalur</option>
+                  <option>Pudukkottai</option>
+                  <option>Ramanathapuram</option>
+                  <option>Ranipet</option>
+                  <option>Salem</option>
+                  <option>Sivaganga</option>
+                  <option>Tenkasi</option>
+                  <option>Thanjavur</option>
+                  <option>Theni</option>
+                  <option>Thoothukudi</option>
+                  <option>Tiruchirappalli</option>
+                  <option>Tirunelveli</option>
+                  <option>Tirupathur</option>
+                  <option>Tiruppur</option>
+                  <option>Tiruvallur</option>
+                  <option>Tiruvannamalai</option>
+                  <option>Tiruvarur</option>
+                  <option>Vellore</option>
+                  <option>Viluppuram</option>
+                  <option>Virudhunagar</option>
+                </select>
       </div>
       <div className="text-field-container">
         <TextField
