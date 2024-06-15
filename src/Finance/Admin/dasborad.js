@@ -5,7 +5,20 @@ const Dasborad = () => {
   return (
     <>
     <AdminNavbar/>
-    
+    <div>dasborad</div>
+    <div>dasborad</div>
+    <div>dasborad</div>
+    <div>dasborad</div>
+    <div>dasborad</div>
+    <div>dasborad</div>
+    <div>dasborad</div>
+    <div>dasborad</div>
+    <div>dasborad</div>
+    <div>dasborad</div>
+    <div>dasborad</div>
+    <div>dasborad</div>
+    <div>dasborad</div>
+    <div>dasborad</div>
     <div>dasborad</div>
     </>
   )

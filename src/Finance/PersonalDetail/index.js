@@ -26,7 +26,6 @@ useEffect(() => {
   getEditzdata()
 }, []);
 
-
 // example for authenticate token
 const gettoken=localStorage.getItem("usertoken")
 const  getEditzdata = async ()=>{
@@ -52,6 +51,7 @@ const getEditData = async () => {
     const headers = { 'Authorization':`Bearer ${token}`};
     const response = await axios.get(`https://PreethiJP.pythonanywhere.com/personalDetail/${uid}`, { headers });
     setUsersData(response.data);
+    alert("success") 
     console.log(response.data, 'usersData');
     alert("success")
   } catch (error) {

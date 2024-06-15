@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const SecuredLoansSlice = createSlice({
   name: "securedLoans",
   initialState: {
-    inputInfo: [
+    inputInfo1: [
       {
         inputName: "employmentType",
         inputType: "radio",
@@ -54,7 +54,7 @@ export const SecuredLoansSlice = createSlice({
         inputName: "vehicleType",
         inputType: "dropdown",
         dropValue: [
-          "select","car","bike"
+          "select","car","bike" 
         ],
         loanType:["vehicleloan"],
         child:[{
@@ -69,7 +69,7 @@ export const SecuredLoansSlice = createSlice({
             "usedCar",
             "newCar"
           ],
-          child1:[{
+          child:[{
             inputLabel: "Second car condition",
             inputName: "secondCarCondition",
             inputType: "dropdown",
@@ -123,7 +123,7 @@ export const SecuredLoansSlice = createSlice({
       }, 
     ],
     updatedinfo:[],
-    data:[{
+    inputInfo:[{
       inputLabel: "Employment Type",
       inputName: "employmentType",
       inputType: "radio",
@@ -134,7 +134,8 @@ export const SecuredLoansSlice = createSlice({
         "vehicleloan"
       ],
       inputValue:"Salaried"
-    },
+    }
+    ,
     {
       inputName: "employmentType",
       inputType: "radio",
