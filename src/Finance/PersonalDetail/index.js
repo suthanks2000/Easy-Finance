@@ -52,6 +52,7 @@ const handleOnkeyup = (ele)=>{
   if(ele.target.value == "Select District"){
     alert("Please select others")
   }
+
   else{setUsersData({...usersData,[ele.target.name]:ele.target.value})
   console.log("usersdata",usersData)
 }
@@ -60,6 +61,7 @@ const handleOnkeyup = (ele)=>{
  }      
 
  
+
 
   function handleExit() {
     Navigate("/category")

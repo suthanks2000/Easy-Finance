@@ -124,10 +124,10 @@ const handleplanApproval = async (plan) => {
                                 <td>{data.Name}</td>
                                 <td>{data.Email}</td>
                                 <td>
-                                    <button className={data.Action=="approve"?'btn btn-warning btn-sm':'btn btn-success btn-sm'}  onClick={()=>tokenGenerate(data)}>{data.Action}</button>
+                                    <button className={data.Action=="approve"?'btn btn-warning btn-sm':'btn btn-success btn-sm'} disabled={data.Action === "verified"} onClick={()=>tokenGenerate(data)}>{data.Action}</button>
                                 </td>
                                 <td>
-                                    <button className='btn btn-success btn-sm' disabled={data.request_plan === "null"} onClick={()=>handleplanApproval(data)}>Accept</button><span> Or </span>
+                                    <button className='btn btn-success btn-sm' disabled={data.request_plan ===null} onClick={()=>handleplanApproval(data)}>Accept</button><span> Or </span>
                                     <button className='btn btn-danger btn-sm'>Reject</button>
                                 </td>
                                 <td>{data.request_plan}</td>

@@ -30,6 +30,8 @@
     "react-scripts": "5.0.1",
     "react-select": "^5.8.0",
     "react-spinners": "^0.13.8",
+    "react-step-progress-bar": "^1.0.3",
+    "reactstrap": "^9.2.2",
     "sweetalert2": "^11.10.8",
     "web-vitals": "^2.1.4"
   },

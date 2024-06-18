@@ -1,33 +1,45 @@
 import {React,useState} from 'react'
 import BankerNavbar from '../bankerNavbar'
-import {  Table } from 'react-bootstrap'
+import {  Container, Table } from 'react-bootstrap'
 import { useEffect } from 'react'
 import axios from 'axios'
 
 const Customerdata = () => {
     const [loanData, setloanData] = useState([])
-    console.log(loanData)
 
-    useEffect(()=>{
-
-    fetchdata()
-
-    },[])
+useEffect(()=>{
+fetchdata()
+},[])
 
     const fetchdata=async()=>{
-    await axios.get('https://disondys.pythonanywhere.com/bankerPlan/13').then(
+        const banker_id = localStorage.getItem('bankerId')
+        
+        const formdata = new FormData();
+        formdata.append('id',22)
+
+        await axios.post('https://suthanks.pythonanywhere.com/bankerPlan',formdata).then(
             (res)=>{
-                setloanData(res.data)
+                if(res.data.message){
+                    alert(res.data.message)
+                }
+                else{
+                        setloanData(res.data)
             console.log(res.data)
+                }
+            
             }
-        )
+        ).catch((err)=>{
+            alert(err)
+            console.log(err)
+        })
             
         }
    
   return (
     <>
     <BankerNavbar/>
-    <Table striped bordered hover>
+    <div>
+    <Table striped bordered hover >
                 <thead>
                     <tr>
                         <th>Loan Type</th>
@@ -90,6 +102,7 @@ const Customerdata = () => {
                 </tbody>
             </Table>
 
+    </div>
             
     </>
   )
