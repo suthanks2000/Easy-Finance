@@ -11,9 +11,9 @@ root.render(
   <Provider store={store}>
   <React.StrictMode>
   <main className="main-content position-relative border-radius-lg ">
-    <nav className="navbar navbar-expand-lg navbar-dark bg-gradient-dark shadow-none border-radius-xl z-index-sticky " id="navbarBlur" data-scroll="false">
-      <div className="container-fluid py-1 px-3">
-        <nav aria-label="breadcrumb">
+    {/* <nav className="navbar navbar-expand-lg navbar-dark bg-gradient-dark shadow-none border-radius-xl z-index-sticky " id="navbarBlur" data-scroll="false">
+      <div className="container-fluid py-1 px-3"> */}
+        {/* <nav aria-label="breadcrumb">
           <ol className="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li className="breadcrumb-item text-sm">
               <a className="text-white" href="javascript:;">
@@ -24,8 +24,8 @@ root.render(
             <li className="breadcrumb-item text-sm text-white active" aria-current="page">Widgets</li>
           </ol>
           <h6 className="font-weight-bolder mb-0 text-white">Widgets</h6>
-        </nav>
-        <div className="sidenav-toggler sidenav-toggler-inner d-xl-block d-none ">
+        </nav> */}
+        {/* <div className="sidenav-toggler sidenav-toggler-inner d-xl-block d-none ">
           <a href="javascript:;" className="nav-link p-0">
             <div className="sidenav-toggler-inner">
               <i className="sidenav-toggler-line bg-white"></i>
@@ -126,7 +126,7 @@ root.render(
             </li>
           </ul>
         </div>
-    </nav>
+    </nav> */}
     <div className="container-fluid py-4">
     <App />
     </div>
