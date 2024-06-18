@@ -8,17 +8,7 @@ import InputRadio from "./InputComponents/inputRadio";
 import InputDropdown from "./InputComponents/inputDropdown";
 import InputTextAndNumber from "./InputComponents/inputText&Number";
 import 'bootstrap/dist/css/bootstrap.min.css'; 
-import {
-  Form,
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  CardText,
-  CardFooter,
-  Alert
-} from "reactstrap";
+
 import MultiStepProgressBar from "./porgrassBar/progressBar.js";
 
 export default function SecuredLoansDetails() { 
