@@ -41,7 +41,7 @@ body, html {
     margin-top: 10px;
   }
   
-  .piechart {
+  .doughnutchart {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -52,7 +52,7 @@ body, html {
   }
 
   .Typography{
-    background-color: lightgreen;
+    background-color: lightblue;
 
   }
 

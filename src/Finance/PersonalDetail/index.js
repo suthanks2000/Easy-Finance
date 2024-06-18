@@ -1,3 +1,4 @@
+
 import { db } from "../FirebaseConfig";
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
@@ -25,7 +26,6 @@ export default function PersonalDetail() {
   const token = localStorage.getItem("Token");
   console.log(token);
 
-
 useEffect(() => {
   getUserPersonalData();
   
@@ -33,9 +33,13 @@ useEffect(() => {
 
 
 const getUserPersonalData = () => {
+  const data = new FormData();
+  data.append('id',uid)
   const headers = { 'Authorization': `Bearer ${token}` };
 
-  axios.get(`https://PreethiJP.pythonanywhere.com/personalDetail/${uid}`, { headers })
+
+  axios.post('https://PreethiJP.pythonanywhere.com/personalDetail',data, { headers })
+
     .then(response => {
       setUsersData(response.data);
       alert("Success");
@@ -51,7 +55,6 @@ const handleOnkeyup = (ele)=>{
   if(ele.target.value == "Select District"){
     alert("Please select others")
   }
-
   else{setUsersData({...usersData,[ele.target.name]:ele.target.value})
   console.log("usersdata",usersData)
 }
@@ -61,18 +64,15 @@ const handleOnkeyup = (ele)=>{
 
  
 
-
   function handleExit() {
     Navigate("/category")
-
   }
 
 
 
   const handleUpdateDetail = () => {
-    const headers = { Authorization: `Bearer ${token}` };
+    const headers = { 'Authorization': `Bearer ${token}` };
     let formData = new FormData();
-
   
     formData.append("first_name", usersData.first_name);
     formData.append("last_name", usersData.last_name);
@@ -84,6 +84,7 @@ const handleOnkeyup = (ele)=>{
     formData.append("city", usersData.city);
     formData.append("pincode", usersData.pincode);
     formData.append("contact", usersData.contact);
+
 
 
     axios
@@ -104,7 +105,6 @@ const handleOnkeyup = (ele)=>{
   };
 
 
-
   return (
     <>
     { !successEdit?
@@ -122,7 +122,6 @@ const handleOnkeyup = (ele)=>{
             <div className="h-100">
               <h5 className="mb-1 font-weight-bolder">
                {usersData.first_name} {usersData.last_name}
-              </h5>
               <p className="mb-0 font-weight-bold text-sm">
                 { usersData.contact }
               </p>
@@ -271,7 +270,6 @@ const handleOnkeyup = (ele)=>{
   }
   </>
 )
-
 }
 
 

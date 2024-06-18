@@ -12,138 +12,100 @@ const UserDatas = () => {
   const [totalPages, setTotalPages] = useState(1);
   
 
+    // useEffect(()=>{
+    //    getUserDatas()
+    // },[page])
+
+
+//   const getUserDatas = async () => {
+//         const response = await axios.get(`https://disondys.pythonanywhere.com/adminUserData?page=${page}&per_page=3`); 
+//         setUserData(response.data.users);
+//         setTotalPages(response.data.pages); 
+// }
+
     useEffect(()=>{
-       getUserDatas()
-    },[page])
-
-  const getUserDatas = async () => {
-        const response = await axios.get(`https://PreethiJP.pythonanywhere.com/adminUserData?page=${page}&per_page=3`); 
-        setUserData(response.data.users);
-        setTotalPages(response.data.pages); 
-}
+        getAllUserDatas()
+    },[])
 
 
-const handleNext = () => {
-    if (page < totalPages) {
-        setPage(page + 1);
+
+    const getAllUserDatas = async () => {
+      await axios.get("https://PreethiJP.pythonanywhere.com/allUserData").then((res)=>{
+        setUserData(res.data)
+        // alert(res.data)
+        console.log("userdata",userData)
+      })
     }
-};
 
-const handlePrevious = () => {
-    if (page > 1) {
-        setPage(page - 1);
-    }
-};
+//   const getUserDatas = async () => {
+//         const response = await axios.get(`https://PreethiJP.pythonanywhere.com/adminUserData?page=${page}&per_page=3`); 
+//         setUserData(response.data.users);
+//         setTotalPages(response.data.pages); 
+// }
 
 
-const deleteUserRegData = async (id) => {
-     await axios.delete(`https://suthanks.pythonanywhere.com/deleteUser/${id}`).then((res)=>{
-        alert(res.data)
-     })
+// const handleNext = () => {
+//     if (page < totalPages) {
+//         setPage(page + 1);
+//     }
+// };
 
-    getUserDatas()
-}
+
+// const handlePrevious = () => {
+//     if (page > 1) {
+//         setPage(page - 1);
+//     }
+// };
+
+
+
+
 
 
   return (
    <>
-   <AdminNavbar />
-    <center>
-            <Table border={2} className='mt-5 w-25'>
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>User name</th>
-                        <th>User Email</th>
-                        <th>User password</th>
-                        <th>delete User</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                    {userData.map((user,i) => (
-                        <tr key={i}>
-                            <td>{user.id}</td>
-                           <td>{user.name}</td>
-                            <td>{user.email}</td>
-                            <td>{user.password}</td>
-                            <td><button type='button' onClick={()=>deleteUserRegData(user.id)}>Delete</button></td>
-                        </tr>
-                    ) )}
-                    
-                </tbody>
-                
-            </Table>
-            <span>total datas in this page {userData?.length}</span>
-            <button type='button' disabled={page === 1} onClick={()=>handlePrevious()}>previous</button>
-            <button type='button' disabled={page === totalPages} onClick={()=>handleNext()}>next</button>
-    </center>
-</>
-)
-}
-   
-  
-/* <>
-     <center>
-             <Table border={2} className='mt-5 w-25'>
-                 <thead>
-                     <tr>
-                         <th>Id</th>
-                         <th>User name</th>
-                         <th>User Email</th>
-                         <th>User password</th>
-                         <th>delete User</th>
-                     </tr>
-                 </thead>
-                 <tbody>
-                    
-                     {userData.map((user,i) => (
-                        <tr key={i}>
-                            <td>{user.id}</td>
-                           <td>{user.name}</td>
-                            <td>{user.email}</td>
-                            <td>{user.password}</td>
-                            <td><button type='button' onClick={()=>deleteUserRegData(user.id)}>Delete</button></td>
-                        </tr>
-                    ) )}
-                    
-                </tbody>
-                
-            </Table>
-            <span>total datas in this page {userData?.length}</span>
-            <button type='button' disabled={page === 1} onClick={()=>handlePrevious()}>previous</button>
-            <button type='button' disabled={page === totalPages} onClick={()=>handleNext()}>next</button>
-    </center>
-<div class="pagination-container justify-content-center">
-    <ul class="pagination pagination-warning">
-      <li class="page-item">
-        <a class="page-link" href="javascript:;" aria-label="Previous">
-          <span aria-hidden="true"><i class="fa fa-angle-left" aria-hidden="true"></i></span>
-        </a>
-      </li>
-      <li class="page-item active">
-        <a class="page-link" href="javascript:;">1</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="javascript:;">2</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="javascript:;">3</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="javascript:;">4</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="javascript:;">5</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="javascript:;" aria-label="Next">
-          <span aria-hidden="true"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-        </a>
-      </li>
-    </ul>
+<div className='container-fluid w-70 mt-5'>
+<div className="card">
+  <div className="table-responsive">
+    <table className="table align-items-center mb-0">
+      <thead>
+        <tr>
+          <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User Id</th>
+          <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">User Name</th>
+          <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User Email</th>
+          <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Delete User</th>
+        
+        </tr>
+      </thead>
+      <tbody>
+        {userData.map((user, i) => (
+          <tr key={i}>
+            <td>
+              <div className="d-flex px-2 py-1">
+                <div className="d-flex flex-column justify-content-center">
+                  <p className="text-xs text-secondary mb-0">{user.uid}</p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <p className="text-xs text-secondary mb-0">{user.name}</p>
+            </td>
+            <td className="align-middle text-center text-sm">
+              <span className="text-secondary text-xs font-weight-bold">{user.email}</span>
+            </td>
+            <td className="align-middle text-center">
+              <span className="badge badge-sm badge-danger">Delete</span>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   </div>
-</> */
- 
+</div>
+     </div>   
+        </>
+      )
+      }
+
 
 export default UserDatas
