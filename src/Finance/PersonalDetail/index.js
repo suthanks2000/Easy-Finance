@@ -33,9 +33,13 @@ useEffect(() => {
 
 
 const getUserPersonalData = () => {
+  const data = new FormData();
+  data.append('id',uid)
   const headers = { 'Authorization': `Bearer ${token}` };
 
-  axios.get(`https://disondys.pythonanywhere.com/personalDetail/${uid}`, { headers })
+
+  axios.post('https://PreethiJP.pythonanywhere.com/personalDetail',data, { headers })
+
     .then(response => {
       setUsersData(response.data);
       alert("Success");
@@ -82,8 +86,14 @@ const handleOnkeyup = (ele)=>{
     formData.append("pincode", usersData.pincode);
     formData.append("contact", usersData.contact);
 
-  
-    axios.put(`https://disondys.pythonanywhere.com/editPersonalData/${uid}`, formData, { headers })
+
+
+    axios
+      .put(
+        `https://PreethiJP.pythonanywhere.com/editPersonalData/${uid}`,
+        formData,
+        { headers }
+      )
       .then(() => {
         console.log("Personal details updated successfully");
         console.log("personaldetail",usersData)
@@ -113,7 +123,7 @@ const handleOnkeyup = (ele)=>{
             <div className="h-100">
               <h5 className="mb-1 font-weight-bolder">
                {usersData.first_name} {usersData.last_name}
-              </h5> 
+
               <p className="mb-0 font-weight-bold text-sm">
                 { usersData.contact }
               </p>

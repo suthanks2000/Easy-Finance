@@ -31,7 +31,7 @@ export default function BankerLog() {
       data.append("bankerpassword", bankLogin.Password);
 
       await axios
-        .post("https://disondys.pythonanywhere.com/allowBankerLogin", data)
+        .post("https://PreethiJP.pythonanywhere.com/allowBankerLogin", data)
         .then((res) => {
           if (res.data.notfound) {
             alert("Banker not found");

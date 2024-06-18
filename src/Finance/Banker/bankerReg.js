@@ -14,7 +14,9 @@ const BankerReg = () => {
 
   const fetchPlanData = async () => {
     try {
-      const res = await axios.get("https://disondys.pythonanywhere.com/getbankerplans");
+
+      const res = await axios.get("https://PreethiJP.pythonanywhere.com/getbankerplans");
+
       setPlan(res.data);
       console.log(res.data);
     } catch (err) {
@@ -42,7 +44,9 @@ const BankerReg = () => {
     requestData.append('bankerplan', bankerRegData.plan);
 
     try {
-      const response = await axios.post("https://disondys.pythonanywhere.com/bankerRegister", requestData);
+
+      const response = await axios.post("https://PreethiJP.pythonanywhere.com/bankerRegister", requestData);
+
       console.log(response.data);
       alert(response.data);
       navigate("/banker/login")
@@ -76,6 +80,10 @@ const BankerReg = () => {
           </div>
 
           <div className="row mb-3">
+          <div className="col-md-6">
+              <label htmlFor="username" className="form-label">Compnay Name</label>
+              <input id="username" name="company" className="form-control" type="text" placeholder="Enter your Name" required onChange={handleOnChange} />
+            </div>
             <div className="col-md-6">
               <label htmlFor="userEmail" className="form-label">Email</label>
               <input id="userEmail" name="email" className="form-control" type="email" placeholder="Enter your Email" required onChange={handleOnChange} />

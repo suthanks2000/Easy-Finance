@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { Box, FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, TextField, Button } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
-// import { setPersonalInfo } from '../../Redux-Toolkit/slices/PersonalDetailCounter';
 import { Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const RegisterPersonalDetail = () => {
-    // const { personalInfo } = useSelector((state) => state.personalDetail);
+    
     const dispatch = useDispatch();
     const navigate=useNavigate();
-    // const [personalInfo,setPersonalInfo] = useState({})
+    
 
     const [errors, setErrors] = useState({});
     const [personalInfo, setPersonalInfo] = useState({
@@ -48,7 +47,8 @@ const RegisterPersonalDetail = () => {
       
         const headers = { 'Authorization': `Bearer ${token}` };
       
-        axios.post("https://disondys.pythonanywhere.com/userPersonalDetail", requestData, { headers })
+
+        axios.post("https://PreethiJP.pythonanywhere.com/userPersonalDetail", requestData, { headers })
           .then((res) => {
             console.log(res.data);
             if (res.data.notFill) {
@@ -80,9 +80,7 @@ const RegisterPersonalDetail = () => {
         <h1 className="mb-1 font-weight-bolder">
           Personal Detail
         </h1>
-        {/* <p className="mb-0 font-weight-bold text-sm">
-          Personal Detail
-        </p> */}
+      
       </div>
     </div>
   </div>

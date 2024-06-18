@@ -4,6 +4,8 @@ import { collection, getDocs, query, where, getDoc, doc, limit } from "firebase/
 import { db } from "../../FirebaseConfig";
 import jsPDF from "jspdf";
 import AdminNavbar from "../adminNavbar";
+import { useEffect } from "react";
+import axios from "axios";
 
 const UserLoanDatas = () => {
     const [adminData, setAdminData] = useState({});   //Stores form data entered by the admin.
@@ -12,131 +14,145 @@ const UserLoanDatas = () => {
     const [modalData, setModalData] = useState({ loanData: {}, personalData: {} });      //Stores data to be displayed in the modal (both loan and personal details)
     const [showModal, setShowModal] = useState(false);     //Toggles the visibility of the modal
 
-    const fetchLoanData = async () => {
-        try {
-            const q = query(
-                collection(db, "securedLoans"),
-                where("loanType", "==", adminData.SelectLoanType),
-                where("grade", "==", adminData.selectGrade),
-                limit(adminData.dataCount)
-            );
-            const docSnap = await getDocs(q);
-            const table = docSnap.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data(),
-            }));
-            setLoanData(table);
-        } catch (error) {
-            console.error("Error fetching loan data: ", error);
-        }
-    };
+    // const fetchLoanData = async () => {
+    //     try {
+    //         const q = query(
+    //             collection(db, "securedLoans"),
+    //             where("loanType", "==", adminData.SelectLoanType),
+    //             where("grade", "==", adminData.selectGrade),
+    //             limit(adminData.dataCount)
+    //         );
+    //         const docSnap = await getDocs(q);
+    //         const table = docSnap.docs.map((doc) => ({
+    //             id: doc.id,
+    //             ...doc.data(),
+    //         }));
+    //         setLoanData(table);
+    //     } catch (error) {
+    //         console.error("Error fetching loan data: ", error);
+    //     }
+    // };
 
-    const handleSubmit = () => {
-        const requiredFields = ["SelectLoanType", "selectGrade", "dataCount"];
-        if (requiredFields.some((field) => !adminData[field])) {
-            alert("Please fill in all fields");
-        } else {
-            setViewLoanDatas(true);
-            fetchLoanData();
-        }
-    };
+    // const handleSubmit = () => {
+    //     const requiredFields = ["SelectLoanType", "selectGrade", "dataCount"];
+    //     if (requiredFields.some((field) => !adminData[field])) {
+    //         alert("Please fill in all fields");
+    //     } else {
+    //         setViewLoanDatas(true);
+    //         fetchLoanData();
+    //     }
+    // };
 
-    const handleAdminData = (e) => {
-        setAdminData({ ...adminData, [e.target.name]: e.target.value });
-    };
+    // const handleAdminData = (e) => {
+    //     setAdminData({ ...adminData, [e.target.name]: e.target.value });
+    // };
 
-    const handleRowClick = async (loan) => {
-        const data = await fetchLoanAndPersonalData(loan.id, loan.uId);
-        setModalData(data);
-        setShowModal(true);
-    };
+    // const handleRowClick = async (loan) => {
+    //     const data = await fetchLoanAndPersonalData(loan.id, loan.uId);
+    //     setModalData(data);
+    //     setShowModal(true);
+    // };
 
-    const handleCloseModal = () => {
-        setShowModal(false);
-    };
+    // const handleCloseModal = () => {
+    //     setShowModal(false);
+    // };
 
-    const fetchLoanAndPersonalData = async (loanId, userId) => {
-        try {
-            const loanDoc = await getDoc(doc(db, "securedLoans", loanId));
-            const personalDetailsQuery = query(
-                collection(db, "personalDetails"),
-                where("uid", "==", userId)
-            );
-            const personalDetailsSnapshot = await getDocs(personalDetailsQuery);
+    // const fetchLoanAndPersonalData = async (loanId, userId) => {
+    //     try {
+    //         const loanDoc = await getDoc(doc(db, "securedLoans", loanId));
+    //         const personalDetailsQuery = query(
+    //             collection(db, "personalDetails"),
+    //             where("uid", "==", userId)
+    //         );
+    //         const personalDetailsSnapshot = await getDocs(personalDetailsQuery);
 
-            const personalDetails = personalDetailsSnapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data(),
-            }))[0];
+    //         const personalDetails = personalDetailsSnapshot.docs.map((doc) => ({
+    //             id: doc.id,
+    //             ...doc.data(),
+    //         }))[0];
 
-            return { loanData: loanDoc.data(), personalData: personalDetails };
-        } catch (error) {
-            console.error("Error fetching data: ", error);
-        }
-    };
+    //         return { loanData: loanDoc.data(), personalData: personalDetails };
+    //     } catch (error) {
+    //         console.error("Error fetching data: ", error);
+    //     }
+    // };
 
 
-    const handleDownloadPDF = () => {
-        const { loanData, personalData } = modalData;
-        const doc = new jsPDF();
-        const pageWidth = doc.internal.pageSize.getWidth();
-        const lineHeight = 10;
+    useEffect(()=>{
+        getAllUserLoanDatas()
+    },[])
+
+
+    const getAllUserLoanDatas = async () => {
+      await axios.get("https://PreethiJP.pythonanywhere.com/allUserLoanData").then((res)=>{
+        setLoanData(res.data)
+        alert(res.data)
+        console.log("loandata",loanData)
+      })
+    }
+
+
+    // const handleDownloadPDF = () => {
+    //     const { loanData, personalData } = modalData;
+    //     const doc = new jsPDF();
+    //     const pageWidth = doc.internal.pageSize.getWidth();
+    //     const lineHeight = 10;
     
-        const title = "Loan and Personal Details";
-        const loanDetails = [
-            `Loan Type: ${loanData.loanType}`,
-            `Employment Type: ${loanData.employmentType}`,
-            `Job Title: ${loanData.jobTitle}`,
-            `Place of Work: ${loanData.placeOfWork}`,
-            `Property Status: ${loanData.propertyStatus}`,
-            `Address Proof: ${loanData.addressProof}`
-        ];
-        const personalDetails = [
-            `Name: ${personalData.firstName} ${personalData.lastName}`,
-            `Father's Name: ${personalData.fatherName}`,
-            `Age: ${personalData.Age}`,
-            `Marital Status: ${personalData.maritalStatus}`,
-            `Gender: ${personalData.Gender}`,
-            `Email: ${personalData.Email}`,
-            `District: ${personalData.District}`,
-            `City: ${personalData.City}`,
-            `Pincode: ${personalData.pinCode}`,
-            `Contact: ${personalData.Contact}`
-        ];
+    //     const title = "Loan and Personal Details";
+    //     const loanDetails = [
+    //         `Loan Type: ${loanData.loanType}`,
+    //         `Employment Type: ${loanData.employmentType}`,
+    //         `Job Title: ${loanData.jobTitle}`,
+    //         `Place of Work: ${loanData.placeOfWork}`,
+    //         `Property Status: ${loanData.propertyStatus}`,
+    //         `Address Proof: ${loanData.addressProof}`
+    //     ];
+    //     const personalDetails = [
+    //         `Name: ${personalData.firstName} ${personalData.lastName}`,
+    //         `Father's Name: ${personalData.fatherName}`,
+    //         `Age: ${personalData.Age}`,
+    //         `Marital Status: ${personalData.maritalStatus}`,
+    //         `Gender: ${personalData.Gender}`,
+    //         `Email: ${personalData.Email}`,
+    //         `District: ${personalData.District}`,
+    //         `City: ${personalData.City}`,
+    //         `Pincode: ${personalData.pinCode}`,
+    //         `Contact: ${personalData.Contact}`
+    //     ];
     
-        // Helper function to calculate the x-coordinate for center alignment
-        const getCenterX = (text) => {
-            const textWidth = doc.getStringUnitWidth(text) * doc.internal.getFontSize() / doc.internal.scaleFactor;
-            return (pageWidth - textWidth) / 2;
-        };
+    //     // Helper function to calculate the x-coordinate for center alignment
+    //     const getCenterX = (text) => {
+    //         const textWidth = doc.getStringUnitWidth(text) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+    //         return (pageWidth - textWidth) / 2;
+    //     };
     
-        // Center align the title
-        doc.text(title, getCenterX(title), lineHeight);
+    //     // Center align the title
+    //     doc.text(title, getCenterX(title), lineHeight);
     
-        // Add spacing before loan details
-        doc.text("Loan Details:", getCenterX("Loan Details:"), lineHeight * 3);
+    //     // Add spacing before loan details
+    //     doc.text("Loan Details:", getCenterX("Loan Details:"), lineHeight * 3);
     
-        // Center-align each line of loan details
-        loanDetails.forEach((line, index) => {
-            doc.text(line, getCenterX(line), lineHeight * (4 + index));
-        });
+    //     // Center-align each line of loan details
+    //     loanDetails.forEach((line, index) => {
+    //         doc.text(line, getCenterX(line), lineHeight * (4 + index));
+    //     });
     
-        // Add spacing before personal details
-        doc.text("Personal Details:", getCenterX("Personal Details:"), lineHeight * (4 + loanDetails.length + 2));
+    //     // Add spacing before personal details
+    //     doc.text("Personal Details:", getCenterX("Personal Details:"), lineHeight * (4 + loanDetails.length + 2));
     
-        // Center-align each line of personal details
-        personalDetails.forEach((line, index) => {
-            doc.text(line, getCenterX(line), lineHeight * (5 + loanDetails.length + 2 + index));
-        });
+    //     // Center-align each line of personal details
+    //     personalDetails.forEach((line, index) => {
+    //         doc.text(line, getCenterX(line), lineHeight * (5 + loanDetails.length + 2 + index));
+    //     });
     
-        const filename = `${personalData.firstName}_${personalData.lastName}_${loanData.loanType}.pdf`;
-        doc.save(filename);
-    };
+    //     const filename = `${personalData.firstName}_${personalData.lastName}_${loanData.loanType}.pdf`;
+    //     doc.save(filename);
+    // };
     
     
     return (
         <>
-            <AdminNavbar/>
+            {/* <AdminNavbar/>
             {JSON.stringify(adminData)}
             <h1>Welcome to Admin Page</h1>
             <div>
@@ -228,7 +244,48 @@ const UserLoanDatas = () => {
                     <Button variant="primary" onClick={handleDownloadPDF}>Download PDF</Button>
                 </Modal.Footer>
                 </center>
-            </Modal>
+            </Modal> */}
+
+<div className='container-fluid w-70 mt-5'>
+<div className="card">
+  <div className="table-responsive">
+    <table className="table align-items-center mb-0">
+      <thead>
+        <tr>
+          <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Loan Id</th>
+          <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">User Uid</th>
+          <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Loan Type</th>
+          <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Assign Id</th>
+        
+        </tr>
+      </thead>
+      <tbody>
+        {loanData.map((user, i) => (
+          <tr key={i}>
+            <td>
+              <div className="d-flex px-2 py-1">
+                <div className="d-flex flex-column justify-content-center">
+                  <p className="text-xs text-secondary mb-0">{user.loan_id}</p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <p className="text-xs text-secondary mb-0">{user.uid}</p>
+            </td>
+            <td className="align-middle text-center text-sm">
+              <span className="text-secondary text-xs font-weight-bold">{user.loan_type}</span>
+            </td>
+            <td className="align-middle text-center">
+              <span className="badge badge-sm badge-danger">{user.assign_id}</span>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
+     </div>   
+
         </>
     );
 };
