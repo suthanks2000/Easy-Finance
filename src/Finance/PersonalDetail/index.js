@@ -44,7 +44,6 @@ const getUserPersonalData = () => {
       setUsersData(response.data);
       alert("Success");
       console.log(response.data, 'usersData');
-      
     })
     .catch(error => {
       alert("Error");
@@ -123,7 +122,6 @@ const handleOnkeyup = (ele)=>{
             <div className="h-100">
               <h5 className="mb-1 font-weight-bolder">
                {usersData.first_name} {usersData.last_name}
-
               <p className="mb-0 font-weight-bold text-sm">
                 { usersData.contact }
               </p>

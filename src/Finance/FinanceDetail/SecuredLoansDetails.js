@@ -10,6 +10,7 @@ import InputTextAndNumber from "./InputComponents/inputText&Number";
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 import MultiStepProgressBar from "./porgrassBar/progressBar.js";
+import axios from "axios";
 
 export default function SecuredLoansDetails() { 
   const dispatch = useDispatch();
@@ -35,14 +36,13 @@ const tyear = securedLoansInfo.tenureMonth?  securedLoansInfo.tenureMonth/12 : n
     console.log(emiValue)
 
 useEffect(() => { 
-  dispatch(setSecuredLoansInfo({ ...securedLoansInfo, emi: emiValue }));
+  dispatch(setSecuredLoansInfo({ ...securedLoansInfo, EMIAmount: emiValue,tenureYear: tenureYear }));
 }, [emiValue]);
 
 
-     
-useEffect(()=>{
-    dispatch(setSecuredLoansInfo({}))
     
+useEffect(()=>{
+    dispatch(setSecuredLoansInfo({}))   
 },[])
 
 useEffect(()=>{
@@ -141,90 +141,105 @@ return true
 
 };
 
-const handleSubmit = () => {
-  // validateForm()
+const handleSubmit =async () => {
   if(validateForm()){
     alert("sucess")
+    const fromdata = new FormData();
+    Object.keys(securedLoansInfo).forEach(key => {
+      fromdata.append(key, securedLoansInfo[key]);
+    });
+    fromdata.append("loantype",loanName)
+    fromdata.append("userId",2)
+
+    axios.post('https://suthanks.pythonanywhere.com/submitsecuredLoans',fromdata).then((res)=>{
+      alert(res.data.message)
+      console.log(res.data)
+    }).catch((err)=>{
+      alert(err)
+      console.log(err)
+    })
+    
+
   }
   else{
     alert(2)
   }
 }
-  const handleSignout = async () => {
-    await localStorage.getItem("userToken");
-    localStorage.removeItem("userToken");
-    navigate("/");
-  };
+  // const handleSignout = async () => {
+  //   await localStorage.getItem("userToken");
+  //   localStorage.removeItem("userToken");
+  //   navigate("/");
+  // };
   
 
 const handleSetLoanData = async () => { 
-  const filteredInputNames = inputInfo.filter(e => e.loanType.includes(loanName) && (!e?.hidden || e?.hidden === false)).map(e => e.inputName);
-  console.log(filteredInputNames);
+//   const filteredInputNames = inputInfo.filter(e => e.loanType.includes(loanName) && (!e?.hidden || e?.hidden === false)).map(e => e.inputName);
+//   console.log(filteredInputNames);
 
-  const elgAmount =(securedLoansInfo.monthlyNetIncome - securedLoansInfo.monthlyExpenses) >= securedLoansInfo.emi*3
-  console.log(elgAmount) 
+//   const elgAmount =(securedLoansInfo.monthlyNetIncome - securedLoansInfo.monthlyExpenses) >= securedLoansInfo.emi*3
+//   console.log(elgAmount) 
 
-  const notElgAmount =(securedLoansInfo.monthlyNetIncome - securedLoansInfo.monthlyExpenses) <= securedLoansInfo.emi*3
-  console.log(notElgAmount) 
+//   const notElgAmount =(securedLoansInfo.monthlyNetIncome - securedLoansInfo.monthlyExpenses) <= securedLoansInfo.emi*3
+//   console.log(notElgAmount) 
 
-  const missingInputs = filteredInputNames.filter(inputName => !securedLoansInfo[inputName]);
-  console.log('Missing Inputs:', missingInputs);
+//   const missingInputs = filteredInputNames.filter(inputName => !securedLoansInfo[inputName]);
+//   console.log('Missing Inputs:', missingInputs);
 
-  if(filteredInputNames.some(inputName => !securedLoansInfo[inputName])){
-    alert("pls fill the inputs")
-    dispatch(setSecuredLoansInfo({}))
+//   if(filteredInputNames.some(inputName => !securedLoansInfo[inputName])){
+//     alert("pls fill the inputs")
+//     dispatch(setSecuredLoansInfo({}))
 
-  }
-  else if(securedLoansInfo.propertyStatus == "owned" && securedLoansInfo.CibilIssue == "no" && securedLoansInfo.monthlyNetIncome >= 25000 && elgAmount ) {
-   const loanRef= await addDoc(collection(db, "securedLoans"), {
-            ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"A"});
-    const loanRefId=  loanRef.id   
-       await updateDoc(doc(db,"securedLoans",loanRefId),{
-        id:loanRefId,
-       }
-      )
-    alert("grade A")
-    navigate(`/showresult/${loanRefId}`)
+//   }
+//   else if(securedLoansInfo.propertyStatus == "owned" && securedLoansInfo.CibilIssue == "no" && securedLoansInfo.monthlyNetIncome >= 25000 && elgAmount ) {
+//    const loanRef= await addDoc(collection(db, "securedLoans"), {
+//             ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"A"});
+//     const loanRefId=  loanRef.id   
+//        await updateDoc(doc(db,"securedLoans",loanRefId),{
+//         id:loanRefId,
+//        }
+//       )
+//     alert("grade A")
+//     navigate(`/showresult/${loanRefId}`)
     
-  }
-  else if(securedLoansInfo.propertyStatus == "rented" && securedLoansInfo.CibilIssue == "no" && securedLoansInfo.monthlyNetIncome  > 25000 ){
-    const loanRef= await addDoc(collection(db, "securedLoans"), {
-      ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"B"});
-const loanRefId=  loanRef.id   
- await updateDoc(doc(db,"securedLoans",loanRefId),{
-  id:loanRefId,
- }
-)
-    alert("grade B")
-    navigate(`/showresult/${loanRefId}`)
+//   }
+//   else if(securedLoansInfo.propertyStatus == "rented" && securedLoansInfo.CibilIssue == "no" && securedLoansInfo.monthlyNetIncome  > 25000 ){
+//     const loanRef= await addDoc(collection(db, "securedLoans"), {
+//       ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"B"});
+// const loanRefId=  loanRef.id   
+//  await updateDoc(doc(db,"securedLoans",loanRefId),{
+//   id:loanRefId,
+//  }
+// )
+//     alert("grade B")
+//     navigate(`/showresult/${loanRefId}`)
 
-  }
-  else if(securedLoansInfo.propertyStatus == "rented" && securedLoansInfo.CibilIssue == "yes" && securedLoansInfo.monthlyNetIncome  > 15000 ){
-    const loanRef= await addDoc(collection(db, "securedLoans"), {
-      ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"C"});
-const loanRefId=  loanRef.id   
- await updateDoc(doc(db,"securedLoans",loanRefId),{
-  id:loanRefId,
- }
-)
-    alert("grade C")
-    navigate(`/showresult/${loanRefId}`)
+//   }
+//   else if(securedLoansInfo.propertyStatus == "rented" && securedLoansInfo.CibilIssue == "yes" && securedLoansInfo.monthlyNetIncome  > 15000 ){
+//     const loanRef= await addDoc(collection(db, "securedLoans"), {
+//       ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"C"});
+// const loanRefId=  loanRef.id   
+//  await updateDoc(doc(db,"securedLoans",loanRefId),{
+//   id:loanRefId,
+//  }
+// )
+//     alert("grade C")
+//     navigate(`/showresult/${loanRefId}`)
 
-  }
-  else {
+//   }
+//   else {
    
-    const loanRef= await addDoc(collection(db, "securedLoans"), {
-      ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"D"});
-const loanRefId=  loanRef.id   
- await updateDoc(doc(db,"securedLoans",loanRefId),{
-  id:loanRefId,
- }
-)
-alert("grade D")
+//     const loanRef= await addDoc(collection(db, "securedLoans"), {
+//       ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"D"});
+// const loanRefId=  loanRef.id   
+//  await updateDoc(doc(db,"securedLoans",loanRefId),{
+//   id:loanRefId,
+//  }
+// )
+// alert("grade D")
 
-            navigate(`/showresult/${loanRefId}`)
+//             navigate(`/showresult/${loanRefId}`)
 
-  }
+//   }
 
 }
 
@@ -286,7 +301,7 @@ alert("grade D")
               </div>
                 <div className="col-12 col-sm-6">
                   <label for="validationDefault01" class="form-label" >Job Title</label>
-                  <input className="multisteps-form__input form-control" value={securedLoansInfo.jobTitle} id="validationDefault01" type="text" name="jobTitle" placeholder="eg. Enginner" onKeyUp={handleOnchange} required />
+                  <input className="multisteps-form__input form-control" value={securedLoansInfo.jobTitle} id="validationDefault01" type="text" name="jobTitle" placeholder="eg. Enginner" onChange={handleOnchange} required />
                 </div>
                 <div className="col-12 col-sm-6 mt-3 mt-sm-0">
                   <label for="placevalidation"class="form-label" >Place Of Work</label>
@@ -394,6 +409,10 @@ alert("grade D")
           <div className="col-12 col-sm-4">
               <label>Variant</label>
               <input type="text" name="variant" className="multisteps-form__input form-control" placeholder="Enter variant" onChange={handleOnchange}/>
+          </div>
+          <div className="col-12 col-sm-4">
+              <label>full price ofvechicle</label>
+              <input type="number" name="fullpriceofvechicle" className="multisteps-form__input form-control" placeholder="Enter full price ofvechicle" onChange={handleOnchange} />
           </div>
           {securedLoansInfo.vehicleType == 'car'?
           <>

@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Box, FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, TextField, Button } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
@@ -47,7 +48,6 @@ const RegisterPersonalDetail = () => {
       
         const headers = { 'Authorization': `Bearer ${token}` };
       
-
         axios.post("https://PreethiJP.pythonanywhere.com/userPersonalDetail", requestData, { headers })
           .then((res) => {
             console.log(res.data);
