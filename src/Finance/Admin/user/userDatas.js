@@ -16,9 +16,17 @@ const UserDatas = () => {
     //    getUserDatas()
     // },[page])
 
+
+//   const getUserDatas = async () => {
+//         const response = await axios.get(`https://disondys.pythonanywhere.com/adminUserData?page=${page}&per_page=3`); 
+//         setUserData(response.data.users);
+//         setTotalPages(response.data.pages); 
+// }
+
     useEffect(()=>{
         getAllUserDatas()
     },[])
+
 
 
     const getAllUserDatas = async () => {
@@ -42,6 +50,7 @@ const UserDatas = () => {
 //     }
 // };
 
+
 // const handlePrevious = () => {
 //     if (page > 1) {
 //         setPage(page - 1);
@@ -49,13 +58,8 @@ const UserDatas = () => {
 // };
 
 
-// const deleteUserRegData = async (id) => {
-//      await axios.delete(`https://suthanks.pythonanywhere.com/deleteUser/${id}`).then((res)=>{
-//         alert(res.data)
-//      })
 
-//     getUserDatas()
-// }
+
 
 
   return (

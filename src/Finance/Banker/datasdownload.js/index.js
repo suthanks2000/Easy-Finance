@@ -18,7 +18,9 @@ fetchdata()
         const formdata = new FormData();
         formdata.append('id',banker_id)
 
+
         await axios.post('https://PreethiJP.pythonanywhere.com/bankerPlan',formdata).then(
+
             (res)=>{
                 if(res.data.message){
                     alert(res.data.message)

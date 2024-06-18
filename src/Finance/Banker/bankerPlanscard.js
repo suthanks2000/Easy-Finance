@@ -10,7 +10,7 @@ const BankerPlansCard = () => {
         fetchData()
     },[])
    async function fetchData () {
-        await axios.get("https://suthanks.pythonanywhere.com/getbankerplans").then((res)=>{
+        await axios.get("https://disondys.pythonanywhere.com/getbankerplans").then((res)=>{
             setplan(res.data) 
            alert("fetch data success")
            console.log(res.data)
