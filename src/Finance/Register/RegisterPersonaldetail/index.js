@@ -82,7 +82,7 @@ const RegisterPersonalDetail = () => {
 
         
                 const headers ={'Authorization':`Bearer ${token}`}
-                await axios.post("https://PreethiJP.pythonanywhere.com/userPersonalDetail", requestData, { headers }).then((res)=>{
+                await axios.post("https://disondys.pythonanywhere.com/userPersonalDetail", requestData, { headers }).then((res)=>{
                     console.log(res.data)
                     if(res.data.notFill){
                         alert(res.data.notFill)

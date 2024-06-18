@@ -1,45 +1,26 @@
 import React, { useState } from "react";
+
 import { useSelector, useDispatch } from "react-redux";
 import {
   setRegisterData,
-  setuserdata,
-  setIsLogin,
 } from "../Redux-Toolkit/slices/RegLogCounter";
-import { useNavigate, Link } from "react-router-dom";
-import { Alert } from "react-bootstrap";
-import Swal from "sweetalert2";
+import { useNavigate, Link } from "react-router-dom";import Swal from "sweetalert2";
 import axios from "axios";
-import userImg from "./userImg.png";
-import emailImg from "./email.png";
-import passwordImg from "./password.png";
+
 import "./index.css";
+import { RegisterNav } from "../registerNav";
 
 export default function Register() {
-  const userdata = useSelector((state) => state.regisLogin.userdata);
   const regData = useSelector((state) => state.regisLogin.registerData);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [fieldErrors, setFieldErrors] = useState({});
-  const [registerUserData, setRegisterUserData] = useState({});
-
-  const handleCreate = async () => {
-    setLoading(true);
-    setError("");
-    setFieldErrors({});
-
-    const newFieldErrors = {};
-    if (!regData.Name) newFieldErrors.Name = "Please fill out this field.";
-    if (!regData.Email) newFieldErrors.Email = "Please fill out this field.";
-
-    if (!regData.Password) newFieldErrors.Password = "Please fill out this field.";
   
-    if (Object.keys(newFieldErrors).length > 0) {
-      setFieldErrors(newFieldErrors);
-      setLoading(false);
-      return;
-    }
+
+  const handleCreate = async (e) => {
+    e.preventDefault()
+    setLoading(true);
+  
 
   
     const requestData = new FormData();
@@ -48,7 +29,7 @@ export default function Register() {
     requestData.append('userpassword', regData.Password);
   
    
-      await axios.post("https://PreethiJP.pythonanywhere.com/userRegister", requestData).then((res)=>{
+      await axios.post("https://disondys.pythonanywhere.com/userRegister", requestData).then((res)=>{
   
       if (res.data.existing) {
         alert(res.data.existing);
@@ -60,70 +41,112 @@ export default function Register() {
         navigate("/register/personaldetail");
       }})
      .catch ((error) => {
-      setError(error.message);
       setLoading(false);
   })}
 
 
   return (
     <>
-      <div className="register-container">
-        <div className="header">
-          <h2>Sign Up</h2>
-        </div>
-        {error && (
-          <Alert variant="danger" className="error">
-            {error}
-          </Alert>
-        )}
-        <div className="inputs">
-          <div className="input">
-            <img src={userImg} alt="User" />
-            <input
-              type="text"
-              placeholder="Name"
-              onChange={(e) =>
-                dispatch(setRegisterData({ ...regData, Name: e.target.value }))
-              }
-            />
-          </div>
-          {fieldErrors.Name && <div className="error">{fieldErrors.Name}</div>}
-          <div className="input">
-            <img src={emailImg} alt="Email" />
-            <input
-              type="email"
-              placeholder="Email Id"
-              onChange={(e) =>
-                dispatch(setRegisterData({ ...regData, Email: e.target.value }))
-              }
-            />
-          </div>
-          {fieldErrors.Email && (
-            <div className="error">{fieldErrors.Email}</div>
-          )}
-          <div className="input">
-            <img src={passwordImg} alt="Password" />
-            <input
-              type="password"
-              placeholder="Password"
-              onChange={(e) =>
-                dispatch(
-                  setRegisterData({ ...regData, Password: e.target.value })
-                )
-              }
-            />
-          </div>
-          {fieldErrors.Password && (
-            <div className="error">{fieldErrors.Password}</div>
-          )}
-        </div>
-        <div className="text-center">
-          Already have an account? <Link to="/">Login Here!</Link>
-        </div>
-        <div className="submit-container">
-          <button onClick={handleCreate}>Sign Up</button>
-        </div>
+<div className="container position-sticky z-index-sticky top-0">
+    <div className="row">
+      <div className="col-12">
+      {<RegisterNav/>}
       </div>
+    </div>
+  </div>
+<main className="main-content mt-0">
+        <section>
+          <div className="page-header min-vh-100">
+            <div className="container">
+              <div className="row">
+                <div className="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
+                  <div className="card card-plain" style={{border:"none"}}>
+                    <div className="card-header pb-0 text-left"  style={{border:'none'}}>
+                      <h4 className="font-weight-bolder">Sign Up</h4>
+                      <p className="mb-0">Enter your email and password to register</p>
+                    </div>
+
+                   
+
+                    <div className="card-body pb-3">
+                      <form role="form" onSubmit={handleCreate}>
+                      <label for="username" class="form-label">Name</label>
+                        <div className="mb-3">
+                          <input
+                            type="text"
+                            placeholder="Name"
+                            class="form-control"
+                            id="username"
+                            onChange={(e) =>
+                              dispatch(setRegisterData({ ...regData, Name: e.target.value }))                            
+                            }
+                            required
+                          />
+                        </div>
+
+                        <label for="useremail" class="form-label">Email</label>
+                        <div className="mb-3">
+                          <input
+                            type="email"
+                            placeholder="Email Id"
+                            class="form-control"
+                            id="useremail"
+                            onChange={(e) =>
+                              dispatch(setRegisterData({ ...regData, Email: e.target.value }))
+                            }
+                            required
+                          />
+                        </div>
+                        
+
+                        <label for="userPassword" class="form-label">Email</label>
+                        <div className="mb-3">
+                          <input
+                            type="password"
+                            placeholder="Password"
+                             class="form-control"
+                             id="userPassword"
+                            onChange={(e) =>
+                              dispatch(setRegisterData({ ...regData, Password: e.target.value }))
+                            }
+                            required
+                          />
+                        </div>
+                        
+
+                        <div className="text-center">
+                          <button
+                            type="submit"
+                            className="btn btn-primary w-100 mt-4 mb-0"
+                            
+                          >
+                            Sign up
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+
+                    <div className="card-footer text-center pt-0 px-sm-4 px-1">
+                      <p className="mb-4 mx-auto">
+                        Already have an account?
+                        <a className="text-primary font-weight-bold"><Link to="/">Sign In</Link></a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
+                  <div className="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden">
+                    <span className="mask bg-primary opacity-4"></span>
+                    <h4 className="mt-5 text-white font-weight-bolder position-relative">Your journey starts here</h4>
+                    <p className="text-white position-relative">Just as it takes a company to sustain a product, it takes a community to sustain a protocol.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
     </>
   );
 }
