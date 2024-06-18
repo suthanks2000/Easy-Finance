@@ -1,86 +1,43 @@
 import React, { useState } from 'react';
 import { Box, FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, TextField, Button } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
-import { setPersonalInfo } from '../../Redux-Toolkit/slices/PersonalDetailCounter';
+// import { setPersonalInfo } from '../../Redux-Toolkit/slices/PersonalDetailCounter';
 import { Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const RegisterPersonalDetail = () => {
-    const { personalInfo } = useSelector((state) => state.personalDetail);
+    // const { personalInfo } = useSelector((state) => state.personalDetail);
     const dispatch = useDispatch();
     const navigate=useNavigate();
+    // const [personalInfo,setPersonalInfo] = useState({})
 
     const [errors, setErrors] = useState({});
+    const [personalInfo, setPersonalInfo] = useState({
+      first_name: '',
+      last_name: '',
+      father_name: '',
+      age: '',
+      gender: '',
+      marital_status: '',
+      district: '',
+      city: '',
+      pincode: '',
+      contact: ''
+    });
+  
   
 
-    const validate = () => {
-        const newErrors = {};
 
-        if (!personalInfo.firstName) {
-            newErrors.firstName = "First name is required";
-        }
 
-        if (!personalInfo.lastName) {
-            newErrors.lastName = "Last name is required";
-        }
-
-        if (!personalInfo.fatherName) {
-            newErrors.fatherName = "Father's name is required";
-        }
-
-        if (!personalInfo.Age) {
-            newErrors.Age = "Age is required";
-
-        } else if (isNaN(personalInfo.Age) || personalInfo.Age <= 0) {
-            newErrors.Age = "Invalid age";
-        }
-
-        if (!personalInfo.City) {
-            newErrors.City = "City is required";
-        }
-
-        if (!personalInfo.pinCode) {
-            newErrors.pinCode = "Pin code is required";
-        } else if (isNaN(personalInfo.pinCode)) {
-            newErrors.pinCode = "Invalid pin code";
-        }
-
-        if (!personalInfo.Contact) {
-            newErrors.Contact = "Contact number is required";
-        } else if (isNaN(personalInfo.Contact)) {
-            newErrors.Contact = "Invalid contact number";
-        }
-
-        if (!personalInfo.District || personalInfo.District === "Select District") {
-            newErrors.District = "District is required";
-        }
-
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
-    };
-
+       const handleOnChange = (e) => {
+        setPersonalInfo({ ...personalInfo, [e.target.name]: e.target.value });
+      };
     
-    const handleSubmit =async (e) => {
-        const uid = localStorage.getItem("loginUserId")
-        const token = localStorage.getItem("Token")
-        // console.log("uidd",uid)
+    
+      const handleSubmit = (e) => {
         e.preventDefault();
-        if (validate()) {
-            console.log("Form submitted successfully:", personalInfo); 
-            const requestData = new FormData();
-            requestData.append('uid',uid);
-            requestData.append('first_name', personalInfo.firstName);
-            requestData.append('last_name', personalInfo.lastName);
-            requestData.append('father_name', personalInfo.fatherName);
-            requestData.append('age', personalInfo.Age);
-            requestData.append('gender', personalInfo.Gender);
-            requestData.append('marital_status', personalInfo.MaritalStatus);
-            requestData.append('district', personalInfo.District); 
-            requestData.append('city', personalInfo.City);
-            requestData.append('pincode', personalInfo.pinCode);
-            requestData.append('contact', personalInfo.Contact);
-
         
+
                 const headers ={'Authorization':`Bearer ${token}`}
                 await axios.post("https://disondys.pythonanywhere.com/userPersonalDetail", requestData, { headers }).then((res)=>{
                     console.log(res.data)
@@ -110,170 +67,147 @@ const RegisterPersonalDetail = () => {
             <form onSubmit={handleSubmit}>
                 <div>RegisterPersonalDetail</div>
 
-                <div>
-                    <TextField
-                        label='First Name'
-                        name='firstName'
-                        type='text'
-                        onChange={(e) => dispatch(setPersonalInfo({ ...personalInfo, [e.target.name]: e.target.value }))}
-                        error={Boolean(errors.firstName)}
-                        helperText={errors.firstName}
-                    />
-                </div>
 
-                <div>
-                    <TextField
-                        label='Last Name'
-                        name='lastName'
-                        type='text'
-                        onChange={(e) => dispatch(setPersonalInfo({ ...personalInfo, [e.target.name]: e.target.value }))}
-                        error={Boolean(errors.lastName)}
-                        helperText={errors.lastName}
-                    />
-                </div>
 
-                <div>
-                    <TextField
-                        label='Father Name'
-                        name='fatherName'
-                        type='text'
-                        onChange={(e) => dispatch(setPersonalInfo({ ...personalInfo, [e.target.name]: e.target.value }))}
-                        error={Boolean(errors.fatherName)}
-                        helperText={errors.fatherName}
-                    />
-                </div>
 
-                <div>
-                    <TextField
-                        label='Age'
-                        name='Age'
-                        type='number'
-                        onChange={(e) => dispatch(setPersonalInfo({ ...personalInfo, [e.target.name]: e.target.value }))}
-                        error={Boolean(errors.Age)}
-                        helperText={errors.Age}
-                    />
-                </div>
+    return (
 
-                <div>
-                    <TextField
-                        label='City'
-                        name='City'
-                        type='text'
-                        onChange={(e) => dispatch(setPersonalInfo({ ...personalInfo, [e.target.name]: e.target.value }))}
-                        error={Boolean(errors.City)}
-                        helperText={errors.City}
-                    />
-                </div>
 
-                <div>
-                    <TextField
-                        label='Pin Code'
-                        name='pinCode'
-                        type='number'
-                        onChange={(e) => dispatch(setPersonalInfo({ ...personalInfo, [e.target.name]: e.target.value }))}
-                        error={Boolean(errors.pinCode)}
-                        helperText={errors.pinCode}
-                    />
-                </div>
+<div className="col-lg-9 mt-lg-0 mt-4 mx-auto">
+<div className="card card-body" id="profile">
+  <div className="row justify-content-center align-items-center">
+    <div className="col-sm-auto col-8 my-auto">
+      <div className="h-100">
+        <h1 className="mb-1 font-weight-bolder">
+          Personal Detail
+        </h1>
+        {/* <p className="mb-0 font-weight-bold text-sm">
+          Personal Detail
+        </p> */}
+      </div>
+    </div>
+  </div>
+</div>
+<div className="card mt-4" id="basic-info">
+  <div className="card-header border-0 bg-white">
+    <h5>Personal Details</h5>
+  </div>
+  <div className="card-body pt-0">
+    <form onSubmit={handleSubmit}>
+      <div className="row mb-3">
+        <div className="col-md-6">
+          <label className="form-label">First Name</label>
+          <input id="firstName" name="first_name" className="form-control" type="text" required placeholder="eg. Harish" onChange={handleOnChange} />
+        </div>
+        <div className="col-md-6">
+          <label className="form-label">Last Name</label>
+          <input id="lastName" name="last_name" className="form-control" type="text" required placeholder="eg. Kumar" onChange={handleOnChange} />
+        </div>
+      </div>
+      <div className="row mb-3">
+        <div className="col-md-6">
+          <label className="form-label">Father Name</label>
+          <input id="fatherName" name="father_name" className="form-control" type="text" placeholder="eg. Rajan" required onChange={handleOnChange} />
+        </div>
+        <div className="col-md-6">
+          <label className="form-label">Age</label>
+          <input id="age" name="age" className="form-control" type="number" required placeholder="eg. 25" onChange={handleOnChange} />
+        </div>
+      </div>
+      <div className="row mb-3">
+        <div className="col-md-6">
+          <label className="form-label">Gender</label>
+          <div className="form-check">
+            <input className="form-check-input" type="radio" name="gender" id="male" value="male" onChange={handleOnChange} />
+            <label className="form-check-label" htmlFor="male">Male</label>
+          </div>
+          <div className="form-check">
+            <input className="form-check-input" type="radio" name="gender" id="female" value="female" onChange={handleOnChange} />
+            <label className="form-check-label" htmlFor="female">Female</label>
+          </div>
+        </div>
+        <div className="col-md-6">
+          <label className="form-label">Marital Status</label>
+          <div className="form-check">
+            <input className="form-check-input" type="radio" name="marital_status" id="married" value="married" onChange={handleOnChange} />
+            <label className="form-check-label" htmlFor="married">Married</label>
+          </div>
+          <div className="form-check">
+            <input className="form-check-input" type="radio" name="marital_status" id="unmarried" value="unmarried" onChange={handleOnChange} />
+            <label className="form-check-label" htmlFor="unmarried">Unmarried</label>
+          </div>
+        </div>
+      </div>
+      <div className="row mb-3">
+        <div className="col-6">
+          <label className="form-label">District</label>
+          <select className="form-control" name="district" onChange={handleOnChange} required>
+            <option value="">Select District</option>
+            <option>Ariyalur</option>
+            <option>Chengalpattu</option>
+            <option>Chennai</option>
+            <option>Coimbatore</option>
+            <option>Cuddalore</option>
+            <option>Dharmapuri</option>
+            <option>Dindigul</option>
+            <option>Erode</option>
+            <option>Kallakurichi</option>
+            <option>Kanchipuram</option>
+            <option>Kanyakumari</option>
+            <option>Karur</option>
+            <option>Krishnagiri</option>
+            <option>Madurai</option>
+            <option>Nagapattinam</option>
+            <option>Namakkal</option>
+            <option>Nilgiris</option>
+            <option>Perambalur</option>
+            <option>Pudukkottai</option>
+            <option>Ramanathapuram</option>
+            <option>Ranipet</option>
+            <option>Salem</option>
+            <option>Sivaganga</option>
+            <option>Tenkasi</option>
+            <option>Thanjavur</option>
+            <option>Theni</option>
+            <option>Thoothukudi</option>
+            <option>Tiruchirappalli</option>
+            <option>Tirunelveli</option>
+            <option>Tirupathur</option>
+            <option>Tiruppur</option>
+            <option>Tiruvallur</option>
+            <option>Tiruvannamalai</option>
+            <option>Tiruvarur</option>
+            <option>Vellore</option>
+            <option>Viluppuram</option>
+            <option>Virudhunagar</option>
+          </select>
+        </div>
+        <div className="col-6">
+          <label className="form-label">City</label>
+          <input id="city" name="city" className="form-control" type="text" required onChange={handleOnChange} placeholder="eg. Nagercoil"/>
+        </div>
+      </div>
+      <div className="row mb-3">
+        <div className="col-6">
+          <label className="form-label">Pincode</label>
+          <input id="pincode" name="pincode" className="form-control" type="text" required onChange={handleOnChange} placeholder="eg. 6000 006"/>
+        </div>
+        <div className="col-6">
+          <label className="form-label">Phone Number</label>
+          <input id="contact" name="contact" className="form-control" type="text" required onChange={handleOnChange} placeholder="eg. 123456789"/>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-12">
+          <button type="submit" className="btn btn-primary float-end">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+</div> 
+    )}
 
-                <div>
-                    <TextField
-                        label='Contact Number'
-                        name='Contact'
-                        type='number'
-                        onChange={(e) => dispatch(setPersonalInfo({ ...personalInfo, [e.target.name]: e.target.value }))}
-                        error={Boolean(errors.Contact)}
-                        helperText={errors.Contact}
-                    />
-                </div>
 
-                <FormControl>
-                    <FormLabel id="gender-radio-group-label">Gender</FormLabel>
-                    <RadioGroup
-                        row
-                        aria-labelledby="gender-radio-group-label"
-                        name="Gender"
-                        value={personalInfo.Gender || ""}
-                        onChange={(e) => dispatch(setPersonalInfo({ ...personalInfo, [e.target.name]: e.target.value }))}
-                    >
-                        <FormControlLabel value="female" control={<Radio />} label="Female" />
-                        <FormControlLabel value="male" control={<Radio />} label="Male" />
-                    </RadioGroup>
-                </FormControl>
-
-                <FormControl>
-                    <FormLabel id="marital-status-radio-group-label">Marital Status</FormLabel>
-                    <RadioGroup
-                        row
-                        aria-labelledby="marital-status-radio-group-label"
-                        name="MaritalStatus"
-                        value={personalInfo.MaritalStatus || ""}
-                        onChange={(e) => dispatch(setPersonalInfo({ ...personalInfo, [e.target.name]: e.target.value }))}
-                    >
-                        <FormControlLabel value="married" control={<Radio />} label="Married" />
-                        <FormControlLabel value="unmarried" control={<Radio />} label="Unmarried" />
-                    </RadioGroup>
-                </FormControl>
-
-                <Box sx={{ minWidth: 120 }}>
-                    <FormControl fullWidth error={Boolean(errors.District)}>
-                        <InputLabel id="district-select-label">District</InputLabel>
-                        <Select
-                            labelId="district-select-label"
-                            id="district-select"
-                            value={personalInfo.District || ""}
-                            name="District"
-                            label="District"
-                            onChange={(e) => dispatch(setPersonalInfo({ ...personalInfo, [e.target.name]: e.target.value }))}
-                        >
-                            <MenuItem value="Select District">Select District</MenuItem>
-                            <MenuItem value="Ariyalur">Ariyalur</MenuItem>
-                            <MenuItem value="Chennai">Chennai</MenuItem>
-                            <MenuItem value="Coimbatore">Coimbatore</MenuItem>
-                            <MenuItem value="Cuddalore">Cuddalore</MenuItem>
-                            <MenuItem value="Dharmapuri">Dharmapuri</MenuItem>
-                            <MenuItem value="Dindigul">Dindigul</MenuItem>
-                            <MenuItem value="Erode">Erode</MenuItem>
-                            <MenuItem value="Kallakurichi">Kallakurichi</MenuItem>
-                            <MenuItem value="Kanchipuram">Kanchipuram</MenuItem>
-                            <MenuItem value="Kanyakumari">Kanyakumari</MenuItem>
-                            <MenuItem value="Karur">Karur</MenuItem>
-                            <MenuItem value="Krishnagiri">Krishnagiri</MenuItem>
-                            <MenuItem value="Madurai">Madurai</MenuItem>
-                            <MenuItem value="Nagapattinam">Nagapattinam</MenuItem>
-                            <MenuItem value="Namakkal">Namakkal</MenuItem>
-                            <MenuItem value="Nilgiris">Nilgiris</MenuItem>
-                            <MenuItem value="Perambalur">Perambalur</MenuItem>
-                            <MenuItem value="Pudukkottai">Pudukkottai</MenuItem>
-                            <MenuItem value="Ramanathapuram">Ramanathapuram</MenuItem>
-                            <MenuItem value="Ranipet">Ranipet</MenuItem>
-                            <MenuItem value="Salem">Salem</MenuItem>
-                            <MenuItem value="Sivaganga">Sivaganga</MenuItem>
-                            <MenuItem value="Tenkasi">Tenkasi</MenuItem>
-                            <MenuItem value="Thanjavur">Thanjavur</MenuItem>
-                            <MenuItem value="Theni">Theni</MenuItem>
-                            <MenuItem value="Thoothukudi">Thoothukudi</MenuItem>
-                            <MenuItem value="Tiruchirappalli">Tiruchirappalli</MenuItem>
-                            <MenuItem value="Tirunelveli">Tirunelveli</MenuItem>
-                            <MenuItem value="Tirupathur">Tirupathur</MenuItem>
-                            <MenuItem value="Tiruppur">Tiruppur</MenuItem>
-                            <MenuItem value="Tiruvallur">Tiruvallur</MenuItem>
-                            <MenuItem value="Tiruvannamalai">Tiruvannamalai</MenuItem>
-                            <MenuItem value="Tiruvarur">Tiruvarur</MenuItem>
-                            <MenuItem value="Vellore">Vellore</MenuItem>
-                            <MenuItem value="Viluppuram">Viluppuram</MenuItem>
-                            <MenuItem value="Virudhunagar">Virudhunagar</MenuItem>
-                        </Select>
-                        {errors.District && <div style={{ color: 'red', marginTop: '5px' }}>{errors.District}</div>}
-                    </FormControl>
-                </Box>
-
-                <Button type="submit" variant="contained" color="primary">
-                    Submit
-                </Button>
-            </form>
-        </>
-    );
-};
 
 export default RegisterPersonalDetail;
