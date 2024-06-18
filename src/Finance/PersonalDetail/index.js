@@ -25,6 +25,7 @@ export default function PersonalDetail() {
   const token = localStorage.getItem("Token");
   console.log(token);
 
+
 useEffect(() => {
   getUserPersonalData();
   
@@ -62,13 +63,15 @@ const handleOnkeyup = (ele)=>{
 
   function handleExit() {
     Navigate("/category")
+
   }
 
 
 
   const handleUpdateDetail = () => {
-    const headers = { 'Authorization': `Bearer ${token}` };
+    const headers = { Authorization: `Bearer ${token}` };
     let formData = new FormData();
+
   
     formData.append("first_name", usersData.first_name);
     formData.append("last_name", usersData.last_name);
@@ -81,8 +84,13 @@ const handleOnkeyup = (ele)=>{
     formData.append("pincode", usersData.pincode);
     formData.append("contact", usersData.contact);
 
-  
-    axios.put(`https://PreethiJP.pythonanywhere.com/editPersonalData/${uid}`, formData, { headers })
+
+    axios
+      .put(
+        `https://disondys.pythonanywhere.com/editPersonalData/${uid}`,
+        formData,
+        { headers }
+      )
       .then(() => {
         console.log("Personal details updated successfully");
         console.log("personaldetail",usersData)
@@ -93,6 +101,7 @@ const handleOnkeyup = (ele)=>{
         console.error("Error updating personal details:", error);
       });
   };
+
 
 
   return (
@@ -261,6 +270,7 @@ const handleOnkeyup = (ele)=>{
   }
   </>
 )
+
 }
 
 

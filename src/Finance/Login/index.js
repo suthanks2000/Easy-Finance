@@ -62,8 +62,9 @@ export default function Login() {
     formData.append("email", logData.Email);
     formData.append("password", logData.Password);
 
-    
+   
       await axios.post("https://PreethiJP.pythonanywhere.com/loginUser", formData)
+
         .then(response => {
           if (response.data.message) {
             alert(response.data.message);
@@ -199,6 +200,7 @@ export default function Login() {
     // </>
 
     <>
+
      <div className="container position-sticky z-index-sticky mt-0 ">
     <div className="row">
       <div className="col-12">
@@ -223,6 +225,7 @@ export default function Login() {
                   <form role="form">
                   {error && (
           <Alert variant="danger" className="error" style={{color:"white"}}>
+
             {error}
           </Alert>
         )}
