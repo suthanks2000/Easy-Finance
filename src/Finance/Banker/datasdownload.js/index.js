@@ -15,9 +15,9 @@ fetchdata()
         const banker_id = localStorage.getItem('bankerId')
         
         const formdata = new FormData();
-        formdata.append('id',22)
+        formdata.append('id',banker_id)
 
-        await axios.post('https://suthanks.pythonanywhere.com/bankerPlan',formdata).then(
+        await axios.post('https://disondys.pythonanywhere.com/bankerPlan',formdata).then(
             (res)=>{
                 if(res.data.message){
                     alert(res.data.message)

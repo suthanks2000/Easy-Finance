@@ -39,7 +39,7 @@ export default function Login() {
   const backgroundImage = "url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signin-ill.jpg')";
 
   const handleLogin = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
+    e.preventDefault(); // Prevent default 
     setLoading(true);
     setError("");
     setFieldErrors({});
@@ -54,10 +54,7 @@ export default function Login() {
       return;
     }
 
-    // if (!logData.Email || !logData.Password) {
-    //   setLoading(false);
-    //   setError("Please fill in all fields");
-    // } else {
+    
     const formData = new FormData();
     formData.append("email", logData.Email);
     formData.append("password", logData.Password);
@@ -97,107 +94,7 @@ export default function Login() {
 };
 
   return (
-    // <>
-    //   <div className="2">
-    //     <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-    //       <Link className="navbar-brand fs-3" to="/">
-    //         Easy Finance
-    //       </Link>
-    //       <button
-    //         className="navbar-toggler"
-    //         type="button"
-    //         data-bs-toggle="collapse"
-    //         data-bs-target="#navbarNav"
-    //         aria-controls="navbarNav"
-    //         aria-expanded="false"
-    //         aria-label="Toggle navigation"
-    //       >
-    //         <span className="navbar-toggler-icon"></span>
-    //       </button>
-    //       <div className="collapse navbar-collapse" id="navbarNav">
-    //         <ul className="navbar-nav justify-content-end flex-grow-1 pe-1 mb-2 mb-lg-0">
-    //           <li className="nav-item dropdown">
-    //             <Link
-    //               className="nav-link dropdown-toggle"
-    //               to="#"
-    //               id="navbarDropdown"
-    //               role="button"
-    //               data-bs-toggle="dropdown"
-    //               aria-expanded="false"
-    //             >
-    //               Invite
-    //             </Link>
-    //             <ul
-    //               className="dropdown-menu bg-dark"
-    //               aria-labelledby="navbarDropdown"
-    //             >
-    //               <li>
-    //                 <Link
-    //                   className="dropdown-item text-capitalize text-white bg-dark"
-    //                   to="/banker/referplan"
-    //                 >
-    //                   Request from banker
-    //                 </Link>
-    //               </li>
-    //             </ul>
-    //           </li>
-    //           <li className="nav-item">
-    //             {/* <button type="button" className="button mt-1 " onClick={()=>navigate('/register')}>signUp</button> */}
-    //             <Link className="nav-link " to="/register">
-    //               Register
-    //             </Link>
-    //           </li>
-    //         </ul>
-    //       </div>
-    //     </nav>
-    //   </div>
-    //   <div className="login-container">
-    //     <div className="header">
-    //       <h2>Sign In</h2>
-    //     </div>
-    //     {error && (
-    //       <Alert variant="danger" className="error">
-    //         {error}
-    //       </Alert>
-    //     )}
-    //     <div className="inputs">
-    //       <div className="input">
-    //         <img src={emailImg} alt="Email" />
-    //         <input
-    //           type="email"
-    //           placeholder="Email Id"
-    //           onChange={(e) =>
-    //             dispatch(setLoginData({ ...logData, Email: e.target.value }))
-    //           }
-    //         />
-    //       </div>
-    //       {fieldErrors.Email && (
-    //         <div className="error">{fieldErrors.Email}</div>
-    //       )}
-    //       <div className="input">
-    //         <img src={passwordImg} alt="Password" />
-    //         <input
-    //           type="password"
-    //           placeholder="Password"
-    //           onChange={(e) =>
-    //             dispatch(setLoginData({ ...logData, Password: e.target.value }))
-    //           }
-    //         />
-    //       </div>
-    //       {fieldErrors.Password && (
-    //         <div className="error">{fieldErrors.Password}</div>
-    //       )}
-    //     </div>
-    //     <div className="text-center">
-    //       Don't have an account? <Link to="/register">Register Here!</Link>
-    //     </div>
-    //     <div className="submit-container">
-    //       <button onClick={handleLogin} disabled={loading}>
-    //         {loading ? "Loading..." : "Sign In"}
-    //       </button>
-    //     </div>
-    //   </div>
-    // </>
+    
 
     <>
 
@@ -241,10 +138,7 @@ export default function Login() {
                     {fieldErrors.Password && (
             <div className="error">{fieldErrors.Password}</div>
           )}
-                    {/* <div className="form-check form-switch">
-                      <input className="form-check-input" type="checkbox" id="rememberMe"/>
-                      <label className="form-check-label" for="rememberMe">Remember me</label>
-                    </div> */}
+                   
                     <div className="text-center">
                       <button type="button" className="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0" onClick={handleLogin}>Sign in</button>
                     </div>

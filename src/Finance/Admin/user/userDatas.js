@@ -17,7 +17,7 @@ const UserDatas = () => {
     },[page])
 
   const getUserDatas = async () => {
-        const response = await axios.get(`https://PreethiJP.pythonanywhere.com/adminUserData?page=${page}&per_page=3`); 
+        const response = await axios.get(`https://disondys.pythonanywhere.com/adminUserData?page=${page}&per_page=3`); 
         setUserData(response.data.users);
         setTotalPages(response.data.pages); 
 }
@@ -37,7 +37,7 @@ const handlePrevious = () => {
 
 
 const deleteUserRegData = async (id) => {
-     await axios.delete(`https://suthanks.pythonanywhere.com/deleteUser/${id}`).then((res)=>{
+     await axios.delete(`https://disondys.pythonanywhere.com/deleteUser/${id}`).then((res)=>{
         alert(res.data)
      })
 

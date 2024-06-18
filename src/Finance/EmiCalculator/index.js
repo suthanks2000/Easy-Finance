@@ -3,7 +3,7 @@ import "./EmiCal.css";
 import { useState } from "react";
 import React from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Pie } from "react-chartjs-2";
+import { Doughnut} from "react-chartjs-2";
 import { Link } from "react-router-dom";
 import {
   TextField,
@@ -164,25 +164,28 @@ export default function EmiCalculator() {
           </Grid>
           {/* Grandparent3          */}
 
-          <Grid item xs={12} sm={12} md={4}>
-            <Paper className="paper">
-              <div className="piechart">
-                <Pie
-                  data={{
-                    labels: ["Total Interest", "Total Amount"],
-                    datasets: [
-                      {
-                        data: [TotalInterest, totalAmt],
-                        backgroundColor: ["red", "green"],
-                      },
-                    ],
-                  }}
-                />
-              </div>
-            </Paper>
-          </Grid>
+              <Grid item xs={12} sm={12} md={4}>
+      <Paper className="paper">
+        <div className="doughnutchart">
+          <Doughnut
+            data={{
+              labels: ["Total Interest", "Total Amount"],
+              datasets: [
+                {
+                  data: [TotalInterest, totalAmt],
+                  backgroundColor: ["blue", "lightblue"],
+                },
+              ],
+            }}
+          />
+        </div>
+      </Paper>
+    </Grid>
+          
         </Grid>
       </Container>
+      
     </div>
+
   );
 }
