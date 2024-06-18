@@ -1,150 +1,151 @@
-// import Spinner from 'react-bootstrap/Spinner';
 
-import { Form, useNavigate } from "react-router-dom";
+import { Form, Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { setBankLogin } from "../Redux-Toolkit/slices/BankerReg&LogCounter";
-import { Button, TextField } from "@mui/material";
 import axios from "axios";
 
 export default function BankerLog() {
-  //   const[adminData,setAdminData]=useState([])
-  const [spinner, setSpinner] = useState(false);
-
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-
-  const { bankLogin, bankRegister } = useSelector(
-    (state) => state.bankerRegLog
-  );
+  const { bankLogin } = useSelector((state) => state.bankerRegLog);
   const dispatch = useDispatch();
-  const Navigate = useNavigate();
-  // console.log(adminData)
+  const navigate = useNavigate();
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
-
-  const validateEmail = (email) => {
-    return emailRegex.test(email);
-  };
-
-  const validatePassword = (password) => {
-    return passwordRegex.test(password);
-  };
 
   useEffect(() => {
-    // adminFbData()
     dispatch(setBankLogin({}));
-    // setSpinner(false)
   }, []);
 
-  const data = useRef();
   const handleOnChange = (ele) => {
     dispatch(
       setBankLogin({ ...bankLogin, [ele.target.name]: ele.target.value })
     );
-    if (ele.target.name === "Email") {
-      setEmailError("");
-    } else if (ele.target.name === "Password") {
-      setPasswordError("");
-    }
   };
-
 
 
   const handleBankerLogin = async (ele) => {
     ele.preventDefault();
-    let valid = true;
-
-    if (!bankLogin.Email) {
-        setEmailError("Email is required");
-        valid = false;
-    }
-
-    if (!bankLogin.Password) {
-        setPasswordError("Password is required");
-        valid = false;
-    }
-
-    if (valid) {
-        const data = new FormData();
-
-        data.append("bankeremail", bankLogin.Email)
-        data.append("bankerpassword", bankLogin.Password)
-
-        await axios.post("https://PreethiJP.pythonanywhere.com/allowBankerLogin", data)
-            .then((res) => {
-                if (res.data.notfound) {
-                    alert("Banker not found")
-                } else if (res.data.notverify) {
-                    alert("Your account is not verified")
-                } else {
-                    alert("Verified successfully. Logging in...")
-                    console.log(res.data) 
-                    console.log(res.data.token)
-                    localStorage.setItem("bankerToken",res.data.token)
-                    localStorage.setItem("bankerId",res.data.uid)
-                    Navigate('/banker/home')
-                }
-            })
-            .catch((error) => {
-                console.error("Error during login:", error)
-                alert(error)
-            })
-    }
-}
 
   
+      const data = new FormData();
+      data.append("bankeremail", bankLogin.Email);
+      data.append("bankerpassword", bankLogin.Password);
+
+      await axios
+        .post("https://disondys.pythonanywhere.com/allowBankerLogin", data)
+        .then((res) => {
+          if (res.data.notfound) {
+            alert("Banker not found");
+          } else if (res.data.notverify) {
+            alert("Your account is not verified");
+          } else {
+            alert("Verified successfully. Logging in...");
+            console.log(res.data);
+            console.log(res.data.token);
+            localStorage.setItem("bankerToken", res.data.token);
+            localStorage.setItem("bankerId", res.data.uid);
+            navigate("/banker/home");
+          }
+        })
+        .catch((error) => {
+          console.error("Error during login:", error);
+          alert(error);
+        });
+    
+  };
+
   return (
     <>
-      {/* {
-    spinner? */}
-      <>
-        <h1>Welcome to Login Pages</h1>
 
-        <form handleBankerLogin>
-          <div>
-            <TextField
-              label="Email"
-              variant="outlined"
-              type="email"
-              name="Email"
-              // value={emiData.tenureMonth}
-              onChange={handleOnChange}
-              error={Boolean(emailError)}
-              helperText={emailError}
-            />
-          </div>
+      <main className="main-content  mt-0">
+        <section>
+          <div className="page-header min-vh-100">
+            <div className="container">
+              <div className="row">
+                <div className="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
+                  <div className="card card-plain" style={{border:"none"}}>
+                    <div className="card-header pb-0 text-start" style={{border:"none"}}>
+                      <h4 className="font-weight-bolder">Sign In</h4>
+                      <p className="mb-0">
+                        Enter your email and password to sign in
+                      </p>
+                    </div>
 
-          <div>
-            <TextField
-              label="Password"
-              variant="outlined"
-              type="password"
-              name="Password"
-              onChange={handleOnChange}
-              error={Boolean(passwordError)}
-              helperText={passwordError}
-            />
-          </div>
+                    <div className="card-body">
+                      <form role="form" onSubmit={handleBankerLogin}>
+                      <label for="bankerEmail" class="form-label">Email</label>
+                        <div className="mb-3">
+                          <input
+                            type="email"
+                            className="form-control form-control-lg"
+                            id="bankerEmail"
+                            class="form-control"
+                            placeholder="type your email"
+                            aria-label="Email"
+                            name="Email"
+                            onChange={handleOnChange}
+                            required
+                          />
+              
+                        </div>
 
-          <div>
-            <Button
-              variant="contained"
-              color="success"
-              onClick={handleBankerLogin}
-            >
-              lOGIN
-            </Button>
+                        <div className="mb-3">
+                        <label for="bankerPassword" class="form-label">password</label>
+                          <input
+                            type="password"
+                            className="form-control form-control-lg"
+                            id="bankerPassword"
+                            placeholder="type your password"
+                            aria-label="Password"
+                            name="Password"
+                            onChange={handleOnChange}
+                            required
+                          />                         
+                        </div>
+
+                        <div className="text-center">
+                          <button
+                            type="submit"
+                            className="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0"
+                            
+                          >
+                            Sign in
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                    <div className="card-footer text-center pt-0 px-lg-2 px-1">
+                      <p className="mb-4 text-sm mx-auto">
+                        Don't have an account?
+                        <Link
+                          to="/banker/register"
+                          className="text-primary text-gradient font-weight-bold"
+                        >
+                          Sign up
+                        </Link>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
+                  <div
+                    className="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden"
+                  >
+                    <span className="mask bg-gradient-primary opacity-6"></span>
+                    <h4 className="mt-5 text-white font-weight-bolder position-relative">
+                      "Attention is the new currency"
+                    </h4>
+                    <p className="text-white position-relative">
+                      The more effortless the writing looks, the more effort the
+                      writer actually put into the process.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
-        </form>
-      </>
-      {/* :
-        <Spinner animation="border" role="status">
-        <span className="visually-hidden">Loading...</span>
-        </Spinner>
-        } */}
+        </section>
+      </main>
     </>
   );
 }
