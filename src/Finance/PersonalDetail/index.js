@@ -40,7 +40,6 @@ const getUserPersonalData = () => {
       setUsersData(response.data);
       alert("Success");
       console.log(response.data, 'usersData');
-      alert("Success");
     })
     .catch(error => {
       alert("Error");
@@ -89,7 +88,7 @@ const handleOnkeyup = (ele)=>{
 
     axios
       .put(
-        `https://disondys.pythonanywhere.com/editPersonalData/${uid}`,
+        `https://PreethiJP.pythonanywhere.com/editPersonalData/${uid}`,
         formData,
         { headers }
       )
@@ -123,7 +122,7 @@ const handleOnkeyup = (ele)=>{
             <div className="h-100">
               <h5 className="mb-1 font-weight-bolder">
                {usersData.first_name} {usersData.last_name}
-              </h5>b
+              </h5>
               <p className="mb-0 font-weight-bold text-sm">
                 { usersData.contact }
               </p>

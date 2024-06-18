@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Box, FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, TextField, Button } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
@@ -37,36 +38,35 @@ const RegisterPersonalDetail = () => {
       const handleSubmit = (e) => {
         e.preventDefault();
         
-
-                const headers ={'Authorization':`Bearer ${token}`}
-                await axios.post("https://disondys.pythonanywhere.com/userPersonalDetail", requestData, { headers }).then((res)=>{
-                    console.log(res.data)
-                    if(res.data.notFill){
-                        alert(res.data.notFill)
-                    }
-                    else if(res.data.alreadyFill){
-                        alert(res.data.alreadyFill)
-                    }
-                    else if(res.data.message){
-                        alert(res.data.message)
-                        navigate('/category')
-                    }
-                }).catch((error)=>{
-                    console.log(error)
-                    alert(error)
-                })
-               
-            
-        }
-    };
-
-
-    return (
-        <>
-            {JSON.stringify(personalInfo)}
-            <form onSubmit={handleSubmit}>
-                <div>RegisterPersonalDetail</div>
-
+        const uid = localStorage.getItem("loginUserId");
+        const token = localStorage.getItem("Token");
+      
+        const requestData = new FormData();
+        requestData.append('uid', uid);
+        Object.keys(personalInfo).forEach(key => {
+          requestData.append(key, personalInfo[key]);
+        });
+      
+        const headers = { 'Authorization': `Bearer ${token}` };
+      
+        axios.post("https://PreethiJP.pythonanywhere.com/userPersonalDetail", requestData, { headers })
+          .then((res) => {
+            console.log(res.data);
+            if (res.data.notFill) {
+              alert(res.data.notFill);
+            } else if (res.data.alreadyFill) {
+              alert(res.data.alreadyFill);
+            } else if (res.data.message) {
+              alert(res.data.message);
+              navigate('/category');
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            alert('An error occurred while submitting the form.');
+          });
+      };
+      
 
 
 
