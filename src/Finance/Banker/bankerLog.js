@@ -101,7 +101,6 @@ export default function BankerLog() {
       {/* {
     spinner? */}
       <>
-        <p>{JSON.stringify(bankLogin)}</p>
         <h1>Welcome to Login Pages</h1>
 
         <form handleBankerLogin>

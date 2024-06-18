@@ -10,8 +10,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
   <React.StrictMode>
-  <main className="main-content position-relative border-radius-lg ">
-    <nav className="navbar navbar-expand-lg navbar-dark bg-gradient-dark shadow-none border-radius-xl z-index-sticky " id="navbarBlur" data-scroll="false">
+  <div className="min-height-300 position-absolute w-100">
+  <main className="main-content position-relative border-radius-lg">
+    {/* <nav className="navbar navbar-expand-lg navbar-dark bg-gradient-dark shadow-none border-radius-xl z-index-sticky " id="navbarBlur" data-scroll="false">
       <div className="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
@@ -126,11 +127,12 @@ root.render(
             </li>
           </ul>
         </div>
-    </nav>
+    </nav> */}
     <div className="container-fluid py-4">
     <App />
     </div>
     </main>
+  </div>
     
   </React.StrictMode>
   </Provider>

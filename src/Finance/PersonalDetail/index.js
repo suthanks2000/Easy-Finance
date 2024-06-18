@@ -42,6 +42,15 @@ const getUserPersonalData = () => {
     });
 };
 
+const handleOnkeyup = (ele)=>{
+  if(ele.target.value == "Select District"){
+    alert("Please select others")
+  }
+  else{setFilterData({...filterData,[ele.target.name]:ele.target.value})
+}
+        
+       
+ }
 
 
    function handleEdit(user) {
