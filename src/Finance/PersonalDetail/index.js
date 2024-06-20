@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Card } from "react-bootstrap";
 import Swal from "sweetalert2";
+import CategoryNavbar from "../Category/categoryNavbar";
 
 
 export default function PersonalDetail() {
@@ -11,6 +12,7 @@ export default function PersonalDetail() {
   const [filterData, setFilterData] = useState({});
   const [spinner, setSpinner] = useState(true);
   const [editPersonalData, setEditPersonalData] = useState({});
+  const pricingHeaderBg="url('../../../public/assets/img/pricing-header-bg.jpg')"
 
 
   const Navigate = useNavigate()
@@ -31,7 +33,7 @@ export default function PersonalDetail() {
 
 
     axios
-      .post("https://disondys.pythonanywhere.com/personalDetail", data, {
+      .post("https://PreethiJP.pythonanywhere.com/personalDetail", data, {
         headers,
       }).then((response) => {
         setUsersData(response.data);
@@ -102,6 +104,16 @@ const handleOnkeyup = (ele)=>{
   return (
 
   <>
+  
+  <CategoryNavbar />
+      <div className="page-header position-relative" style={{
+        backgroundImage: `url(${pricingHeaderBg})`,
+        backgroundSize: 'cover'
+      }}>
+        </div>
+        <span className="mask bg-gradient-primary opacity-6 height-200"></span>
+
+
 <div className="col-lg-9 mt-lg-0 mt-4 mx-auto">
       
       <div className="card card-body" id="profile">

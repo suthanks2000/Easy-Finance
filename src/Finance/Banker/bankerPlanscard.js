@@ -4,7 +4,7 @@ import { Card } from 'react-bootstrap'
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from 'react-router-dom';
 import "./bankerPlanscard.css"; 
-import BankerNavbar from './bankerNavbar';
+import BankerRegNavbar from './bankerRegNavbar';
 // import pricingHeaderBg from '../../../public/assets/img/pricing-header-bg.jpg'
 
 const BankerPlansCard = () => {
@@ -25,7 +25,7 @@ const BankerPlansCard = () => {
     }
     return (
       <>
-      <BankerNavbar />
+      <BankerRegNavbar />
       <div className="page-header position-relative" style={{
         backgroundImage: `url(${pricingHeaderBg})`,
         backgroundSize: 'cover'

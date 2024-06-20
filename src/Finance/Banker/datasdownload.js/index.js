@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 
 const Customerdata = () => {
     const [loanData, setloanData] = useState([])
-    const[filterLoan,setFilterLoan]=useState([])
+    const pricingHeaderBg="url('../../../public/assets/img/pricing-header-bg.jpg')"
 
 useEffect(()=>{
 fetchdata()
@@ -25,7 +25,6 @@ const handleClick=(loan)=>{
         
         const formdata = new FormData();
         formdata.append('id',banker_id)
-
 
         await axios.post('https://disondys.pythonanywhere.com/bankerPlan',formdata).then(
 
@@ -49,8 +48,21 @@ const handleClick=(loan)=>{
    
   return (
     <>
-    <BankerNavbar/>
-    <div>
+    {/* <BankerNavbar/> */}
+    {/* <div className="page-header position-relative" style={{
+        backgroundImage: `url(${pricingHeaderBg})`,
+        backgroundSize: 'cover'
+      }}>
+         <span className="mask bg-gradient-primary opacity-6"></span>
+        <div className="container pb-lg-9 pb-10 pt-7 position-relative z-index-2">
+          <div className="row mt-4">
+            <div className="col-md-6 mx-auto text-center">
+              <h3 className="text-white">Banker customer data page</h3>
+              <p className="text-white"></p>
+            </div>
+          </div>
+          </div>
+          </div> */}
     <div className="nav-wrapper position-relative end-0">
   <ul className="nav nav-pills nav-fill p-1" role="tablist">
     {loanData.map((loan, i) => (

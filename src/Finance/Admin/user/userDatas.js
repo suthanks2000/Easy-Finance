@@ -30,7 +30,7 @@ const UserDatas = () => {
 
 
     const getAllUserDatas = async () => {
-      await axios.get("https://disondys.pythonanywhere.com/allUserData").then((res)=>{
+      await axios.get("https://PreethiJP.pythonanywhere.com/allUserData").then((res)=>{
         setUserData(res.data)
         // alert(res.data)
         console.log("userdata",userData)

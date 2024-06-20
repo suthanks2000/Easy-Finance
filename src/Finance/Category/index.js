@@ -3,15 +3,24 @@ import { Link } from 'react-router-dom';
 import Navbar from '../Navbar'; 
 import { Container, Row, Col } from 'react-bootstrap';
 import './index.css';
+import CategoryNavbar from './categoryNavbar';
+
 
 export default function Category() {
+      const pricingHeaderBg="url('../../../public/assets/img/pricing-header-bg.jpg')"
   return (
     <>
-      <Navbar />
-      <div className="app">
-        <div className="container">
-          <h4>We provide Loans</h4>
+      <CategoryNavbar />
+      <div className="page-header position-relative" style={{
+        backgroundImage: `url(${pricingHeaderBg})`,
+        backgroundSize: 'cover'
+      }}>
         </div>
+        <span className="mask bg-gradient-primary opacity-6 height-200"></span>
+      
+
+      <div className="app">
+        
         <div className="bottom-right-container">
           <Row className="justify-content-around">
             <Col xs={12} sm={6} md={3}>
