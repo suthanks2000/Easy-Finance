@@ -19,7 +19,7 @@ fetchdata()
         formdata.append('id',banker_id)
 
 
-        await axios.post('https://disondys.pythonanywhere.com/bankerPlan',formdata).then(
+        await axios.post('https://suthanks.pythonanywhere.com/bankerPlan',formdata).then(
 
             (res)=>{
                 if(res.data.message){

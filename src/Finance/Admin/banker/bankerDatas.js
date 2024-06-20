@@ -7,7 +7,7 @@ import { Container, Table } from 'react-bootstrap';
 const BankerDatas = () => {
     const [bankerReg, setBankerReg] = useState([])
     const [verifyToken,setVerifyToken] = useState({})
-    const [updateStatus,setUpdateStatus] = useState("verified")
+    // const [updateStatus,setUpdateStatus] = useState("verified")
     const navigate = useNavigate()
 
     useEffect(() => {

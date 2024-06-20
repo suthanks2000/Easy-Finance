@@ -44,14 +44,19 @@ export default function PersonalDetail() {
       });
   };
 
-  const handleOnkeyup = (ele) => {
-    if (ele.target.value == "Select District") {
-      alert("Please select others");
-    } else {
-      setUsersData({ ...usersData, [ele.target.name]: ele.target.value });
-      console.log("usersdata", usersData);
-    }
-  };
+
+const handleOnkeyup = (ele)=>{
+  if(ele.target.value == "Select District"){
+    alert("Please select others")
+  }
+  else{setUsersData({...usersData,[ele.target.name]:ele.target.value})
+  console.log("usersdata",usersData)
+}
+        
+       
+ }      
+
+ 
 
   function handleExit() {
     Navigate("/category");
@@ -74,7 +79,7 @@ export default function PersonalDetail() {
 
     axios
       .put(
-        `https://disondys.pythonanywhere.com/editPersonalData/${uid}`,
+        `https://suthanks.pythonanywhere.com/editPersonalData/${uid}`,
         formData,
         { headers }
       )
@@ -96,6 +101,7 @@ export default function PersonalDetail() {
 
   return (
 
+  <>
 <div className="col-lg-9 mt-lg-0 mt-4 mx-auto">
       
       <div className="card card-body" id="profile">
@@ -112,6 +118,7 @@ export default function PersonalDetail() {
               <p className="mb-0 font-weight-bold text-sm">
                 { usersData.contact }
               </p>
+            
             </div>
           </div>
           
@@ -273,6 +280,7 @@ export default function PersonalDetail() {
         </div>
       </div>
     </div>
+</>
 
 )
 

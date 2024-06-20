@@ -1,12 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
-import {setRenderedInfo, setSecuredLoansInfo,setUpdatedInfo} from "../Redux-Toolkit/slices/SecuredLoansCounter";
+import { setSecuredLoansInfo} from "../Redux-Toolkit/slices/SecuredLoansCounter";
 import { useNavigate, useParams } from "react-router-dom";
-import { db } from "../FirebaseConfig";
-import { collection, addDoc, updateDoc, doc } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import InputRadio from "./InputComponents/inputRadio";
-import InputDropdown from "./InputComponents/inputDropdown";
-import InputTextAndNumber from "./InputComponents/inputText&Number";
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 import MultiStepProgressBar from "./porgrassBar/progressBar.js";
@@ -15,13 +10,10 @@ import axios from "axios";
 export default function SecuredLoansDetails() { 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { securedLoansInfo,inputInfo, updatedinfo } = useSelector((state) => state.securedLoans);
-  const userdata = useSelector((state) => state.regisLogin.userdata);
+  const { securedLoansInfo} = useSelector((state) => state.securedLoans);
   const { loanName } = useParams();
   const [currentStep, setcurrentStep] = useState("1")
   const [warning, setwarning] = useState(false)
-  const [isFormValid, setIsFormValid] = useState(false);
-  const uid =localStorage.getItem("loginUserId")
 
   
 const tyear = securedLoansInfo.tenureMonth?  securedLoansInfo.tenureMonth/12 : null
@@ -34,7 +26,6 @@ const tyear = securedLoansInfo.tenureMonth?  securedLoansInfo.tenureMonth/12 : n
           (1 - Math.pow(1 / (1 + intr), securedLoansInfo.tenureMonth))
       )
     : null;
-    console.log(emiValue)
 
 useEffect(() => { 
   dispatch(setSecuredLoansInfo({ ...securedLoansInfo, EMIAmount: emiValue,tenureYear: tenureYear }));
@@ -43,7 +34,10 @@ useEffect(() => {
 
     
 useEffect(()=>{
-    dispatch(setSecuredLoansInfo({}))   
+  if (Object.keys(securedLoansInfo).length > 0) {
+    dispatch(setSecuredLoansInfo({}))  
+      }
+
 },[])
 
 useEffect(()=>{
@@ -145,18 +139,20 @@ return true
 
 const handleSubmit =async () => {
   if(validateForm()){
+    const id = localStorage.getItem("loginUserId")
     alert("sucess")
     const fromdata = new FormData();
     Object.keys(securedLoansInfo).forEach(key => {
       fromdata.append(key, securedLoansInfo[key]);
     });
     fromdata.append("loantype",loanName)
+    fromdata.append("userId",id)
 
-    fromdata.append("userId",uid)
 
     axios.post('https://PreethiJP.pythonanywhere.com/submitsecuredLoans',fromdata).then((res)=>{
       alert(res.data.message)
       console.log(res.data)
+      navigate('/showresult')
     }).catch((err)=>{
       alert(err)
       console.log(err)
@@ -165,14 +161,10 @@ const handleSubmit =async () => {
 
   }
   else{
-    alert(2)
+    alert("pls fill correct detail")
   }
 }
-  // const handleSignout = async () => {
-  //   await localStorage.getItem("userToken");
-  //   localStorage.removeItem("userToken");
-  //   navigate("/");
-  // };
+
   
 
 const handleSetLoanData = async () => { 
@@ -290,13 +282,13 @@ const handleSetLoanData = async () => {
               <div class="col-12 col-sm-6">
               <label>Employment Type</label>
                 <div>
-                  <input class="form-check-input" type="radio" value="Salaried" name="employmentType" id="EmploymentType1" onChange={handleOnchange} required/>
+                  <input class="form-check-input" type="radio" value="salaried" name="employmentType" id="EmploymentType1" onChange={handleOnchange} required/>
                   <label class="form-label" for="EmploymentType1">
                   Salaried
                   </label>
                 </div>
                 <div>
-                  <input class="form-check-input" type="radio" value='SelfEmployed' name="employmentType" id="EmploymentType2" onChange={handleOnchange} required/>
+                  <input class="form-check-input" type="radio" value='selfEmployed' name="employmentType" id="EmploymentType2" onChange={handleOnchange} required/>
                   <label class="form-label" for="EmploymentType2">
                   SelfEmployed
                   </label>
@@ -313,13 +305,13 @@ const handleSetLoanData = async () => {
                 <div class="col-12 col-sm-6">
                   <label for="propertyvalidation">You Own Any Property</label>
                 <div>
-                  <input class="form-check-input" type="radio" value={'Yes'} name="youOwnAnyProperty" id="YouOwnAnyProperty3" onChange={handleOnchange} required/>
+                  <input class="form-check-input" type="radio" value={'yes'} name="youOwnAnyProperty" id="YouOwnAnyProperty3" onChange={handleOnchange} required/>
                   <label class="form-label" for="YouOwnAnyProperty3">
                   Yes
                   </label>
                 </div>
                 <div>
-                  <input class="form-check-input" value={'No'} type="radio" name="youOwnAnyProperty" id="YouOwnAnyProperty4"  onChange={handleOnchange} required/>
+                  <input class="form-check-input" value={'no'} type="radio" name="youOwnAnyProperty" id="YouOwnAnyProperty4"  onChange={handleOnchange} required/>
                   <label class="form-label" for="YouOwnAnyProperty4">
                   No
                   </label>
@@ -382,14 +374,14 @@ const handleSetLoanData = async () => {
               <div class="col-12 col-sm-6">
               <label>You Have Any Cibil Issuse</label>
               <div>
-                <input class="form-check-input" type="radio" value='Yes' name="cibilissue" id="cibilissue1" onChange={handleOnchange}/>
+                <input class="form-check-input" type="radio" value='yes' name="cibilissue" id="cibilissue1" onChange={handleOnchange}/>
                 <label class="form-check-label" for="cibilissue1">
                 Yes
                 </label>
               </div>
               <span></span>
               <div>
-                <input class="form-check-input" type="radio" value='No' name="cibilissue" id="cibilissue2" onChange={handleOnchange}/>
+                <input class="form-check-input" type="radio" value='no' name="cibilissue" id="cibilissue2" onChange={handleOnchange}/>
                 <label class="form-check-label" for="cibilissue2">
                 No
                 </label>
