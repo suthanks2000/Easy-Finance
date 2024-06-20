@@ -166,78 +166,7 @@ const handleSubmit =async () => {
   else{
     alert("pls fill correct detail")
   }
-}
 
-  
-
-const handleSetLoanData = async () => { 
-//   const filteredInputNames = inputInfo.filter(e => e.loanType.includes(loanName) && (!e?.hidden || e?.hidden === false)).map(e => e.inputName);
-//   console.log(filteredInputNames);
-
-//   const elgAmount =(securedLoansInfo.monthlyNetIncome - securedLoansInfo.monthlyExpenses) >= securedLoansInfo.emi*3
-//   console.log(elgAmount) 
-
-//   const notElgAmount =(securedLoansInfo.monthlyNetIncome - securedLoansInfo.monthlyExpenses) <= securedLoansInfo.emi*3
-//   console.log(notElgAmount) 
-
-//   const missingInputs = filteredInputNames.filter(inputName => !securedLoansInfo[inputName]);
-//   console.log('Missing Inputs:', missingInputs);
-
-//   if(filteredInputNames.some(inputName => !securedLoansInfo[inputName])){
-//     alert("pls fill the inputs")
-//     dispatch(setSecuredLoansInfo({}))
-
-//   }
-//   else if(securedLoansInfo.propertyStatus == "owned" && securedLoansInfo.CibilIssue == "no" && securedLoansInfo.monthlyNetIncome >= 25000 && elgAmount ) {
-//    const loanRef= await addDoc(collection(db, "securedLoans"), {
-//             ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"A"});
-//     const loanRefId=  loanRef.id   
-//        await updateDoc(doc(db,"securedLoans",loanRefId),{
-//         id:loanRefId,
-//        }
-//       )
-//     alert("grade A")
-//     navigate(`/showresult/${loanRefId}`)
-    
-//   }
-//   else if(securedLoansInfo.propertyStatus == "rented" && securedLoansInfo.CibilIssue == "no" && securedLoansInfo.monthlyNetIncome  > 25000 ){
-//     const loanRef= await addDoc(collection(db, "securedLoans"), {
-//       ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"B"});
-// const loanRefId=  loanRef.id   
-//  await updateDoc(doc(db,"securedLoans",loanRefId),{
-//   id:loanRefId,
-//  }
-// )
-//     alert("grade B")
-//     navigate(`/showresult/${loanRefId}`)
-
-//   }
-//   else if(securedLoansInfo.propertyStatus == "rented" && securedLoansInfo.CibilIssue == "yes" && securedLoansInfo.monthlyNetIncome  > 15000 ){
-//     const loanRef= await addDoc(collection(db, "securedLoans"), {
-//       ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"C"});
-// const loanRefId=  loanRef.id   
-//  await updateDoc(doc(db,"securedLoans",loanRefId),{
-//   id:loanRefId,
-//  }
-// )
-//     alert("grade C")
-//     navigate(`/showresult/${loanRefId}`)
-
-//   }
-//   else {
-   
-//     const loanRef= await addDoc(collection(db, "securedLoans"), {
-//       ...securedLoansInfo,uId: userdata.uid,loanType:loanName,grade:"D"});
-// const loanRefId=  loanRef.id   
-//  await updateDoc(doc(db,"securedLoans",loanRefId),{
-//   id:loanRefId,
-//  }
-// )
-// alert("grade D")
-
-//             navigate(`/showresult/${loanRefId}`)
-
-//   }
 
 }
 
