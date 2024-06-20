@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./bankerReg.css";
 import axios from "axios";
+
 import { useNavigate } from "react-router-dom";
 import BankerRegNavbar from './bankerRegNavbar';
 
@@ -8,6 +9,8 @@ const BankerReg = () => {
   const [bankerRegData, setBankerRegData] = useState({});
   const [plan, setPlan] = useState([]);
   const navigate=useNavigate()
+  const [warning, setwarning] = useState(false)
+
 
   useEffect(() => {
     fetchPlanData();
@@ -16,7 +19,7 @@ const BankerReg = () => {
   const fetchPlanData = async () => {
     try {
 
-      const res = await axios.get("https://disondys.pythonanywhere.com/getbankerplans");
+      const res = await axios.get("https://suthanks.pythonanywhere.com/getbankerplans");
 
       setPlan(res.data);
       console.log(res.data);
@@ -26,12 +29,39 @@ const BankerReg = () => {
     }
   };
 
+  const getPlanCount = (e) => {
+    const count = plan.filter((each)=>each.id == e.target.value)[0]
+    setBankerRegData({ ...bankerRegData, "planCount": count.count });
+  }
+  const {personalloan,vehicleloan,businessloan,homeloan,planCount} = bankerRegData
+    const total = personalloan+vehicleloan+businessloan+homeloan 
+
+// useEffect(()=>{ 
+//   if(total != planCount ){
+//     setwarning(true)
+//   }
+// },[total])
+  const tallayplanCount = () => {
+    
+    
+  }
   const handleOnChange = (e) => {
     setBankerRegData({ ...bankerRegData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+   const personalloanCount = Number(personalloan)
+   const vehicleloanCount = Number(vehicleloan)
+   const businessloanCount = Number(businessloan)
+   const homeloanCount = Number(homeloan)
+    const total = personalloanCount + vehicleloanCount+ businessloanCount+ homeloanCount ;
+  
+    if(total != planCount ){
+          setwarning(true)
+        } 
+    else{
+      
 
     const requestData = new FormData();
     requestData.append('bankername', bankerRegData.name);
@@ -43,6 +73,10 @@ const BankerReg = () => {
     requestData.append('bankercontact', bankerRegData.contact);
     requestData.append('bankerpassword', bankerRegData.password);
     requestData.append('bankerplan', bankerRegData.plan);
+    requestData.append('personalloanCount', personalloanCount);
+    requestData.append('vehicleloanCount', vehicleloanCount);
+    requestData.append('businessloanCount', businessloanCount);
+    requestData.append('homeloanCount', homeloanCount);
 
     try {
 
@@ -53,6 +87,7 @@ const BankerReg = () => {
       navigate("/banker/login")
     } catch (error) {
       console.error(error);
+    }
     }
   };
 
@@ -66,40 +101,75 @@ const BankerReg = () => {
       </div>
       <div className="card-body pt-0">
         <form role="form" onSubmit={handleSubmit}>
+        {JSON.stringify(bankerRegData)}
           <div className="row mb-3">
+            
             <div className="col-md-6">
+            {warning?
+                      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                      <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                      <span class="alert-text"><strong>Warning!</strong> Pls Tally the Banker Plan Datas Count</span>
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" onClick={()=>setwarning(false)} aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                    :
+                    null}
               <label htmlFor="username" className="form-label">Name</label>
               <input id="username" name="name" className="form-control" type="text" placeholder="Enter your Name" required onChange={handleOnChange} />
             </div>
             <div className="col-md-6">
               <label htmlFor="userPlan" className="form-label">Plan</label>
-              <select className="form-control" name="plan" id="userPlan" required onChange={handleOnChange}>
-                <option value="">Select one</option>
+              <select className="form-control" name="plan" id="userPlan" required onChange={(e)=>{handleOnChange(e)
+                getPlanCount(e)}}>
+                <option >Select one</option>
                 {plan.map((each, i) => (
                   <option key={i} value={each.id}>{each.plan_name.replace(/_/g, ' ').toUpperCase()}</option>
                 ))}
               </select>
             </div>
           </div>
-
+          
           <div className="row mb-3">
           <div className="col-md-6">
-              <label htmlFor="username" className="form-label">Compnay Name</label>
+              <label htmlFor="username" className="form-label">Company Name</label>
               <input id="username" name="company" className="form-control" type="text" placeholder="Enter your Name" required onChange={handleOnChange} />
             </div>
             <div className="col-md-6">
               <label htmlFor="userEmail" className="form-label">Email</label>
               <input id="userEmail" name="email" className="form-control" type="email" placeholder="Enter your Email" required onChange={handleOnChange} />
             </div>
+            <div className="row mt-3">
+            <label for="customRange3" class="form-label">Loan Data's Count AS Per Plan </label>
+            <div className="col-md-3 ">
+              <label for="customRange3" class="form-label">personal Loan Data Count ({personalloan})</label>
+              <input type="range" class="form-range" name="personalloan" onChange={handleOnChange} min="0" max="5" step="1" id="customRange3"/>
+            </div>
+            <div className="col-md-3">
+              <label for="customRange3" class="form-label"> home Loan Data Count ({homeloan})</label>
+              <input type="range" class="form-range" name="homeloan" onChange={handleOnChange} min="0" max="5" step="1" id="customRange3"/>
+            </div>
+            <div className="col-md-3">
+              <label for="customRange3" class="form-label">vehicle Loan  Data Count ({vehicleloan})</label>
+              <input type="range" class="form-range" name="vehicleloan" onChange={handleOnChange} min="0" max="5" step="1" id="customRange3"/>
+            </div>
+            <div className="col-md-3">
+              <label for="customRange3" class="form-label">business Loan Data Count({businessloan})</label>
+              <input type="range" class="form-range" name="businessloan" onChange={handleOnChange} min="0" max="5" step="1" id="customRange3"/>
+            </div>
+            </div>
             <div className="col-md-6">
               <label htmlFor="userPassword" className="form-label">Password</label>
               <input id="userPassword" name="password" className="form-control" type="password" placeholder="enter your password" required onChange={handleOnChange} />
             </div>
-          </div>
+            <div className="col-md-6">
+              <label htmlFor="userPassword" className="form-label fs-6">Total Data Count Need ({bankerRegData.planCount})</label>
+              <input id="userPassword" name="password" className="form-control" type="number" placeholder="total tally count" disabled onChange={handleOnChange} />
+            </div>
 
-          <div className="row mb-3">
-            
           </div>
+          
+          
 
           <div className="row mb-3">
             <div className="col-6">
