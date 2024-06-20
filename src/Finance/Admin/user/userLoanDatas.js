@@ -84,7 +84,7 @@ const UserLoanDatas = () => {
 
 
     const getAllUserLoanDatas = async () => {
-      await axios.get("https://PreethiJP.pythonanywhere.com/allUserLoanData").then((res)=>{
+      await axios.get("https://disondys.pythonanywhere.com/allUserLoanData").then((res)=>{
         setLoanData(res.data)
         alert(res.data)
         console.log("loandata",loanData)

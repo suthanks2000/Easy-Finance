@@ -19,17 +19,17 @@ const CategoryNavbar = () => {
         <div className="collapse navbar-collapse w-100 pt-3 pb-2 py-lg-0" id="navigation">
           <ul className="navbar-nav navbar-nav-hover ms-auto">
             <li className="nav-item dropdown dropdown-hover mx-2">
-              <Link to="/banker/payment" role="button" className="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" style={{ fontSize: '18px' }}>
+              <Link to="/personaldetail" role="button" className="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" style={{ fontSize: '18px' }}>
                 Personal Detail
               </Link>
             </li>
             <li className="nav-item dropdown dropdown-hover mx-2">
-              <Link to="/banker/customerdata" role="button" className="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" style={{ fontSize: '18px' }}>
+              <Link to="/emicalculator" role="button" className="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" style={{ fontSize: '18px' }}>
                 EMI Calculator
               </Link>
             </li>
             <li className="nav-item dropdown dropdown-hover mx-2">
-              <Link to="/banker/home" role="button" className="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" style={{ fontSize: '18px' }}>
+              <Link to="/loandatas" role="button" className="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" style={{ fontSize: '18px' }}>
                 Loan Datas
               </Link>
             </li>
@@ -64,7 +64,7 @@ const CategoryNavbar = () => {
               </ul>
             </li>
             <button type="button" className="nav-item dropdown dropdown-hover mx-2 border-0 text-white bg-dark">
-              <Link to="/banker/home" role="button" className="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" style={{ fontSize: '18px' }}>
+              <Link to="/" role="button" className="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" style={{ fontSize: '18px' }}>
                 LogOut
               </Link>
             </button>

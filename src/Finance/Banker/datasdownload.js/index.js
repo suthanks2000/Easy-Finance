@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom'
 const Customerdata = () => {
     const [loanData, setloanData] = useState([])
     const pricingHeaderBg="url('../../../public/assets/img/pricing-header-bg.jpg')"
+    const [filterLoan,setFilterLoan]=useState([])
 
 useEffect(()=>{
 fetchdata()
@@ -48,8 +49,8 @@ const handleClick=(loan)=>{
    
   return (
     <>
-    {/* <BankerNavbar/> */}
-    {/* <div className="page-header position-relative" style={{
+    <BankerNavbar/>
+    <div className="page-header position-relative" style={{
         backgroundImage: `url(${pricingHeaderBg})`,
         backgroundSize: 'cover'
       }}>
@@ -62,7 +63,7 @@ const handleClick=(loan)=>{
             </div>
           </div>
           </div>
-          </div> */}
+          </div>
     <div className="nav-wrapper position-relative end-0">
   <ul className="nav nav-pills nav-fill p-1" role="tablist">
     {loanData.map((loan, i) => (
@@ -113,7 +114,7 @@ const handleClick=(loan)=>{
             </Table>
 
     </div>
-    </div>
+    
             
     </>
   )

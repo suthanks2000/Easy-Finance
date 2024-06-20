@@ -21,7 +21,6 @@ const BankerReg = () => {
 
       const res = await axios.get("https://suthanks.pythonanywhere.com/getbankerplans");
 
-
       setPlan(res.data);
       console.log(res.data);
     } catch (err) {
