@@ -141,6 +141,8 @@ return true
 
 };
 
+
+const getuid=localStorage.getItem("loginUserId")
 const handleSubmit =async () => {
   if(validateForm()){
     alert("sucess")
@@ -149,9 +151,9 @@ const handleSubmit =async () => {
       fromdata.append(key, securedLoansInfo[key]);
     });
     fromdata.append("loantype",loanName)
-    fromdata.append("userId",2)
+    fromdata.append("userId",getuid)
 
-    axios.post('https://suthanks.pythonanywhere.com/submitsecuredLoans',fromdata).then((res)=>{
+    axios.post('https://disondys.pythonanywhere.com/submitsecuredLoans',fromdata).then((res)=>{
       alert(res.data.message)
       console.log(res.data)
     }).catch((err)=>{
