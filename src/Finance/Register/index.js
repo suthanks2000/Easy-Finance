@@ -24,7 +24,7 @@ export default function Register() {
     requestData.append('userpassword', regData.Password);
   
    
-      await axios.post("https://PreethiJP.pythonanywhere.com/userRegister", requestData).then((res)=>{
+      await axios.post("https://disondys.pythonanywhere.com/userRegister", requestData).then((res)=>{
   
       if (res.data.existing) {
         alert(res.data.existing);

@@ -46,7 +46,7 @@ const BankerReg = () => {
 
     try {
 
-      const response = await axios.post("https://PreethiJP.pythonanywhere.com/bankerRegister", requestData);
+      const response = await axios.post("https://disondys.pythonanywhere.com/bankerRegister", requestData);
 
       console.log(response.data);
       alert(response.data);

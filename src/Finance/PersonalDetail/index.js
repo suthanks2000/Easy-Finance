@@ -81,7 +81,7 @@ const handleOnkeyup = (ele)=>{
 
     axios
       .put(
-        `https://PreethiJP.pythonanywhere.com/editPersonalData/${uid}`,
+        `https://disondys.pythonanywhere.com/editPersonalData/${uid}`,
         formData,
         { headers }
       )
