@@ -76,9 +76,8 @@ const sendEmail = (tokenData) => {
       to_name: tokenData.email,
       from_name: "Easy Finance Official Website",
       message: `http://localhost:3000/verifiedEmail/${tokenData.token_id}`,
-    //   to_email: tokenData.email,
+      to_email: 'muginreo@gmail.com',
 
-      to_email: tokenData.email,
 
     };
 

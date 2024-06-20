@@ -12,7 +12,8 @@ const BankerPayment = () => {
         fetchData()
     },[])
    async function fetchData () {
-        await axios.get("https://PreethiJP.pythonanywhere.com/getbankerplans").then((res)=>{
+        await axios.get("https://disondys.pythonanywhere.com/getbankerplans").then((res)=>{
+
            setbankerPlans(res.data) 
            alert("fetch data success")
            console.log(res.data)
@@ -25,7 +26,8 @@ const BankerPayment = () => {
       const planData = new FormData();
       
       planData.append('plan',plan.id)
-      await axios.post("https://PreethiJP.pythonanywhere.com/bankerRequestplan",planData).then((res)=>{
+
+      await axios.post("https://disondys.pythonanywhere.com/bankerRequestplan",planData).then((res)=>{
         alert(res.data)
         console.log(res.data)
       }).catch((err)=>{

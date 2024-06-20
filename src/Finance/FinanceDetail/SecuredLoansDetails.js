@@ -142,6 +142,7 @@ return true
 
 };
 
+
 const handleSubmit =async () => {
   if(validateForm()){
     alert("sucess")
@@ -150,6 +151,7 @@ const handleSubmit =async () => {
       fromdata.append(key, securedLoansInfo[key]);
     });
     fromdata.append("loantype",loanName)
+
     fromdata.append("userId",uid)
 
     axios.post('https://PreethiJP.pythonanywhere.com/submitsecuredLoans',fromdata).then((res)=>{

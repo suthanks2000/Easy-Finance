@@ -24,6 +24,8 @@ import RegisterPersonalDetail from "./Finance/Register/RegisterPersonaldetail/in
 import BankerVerify from "./Finance/Admin/banker/BankerVerify.js";
 import BankerPlans from "./Finance/Admin/banker/bankerPlans.js";
 import BankerPlansCard from "./Finance/Banker/bankerPlanscard.js";
+import AdminLogin from "./Finance/Admin/adminLogin.js";
+
 
 
 
@@ -72,7 +74,9 @@ function App() {
           <Route path="/admin/banker/alldatas" element={<BankerDatas />}/>
           <Route path="/admin/banker/plans" element={<BankerPlans />}/>
           <Route path="/verifiedEmail/:token" element={<BankerVerify/>}/>
-          </Routes>
+          <Route path="/adminLogin" element={<AdminLogin/>}/>
+          
+        </Routes>
       </BrowserRouter>
     </div>
   );

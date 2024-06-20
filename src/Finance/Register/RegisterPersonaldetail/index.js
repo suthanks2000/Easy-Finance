@@ -1,17 +1,13 @@
 
 import React, { useState } from 'react';
-import { Box, FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, TextField, Button } from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const RegisterPersonalDetail = () => {
     
-    const dispatch = useDispatch();
     const navigate=useNavigate();
     
 
-    const [errors, setErrors] = useState({});
     const [personalInfo, setPersonalInfo] = useState({
       first_name: '',
       last_name: '',
@@ -48,7 +44,7 @@ const RegisterPersonalDetail = () => {
       
         const headers = { 'Authorization': `Bearer ${token}` };
       
-        axios.post("https://PreethiJP.pythonanywhere.com/userPersonalDetail", requestData, { headers })
+        axios.post("https://disondys.pythonanywhere.com/userPersonalDetail", requestData, { headers })
           .then((res) => {
             console.log(res.data);
             if (res.data.notFill) {

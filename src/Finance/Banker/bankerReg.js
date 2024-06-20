@@ -15,7 +15,7 @@ const BankerReg = () => {
   const fetchPlanData = async () => {
     try {
 
-      const res = await axios.get("https://PreethiJP.pythonanywhere.com/getbankerplans");
+      const res = await axios.get("https://disondys.pythonanywhere.com/getbankerplans");
 
       setPlan(res.data);
       console.log(res.data);
@@ -45,7 +45,7 @@ const BankerReg = () => {
 
     try {
 
-      const response = await axios.post("https://PreethiJP.pythonanywhere.com/bankerRegister", requestData);
+      const response = await axios.post("https://disondys.pythonanywhere.com/bankerRegister", requestData);
 
       console.log(response.data);
       alert(response.data);

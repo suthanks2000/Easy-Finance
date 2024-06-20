@@ -84,7 +84,7 @@ const UserLoanDatas = () => {
 
 
     const getAllUserLoanDatas = async () => {
-      await axios.get("https://PreethiJP.pythonanywhere.com/allUserLoanData").then((res)=>{
+      await axios.get("https://disondys.pythonanywhere.com/allUserLoanData").then((res)=>{
         setLoanData(res.data)
         alert(res.data)
         console.log("loandata",loanData)
@@ -256,6 +256,7 @@ const UserLoanDatas = () => {
           <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">User Uid</th>
           <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Loan Type</th>
           <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Assign Id</th>
+          <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">status</th>
         
         </tr>
       </thead>
@@ -277,6 +278,9 @@ const UserLoanDatas = () => {
             </td>
             <td className="align-middle text-center">
               <span className="badge badge-sm badge-danger">{user.assign_id}</span>
+            </td>
+            <td className="align-middle text-center">
+              <span className="badge badge-sm badge-danger">{user.status}</span>
             </td>
           </tr>
         ))}
