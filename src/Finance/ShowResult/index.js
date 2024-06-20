@@ -23,7 +23,7 @@ const fetchData = async () =>{
   const id = localStorage.getItem("loginUserId");
   const formdata = new FormData();
   formdata.append("id",id)
-  await axios.post('https://suthanks.pythonanywhere.com/idbasedshowresult',formdata).then((res)=>{
+  await axios.post('https://PreethiJP.pythonanywhere.com/idbasedshowresult',formdata).then((res)=>{
     // setuserdetail(res.data)
     dispatch(setRenderloaninfo(res.data))
     alert(res.data)

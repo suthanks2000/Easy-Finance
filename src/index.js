@@ -12,7 +12,7 @@ root.render(
   <React.StrictMode>
 
   <main className="main-content position-relative border-radius-lg ">
-    <div className="container-fluid py-0">
+    <div className="">
     <App />
     </div>
     </main>

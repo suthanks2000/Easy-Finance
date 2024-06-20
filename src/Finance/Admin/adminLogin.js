@@ -14,7 +14,7 @@ const AdminLogin = () => {
     requestData.append("password", loginData.password);
 
     try {
-      const res = await axios.post("https://disondys.pythonanywhere.com/adminLogin", requestData);
+      const res = await axios.post("https://PreethiJP.pythonanywhere.com/adminLogin", requestData);
       console.log(res.data);
       alert(JSON.stringify(res.data));
       localStorage.setItem("Token", res.data.token);
