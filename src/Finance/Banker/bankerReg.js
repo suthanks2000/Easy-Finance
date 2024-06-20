@@ -16,7 +16,7 @@ const BankerReg = () => {
   const fetchPlanData = async () => {
     try {
 
-      const res = await axios.get("https://PreethiJP.pythonanywhere.com/getbankerplans");
+      const res = await axios.get("https://disondys.pythonanywhere.com/getbankerplans");
 
       setPlan(res.data);
       console.log(res.data);

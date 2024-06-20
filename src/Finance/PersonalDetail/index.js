@@ -33,7 +33,7 @@ export default function PersonalDetail() {
 
 
     axios
-      .post("https://PreethiJP.pythonanywhere.com/personalDetail", data, {
+      .post("https://disondys.pythonanywhere.com/personalDetail", data, {
         headers,
       }).then((response) => {
         setUsersData(response.data);

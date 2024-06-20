@@ -27,7 +27,7 @@ const data=new FormData()
 data.append("id",uid)
 const headers = { Authorization: `Bearer ${token}` };
 
-  axios.post("https://PreethiJP.pythonanywhere.com/idBasedUserLoanDatas",data,{headers}).then((res)=>{
+  axios.post("https://disondys.pythonanywhere.com/idBasedUserLoanDatas",data,{headers}).then((res)=>{
     setUsersData(res.data)
     console.log(res.data)
     alert(res.data)

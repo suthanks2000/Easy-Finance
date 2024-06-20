@@ -40,7 +40,7 @@ const AdminNavbar = () => {
                             <img src="/assets/img/down-arrow-dark.svg" alt="down-arrow" className="arrow ms-1 d-lg-none d-block"/>
                         </Link>
                         <ul className="dropdown-menu custom-dropdown-menu" aria-labelledby="dropdownMenuPagesUsers">
-                            <li><Link className="dropdown-item text-dark" to="/user-datas">User Datas</Link></li>
+                            <li><Link className="dropdown-item text-dark" to="/admin/userdatas">User Datas</Link></li>
                             <li><Link className="dropdown-item text-dark" to="/admin/loandatas">User Loan Datas</Link></li>
                         </ul>
                     </li>
