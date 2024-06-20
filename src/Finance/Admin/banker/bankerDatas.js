@@ -17,7 +17,7 @@ const BankerDatas = () => {
     const getRegBankerData = async () => {
         try {
 
-            const response = await axios.get("https://disondys.pythonanywhere.com/getBankerData")
+            const response = await axios.get("https://PreethiJP.pythonanywhere.com/getBankerData")
 
             setBankerReg(response.data)
             console.log(response.data)
@@ -34,7 +34,7 @@ const BankerDatas = () => {
       formData.append("email", bankerData.Email);
      
    
-     await axios.post("https://disondys.pythonanywhere.com/tokenGenerate",formData).then((res)=>{
+     await axios.post("https://PreethiJP.pythonanywhere.com/tokenGenerate",formData).then((res)=>{
 
         console.log("res",res)
         alert(res.data)
@@ -54,7 +54,7 @@ const BankerDatas = () => {
   const getToken = async (bankerData) => {
  
     try {
-        const getTokenData = await axios.get(`https://disondys.pythonanywhere.com/getToken/${bankerData.Email}`);
+        const getTokenData = await axios.get(`https://PreethiJP.pythonanywhere.com/getToken/${bankerData.Email}`);
 
         console.log("getToken", getTokenData.data);
         alert(JSON.stringify(getTokenData.data, null, 2));
@@ -99,7 +99,7 @@ const handleplanApproval = async (plan) => {
     planData.append('requestBanker',plan.id)
 
 
-    await axios.post('https://disondys.pythonanywhere.com/approveplan',planData).then((res)=>{
+    await axios.post('https://PreethiJP.pythonanywhere.com/approveplan',planData).then((res)=>{
 
         console.log(res.data)
         alert(res.data)

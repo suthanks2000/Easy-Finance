@@ -1,6 +1,6 @@
 import {React,useState} from 'react'
 import BankerNavbar from '../bankerNavbar'
-import {  Container, Table } from 'react-bootstrap'
+import { Table } from 'react-bootstrap'
 import { useEffect } from 'react'
 import axios from 'axios'
 

@@ -71,10 +71,8 @@ function App() {
           <Route path="/admin" element={<Dasborad/>}/>
           <Route path="/admin/banker/alldatas" element={<BankerDatas />}/>
           <Route path="/admin/banker/plans" element={<BankerPlans />}/>
-          
           <Route path="/verifiedEmail/:token" element={<BankerVerify/>}/>
-          
-        </Routes>
+          </Routes>
       </BrowserRouter>
     </div>
   );
