@@ -1,9 +1,11 @@
 
-import { Form, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { setBankLogin } from "../Redux-Toolkit/slices/BankerReg&LogCounter";
 import axios from "axios";
+
+import BankerNavbar from './bankerNavbar';
 
 export default function BankerLog() {
   const { bankLogin } = useSelector((state) => state.bankerRegLog);
@@ -55,7 +57,7 @@ export default function BankerLog() {
 
   return (
     <>
-
+ <BankerNavbar />
       <main className="main-content  mt-0">
         <section>
           <div className="page-header min-vh-100">
@@ -79,26 +81,29 @@ export default function BankerLog() {
                             className="form-control form-control-lg"
                             id="bankerEmail"
                             class="form-control"
-                            placeholder="type your email"
+                            placeholder="Enter your Email"
                             aria-label="Email"
                             name="Email"
                             onChange={handleOnChange}
                             required
+                            style={{ fontSize: '16px' }} 
                           />
               
                         </div>
-
+                         
+                        <label for="bankerPassword" class="form-label">Password</label>
                         <div className="mb-3">
-                        <label for="bankerPassword" class="form-label">password</label>
+                        
                           <input
                             type="password"
                             className="form-control form-control-lg"
                             id="bankerPassword"
-                            placeholder="type your password"
+                            placeholder="Enter your Password"
                             aria-label="Password"
                             name="Password"
                             onChange={handleOnChange}
                             required
+                            style={{ fontSize: '16px' }} 
                           />                         
                         </div>
 
@@ -117,7 +122,7 @@ export default function BankerLog() {
                       <p className="mb-4 text-sm mx-auto">
                         Don't have an account?
                         <Link
-                          to="/banker/register"
+                          to="/banker/referplan"
                           className="text-primary text-gradient font-weight-bold"
                         >
                           Sign up

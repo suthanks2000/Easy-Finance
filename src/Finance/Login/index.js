@@ -20,38 +20,31 @@ export default function Login() {
     formData.append("email", logData.Email);
     formData.append("password", logData.Password);
 
-    await axios
-      .post("https://disondys.pythonanywhere.com/loginUser", formData)
+   
+      await axios.post("https://PreethiJP.pythonanywhere.com/loginUser", formData)
 
-      .then((response) => {
-        if (response.data.message) {
-          alert(response.data.message);
-          if (response.data.message === "Incomplete personal detail") {
-            localStorage.setItem("Token", response.data.token);
-            localStorage.setItem(
-              "loginUserId",
-              JSON.stringify(response.data.uid)
-            );
-            navigate("/register/personaldetail");
-          }
-        } else {
-          alert("You are authenticated!");
-          alert(`Token: ${response.data.token}`);
-          alert(`UID: ${response.data.uid}`);
-
-          localStorage.setItem("Token", response.data.token);
-          localStorage.setItem(
-            "loginUserId",
-            JSON.stringify(response.data.uid)
-          );
-
-          navigate("/category");
-        }
-      })
-      .catch((err) => {
-        console.error("Login error:", err);
-      });
-  };
+        .then(response => {
+          if (response.data.message) {
+            alert(response.data.message);
+            if (response.data.message === "Incomplete personal detail") {
+             
+              localStorage.setItem("Token", response.data.token);
+              localStorage.setItem("loginUserId", JSON.stringify(response.data.uid));
+              navigate("/register/personaldetail");
+            }
+            setLoading(false)
+          } else {
+            alert("You are authenticated!");
+            alert(`Token: ${response.data.token}`);
+            alert(`UID: ${response.data.uid}`);
+        })
+        .catch(err => {
+          console.error("Login error:", err);
+          setLoading(false);
+        });
+        
+    
+};
 
   return (
     <>
@@ -81,89 +74,65 @@ export default function Login() {
                         <label for="useremail" class="form-label">
                           Email
                         </label>
+  
+       <main className="main-content  mt-0">
+    <section>
+      <div className="page-header min-vh-100">
+        <div className="container">
+          <div className="row">
+            <div className="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto mb-lg-0 mb-5">
+              <div className="card card-plain border-0 mb-5">
+                <div className="card-header pb-0 text-start border-0">
+                  <h4 className="font-weight-bolder">Sign In</h4>
+                  <p className="mb-0">Enter your email and password to sign in</p>
+                </div>
+                <div className="card-body">
+      <form role="form" onSubmit={handleLogin}>
+        
+        <label>Email</label>
+        <div className="mb-3">
+          <input 
+            type="email" 
+            className="form-control form-control-lg" 
+            placeholder="Email" 
+            aria-label="Email" 
+            style={{ fontSize: '16px' }}
+            onChange={(e) => dispatch(setLoginData({ ...logData, Email: e.target.value })) }
+            required/>
+        </div>
 
-                        <div className="mb-3">
-                          <input
-                            type="email"
-                            id="useremail"
-                            className="form-control form-control-lg"
-                            placeholder="Email"
-                            aria-label="Email"
-                            onChange={(e) =>
-                              dispatch(
-                                setLoginData({
-                                  ...logData,
-                                  Email: e.target.value,
-                                })
-                              )
-                            }
-                            required
-                          />
-                        </div>
-
-                        <label for="userPassword" class="form-label">
-                          Password
-                        </label>
-
-                        <div className="mb-3">
-                          <input
-                            type="password"
-                            id="userPassword"
-                            className="form-control form-control-lg"
-                            placeholder="Password"
-                            aria-label="Password"
-                            onChange={(e) =>
-                              dispatch(
-                                setLoginData({
-                                  ...logData,
-                                  Password: e.target.value,
-                                })
-                              )
-                            }
-                            required
-                          />
-                        </div>
-
-                        <div className="text-center">
+       
+        <label>Password</label>
+        <div className="mb-3">
+          <input 
+            type="password" 
+            className="form-control form-control-lg" 
+            placeholder="Password" 
+            aria-label="Password" 
+            style={{ fontSize: '16px' }} 
+            onChange={(e) => dispatch(setLoginData({ ...logData, Password: e.target.value })) }
+            required/>
+        </div>
+                   
+      
+        <div className="text-center">
                           <button
                             type="submit"
                             className="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0"
+                            disabled={loading}
                           >
-                            Sign in
+                            {loading ? <Spinner animation="border" size="sm" /> : 'Sign in'}
                           </button>
                         </div>
                       </form>
                     </div>
-                    <div className="card-footer text-center pt-0 px-lg-2 px-1">
-                      <p className="mb-4 text-sm mx-auto">
-                        Don't have an account?
-                        <Link
-                          to="/register"
-                          className="text-primary text-gradient font-weight-bold"
-                        >
-                          Sign up
-                        </Link>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-6 d-lg-flex d-none h-100 my-auto pe-5 position-absolute top-0 end-0 text-center justify-content-center flex-column">
-                  <div
-                    className="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden"
-                    style={{
-                      backgroundImage: backgroundImage,
-                      backgroundSize: "cover",
-                    }}
-                  >
-                    <span className="mask bg-gradient-primary opacity-6"></span>
-                    <h4 className="mt-5 text-white font-weight-bolder position-relative">
-                      "Attention is the new currency"
-                    </h4>
-                    <p className="text-white position-relative">
-                      The more effortless the writing looks, the more effort the
-                      writer actually put into the process.
-                    </p>
-                  </div>
+
+
+                <div className="card-footer text-center pt-0 px-lg-2 px-1">
+                  <p className="mb-4 text-sm mx-auto">
+                    Don't have an account?
+                    <Link to="/register" className="text-primary text-gradient font-weight-bold">Sign up</Link>
+                  </p>
                 </div>
               </div>
             </div>

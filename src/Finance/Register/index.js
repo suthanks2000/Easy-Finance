@@ -5,7 +5,7 @@ import { setRegisterData } from "../Redux-Toolkit/slices/RegLogCounter";
 import { useNavigate, Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
-
+import { Spinner } from "react-bootstrap";
 import "./index.css";
 import { RegisterNav } from "../registerNav";
 
@@ -18,25 +18,26 @@ export default function Register() {
     e.preventDefault();
 
     const requestData = new FormData();
-    requestData.append("username", regData.Name);
-    requestData.append("useremail", regData.Email);
-    requestData.append("userpassword", regData.Password);
-
-    await axios
-      .post("https://disondys.pythonanywhere.com/userRegister", requestData)
-      .then((res) => {
-        if (res.data.existing) {
-          alert(res.data.existing);
-        } else if (res.data.uid && res.data.token) {
-          alert(`Registration successful. Your UID: ${res.data.uid}`);
-          alert(res.data.token);
-          localStorage.setItem("loginUserId", JSON.stringify(res.data.uid));
-          localStorage.setItem("Token", res.data.token);
-          navigate("/register/personaldetail");
-        }
-      })
-      .catch((error) => {});
-  };
+    requestData.append('username', regData.Name);
+    requestData.append('useremail', regData.Email);
+    requestData.append('userpassword', regData.Password);
+  
+   
+      await axios.post("https://PreethiJP.pythonanywhere.com/userRegister", requestData).then((res)=>{
+  
+      if (res.data.existing) {
+        alert(res.data.existing);
+      } else if (res.data.uid && res.data.token) {
+        alert(`Registration successful. Your UID: ${res.data.uid}`);
+        alert(res.data.token)
+        localStorage.setItem("loginUserId", JSON.stringify(res.data.uid));
+        localStorage.setItem("Token",res.data.token)
+        setLoading(false);
+        navigate("/register/personaldetail");
+      }})
+     .catch ((error) => {
+      setLoading(false);
+  })}
 
   return (
     <>
@@ -105,10 +106,7 @@ export default function Register() {
                             required
                           />
                         </div>
-
-                        <label for="userPassword" class="form-label">
-                          Password
-                        </label>
+                        <label for="userPassword" class="form-label">Password</label>
                         <div className="mb-3">
                           <input
                             type="password"
@@ -130,9 +128,9 @@ export default function Register() {
                         <div className="text-center">
                           <button
                             type="submit"
-                            className="btn btn-primary w-100 mt-4 mb-0"
-                          >
-                            Sign up
+                            className="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0"
+                            disabled={loading}>
+                            {loading ? <Spinner animation="border" size="sm" /> : 'Sign Up'}
                           </button>
                         </div>
                       </form>
