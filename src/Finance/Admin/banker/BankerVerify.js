@@ -23,7 +23,6 @@ const BankerVerify = () => {
 
    
     const res = await axios.put(
-
       `https://suthanks.pythonanywhere.com/updateStatus?bankerToken=${token}&bankerEmail=${checkEmail}`,
 
       formData
@@ -64,6 +63,7 @@ const changeStatusRegister = async () => {
     formData.append("statusUpdate", updateStatus)
     
     try {const res = await axios.put(`https://suthanks.pythonanywhere.com/updateVerifiedBanker/${checkEmail}`, formData)
+
 
         console.log(res.data) 
         

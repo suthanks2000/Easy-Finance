@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import MultiStepProgressBar from "./porgrassBar/progressBar.js";
 import axios from "axios";
+import CategoryNavbar from "../Category/categoryNavbar.js";
 
 export default function SecuredLoansDetails() { 
   const dispatch = useDispatch();
@@ -14,6 +15,8 @@ export default function SecuredLoansDetails() {
   const { loanName } = useParams();
   const [currentStep, setcurrentStep] = useState("1")
   const [warning, setwarning] = useState(false)
+  const pricingHeaderBg="url('../../../public/assets/img/pricing-header-bg.jpg')"
+  
 
   
 const tyear = securedLoansInfo.tenureMonth?  securedLoansInfo.tenureMonth/12 : null
@@ -149,7 +152,7 @@ const handleSubmit =async () => {
     fromdata.append("userId",id)
 
 
-    axios.post('https://PreethiJP.pythonanywhere.com/submitsecuredLoans',fromdata).then((res)=>{
+    axios.post('https://disondys.pythonanywhere.com/submitsecuredLoans',fromdata).then((res)=>{
       alert(res.data.message)
       console.log(res.data)
       navigate('/showresult')
@@ -169,7 +172,15 @@ const handleSubmit =async () => {
 
   return (
     <>
-    
+          <CategoryNavbar />
+      <div className="page-header position-relative" style={{
+        backgroundImage: `url(${pricingHeaderBg})`,
+        backgroundSize: 'cover'
+      }}>
+        </div>
+        <span className="mask bg-gradient-primary opacity-6 height-200"></span>
+      
+
 
         <h1>Welcome to {loanName}</h1> 
         {JSON.stringify(securedLoansInfo)}

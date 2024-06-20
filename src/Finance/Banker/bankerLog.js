@@ -5,12 +5,13 @@ import { useEffect } from "react";
 import { setBankLogin } from "../Redux-Toolkit/slices/BankerReg&LogCounter";
 import axios from "axios";
 
-import BankerNavbar from './bankerNavbar';
+import BankerRegNavbar from './bankerRegNavbar';
 
 export default function BankerLog() {
   const { bankLogin } = useSelector((state) => state.bankerRegLog);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // const pricingHeaderBg="url('../../../public/assets/img/pricing-header-bg.jpg')"
 
 
   useEffect(() => {
@@ -33,7 +34,7 @@ export default function BankerLog() {
       data.append("bankerpassword", bankLogin.Password);
 
       await axios
-        .post("https://suthanks.pythonanywhere.com/allowBankerLogin", data)
+        .post("https://disondys.pythonanywhere.com/allowBankerLogin", data)
         .then((res) => {
           if (res.data.notfound) {
             alert("Banker not found");
@@ -57,7 +58,8 @@ export default function BankerLog() {
 
   return (
     <>
- <BankerNavbar />
+ <BankerRegNavbar />
+
       <main className="main-content  mt-0">
         <section>
           <div className="page-header min-vh-100">

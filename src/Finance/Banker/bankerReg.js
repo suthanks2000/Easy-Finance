@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./bankerReg.css";
 import axios from "axios";
-import { json, useNavigate } from "react-router-dom";
+
+import { useNavigate } from "react-router-dom";
+import BankerRegNavbar from './bankerRegNavbar';
 
 const BankerReg = () => {
   const [bankerRegData, setBankerRegData] = useState({});
@@ -18,6 +20,7 @@ const BankerReg = () => {
     try {
 
       const res = await axios.get("https://suthanks.pythonanywhere.com/getbankerplans");
+
 
       setPlan(res.data);
       console.log(res.data);
@@ -78,7 +81,7 @@ const BankerReg = () => {
 
     try {
 
-      const response = await axios.post("https://suthanks.pythonanywhere.com/bankerRegister", requestData);
+      const response = await axios.post("https://disondys.pythonanywhere.com/bankerRegister", requestData);
 
       console.log(response.data);
       alert(response.data);
@@ -90,6 +93,8 @@ const BankerReg = () => {
   };
 
   return (
+    <>
+    <BankerRegNavbar />
     <div className="card mt-4 w-70 mx-auto" id="basic-info">
       <div className="card-header border-0 bg-white">
         <h1>Easy Finance</h1>
@@ -237,6 +242,7 @@ const BankerReg = () => {
         </form>
       </div>
     </div>
+    </>
   );
 };
 

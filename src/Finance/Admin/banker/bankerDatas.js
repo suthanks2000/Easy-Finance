@@ -19,6 +19,7 @@ const BankerDatas = () => {
 
             const response = await axios.get("https://suthanks.pythonanywhere.com/getBankerData")
 
+
             setBankerReg(response.data)
             console.log(response.data)
         } catch (error) {
@@ -35,6 +36,7 @@ const BankerDatas = () => {
      
    
      await axios.post("https://suthanks.pythonanywhere.com/tokenGenerate",formData).then((res)=>{
+
 
         console.log("res",res)
         alert(res.data)
@@ -97,8 +99,8 @@ const handleplanApproval = async (plan) => {
     const planData = new FormData();
     planData.append('requestBanker',plan.id)
 
-
     await axios.post('https://suthanks.pythonanywhere.com/approveplan',planData).then((res)=>{
+
 
         console.log(res.data)
         alert(res.data)
