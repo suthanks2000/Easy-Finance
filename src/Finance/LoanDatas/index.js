@@ -4,13 +4,14 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from 'axios';
 
-
+import CategoryNavbar from "../Category/categoryNavbar.js";
 
 
 
 export default function LoanDatas(){
  const [usersData, setUsersData] = useState([]);
 const [spinner, setSpinner] = useState(true)
+  const pricingHeaderBg="url('../../../public/assets/img/pricing-header-bg.jpg')"
 
 useEffect(() => {
     fetchData();  
@@ -26,7 +27,7 @@ const data=new FormData()
 data.append("id",uid)
 const headers = { Authorization: `Bearer ${token}` };
 
-  axios.post("https://disondys.pythonanywhere.com/idBasedUserLoanDatas",data,{headers}).then((res)=>{
+  axios.post("https://PreethiJP.pythonanywhere.com/idBasedUserLoanDatas",data,{headers}).then((res)=>{
     setUsersData(res.data)
     console.log(res.data)
     alert(res.data)
@@ -42,6 +43,15 @@ const headers = { Authorization: `Bearer ${token}` };
      
  
 <>
+<CategoryNavbar />
+      <div className="page-header position-relative" style={{
+        backgroundImage: `url(${pricingHeaderBg})`,
+        backgroundSize: 'cover'
+      }}>
+        </div>
+        <span className="mask bg-gradient-primary opacity-6 height-200"></span>
+      
+
 <div className='container-fluid w-70 mt-5'>
 <div className="card">
 <div className="table-responsive">
