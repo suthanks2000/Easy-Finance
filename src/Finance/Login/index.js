@@ -23,7 +23,7 @@ import axios from "axios";
 import { db } from "../FirebaseConfig";
 import emailImg from "./email.png";
 import passwordImg from "./password.png";
-import backgroundImg from "./backgroundImg.jpg"
+
 import LoginNavbar from "./loginNavbar.js";
 
 
@@ -60,7 +60,7 @@ export default function Login() {
     formData.append("password", logData.Password);
 
    
-      await axios.post("https://disondys.pythonanywhere.com/loginUser", formData)
+      await axios.post("https://PreethiJP.pythonanywhere.com/loginUser", formData)
 
         .then(response => {
           if (response.data.message) {
@@ -90,6 +90,7 @@ export default function Login() {
           console.error("Login error:", err);
           setLoading(false);
         });
+        
     
 };
 
@@ -119,31 +120,47 @@ export default function Login() {
                   <p className="mb-0">Enter your email and password to sign in</p>
                 </div>
                 <div className="card-body">
-                  <form role="form">
-                  {error && (
-          <Alert variant="danger" className="error" style={{color:"white"}}>
+      <form role="form" onSubmit={handleLogin}>
+        
+        <label>Email</label>
+        <div className="mb-3">
+          <input 
+            type="email" 
+            className="form-control form-control-lg" 
+            placeholder="Email" 
+            aria-label="Email" 
+            style={{ fontSize: '16px' }}
+            onChange={(e) => dispatch(setLoginData({ ...logData, Email: e.target.value })) }
+            required/>
+        </div>
 
-            {error}
-          </Alert>
-        )}
-                    <div className="mb-3">
-                      <input type="email" className="form-control form-control-lg" placeholder="Email" aria-label="Email" onChange={(e) => dispatch(setLoginData({ ...logData, Email: e.target.value })) }/>
-                    </div>
-                    {fieldErrors.Email && (
-            <div className="error">{fieldErrors.Email}</div>
-          )}
-                    <div className="mb-3">
-                      <input type="password" className="form-control form-control-lg" placeholder="Password" aria-label="Password"  onChange={(e) => dispatch(setLoginData({ ...logData, Password: e.target.value })) }/>
-                    </div>
-                    {fieldErrors.Password && (
-            <div className="error">{fieldErrors.Password}</div>
-          )}
+       
+        <label>Password</label>
+        <div className="mb-3">
+          <input 
+            type="password" 
+            className="form-control form-control-lg" 
+            placeholder="Password" 
+            aria-label="Password" 
+            style={{ fontSize: '16px' }} 
+            onChange={(e) => dispatch(setLoginData({ ...logData, Password: e.target.value })) }
+            required/>
+        </div>
                    
-                    <div className="text-center">
-                      <button type="button" className="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0" onClick={handleLogin}>Sign in</button>
+      
+        <div className="text-center">
+                          <button
+                            type="submit"
+                            className="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0"
+                            disabled={loading}
+                          >
+                            {loading ? <Spinner animation="border" size="sm" /> : 'Sign in'}
+                          </button>
+                        </div>
+                      </form>
                     </div>
-                  </form>
-                </div>
+
+
                 <div className="card-footer text-center pt-0 px-lg-2 px-1">
                   <p className="mb-4 text-sm mx-auto">
                     Don't have an account?

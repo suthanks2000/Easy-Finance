@@ -21,6 +21,7 @@ export default function SecuredLoansDetails() {
   const [currentStep, setcurrentStep] = useState("1")
   const [warning, setwarning] = useState(false)
   const [isFormValid, setIsFormValid] = useState(false);
+  const uid =localStorage.getItem("loginUserId")
 
   
 const tyear = securedLoansInfo.tenureMonth?  securedLoansInfo.tenureMonth/12 : null
@@ -149,9 +150,9 @@ const handleSubmit =async () => {
       fromdata.append(key, securedLoansInfo[key]);
     });
     fromdata.append("loantype",loanName)
-    fromdata.append("userId",2)
+    fromdata.append("userId",uid)
 
-    axios.post('https://suthanks.pythonanywhere.com/submitsecuredLoans',fromdata).then((res)=>{
+    axios.post('https://PreethiJP.pythonanywhere.com/submitsecuredLoans',fromdata).then((res)=>{
       alert(res.data.message)
       console.log(res.data)
     }).catch((err)=>{

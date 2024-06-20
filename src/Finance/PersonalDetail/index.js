@@ -9,6 +9,8 @@ import Spinner from "react-bootstrap/Spinner";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Card } from "react-bootstrap";
+import Swal from "sweetalert2";
+
 
 export default function PersonalDetail() {
   const userdata = useSelector((state) => state.regisLogin.userdata);
@@ -18,7 +20,8 @@ export default function PersonalDetail() {
   const [filterData, setFilterData] = useState({});
   const [spinner, setSpinner] = useState(true);
   const [editPersonalData, setEditPersonalData] = useState({});
-  const [successEdit,setSuccessEdit]=useState(false)
+
+
   const Navigate = useNavigate()
 
   const uid = localStorage.getItem("loginUserId");
@@ -42,7 +45,7 @@ const getUserPersonalData = () => {
 
     .then(response => {
       setUsersData(response.data);
-      alert("Success");
+      // alert("Success");
       console.log(response.data, 'usersData');
     })
     .catch(error => {
@@ -96,8 +99,14 @@ const handleOnkeyup = (ele)=>{
       .then(() => {
         console.log("Personal details updated successfully");
         console.log("personaldetail",usersData)
-        setSuccessEdit(true)
-        getUserPersonalData();
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your Personal details has been Saved",
+          showConfirmButton: false,
+          timer: 2500
+        });
+        
       })
       .catch((error) => {
         console.error("Error updating personal details:", error);
@@ -106,9 +115,7 @@ const handleOnkeyup = (ele)=>{
 
 
   return (
-    <>
-    { !successEdit?
-    <>
+ 
     <div className="col-lg-9 mt-lg-0 mt-4 mx-auto">
       
       <div className="card card-body" id="profile">
@@ -120,7 +127,7 @@ const handleOnkeyup = (ele)=>{
           </div>
           <div className="col-sm-auto col-8 my-auto">
             <div className="h-100">
-              <h5 className="mb-1 font-weight-bolder">
+              <h5 className="mb-1 font-weight-bolder"/>
                {usersData.first_name} {usersData.last_name}
               <p className="mb-0 font-weight-bold text-sm">
                 { usersData.contact }
@@ -236,39 +243,14 @@ const handleOnkeyup = (ele)=>{
           <button type="button" className="btn btn-primary float-end" onClick={handleUpdateDetail}>Save Changes</button>
         </div>
         <div className="col-2">
-          <button type="button" className="btn btn-warning float-end" onClick={handleExit}>Cancel</button>
+          <button type="button" className="btn btn-warning float-end" onClick={handleExit}>Back</button>
         </div>
       </div>
           
         </div>
       </div>
     </div>
-  </>
-  :
-  <>
-  
-  <Card>
-        <Card.Img variant="top" src="holder.js/100px180" />
-        <Card.Body>
-          <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </Card.Text>
-        </Card.Body>
-      </Card>
-      <br />
-      <Card>
-        <Card.Body>
-          <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </Card.Text>
-        </Card.Body>
-        <Card.Img variant="bottom" src="holder.js/100px180" />
-      </Card>
-  </>
-  }
-  </>
+
 )
 }
 
