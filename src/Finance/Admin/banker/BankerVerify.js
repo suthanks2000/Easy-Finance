@@ -24,7 +24,7 @@ const BankerVerify = () => {
    
     const res = await axios.put(
 
-      `https://PreethiJP.pythonanywhere.com/updateStatus?bankerToken=${token}&bankerEmail=${checkEmail}`,
+      `https://disondys.pythonanywhere.com/updateStatus?bankerToken=${token}&bankerEmail=${checkEmail}`,
 
       formData
   ).then((response) => {
@@ -63,7 +63,7 @@ const changeStatusRegister = async () => {
     let formData = new FormData()
     formData.append("statusUpdate", updateStatus)
     
-    try {const res = await axios.put(`https://PreethiJP.pythonanywhere.com/updateVerifiedBanker/${checkEmail}`, formData)
+    try {const res = await axios.put(`https://disondys.pythonanywhere.com/updateVerifiedBanker/${checkEmail}`, formData)
 
         console.log(res.data) 
         

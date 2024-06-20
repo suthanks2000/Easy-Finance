@@ -149,7 +149,7 @@ const handleSubmit =async () => {
     fromdata.append("userId",id)
 
 
-    axios.post('https://PreethiJP.pythonanywhere.com/submitsecuredLoans',fromdata).then((res)=>{
+    axios.post('https://disondys.pythonanywhere.com/submitsecuredLoans',fromdata).then((res)=>{
       alert(res.data.message)
       console.log(res.data)
       navigate('/showresult')
