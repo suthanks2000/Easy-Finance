@@ -48,7 +48,7 @@ const RegisterPersonalDetail = () => {
       
         const headers = { 'Authorization': `Bearer ${token}` };
       
-        axios.post("https://PreethiJP.pythonanywhere.com/userPersonalDetail", requestData, { headers })
+        axios.post("https://suthanks.pythonanywhere.com/userPersonalDetail", requestData, { headers })
           .then((res) => {
             console.log(res.data);
             if (res.data.notFill) {

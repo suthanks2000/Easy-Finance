@@ -38,7 +38,7 @@ const getUserPersonalData = () => {
   const headers = { 'Authorization': `Bearer ${token}` };
 
 
-  axios.post('https://PreethiJP.pythonanywhere.com/personalDetail',data, { headers })
+  axios.post('https://suthanks.pythonanywhere.com/personalDetail',data, { headers })
 
     .then(response => {
       setUsersData(response.data);
@@ -89,7 +89,7 @@ const handleOnkeyup = (ele)=>{
 
     axios
       .put(
-        `https://PreethiJP.pythonanywhere.com/editPersonalData/${uid}`,
+        `https://suthanks.pythonanywhere.com/editPersonalData/${uid}`,
         formData,
         { headers }
       )
@@ -125,6 +125,7 @@ const handleOnkeyup = (ele)=>{
               <p className="mb-0 font-weight-bold text-sm">
                 { usersData.contact }
               </p>
+              </h5>
             </div>
           </div>
           

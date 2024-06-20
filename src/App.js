@@ -8,7 +8,6 @@ import SecuredLoansDetails from "./Finance/FinanceDetail/SecuredLoansDetails";
 import ShowResult from "./Finance/ShowResult";
 import { useEffect,useState } from "react";
 import EmiCalculator from "./Finance/EmiCalculator";
-import {setuserdata, setIsLogin} from "./Finance/Redux-Toolkit/slices/RegLogCounter";
 import BankerLog from "./Finance/Banker/bankerLog";
 import BankerReg from "./Finance/Banker/bankerReg";
 import { useSelector, useDispatch } from "react-redux";
@@ -52,7 +51,7 @@ function App() {
           <Route path="/register/personaldetail" element={<RegisterPersonalDetail/>}/>
           <Route path="/category" element={<Category />} />
           <Route path="/loans/:loanName" element={<SecuredLoansDetails />} />
-          <Route path="/showresult/:loanId" element={<ShowResult />} />
+          <Route path="/showresult" element={<ShowResult />} />
           <Route path="/emicalculator" element={<EmiCalculator/>}/>
           <Route path="/personaldetail" element={<PersonalDetail/>}/>
           <Route path="/loandatas" element={<LoanDatas/>}/>

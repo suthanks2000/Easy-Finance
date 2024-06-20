@@ -22,7 +22,7 @@ export const EmailVerify = ({emailVerify,setEmailVerify}) => {
       to_name: "preethi",
       from_name: "Easy Finance Official Website",
       message: "http://localhost:3000/verifiedEmail",
-      to_email: "preethipriti01@gmail.com",
+      to_email: "suthanks2000@gmail.com",
     };
 
     emailjs.send('service_kh6ub9f', 'template_vnbstvb', data, 'GNwyY4-I6aDBWSefP')

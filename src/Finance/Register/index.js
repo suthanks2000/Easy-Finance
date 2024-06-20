@@ -29,7 +29,7 @@ export default function Register() {
     requestData.append('userpassword', regData.Password);
   
    
-      await axios.post("https://PreethiJP.pythonanywhere.com/userRegister", requestData).then((res)=>{
+      await axios.post("https://suthanks.pythonanywhere.com/userRegister", requestData).then((res)=>{
   
       if (res.data.existing) {
         alert(res.data.existing);
@@ -69,7 +69,7 @@ export default function Register() {
                    
 
                     <div className="card-body pb-3">
-                      <form role="form" onSubmit={handleCreate}>
+                      <form  onSubmit={handleCreate}>
                       <label for="username" class="form-label">Name</label>
                         <div className="mb-3">
                           <input
