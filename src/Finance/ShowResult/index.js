@@ -21,7 +21,7 @@ export default function ShowResult() {
 const fetchData = async () =>{
   const id = localStorage.getItem("loginUserId");
   const formdata = new FormData();
-  formdata.append("id",30)
+  formdata.append("id",id)
   await axios.post('https://disondys.pythonanywhere.com/idbasedshowresult',formdata).then((res)=>{
     // setuserdetail(res.data)
     dispatch(setRenderloaninfo(res.data))
