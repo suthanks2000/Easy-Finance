@@ -56,7 +56,7 @@ const UserDatas = () => {
 //         setPage(page - 1);
 //     }
 // };
-
+const pricingHeaderBg="url('../../../public/assets/img/pricing-header-bg.jpg')"
 
 
 
@@ -64,7 +64,15 @@ const UserDatas = () => {
 
   return (
    <>
-<div className='container-fluid w-70 mt-5'>
+   <AdminNavbar />
+      <div className="page-header position-relative" style={{
+        backgroundImage: `url(${pricingHeaderBg})`,
+        backgroundSize: 'cover'
+      }}>
+        </div>
+        <span className="mask bg-gradient-primary opacity-6 height-200"></span>
+<div className='container-fluid w-70 mt-7'>
+  <h2 className='text-center'>User Datas by Admin Control</h2>
 <div className="card">
   <div className="table-responsive">
     <table className="table align-items-center mb-0">

@@ -6,7 +6,7 @@ const CategoryNavbar = () => {
     <div>
     <nav className="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent">
       <div className="container ps-2 pe-0">
-        <Link className="navbar-brand font-weight-bolder ms-lg-0 ms-3 text-light" style={{ fontSize: '26px' }}>
+        <Link className="navbar-brand font-weight-bolder ms-lg-0 ms-3 text-light" to="/category"  style={{ fontSize: '26px' }}>
           Easy Finance
         </Link>
         <button className="navbar-toggler shadow-none ml-4" style={{ border: 'none' }} type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,6 +21,11 @@ const CategoryNavbar = () => {
             <li className="nav-item dropdown dropdown-hover mx-2">
               <Link to="/personaldetail" role="button" className="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" style={{ fontSize: '18px' }}>
                 Personal Detail
+              </Link>
+            </li>
+            <li className="nav-item dropdown dropdown-hover mx-2">
+              <Link to="/category" role="button" className="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" style={{ fontSize: '18px' }}>
+                Category
               </Link>
             </li>
             <li className="nav-item dropdown dropdown-hover mx-2">
@@ -63,11 +68,11 @@ const CategoryNavbar = () => {
               
               </ul>
             </li>
-            <button type="button" className="nav-item dropdown dropdown-hover mx-2 border-0 text-white bg-dark">
-              <Link to="/" role="button" className="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" style={{ fontSize: '18px' }}>
-                LogOut
-              </Link>
-            </button>
+            <li className="nav-item">
+                                <Link to="/" className="btn btn-sm bg-white mt-2 mb-0 me-1">
+                                    LogOut
+                                </Link>
+            </li>
           </ul>
         </div>
       </div>

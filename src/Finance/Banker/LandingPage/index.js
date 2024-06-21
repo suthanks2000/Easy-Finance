@@ -14,7 +14,7 @@ const LandinngComponent = () => {
         <div className="container pb-lg-9 pb-10 pt-7 position-relative z-index-2">
           <div className="row mt-4">
             <div className="col-md-6 mx-auto text-center">
-              <h3 className="text-white">Banker Landing Page</h3>
+              <h3 className="text-white">Welcome to Easy Finance Banker</h3>
               <p className="text-white"></p>
             </div>
           </div>
