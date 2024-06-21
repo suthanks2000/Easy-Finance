@@ -27,7 +27,7 @@ const handleClick=(loan)=>{
         const formdata = new FormData();
         formdata.append('id',banker_id)
 
-        await axios.post('https://disondys.pythonanywhere.com/bankerPlan',formdata).then(
+        await axios.post('https://suthanks.pythonanywhere.com/bankerPlan',formdata).then(
 
             (res)=>{
                 if(res.data.message){
@@ -54,17 +54,19 @@ const handleClick=(loan)=>{
         backgroundImage: `url(${pricingHeaderBg})`,
         backgroundSize: 'cover'
       }}>
-         <span className="mask bg-gradient-primary opacity-6"></span>
-        <div className="container pb-lg-9 pb-10 pt-7 position-relative z-index-2">
+        </div>
+         <span className="mask bg-gradient-primary opacity-6 height-200"></span>
+         
+        {/* <div className="container pb-lg-9 pb-10 pt-7">
           <div className="row mt-4">
             <div className="col-md-6 mx-auto text-center">
-              <h3 className="text-white">Banker customer data page</h3>
+              <h3 className="text-white">Banker customer Detail</h3>
               <p className="text-white"></p>
             </div>
           </div>
-          </div>
-          </div>
-    <div className="nav-wrapper position-relative end-0">
+          </div> */}
+          
+    {/* <div className="nav-wrapper position-relative end-0">
   <ul className="nav nav-pills nav-fill p-1" role="tablist">
     {loanData.map((loan, i) => (
       <li className="nav-item" key={i}>
@@ -74,9 +76,10 @@ const handleClick=(loan)=>{
       </li>
     ))}
   </ul>
-</div>
+</div> */}
 
-    <div>
+    <div className='mt-9'>
+    <h3 className="text-center">Banker customer Detail</h3>
     <Table striped bordered hover >
                 <thead>
                     <tr>
@@ -88,13 +91,16 @@ const handleClick=(loan)=>{
                         
                         <th>Loan Amount</th>
 
-                        <th>Contact</th>
+                        <th>interest</th>
+
+                        <th>Contact</th> 
+                       
                        
                     </tr>
                 </thead>
                 <tbody>
                     {
-                        filterLoan.map((loan, index) => (
+                        loanData.map((loan, index) => (
                             <tr key={index}>
                                 <td>{loan.loan_type}</td>
                                 
@@ -103,6 +109,8 @@ const handleClick=(loan)=>{
                                 <td>{loan.monthly_netincome}</td>
                                 
                                 <td>{loan.loan_amount}</td>
+
+                                <td>{loan.interest}</td>
 
                                 <td>{loan.contact}</td>
 

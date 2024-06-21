@@ -27,7 +27,7 @@ const data=new FormData()
 data.append("id",uid)
 const headers = { Authorization: `Bearer ${token}` };
 
-  axios.post("https://disondys.pythonanywhere.com/idBasedUserLoanDatas",data,{headers}).then((res)=>{
+  axios.post("https://suthanks.pythonanywhere.com/idBasedUserLoanDatas",data,{headers}).then((res)=>{
     setUsersData(res.data)
     console.log(res.data)
     alert(res.data)
@@ -52,7 +52,10 @@ const headers = { Authorization: `Bearer ${token}` };
         <span className="mask bg-gradient-primary opacity-6 height-200"></span>
       
 
-<div className='container-fluid w-70 mt-5'>
+<div className='container-fluid w-70 mt-7'>
+<div>
+  <h2>User Apply Loans</h2>
+</div>
 <div className="card">
 <div className="table-responsive">
 <table className="table align-items-center mb-0">

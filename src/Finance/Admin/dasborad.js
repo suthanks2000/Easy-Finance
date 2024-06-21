@@ -10,7 +10,7 @@ const Dasborad = () => {
     <>
     <div>
     <AdminNavbar/>
-    <span className="mask bg-gradient-primary opacity-6"></span>
+    <span className="mask bg-gradient-primary opacity-6" ></span>
         <div className="container pb-lg-9 pb-10 pt-7 position-relative z-index-2">
           <div className="row mt-4">
             <div className="col-md-6 mx-auto text-center">
