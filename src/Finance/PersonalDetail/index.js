@@ -103,7 +103,7 @@ const handleOnkeyup = (ele)=>{
 
   return (
 
-  <>
+  <div style={{overflowX:'hidden'}}>
   
   <CategoryNavbar />
       <div className="page-header position-relative" style={{
@@ -114,6 +114,7 @@ const handleOnkeyup = (ele)=>{
         <span className="mask bg-gradient-primary opacity-6 height-200"></span>
 
 
+<div className="row mt-7">
 <div className="col-lg-9 mt-lg-0 mt-4 mx-auto">
       
       <div className="card card-body" id="profile">
@@ -292,7 +293,8 @@ const handleOnkeyup = (ele)=>{
         </div>
       </div>
     </div>
-</>
+</div>
+</div>
 
 )
 

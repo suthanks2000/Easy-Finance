@@ -3,11 +3,13 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import emailjs from '@emailjs/browser';
 import { Container, Table } from 'react-bootstrap';
+import AdminNavbar from '../adminNavbar';
 
 const BankerDatas = () => {
     const [bankerReg, setBankerReg] = useState([])
     const [verifyToken,setVerifyToken] = useState({})
-    // const [updateStatus,setUpdateStatus] = useState("verified")
+    const pricingHeaderBg="url('../../../public/assets/img/pricing-header-bg.jpg')"
+
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -111,43 +113,73 @@ const handleplanApproval = async (plan) => {
 }  
 
     return (
-        <Container>
-            <center>
-                <Table striped bordered hover size="sm" variant="dark" responsive="sm" style={{width:'80%'}} >
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Email Verify</th>
-                            <th>plan Approvel Buttons</th>
-                            <th>request plan</th>
-                            <th>Assign plan</th>
-                            <th>plan Id</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {bankerReg.map(data => (
-                            <tr key={data.id}>
-                                <td>{data.id}</td>
-                                <td>{data.Name}</td>
-                                <td>{data.Email}</td>
-                                <td>
-                                    <button className={data.Action=="approve"?'btn btn-warning btn-sm':'btn btn-success btn-sm'} disabled={data.Action === "verified"} onClick={()=>tokenGenerate(data)}>{data.Action}</button>
-                                </td>
-                                <td>
-                                    <button className='btn btn-success btn-sm' disabled={data.request_plan ===null} onClick={()=>handleplanApproval(data)}>Accept</button><span> Or </span>
-                                    <button className='btn btn-danger btn-sm'>Reject</button>
-                                </td>
-                                <td>{data.request_plan}</td>
-                                <td>{data.assign_plan}</td>
-                                <td>{data.plan_id}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table>
-            </center>
-        </Container>
+        <>
+        <AdminNavbar />
+      <div className="page-header position-relative" style={{
+        backgroundImage: `url(${pricingHeaderBg})`,
+        backgroundSize: 'cover'
+      }}>
+        </div>
+        <span className="mask bg-gradient-primary opacity-6 height-200"></span>
+            <div className=' container-fluid mt-7'>
+            <h2 className='text-center'>User Datas by Admin Control</h2>
+<div className="card">
+  <div className="table-responsive">
+    <table className="table align-items-center mb-0">
+      <thead>
+        <tr>
+          <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">id</th>
+          <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+          <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
+          <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Email Verify</th>
+          <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">plan Approvel Buttons</th>
+          <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">request plan</th>
+          <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Assign plan</th>
+        
+        </tr>
+                    
+      </thead>
+      <tbody>
+        {bankerReg.map((data, i) => (
+          <tr key={i}>
+            <td>
+              <div className="d-flex px-2 py-1">
+                <div className="d-flex flex-column justify-content-center">
+                  <p className="text-xs text-secondary mb-0">{data.id}</p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <p className="text-xs text-secondary mb-0">{data.Name}</p>
+            </td>
+            <td className="align-middle text-center text-sm">
+              <span className="text-secondary text-xs font-weight-bold">{data.Email}</span>
+            </td>
+            <td className="align-middle text-center">
+                <button className={data.Action=="approve"?'btn btn-warning btn-sm':'btn btn-success btn-sm'} disabled={data.Action === "verified"} onClick={()=>tokenGenerate(data)}>{data.Action}</button>
+            </td>
+            <td className="align-middle text-center">
+                <button className='btn btn-success btn-sm' disabled={data.request_plan ===null} onClick={()=>handleplanApproval(data)}>Accept</button><span> Or </span>
+                <button className='btn btn-danger btn-sm'>Reject</button>
+            </td>
+            <td className="align-middle text-center">
+              <span className="badge badge-sm badge-danger">{data.request_plan}</span>
+            </td>
+            <td className="align-middle text-center">
+              <span className="badge badge-sm badge-danger">{data.assign_plan}</span>
+            </td>
+            <td className="align-middle text-center">
+              <span className="badge badge-sm badge-danger">{data.plan_id}</span>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+        </div>
+        </>
     );
 }
 

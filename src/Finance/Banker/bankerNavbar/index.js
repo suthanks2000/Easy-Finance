@@ -8,7 +8,7 @@ const BankerNavbar = () => {
 <div>
             <nav className="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent">
                 <div className="container ps-2 pe-0">
-                    <Link className="navbar-brand font-weight-bolder ms-lg-0 ms-3 text-light" style={{ fontSize: '26px' }}>
+                    <Link className="navbar-brand font-weight-bolder ms-lg-0 ms-3 text-light" to="/banker/home" style={{ fontSize: '26px' }}>
                         Easy Finance
                     </Link>
                     <button className="navbar-toggler shadow-none ml-4" style={{border: 'none' }} type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">

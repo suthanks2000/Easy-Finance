@@ -164,27 +164,28 @@ const handleSubmit =async () => {
 
   }
   else{
-    alert("pls fill correct detail")
+    setwarning(true);
   }
 
 
 }
 
   return (
-    <>
+    <div style={{overflowX:'hidden'}}>
           <CategoryNavbar />
       <div className="page-header position-relative" style={{
         backgroundImage: `url(${pricingHeaderBg})`,
-        backgroundSize: 'cover'
+        backgroundSize: 'cover',
+        
       }}>
         </div>
         <span className="mask bg-gradient-primary opacity-6 height-200"></span>
       
 
 
-        <h1>Welcome to {loanName}</h1> 
-        {JSON.stringify(securedLoansInfo)}
-        <div className="row w-50 mx-auto ">
+       
+        <div className="row w-50 mx-auto mt-5">
+        <h1 className="text-center">Welcome to {loanName}</h1>
         <div className="col-12">
           <div className="multisteps-form">
             <div className="row">
@@ -419,6 +420,6 @@ const handleSubmit =async () => {
             </form>
           </div>
         </div>
-    </>
+    </div>
   );
 }

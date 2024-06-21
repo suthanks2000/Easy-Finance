@@ -6,7 +6,7 @@ const AdminNavbar = () => {
 
 
 
-    <div  style={{height: '60px' }}>
+    <div>
     <nav className="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent mt-4">
         <div className="container ps-2 pe-0">
             <Link className="navbar-brand font-weight-bolder ms-lg-0 ms-3 text-light" to="/dashboard" style={{ fontSize: '24px' }}>
@@ -21,6 +21,11 @@ const AdminNavbar = () => {
             </button>
             <div className="collapse navbar-collapse w-100 pt-3 pb-2 py-lg-0" id="navigation">
                 <ul className="navbar-nav navbar-nav-hover ms-auto">
+                <li className="nav-item  dropdown dropdown-hover mx-2">
+                  <Link to="/admin" className="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" style={{ fontSize: '18px' }}>
+                    Dasborad
+                  </Link>
+                </li>
                     <li className="nav-item dropdown dropdown-hover mx-2">
                         <Link role="button" className="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" id="dropdownMenuPagesBankers" data-bs-toggle="dropdown" aria-expanded="false" style={{ fontSize: '18px' }}>
                             Bankers

@@ -31,7 +31,7 @@ const BankerReg = () => {
 
   const getPlanCount = (e) => {
     const count = plan.filter((each)=>each.id == e.target.value)[0]
-    setBankerRegData({ ...bankerRegData, "planCount": count.count });
+    setBankerRegData({ ...bankerRegData, "planCount": count.count,[e.target.name]:e.target.value });
   }
   const {personalloan,vehicleloan,businessloan,homeloan,planCount} = bankerRegData
     const total = personalloan+vehicleloan+businessloan+homeloan 
@@ -80,7 +80,7 @@ const BankerReg = () => {
 
     try {
 
-      const response = await axios.post("https://disondys.pythonanywhere.com/bankerRegister", requestData);
+      const response = await axios.post("https://suthanks.pythonanywhere.com/bankerRegister", requestData);
 
       console.log(response.data);
       alert(response.data);

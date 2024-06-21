@@ -5,6 +5,7 @@ import { Doughnut} from "react-chartjs-2";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setRenderloaninfo} from "../Redux-Toolkit/slices/SecuredLoansCounter";
+import CategoryNavbar from "../Category/categoryNavbar";
 
 
 
@@ -13,6 +14,7 @@ export default function ShowResult() {
   const navigate = useNavigate();
   const dispatch = useDispatch(); 
   const { renderloaninfo} = useSelector((state) => state.securedLoans);
+  const pricingHeaderBg="url('../../../public/assets/img/pricing-header-bg.jpg')"
 
   useEffect(()=>{
     fetchData()
@@ -84,9 +86,20 @@ const TotalInterest = totalAmt - renderloaninfo.loanamount
 
   return (
     <>
-          <h1>Welcome to Result Page</h1>
+    
+    {/* <div style={{overflowX:'hidden'}}> */}
+          <CategoryNavbar />
+      <div className="page-header position-relative" style={{
+        backgroundImage: `url(${pricingHeaderBg})`,
+        backgroundSize: 'cover',
+        
+      }}>
+        </div>
+        <span className="mask bg-gradient-primary opacity-6 height-200"></span>
+         
 
-<div className="row mt-4">
+<div className="row mt-6">
+<h1 className="text-center">See Your {renderloaninfo.loantype} Result </h1>
   <div className="col-lg-6 col-sm-6 d-flex align-items-stretch">
     <div className="card w-70 h-80 mx-auto">
       <div className="card-header bg-white" style={{ border: "none" }}>
