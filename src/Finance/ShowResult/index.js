@@ -1,12 +1,11 @@
 
 import axios from "axios";
 import  {React, useEffect, useState } from "react";
-import { Pie } from "react-chartjs-2";
+import { Doughnut} from "react-chartjs-2";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setRenderloaninfo} from "../Redux-Toolkit/slices/SecuredLoansCounter";
 import { Box, Divider, Paper, Typography } from "@mui/material";
-import CategoryNavbar from "../Category/categoryNavbar";
 
 
 
@@ -28,7 +27,7 @@ const fetchData = async () =>{
   await axios.post('https://PreethiJP.pythonanywhere.com/idbasedshowresult',formdata).then((res)=>{
     // setuserdetail(res.data)
     dispatch(setRenderloaninfo(res.data))
-    alert(res.data)
+    // alert(res.data)
     console.log(res.data)
     askai()
   }).catch((err)=>{
@@ -87,81 +86,74 @@ const TotalInterest = totalAmt - renderloaninfo.loanamount
 
   return (
     <>
-    <CategoryNavbar />
-     <div className="page-header position-relative" style={{
-        backgroundImage: `url(${pricingHeaderBg})`,
-        backgroundSize: 'cover'
-      }}>
-        </div>
-        <span className="mask bg-gradient-primary opacity-6 height-200"></span>
-      <h1>Welcome to Result Page</h1>
+          <h1>Welcome to Result Page</h1>
 
-      <div className="row mt-4">
-        <div className="col-lg-6 col-sm-6">
-          <div className="card">
-            <div className="card-header p-3 pb-0 bg-white" style={{border:"none"}}>
-                <h6 className="mb-0">Your {renderloaninfo.loantype} DETAILS</h6>
-                <p className="text-sm mb-0 text-capitalize font-weight-bold">& EMI Details Also</p>
-            </div>
-            <div className="card-body border-radius-lg p-3">
-                <p>{renderloaninfo.loanamount}</p>
-                <p>{renderloaninfo.interest}</p>
-                <p>{renderloaninfo.EMI}</p>
-                <p>{renderloaninfo.tenuremonth}</p>
-                <p>{TenureYear}</p>
-                <p>{totalAmt}</p>
-                <p>{TotalInterest}</p>
-            </div>
-
-          </div>
-        </div>
-        <div className="col-lg-6 col-sm-6">
-          <div className="card">
-          <div className="card-header p-3 pb-0 bg-white">
-                <h6 className="mb-0">Your {renderloaninfo.loantype} DETAILS</h6>
-                <p className="text-sm mb-0 text-capitalize font-weight-bold">& EMI Details Also</p>
-            </div>
-          </div>
-          <div className="card-body border-radius-lg p-3">
-          <Pie 
-              data={{
-                labels: ["Total Interest", "Total Amount"],
-                datasets: [
-                  {
-                    data: [TotalInterest, totalAmt],
-                    backgroundColor: ["yellow", "green"],
-                  },
-                ],
-              }}
-             
-            />
-          </div>
-        </div>
+<div className="row mt-4">
+  <div className="col-lg-6 col-sm-6 d-flex align-items-stretch">
+    <div className="card w-70 h-80 mx-auto">
+      <div className="card-header bg-white" style={{ border: "none" }}>
+        <h4 className="mb-0">Your {renderloaninfo.loantype} DETAILS</h4>
+        <h4 className="text-sm mb-0 text-capitalize font-weight-bold">& EMI Details Also</h4>
       </div>
-      <div className="w-70 mx-auto">
-      <div className="card">
-            <div className="card-header p-3 pb-0 bg-white" style={{border:"none"}}>
-              <h6 className="mb-0">Probability Based On AI</h6>
-              <p className="text-sm mb-0 text-capitalize font-weight-bold">Joined</p>
-            </div>
-            <div className="card-body border-radius-lg p-3">
-              <div style={{
-                border: "none",
-                // padding: "15px",
-                fontFamily: "Arial, sans-serif",
-                fontSize: "15px",
-                // backgroundColor: "#f9f9f9",
-                // resize: "none",
-                whiteSpace: "pre-wrap",
-                wordWrap: "break-word",
-                boxSizing: "border-box",
-
-              }}>
-                {aitext}
-              </div>
-            </div>
-          </div>
+      <div className="card-body border-radius-lg p-3">
+        <div><h6>LoanAmount: ₹{renderloaninfo.loanamount}</h6></div>
+        <div>
+          <h6>Interest: ₹{renderloaninfo.interest}</h6>
         </div>
+        <div><h6>EMI: ₹{renderloaninfo.EMI}</h6></div>
+        <div><h6>TenureMonth: ₹{renderloaninfo.tenuremonth}</h6></div>
+        <div><h6>TenureYear: ₹{TenureYear}</h6></div>
+        <div><h6>TotalAmt: ₹{totalAmt}</h6></div>
+        <div><h6>TotalInterest: ₹{TotalInterest}</h6></div>
+      </div>
+    </div>
+  </div>
+
+  <div className="col-lg-6 col-sm-6 d-flex align-items-stretch">
+    <div className="card w-70 h-80 mx-auto" >
+      <div className="card-header p-3 pb-0 bg-white" style={{ border: "none" }}>
+        <h4 className="mb-0">Your {renderloaninfo.loantype} DETAILS</h4>
+        <h4 className="text-sm mb-0 text-capitalize font-weight-bold">&doughnutchart</h4>
+      </div>
+      <div className="card-body border-radius-lg p-3">
+        <Doughnut
+          data={{
+            labels: ["Total Interest", "Total Amount"],
+            datasets: [
+              {
+                data: [TotalInterest, totalAmt],
+                backgroundColor: ["blue", "lightblue"],
+              },
+            ],
+          }}
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div className="w-70 mx-auto mt-5">
+  <div className="card">
+    <div className="card-header p-3 pb-0 bg-white" style={{ border: "none" }}>
+      <h6 className="mb-0">Probability Based On Gemini</h6>
+      <p className="text-sm mb-0 text-capitalize font-weight-bold">Joined</p>
+    </div>
+    <div className="card-body border-radius-lg p-3">
+      <div
+        style={{
+          border: "none",
+          fontFamily: "Arial, sans-serif",
+          fontSize: "15px",
+          whiteSpace: "pre-wrap",
+          wordWrap: "break-word",
+          boxSizing: "border-box",
+        }}
+      >
+        {aitext}
+      </div>
+    </div>
+  </div>
+</div>
     </>
 
   );

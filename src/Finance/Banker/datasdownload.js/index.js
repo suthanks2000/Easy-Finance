@@ -3,15 +3,22 @@ import BankerNavbar from '../bankerNavbar'
 import { Table } from 'react-bootstrap'
 import { useEffect } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 const Customerdata = () => {
     const [loanData, setloanData] = useState([])
     const pricingHeaderBg="url('../../../public/assets/img/pricing-header-bg.jpg')"
-
+    const [filterLoan,setFilterLoan]=useState([])
 
 useEffect(()=>{
 fetchdata()
 },[])
+
+const handleClick=(loan)=>{
+  const filterdata = loanData.filter((each)=>each.loan_type==loan)
+  setFilterLoan(filterdata)
+  
+}
 
     const fetchdata=async()=>{
         const banker_id = localStorage.getItem('bankerId')
@@ -19,7 +26,6 @@ fetchdata()
         
         const formdata = new FormData();
         formdata.append('id',banker_id)
-
 
         await axios.post('https://PreethiJP.pythonanywhere.com/bankerPlan',formdata).then(
 
@@ -43,8 +49,8 @@ fetchdata()
    
   return (
     <>
-    {/* <BankerNavbar/> */}
-    {/* <div className="page-header position-relative" style={{
+    <BankerNavbar/>
+    <div className="page-header position-relative" style={{
         backgroundImage: `url(${pricingHeaderBg})`,
         backgroundSize: 'cover'
       }}>
@@ -57,14 +63,14 @@ fetchdata()
             </div>
           </div>
           </div>
-          </div> */}
+          </div>
     <div className="nav-wrapper position-relative end-0">
   <ul className="nav nav-pills nav-fill p-1" role="tablist">
     {loanData.map((loan, i) => (
       <li className="nav-item" key={i}>
-        <a className="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="#profile-tabs-icons" role="tab" aria-controls="preview" aria-selected="true">
-          <i className="ni ni-badge text-sm me-2"></i> {loan.loan_type}
-        </a>
+        <Link className="nav-link mb-0 px-0 py-1 " data-bs-toggle="tab"  role="tab" aria-controls="preview" aria-selected="true" onClick={() => handleClick(loan.loan_type)}>
+          <i className="text-sm me-2"></i> {loan.loan_type}
+        </Link>
       </li>
     ))}
   </ul>
@@ -81,12 +87,14 @@ fetchdata()
                         <th>Monthly Net Income</th>
                         
                         <th>Loan Amount</th>
+
+                        <th>Contact</th>
                        
                     </tr>
                 </thead>
                 <tbody>
                     {
-                        loanData.map((loan, index) => (
+                        filterLoan.map((loan, index) => (
                             <tr key={index}>
                                 <td>{loan.loan_type}</td>
                                 
@@ -95,6 +103,9 @@ fetchdata()
                                 <td>{loan.monthly_netincome}</td>
                                 
                                 <td>{loan.loan_amount}</td>
+
+                                <td>{loan.contact}</td>
+
                                
                             </tr>
                         ))
@@ -103,6 +114,7 @@ fetchdata()
             </Table>
 
     </div>
+    
             
     </>
   )

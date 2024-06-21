@@ -19,6 +19,7 @@ const BankerDatas = () => {
 
             const response = await axios.get("https://PreethiJP.pythonanywhere.com/getBankerData")
 
+
             setBankerReg(response.data)
             console.log(response.data)
         } catch (error) {
@@ -35,6 +36,7 @@ const BankerDatas = () => {
      
    
      await axios.post("https://PreethiJP.pythonanywhere.com/tokenGenerate",formData).then((res)=>{
+
 
         console.log("res",res)
         alert(res.data)
@@ -76,7 +78,7 @@ const sendEmail = (tokenData) => {
       to_name: tokenData.email,
       from_name: "Easy Finance Official Website",
       message: `http://localhost:3000/verifiedEmail/${tokenData.token_id}`,
-      to_email: 'muginreo@gmail.com',
+      to_email: 'suthanks2000@gmail.com',
 
 
     };
@@ -97,8 +99,8 @@ const handleplanApproval = async (plan) => {
     const planData = new FormData();
     planData.append('requestBanker',plan.id)
 
-
     await axios.post('https://PreethiJP.pythonanywhere.com/approveplan',planData).then((res)=>{
+
 
         console.log(res.data)
         alert(res.data)

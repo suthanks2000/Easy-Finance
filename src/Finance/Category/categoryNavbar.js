@@ -24,11 +24,6 @@ const CategoryNavbar = () => {
               </Link>
             </li>
             <li className="nav-item dropdown dropdown-hover mx-2">
-              <Link to="/category" role="button" className="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" style={{ fontSize: '18px' }}>
-                Category
-              </Link>
-            </li>
-            <li className="nav-item dropdown dropdown-hover mx-2">
               <Link to="/emicalculator" role="button" className="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" style={{ fontSize: '18px' }}>
                 EMI Calculator
               </Link>
@@ -68,8 +63,8 @@ const CategoryNavbar = () => {
               
               </ul>
             </li>
-            <button type="button" className="nav-item dropdown dropdown-hover mx-2 border-0 text-white bg-dark"  style={{ borderRadius: '10px' }}>
-              <Link to="/banker/home" role="button" className="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" style={{ fontSize: '18px' }}>
+            <button type="button" className="nav-item dropdown dropdown-hover mx-2 border-0 text-white bg-dark">
+              <Link to="/" role="button" className="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" style={{ fontSize: '18px' }}>
                 LogOut
               </Link>
             </button>
