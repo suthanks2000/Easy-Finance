@@ -253,8 +253,8 @@ const handleSetLoanData = async () => {
       
 
 
-        <h1>Welcome to {loanName}</h1> 
-        {JSON.stringify(securedLoansInfo)}
+        <h1 className="mt-8 d-flex align-items-center justify-content-center text-dark">Welcome to {loanName}</h1> 
+        {/* {JSON.stringify(securedLoansInfo)} */}
         <div className="row w-50 mx-auto ">
         <div className="col-12">
           <div className="multisteps-form">

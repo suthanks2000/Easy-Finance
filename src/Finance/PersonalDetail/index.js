@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Card } from "react-bootstrap";
 import Swal from "sweetalert2";
 import CategoryNavbar from "../Category/categoryNavbar";
+import "./personaldetail.css"
 
 
 export default function PersonalDetail() {
@@ -101,199 +102,230 @@ const handleOnkeyup = (ele)=>{
       });
   };
 
-  return (
-
-  <>
-  
-  <CategoryNavbar />
+  return  (
+    <>
+      <CategoryNavbar />
       <div className="page-header position-relative" style={{
         backgroundImage: `url(${pricingHeaderBg})`,
-        backgroundSize: 'cover'
+        backgroundSize: 'cover',
+        height: '300px',
+        position: 'relative'
       }}>
-        </div>
-        <span className="mask bg-gradient-primary opacity-6 height-200"></span>
-
-
-<div className="col-lg-9 mt-lg-0 mt-4 mx-auto">
-      
-      <div className="card card-body" id="profile">
-        <div className="row justify-content-center align-items-center">
-          <div className="col-sm-auto col-4">
-            {/* <div className="avatar avatar-xl position-relative">
-              <img src="../../../assets/img/team-3.jpg" alt="bruce" className="w-100 border-radius-lg shadow-sm"/>
-            </div> */}
-          </div>
-          <div className="col-sm-auto col-8 my-auto">
-            <div className="h-100">
-              <h5 className="mb-1 font-weight-bolder"/>
-               {usersData.first_name} {usersData.last_name}
-              <p className="mb-0 font-weight-bold text-sm">
-                { usersData.contact }
-              </p>
-            
-            </div>
-          </div>
-          
-        </div>
+        <span className="mask bg-gradient-primary opacity-6" style={{ height: '100%' }}></span>
       </div>
-            <div className="card mt-4" id="basic-info">
-              <div className="card-header border-0">
-                <h5>Personal Details</h5>
+      <div className="container mt-5">
+        <div className="col-lg-9 mt-lg-0 mt-4 mx-auto">
+          <div className="card card-body" id="profile">
+            <div className="row justify-content-center align-items-center">
+              <div className="col-sm-auto col-4">
+                {/* Optional avatar image */}
               </div>
-              <div className="card-body pt-0">
-                <div className="row mb-3">
-                  <div className="col-md-6">
-                    <label className="form-label">First Name</label>
-                    <input
-                      id="firstName"
-                      name="first_name"
-                      className="form-control"
-                      type="text"
-                      required
-                      defaultValue={usersData.first_name}
-                      onChange={(e) => handleOnkeyup(e)}
-                    />
-                  </div>
-                  <div className="col-md-6">
-                    <label className="form-label">Last Name</label>
-                    <input
-                      id="lastName"
-                      name="last_name"
-                      className="form-control"
-                      type="text"
-                      required
-                      defaultValue={usersData.last_name}
-                      onChange={(e) => handleOnkeyup(e)}
-                    />
-                  </div>
+              <div className="col-sm-auto col-8 my-auto">
+                <div className="h-100">
+                  <h5 className="mb-1 font-weight-bolder">
+                    {usersData.first_name} {usersData.last_name}
+                  </h5>
+                  <p className="mb-0 font-weight-bold text-sm">
+                    {usersData.contact}
+                  </p>
                 </div>
-                <div className="row mb-3">
-                  <div className="col-md-6">
-                    <label className="form-label">Father Name</label>
-                    <input
-                      id="firstName"
-                      name="father_name"
-                      className="form-control"
-                      type="text"
-                      required
-                      defaultValue={usersData.father_name}
-                      onChange={(e) => handleOnkeyup(e)}
-                    />
-                  </div>
-                  <div className="col-md-6">
-                    <label className="form-label">Age</label>
-                    <input
-                      id="lastName"
-                      name="age"
-                      className="form-control"
-                      type="text"
-                      required
-                      defaultValue={usersData.age}
-                      onChange={(e) => handleOnkeyup(e)}
-                    />
-                  </div>
-                </div>
-                <div className="row mb-3">
-                  <div className="col-md-6">
-                    <label className="form-label">Gender</label>
-                    <select
-                      className="form-control"
-                      name="gender"
-                      id="choices-gender"
-                      value={usersData.gender}
-                      onChange={(e) => handleOnkeyup(e)}
-                    >
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                    </select>
-                  </div>
-                  <div className="col-md-6">
-                    <label className="form-label">Marital Status</label>
-                    <select
-                      className="form-control"
-                      name="marital_status"
-                      id="choices-gender"
-                      value={usersData.marital_status}
-                      onChange={(e) => handleOnkeyup(e)}
-                    >
-                      <option value="married">Married</option>
-                      <option value="unmarried">Unmarried</option>
-                    </select>
-                  </div>
-                </div>
-          <div className="row mb-3">
-            <div className="col-6">
-            <label className="form-label">District</label>
-              <select className="form-control" name="district" id="choices-gender" value={usersData.district} onChange={(e)=> handleOnkeyup(e)}>
-                  <option>Select District</option>
-                  <option>Ariyalur</option>
-                  <option>Chengalpattu</option>
-                  <option>Chennai</option>
-                  <option>Coimbatore</option>
-                  <option>Cuddalore</option>
-                  <option>Dharmapuri</option>
-                  <option>Dindigul</option>
-                  <option>Erode</option>
-                  <option>Kallakurichi</option>
-                  <option>Kanchipuram</option>
-                  <option>Kanyakumari</option>
-                  <option>Karur</option>
-                  <option>Krishnagiri</option>
-                  <option>Madurai</option>
-                  <option>Nagapattinam</option>
-                  <option>Namakkal</option>
-                  <option>Nilgiris</option>
-                  <option>Perambalur</option>
-                  <option>Pudukkottai</option>
-                  <option>Ramanathapuram</option>
-                  <option>Ranipet</option>
-                  <option>Salem</option>
-                  <option>Sivaganga</option>
-                  <option>Tenkasi</option>
-                  <option>Thanjavur</option>
-                  <option>Theni</option>
-                  <option>Thoothukudi</option>
-                  <option>Tiruchirappalli</option>
-                  <option>Tirunelveli</option>
-                  <option>Tirupathur</option>
-                  <option>Tiruppur</option>
-                  <option>Tiruvallur</option>
-                  <option>Tiruvannamalai</option>
-                  <option>Tiruvarur</option>
-                  <option>Vellore</option>
-                  <option>Viluppuram</option>
-                  <option>Virudhunagar</option>
-              </select>
-            </div>
-            <div className="col-6">
-              <label className="form-label">City</label>
-              <input id="confirmation" name="city" className="form-control" type="email" defaultValue={usersData.city} onChange={(e)=> handleOnkeyup(e)}/>
+              </div>
             </div>
           </div>
-          <div className="row mb-3">
-            <div className="col-6">
-              <label className="form-label">Pincode</label>
-              <input id="location" name="pincode" className="form-control" type="text" defaultValue={usersData.pincode} onChange={(e)=> handleOnkeyup(e)}/>
+          <div className="card mt-4" id="basic-info">
+            <div className="card-header border-0 bg-white">
+              <h5>Personal Details</h5>
             </div>
-            <div className="col-6">
-              <label className="form-label">Phone Number</label>
-              <input id="phone" name="contact" className="form-control" type="number" defaultValue={usersData.contact} onChange={(e)=> handleOnkeyup(e)}/>
+            <div className="card-body pt-0">
+              <div className="row mb-3">
+                <div className="col-md-6">
+                  <label className="form-label">First Name</label>
+                  <input
+                    id="firstName"
+                    name="first_name"
+                    className="form-control"
+                    type="text"
+                    required
+                    defaultValue={usersData.first_name}
+                    onChange={(e) => handleOnkeyup(e)}
+                  />
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label">Last Name</label>
+                  <input
+                    id="lastName"
+                    name="last_name"
+                    className="form-control"
+                    type="text"
+                    required
+                    defaultValue={usersData.last_name}
+                    onChange={(e) => handleOnkeyup(e)}
+                  />
+                </div>
+              </div>
+              <div className="row mb-3">
+                <div className="col-md-6">
+                  <label className="form-label">Father Name</label>
+                  <input
+                    id="fatherName"
+                    name="father_name"
+                    className="form-control"
+                    type="text"
+                    required
+                    defaultValue={usersData.father_name}
+                    onChange={(e) => handleOnkeyup(e)}
+                  />
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label">Age</label>
+                  <input
+                    id="age"
+                    name="age"
+                    className="form-control"
+                    type="text"
+                    required
+                    defaultValue={usersData.age}
+                    onChange={(e) => handleOnkeyup(e)}
+                  />
+                </div>
+              </div>
+              <div className="row mb-3">
+                <div className="col-md-6">
+                  <label className="form-label">Gender</label>
+                  <select
+                    className="form-control"
+                    name="gender"
+                    value={usersData.gender}
+                    onChange={(e) => handleOnkeyup(e)}
+                  >
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </select>
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label">Marital Status</label>
+                  <select
+                    className="form-control"
+                    name="marital_status"
+                    value={usersData.marital_status}
+                    onChange={(e) => handleOnkeyup(e)}
+                  >
+                    <option value="married">Married</option>
+                    <option value="unmarried">Unmarried</option>
+                  </select>
+                </div>
+              </div>
+              <div className="row mb-3">
+                <div className="col-6">
+                  <label className="form-label">District</label>
+                  <select
+                    className="form-control"
+                    name="district"
+                    value={usersData.district}
+                    onChange={(e) => handleOnkeyup(e)}
+                  >
+                    <option>Select District</option>
+                    <option>Ariyalur</option>
+                    <option>Chengalpattu</option>
+                    <option>Chennai</option>
+                    <option>Coimbatore</option>
+                    <option>Cuddalore</option>
+                    <option>Dharmapuri</option>
+                    <option>Dindigul</option>
+                    <option>Erode</option>
+                    <option>Kallakurichi</option>
+                    <option>Kanchipuram</option>
+                    <option>Kanyakumari</option>
+                    <option>Karur</option>
+                    <option>Krishnagiri</option>
+                    <option>Madurai</option>
+                    <option>Nagapattinam</option>
+                    <option>Namakkal</option>
+                    <option>Nilgiris</option>
+                    <option>Perambalur</option>
+                    <option>Pudukkottai</option>
+                    <option>Ramanathapuram</option>
+                    <option>Ranipet</option>
+                    <option>Salem</option>
+                    <option>Sivaganga</option>
+                    <option>Tenkasi</option>
+                    <option>Thanjavur</option>
+                    <option>Theni</option>
+                    <option>Thoothukudi</option>
+                    <option>Tiruchirappalli</option>
+                    <option>Tirunelveli</option>
+                    <option>Tirupathur</option>
+                    <option>Tiruppur</option>
+                    <option>Tiruvallur</option>
+                    <option>Tiruvannamalai</option>
+                    <option>Tiruvarur</option>
+                    <option>Vellore</option>
+                    <option>Viluppuram</option>
+                    <option>Virudhunagar</option>
+                  </select>
+                </div>
+                <div className="col-6">
+                  <label className="form-label">City</label>
+                  <input
+                    id="city"
+                    name="city"
+                    className="form-control"
+                    type="text"
+                    defaultValue={usersData.city}
+                    onChange={(e) => handleOnkeyup(e)}
+                  />
+                </div>
+              </div>
+              <div className="row mb-3">
+                <div className="col-6">
+                  <label className="form-label">Pincode</label>
+                  <input
+                    id="pincode"
+                    name="pincode"
+                    className="form-control"
+                    type="text"
+                    defaultValue={usersData.pincode}
+                    onChange={(e) => handleOnkeyup(e)}
+                  />
+                </div>
+                <div className="col-6">
+                  <label className="form-label">Phone Number</label>
+                  <input
+                    id="contact"
+                    name="contact"
+                    className="form-control"
+                    type="text"
+                    defaultValue={usersData.contact}
+                    onChange={(e) => handleOnkeyup(e)}
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-10">
+                  <button
+                    type="button"
+                    className="btn btn-primary float-end"
+                    onClick={handleUpdateDetail}
+                  >
+                    Save Changes
+                  </button>
+                </div>
+                <div className="col-2">
+                  <button
+                    type="button"
+                    className="btn btn-warning float-end"
+                    onClick={handleExit}
+                  >
+                    Back
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="row">
-        <div className="col-10">
-          <button type="button" className="btn btn-primary float-end" onClick={handleUpdateDetail}>Save Changes</button>
-        </div>
-        <div className="col-2">
-          <button type="button" className="btn btn-warning float-end" onClick={handleExit}>Back</button>
         </div>
       </div>
-          
-        </div>
-      </div>
-    </div>
-</>
-
+    </>
+  
 )
 
 }
