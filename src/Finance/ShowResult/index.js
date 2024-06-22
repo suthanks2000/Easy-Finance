@@ -5,7 +5,7 @@ import { Doughnut} from "react-chartjs-2";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setRenderloaninfo} from "../Redux-Toolkit/slices/SecuredLoansCounter";
-import { Box, Divider, Paper, Typography } from "@mui/material";
+import CategoryNavbar from "../Category/categoryNavbar";
 
 
 
@@ -14,7 +14,7 @@ export default function ShowResult() {
   const navigate = useNavigate();
   const dispatch = useDispatch(); 
   const { renderloaninfo} = useSelector((state) => state.securedLoans);
-   const pricingHeaderBg="url('../../../public/assets/img/pricing-header-bg.jpg')"
+  const pricingHeaderBg="url('../../../public/assets/img/pricing-header-bg.jpg')"
 
   useEffect(()=>{
     fetchData()
@@ -25,11 +25,11 @@ const fetchData = async () =>{
   const formdata = new FormData();
   formdata.append("id",id)
   await axios.post('https://PreethiJP.pythonanywhere.com/idbasedshowresult',formdata).then((res)=>{
-    // setuserdetail(res.data)
+  
     dispatch(setRenderloaninfo(res.data))
-    // alert(res.data)
+ 
     console.log(res.data)
-    askai()
+  
   }).catch((err)=>{
     alert(err)
     console.log(err)
@@ -86,9 +86,20 @@ const TotalInterest = totalAmt - renderloaninfo.loanamount
 
   return (
     <>
-          <h1>Welcome to Result Page</h1>
+    
+    {/* <div style={{overflowX:'hidden'}}> */}
+          <CategoryNavbar />
+      <div className="page-header position-relative" style={{
+        backgroundImage: `url(${pricingHeaderBg})`,
+        backgroundSize: 'cover',
+        
+      }}>
+        </div>
+        <span className="mask bg-gradient-primary opacity-6 height-200"></span>
+         
 
-<div className="row mt-4">
+<div className="row mt-6">
+<h1 className="text-center">See Your {renderloaninfo.loantype} Result </h1>
   <div className="col-lg-6 col-sm-6 d-flex align-items-stretch">
     <div className="card w-70 h-80 mx-auto">
       <div className="card-header bg-white" style={{ border: "none" }}>
@@ -98,13 +109,13 @@ const TotalInterest = totalAmt - renderloaninfo.loanamount
       <div className="card-body border-radius-lg p-3">
         <div><h6>LoanAmount: ₹{renderloaninfo.loanamount}</h6></div>
         <div>
-          <h6>Interest: ₹{renderloaninfo.interest}</h6>
+          <h6>Interest: %{renderloaninfo.interest}</h6>
         </div>
         <div><h6>EMI: ₹{renderloaninfo.EMI}</h6></div>
-        <div><h6>TenureMonth: ₹{renderloaninfo.tenuremonth}</h6></div>
-        <div><h6>TenureYear: ₹{TenureYear}</h6></div>
+        <div><h6>TenureMonth: {renderloaninfo.tenuremonth}</h6></div>
+        <div><h6>TenureYear: {TenureYear}</h6></div>
         <div><h6>TotalAmt: ₹{totalAmt}</h6></div>
-        <div><h6>TotalInterest: ₹{TotalInterest}</h6></div>
+        <div><h6>TotalInterest: %{TotalInterest}</h6></div>
       </div>
     </div>
   </div>
@@ -135,8 +146,8 @@ const TotalInterest = totalAmt - renderloaninfo.loanamount
 <div className="w-70 mx-auto mt-5">
   <div className="card">
     <div className="card-header p-3 pb-0 bg-white" style={{ border: "none" }}>
-      <h6 className="mb-0">Probability Based On Gemini</h6>
-      <p className="text-sm mb-0 text-capitalize font-weight-bold">Joined</p>
+      <h6 className="mb-0">Probability Based On Gemini AI</h6>
+      <p className="text-sm mb-0 text-capitalize font-weight-bold"></p>
     </div>
     <div className="card-body border-radius-lg p-3">
       <div

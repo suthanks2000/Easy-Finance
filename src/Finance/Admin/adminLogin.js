@@ -28,7 +28,7 @@ const AdminLogin = () => {
 
   return (
     <>
-      {JSON.stringify(loginData)}
+      {/* {JSON.stringify(loginData)} */}
       <main className="main-content mt-0">
         <div className="page-header align-items-start min-vh-50 pt-7 pb-9 m-3 border-radius-lg">
           <span className="mask bg-gradient-dark opacity-6"></span>

@@ -54,17 +54,22 @@ function App() {
           <Route path="/category" element={<Category />} />
           <Route path="/loans/:loanName" element={<SecuredLoansDetails />} />
           <Route path="/showresult" element={<ShowResult />} />
+
           <Route path="/emicalculator" element={<EmiCalculator/>}/>
           <Route path="/personaldetail" element={<PersonalDetail/>}/>
           <Route path="/loandatas" element={<LoanDatas/>}/>
           
           {/* banker routes */}
-          <Route path="/banker/login" element = {<BankerLog/>}/>
+       
+          <Route path="/banker/referplan" element = {<BankerPlansCard/>}/>
           <Route path="/banker/register" element = {<BankerReg/>}/>
+          <Route path="/verifiedEmail/:token" element={<BankerVerify/>}/>
+          <Route path="/banker/login" element = {<BankerLog/>}/>
+          
           <Route path="/banker/payment" element={<BankerPayment/>}/>
           <Route path="/banker/customerdata" element = {<Customerdata/>}/>
           <Route path="/banker/home" element = {<LandinngComponent/>}/>
-          <Route path="/banker/referplan" element = {<BankerPlansCard/>}/>
+         
           
           {/* admin routes */}
           <Route path="/admin/loandatas" element={<UserLoanDatas/>}/>
@@ -72,7 +77,7 @@ function App() {
           <Route path="/admin" element={<Dasborad/>}/>
           <Route path="/admin/banker/alldatas" element={<BankerDatas />}/>
           <Route path="/admin/banker/plans" element={<BankerPlans />}/>
-          <Route path="/verifiedEmail/:token" element={<BankerVerify/>}/>
+          
           <Route path="/adminLogin" element={<AdminLogin/>}/>
           
         </Routes>

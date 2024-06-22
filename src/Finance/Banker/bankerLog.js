@@ -1,16 +1,18 @@
 
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { setBankLogin } from "../Redux-Toolkit/slices/BankerReg&LogCounter";
 import axios from "axios";
 
 import BankerRegNavbar from './bankerRegNavbar';
+import { Spinner } from "react-bootstrap";
 
 export default function BankerLog() {
   const { bankLogin } = useSelector((state) => state.bankerRegLog);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loading,setLoading] = useState(false)
   // const pricingHeaderBg="url('../../../public/assets/img/pricing-header-bg.jpg')"
 
 
@@ -38,20 +40,24 @@ export default function BankerLog() {
         .then((res) => {
           if (res.data.notfound) {
             alert("Banker not found");
+             setLoading(false);
           } else if (res.data.notverify) {
             alert("Your account is not verified");
+            setLoading(false);
           } else {
             alert("Verified successfully. Logging in...");
             console.log(res.data);
             console.log(res.data.token);
             localStorage.setItem("bankerToken", res.data.token);
             localStorage.setItem("bankerId", res.data.uid);
+            setLoading(false);
             navigate("/banker/home");
           }
         })
         .catch((error) => {
           console.error("Error during login:", error);
           alert(error);
+          setLoading(false);
         });
     
   };
@@ -112,10 +118,10 @@ export default function BankerLog() {
                         <div className="text-center">
                           <button
                             type="submit"
-                            className="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0"
+                            className="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0" disabled={loading}
                             
                           >
-                            Sign in
+                            {loading ? <Spinner animation="border" size="sm" /> : 'Sign in'}
                           </button>
                         </div>
                       </form>

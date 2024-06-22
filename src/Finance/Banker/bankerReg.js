@@ -31,20 +31,12 @@ const BankerReg = () => {
 
   const getPlanCount = (e) => {
     const count = plan.filter((each)=>each.id == e.target.value)[0]
-    setBankerRegData({ ...bankerRegData, "planCount": count.count });
+    setBankerRegData({ ...bankerRegData, "planCount": count.count,[e.target.name]:e.target.value });
   }
   const {personalloan,vehicleloan,businessloan,homeloan,planCount} = bankerRegData
-    const total = personalloan+vehicleloan+businessloan+homeloan 
 
-// useEffect(()=>{ 
-//   if(total != planCount ){
-//     setwarning(true)
-//   }
-// },[total])
-  const tallayplanCount = () => {
-    
-    
-  }
+
+
   const handleOnChange = (e) => {
     setBankerRegData({ ...bankerRegData, [e.target.name]: e.target.value });
   };
@@ -101,7 +93,7 @@ const BankerReg = () => {
       </div>
       <div className="card-body pt-0">
         <form role="form" onSubmit={handleSubmit}>
-        {JSON.stringify(bankerRegData)}
+        {/* {JSON.stringify(bankerRegData)} */}
           <div className="row mb-3">
             
             <div className="col-md-6">
@@ -164,7 +156,7 @@ const BankerReg = () => {
             </div>
             <div className="col-md-6">
               <label htmlFor="userPassword" className="form-label fs-6">Total Data Count Need ({bankerRegData.planCount})</label>
-              <input id="userPassword" name="password" className="form-control" type="number" placeholder="total tally count" disabled onChange={handleOnChange} />
+              {/* <input id="userPassword" name="password" className="form-control" type="number" placeholder="total tally count" disabled onChange={handleOnChange} /> */}
             </div>
 
           </div>

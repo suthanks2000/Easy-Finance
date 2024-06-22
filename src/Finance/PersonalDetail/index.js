@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Card } from "react-bootstrap";
 import Swal from "sweetalert2";
 import CategoryNavbar from "../Category/categoryNavbar";
 import "./personaldetail.css"
