@@ -6,6 +6,7 @@ initialState: {
     bankRegister: {},
     bankLogin: {},
     BankData: {},
+    isbankerlogin:false
 },
 reducers:{
     setBankRegister : (state, action) => {
@@ -16,11 +17,14 @@ reducers:{
     },
     setBankData : (state , action) => {
         state.BankData = action.payload
+    },
+    setbankerlogin : (state , action) => {
+        state.isbankerlogin = action.payload
     }
 
 }
 })
 
-export const {setBankRegister,setBankLogin,setBankData} = BankerRegLogSlice.actions
+export const {setBankRegister,setBankLogin,setBankData,setbankerlogin} = BankerRegLogSlice.actions
 
 export default BankerRegLogSlice.reducer

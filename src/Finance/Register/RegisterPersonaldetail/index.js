@@ -44,7 +44,7 @@ const RegisterPersonalDetail = () => {
       
         const headers = { 'Authorization': `Bearer ${token}` };
       
-        axios.post("https://disondys.pythonanywhere.com/userPersonalDetail", requestData, { headers })
+        axios.post("https://suthanks.pythonanywhere.com/userPersonalDetail", requestData, { headers })
           .then((res) => {
             console.log(res.data);
             if (res.data.notFill) {
@@ -183,11 +183,11 @@ const RegisterPersonalDetail = () => {
       <div className="row mb-3">
         <div className="col-6">
           <label className="form-label">Pincode</label>
-          <input id="pincode" name="pincode" className="form-control" type="text" required onChange={handleOnChange} placeholder="eg. 6000 006"/>
+          <input id="pincode" name="pincode" className="form-control" type="number"  required onChange={handleOnChange} placeholder="eg. 6000 006"/>
         </div>
         <div className="col-6">
           <label className="form-label">Phone Number</label>
-          <input id="contact" name="contact" className="form-control" type="text" required onChange={handleOnChange} placeholder="eg. 123456789"/>
+          <input id="contact" name="contact" className="form-control" type="number" required onChange={handleOnChange} placeholder="eg. 123456789"/>
         </div>
       </div>
       <div className="row">

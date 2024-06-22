@@ -46,7 +46,6 @@ useEffect(()=>{
 useEffect(()=>{
   if(securedLoansInfo.vehicleType  === "bike"){
     const {carType,secondCarCondition,registeredMonth,registeredYear,...rest} =securedLoansInfo
-    console.log(rest)
     dispatch(setSecuredLoansInfo(rest))
       
   }
@@ -55,7 +54,6 @@ useEffect(()=>{
 useEffect(()=>{
   if(securedLoansInfo.carType  === "newCar"){
     const {secondCarCondition,registeredMonth,registeredYear,...rest} =securedLoansInfo
-    console.log(rest)
     dispatch(setSecuredLoansInfo(rest))
       
   }
@@ -152,7 +150,7 @@ const handleSubmit =async () => {
     fromdata.append("userId",id)
 
 
-    axios.post('https://disondys.pythonanywhere.com/submitsecuredLoans',fromdata).then((res)=>{
+    axios.post('https://suthanks.pythonanywhere.com/submitsecuredLoans',fromdata).then((res)=>{
       alert(res.data.message)
       console.log(res.data)
       navigate('/showresult')

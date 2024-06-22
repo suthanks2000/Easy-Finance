@@ -23,13 +23,11 @@ export default function ShowResult() {
 const fetchData = async () =>{
   const id = localStorage.getItem("loginUserId");
   const formdata = new FormData();
-  formdata.append("id",30)
-  await axios.post('https://disondys.pythonanywhere.com/idbasedshowresult',formdata).then((res)=>{
-    // setuserdetail(res.data)
+  formdata.append("id",id)
+  await axios.post('https://suthanks.pythonanywhere.com/idbasedshowresult',formdata).then((res)=>{
+
     dispatch(setRenderloaninfo(res.data))
-    // alert(res.data)
     console.log(res.data)
-    askai()
   }).catch((err)=>{
     alert(err)
     console.log(err)
@@ -109,11 +107,11 @@ const TotalInterest = totalAmt - renderloaninfo.loanamount
       <div className="card-body border-radius-lg p-3">
         <div><h6>LoanAmount: ₹{renderloaninfo.loanamount}</h6></div>
         <div>
-          <h6>Interest: ₹{renderloaninfo.interest}</h6>
+          <h6>Interest: {renderloaninfo.interest}%</h6>
         </div>
         <div><h6>EMI: ₹{renderloaninfo.EMI}</h6></div>
-        <div><h6>TenureMonth: ₹{renderloaninfo.tenuremonth}</h6></div>
-        <div><h6>TenureYear: ₹{TenureYear}</h6></div>
+        <div><h6>TenureMonth: {renderloaninfo.tenuremonth}</h6></div>
+        <div><h6>TenureYear: {TenureYear}</h6></div>
         <div><h6>TotalAmt: ₹{totalAmt}</h6></div>
         <div><h6>TotalInterest: ₹{TotalInterest}</h6></div>
       </div>
@@ -146,8 +144,8 @@ const TotalInterest = totalAmt - renderloaninfo.loanamount
 <div className="w-70 mx-auto mt-5">
   <div className="card">
     <div className="card-header p-3 pb-0 bg-white" style={{ border: "none" }}>
-      <h6 className="mb-0">Probability Based On Gemini</h6>
-      <p className="text-sm mb-0 text-capitalize font-weight-bold">Joined</p>
+      <h6 className="mb-0">Probability Based On Gemini AI</h6>
+      <p className="text-sm mb-0 text-capitalize font-weight-bold"></p>
     </div>
     <div className="card-body border-radius-lg p-3">
       <div

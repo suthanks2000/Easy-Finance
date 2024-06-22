@@ -34,17 +34,7 @@ const BankerReg = () => {
     setBankerRegData({ ...bankerRegData, "planCount": count.count,[e.target.name]:e.target.value });
   }
   const {personalloan,vehicleloan,businessloan,homeloan,planCount} = bankerRegData
-    const total = personalloan+vehicleloan+businessloan+homeloan 
 
-// useEffect(()=>{ 
-//   if(total != planCount ){
-//     setwarning(true)
-//   }
-// },[total])
-  const tallayplanCount = () => {
-    
-    
-  }
   const handleOnChange = (e) => {
     setBankerRegData({ ...bankerRegData, [e.target.name]: e.target.value });
   };
@@ -101,7 +91,6 @@ const BankerReg = () => {
       </div>
       <div className="card-body pt-0">
         <form role="form" onSubmit={handleSubmit}>
-        {JSON.stringify(bankerRegData)}
           <div className="row mb-3">
             
             <div className="col-md-6">

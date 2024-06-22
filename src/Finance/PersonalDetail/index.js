@@ -33,11 +33,10 @@ export default function PersonalDetail() {
 
 
     axios
-      .post("https://disondys.pythonanywhere.com/personalDetail", data, {
+      .post("https://suthanks.pythonanywhere.com/personalDetail", data, {
         headers,
       }).then((response) => {
         setUsersData(response.data);
-        alert("Success");
         console.log(response.data, "usersData");
       })
       .catch((error) => {
@@ -81,7 +80,7 @@ const handleOnkeyup = (ele)=>{
 
     axios
       .put(
-        `https://disondys.pythonanywhere.com/editPersonalData/${uid}`,
+        `https://suthanks.pythonanywhere.com/editPersonalData/${uid}`,
         formData,
         { headers }
       )

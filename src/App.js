@@ -24,6 +24,7 @@ import BankerVerify from "./Finance/Admin/banker/BankerVerify.js";
 import BankerPlans from "./Finance/Admin/banker/bankerPlans.js";
 import BankerPlansCard from "./Finance/Banker/bankerPlanscard.js";
 import AdminLogin from "./Finance/Admin/adminLogin.js";
+import { setIsLogin } from "./Finance/Redux-Toolkit/slices/RegLogCounter.js";
 
 
 
@@ -31,15 +32,14 @@ import AdminLogin from "./Finance/Admin/adminLogin.js";
 function App() {
   const {isLogin,userdata} = useSelector((state) => state.regisLogin);
   const dispatch = useDispatch();
-  const [emailVerify,setEmailVerify] = useState({})
 
   // useEffect(() => {
   //   if (!isLogin) {
-  //     if (localStorage.getItem("userToken")) {
-  //       checkAuth();
+  //     if (localStorage.getItem("Token")) {
+  //       setIsLogin(true)
   //     }
   //   }
-  // });
+  // },[]);
 
  
 
@@ -50,7 +50,8 @@ function App() {
           {/* user routes */}
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/register/personaldetail" element={<RegisterPersonalDetail/>}/>
+          <Route path="/register/personaldetail" element={<RegisterPersonalDetail/>}/>          
+  
           <Route path="/category" element={<Category />} />
           <Route path="/loans/:loanName" element={<SecuredLoansDetails />} />
           <Route path="/showresult" element={<ShowResult />} />

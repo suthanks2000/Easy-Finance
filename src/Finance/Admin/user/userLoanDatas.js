@@ -23,7 +23,7 @@ const UserLoanDatas = () => {
 
 const pricingHeaderBg="url('../../../public/assets/img/pricing-header-bg.jpg')"
     const getAllUserLoanDatas = async () => {
-      await axios.get("https://disondys.pythonanywhere.com/allUserLoanData").then((res)=>{
+      await axios.get("https://suthanks.pythonanywhere.com/allUserLoanData").then((res)=>{
         setLoanData(res.data)
         // alert(res.data)
         console.log("loandata",loanData)

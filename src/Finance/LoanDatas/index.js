@@ -30,7 +30,6 @@ const headers = { Authorization: `Bearer ${token}` };
   axios.post("https://suthanks.pythonanywhere.com/idBasedUserLoanDatas",data,{headers}).then((res)=>{
     setUsersData(res.data)
     console.log(res.data)
-    alert(res.data)
     setSpinner(false)
   }).catch((error)=>{
     console.log(error)
