@@ -1,151 +1,230 @@
-import { db } from "../FirebaseConfig";
-import { collection, getDocs, query, where, updateDoc, doc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { Modal } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { Button } from "react-bootstrap";
-import Spinner from 'react-bootstrap/Spinner';
-
-export default function PersonalDetail(){
-  const userdata = useSelector((state) => state.regisLogin.userdata);
-  const dispatch = useDispatch()
-const [usersData, setUsersData] = useState([]);
-const [ editData,setEditData ] = useState(false)
-const [ filterData, setFilterData ] = useState({})
-const [ spinner, setSpinner] = useState(true)
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { Card } from "react-bootstrap";
+import Swal from "sweetalert2";
+import CategoryNavbar from "../Category/categoryNavbar";
 
 
-useEffect(() => {
-    fetchData();
-}, []);
+export default function PersonalDetail() {
+  const [usersData, setUsersData] = useState({});
+  const [editData, setEditData] = useState(false);
+  const [filterData, setFilterData] = useState({});
+  const [spinner, setSpinner] = useState(true);
+  const [editPersonalData, setEditPersonalData] = useState({});
+  const pricingHeaderBg="url('../../../public/assets/img/pricing-header-bg.jpg')"
 
 
+  const Navigate = useNavigate()
 
-const fetchData = async () => {
-  const q = query(collection(db, "personalDetails"),where("uid", "==", userdata.uid));
-  const docSnap = await getDocs(q);
-  const data = [];
+  const uid = localStorage.getItem("loginUserId");
 
-  docSnap.forEach((doc) => {
-    
-      data.push({ ...doc.data(), id: doc.id });
-  });
+  const token = localStorage.getItem("Token");
+  console.log(token);
+
+  useEffect(() => {
+    getUserPersonalData();
+  }, []);
+
+  const getUserPersonalData = () => {
+    const data = new FormData();
+    data.append("id", uid);
+    const headers = { Authorization: `Bearer ${token}` };
 
 
-  setUsersData(data);
-  console.log(userdata.uid)
-};
-   
-   function handleEdit(user) {
-      setFilterData(user);
-      setEditData(true);
-  }
+    axios
+      .post("https://suthanks.pythonanywhere.com/personalDetail", data, {
+        headers,
+      }).then((response) => {
+        setUsersData(response.data);
+        console.log(response.data, "usersData");
+      })
+      .catch((error) => {
+        alert("Error");
+        console.error("Error fetching personal data:", error);
+      });
+  };
 
- const handleOnkeyup = (ele)=>{
+
+const handleOnkeyup = (ele)=>{
   if(ele.target.value == "Select District"){
     alert("Please select others")
   }
-  else{setFilterData({...filterData,[ele.target.name]:ele.target.value})
+  else{setUsersData({...usersData,[ele.target.name]:ele.target.value})
+  console.log("usersdata",usersData)
 }
         
        
- }
+ }      
 
-  function exitFromEdit(){
-    setEditData(false)
+ 
+
+  function handleExit() {
+    Navigate("/category");
   }
 
-  const handleUpdateDetail = async() => { // update btn function
-   
-    const docRef = doc(db, "personalDetails", filterData.id);
+  const handleUpdateDetail = () => {
+    const headers = { Authorization: `Bearer ${token}` };
+    let formData = new FormData();
 
-    await updateDoc(docRef, filterData)
-    alert("Success: Personal details updated successfully");
-    fetchData();
-    setEditData(false);
-};
+    formData.append("first_name", usersData.first_name);
+    formData.append("last_name", usersData.last_name);
+    formData.append("father_name", usersData.father_name);
+    formData.append("age", usersData.age);
+    formData.append("gender", usersData.gender);
+    formData.append("marital_status", usersData.marital_status);
+    formData.append("district", usersData.district);
+    formData.append("city", usersData.city);
+    formData.append("pincode", usersData.pincode);
+    formData.append("contact", usersData.contact);
 
-    return (
-      <>
-        {!editData ? 
-          <>
-            <h1>Welcome to Personal Detail Page</h1>
-            { usersData.map((user,i) => {
-              return (
-                <div key={i}>1
-                  <p>Full Name: { user.firstName } { user.lastName }</p>
-                  <p>Father Name: {user.fatherName}</p>
-                      <p>Age: {user.Age}</p>
-                      <p>Gender: {user.Gender}</p>
-                      <p>Marital status: {user.maritalStatus}</p>
-                      <p>Email: {user.Email}</p>
-                      <p>District: {user.District}</p>
-                      <p>City: {user.City}</p>
-                      <p>Pincode: {user.pinCode}</p>
-                      <p>Contact: {user.Contact}</p>
+    axios
+      .put(
+        `https://suthanks.pythonanywhere.com/editPersonalData/${uid}`,
+        formData,
+        { headers }
+      )
+      .then(() => {
+        console.log("Personal details updated successfully");
+        console.log("personaldetail",usersData)
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your Personal details has been Saved",
+          showConfirmButton: false,
+          timer: 2500
+        });
+      })
+      .catch((error) => {
+        console.error("Error updating personal details:", error);
+      });
+  };
 
-                      <button type="button" onClick={() => handleEdit(user)}>Edit</button>
-                </div>
-              )
-            })}
+  return (
 
-          </>
-        : null}
-          <>
-          <Modal show= {editData}>
-          <center>
-              <Modal.Header>
-                <Modal.Title>
-                  {filterData.firstName}  {filterData.lastName} 
-                </Modal.Title>
-                <Button className="btn-close" onClick={exitFromEdit}></Button>
-              </Modal.Header>
-              <Modal.Body>
-              <h1>Edit Your Datas</h1>
-                
-            <div>  
-            <label>First Name</label>
-              <input type="text" name ='firstName' defaultValue={filterData.firstName} onChange={(e)=>handleOnkeyup(e)}/>
-              </div> 
-
-              <div>  
-            <label>Last Name</label>
-              <input type="text" name="lastName" defaultValue={filterData.lastName} onChange={(e)=>handleOnkeyup(e)}/>
-              </div>
-
-              <div>  
-            <label>Father Name</label>
-              <input type="text" name="fatherName" defaultValue={filterData.fatherName} onChange={(e)=>handleOnkeyup(e)}/>
-              </div>
-
-              <div>  
-            <label>Age</label>
-              <input type="number" name="Age" defaultValue={filterData.Age} onChange={(e)=>handleOnkeyup(e)}/>
-              </div>
-
-              <div>
-            <label>Gender</label>
-              <input type="radio" name="Gender" value="male" defaultChecked={filterData.Gender === "male"}  onChange={(e)=>handleOnkeyup(e)}/> Male
-              <input type="radio" name="Gender" value="female" defaultChecked={filterData.Gender === "female"} onChange={(e)=>handleOnkeyup(e)} /> Female
-              </div>
-              
-              <div>  
-            <label>Email Address</label>
-              <input type="email" name="Email" defaultValue={filterData.Email} onChange={(e)=>handleOnkeyup(e)}/>
-              </div>
-
-          
-              <div>
-            <label>Marital Status</label>
-              <input type="radio" name="maritalStatus" value="married" defaultChecked={filterData.maritalStatus === "married"} onChange={(e)=>handleOnkeyup(e)}/> Married
-              <input type="radio" name="maritalStatus" value="unmarried" defaultChecked={filterData.maritalStatus === "unmarried"} onChange={(e)=>handleOnkeyup(e)}/> Unmarried
-              </div>
+  <div style={{overflowX:'hidden'}}>
   
-              
-              <div>
-                <label>District</label>
-                <select name="District" defaultValue={filterData.District} onChange={(e)=>handleOnkeyup(e)}>
+  <CategoryNavbar />
+      <div className="page-header position-relative" style={{
+        backgroundImage: `url(${pricingHeaderBg})`,
+        backgroundSize: 'cover'
+      }}>
+        </div>
+        <span className="mask bg-gradient-primary opacity-6 height-200"></span>
+
+
+<div className="row mt-7">
+<div className="col-lg-9 mt-lg-0 mt-4 mx-auto">
+      
+      <div className="card card-body" id="profile">
+        <div className="row justify-content-center align-items-center">
+          <div className="col-sm-auto col-4">
+            {/* <div className="avatar avatar-xl position-relative">
+              <img src="../../../assets/img/team-3.jpg" alt="bruce" className="w-100 border-radius-lg shadow-sm"/>
+            </div> */}
+          </div>
+          <div className="col-sm-auto col-8 my-auto">
+            <div className="h-100">
+              <h5 className="mb-1 font-weight-bolder"/>
+               {usersData.first_name} {usersData.last_name}
+              <p className="mb-0 font-weight-bold text-sm">
+                { usersData.contact }
+              </p>
+            
+            </div>
+          </div>
+          
+        </div>
+      </div>
+            <div className="card mt-4" id="basic-info">
+              <div className="card-header border-0">
+                <h5>Personal Details</h5>
+              </div>
+              <div className="card-body pt-0">
+                <div className="row mb-3">
+                  <div className="col-md-6">
+                    <label className="form-label">First Name</label>
+                    <input
+                      id="firstName"
+                      name="first_name"
+                      className="form-control"
+                      type="text"
+                      required
+                      defaultValue={usersData.first_name}
+                      onChange={(e) => handleOnkeyup(e)}
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <label className="form-label">Last Name</label>
+                    <input
+                      id="lastName"
+                      name="last_name"
+                      className="form-control"
+                      type="text"
+                      required
+                      defaultValue={usersData.last_name}
+                      onChange={(e) => handleOnkeyup(e)}
+                    />
+                  </div>
+                </div>
+                <div className="row mb-3">
+                  <div className="col-md-6">
+                    <label className="form-label">Father Name</label>
+                    <input
+                      id="firstName"
+                      name="father_name"
+                      className="form-control"
+                      type="text"
+                      required
+                      defaultValue={usersData.father_name}
+                      onChange={(e) => handleOnkeyup(e)}
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <label className="form-label">Age</label>
+                    <input
+                      id="lastName"
+                      name="age"
+                      className="form-control"
+                      type="text"
+                      required
+                      defaultValue={usersData.age}
+                      onChange={(e) => handleOnkeyup(e)}
+                    />
+                  </div>
+                </div>
+                <div className="row mb-3">
+                  <div className="col-md-6">
+                    <label className="form-label">Gender</label>
+                    <select
+                      className="form-control"
+                      name="gender"
+                      id="choices-gender"
+                      value={usersData.gender}
+                      onChange={(e) => handleOnkeyup(e)}
+                    >
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select>
+                  </div>
+                  <div className="col-md-6">
+                    <label className="form-label">Marital Status</label>
+                    <select
+                      className="form-control"
+                      name="marital_status"
+                      id="choices-gender"
+                      value={usersData.marital_status}
+                      onChange={(e) => handleOnkeyup(e)}
+                    >
+                      <option value="married">Married</option>
+                      <option value="unmarried">Unmarried</option>
+                    </select>
+                  </div>
+                </div>
+          <div className="row mb-3">
+            <div className="col-6">
+            <label className="form-label">District</label>
+              <select className="form-control" name="district" id="choices-gender" value={usersData.district} onChange={(e)=> handleOnkeyup(e)}>
                   <option>Select District</option>
                   <option>Ariyalur</option>
                   <option>Chengalpattu</option>
@@ -184,32 +263,38 @@ const fetchData = async () => {
                   <option>Vellore</option>
                   <option>Viluppuram</option>
                   <option>Virudhunagar</option>
-                </select>
-              </div>
-              
-              <div>  
-            <label>City</label>
-              <input type="text" name="City" defaultValue={filterData.City} onChange={(e)=>handleOnkeyup(e)}/>
-              </div>
+              </select>
+            </div>
+            <div className="col-6">
+              <label className="form-label">City</label>
+              <input id="confirmation" name="city" className="form-control" type="email" defaultValue={usersData.city} onChange={(e)=> handleOnkeyup(e)}/>
+            </div>
+          </div>
+          <div className="row mb-3">
+            <div className="col-6">
+              <label className="form-label">Pincode</label>
+              <input id="location" name="pincode" className="form-control" type="text" defaultValue={usersData.pincode} onChange={(e)=> handleOnkeyup(e)}/>
+            </div>
+            <div className="col-6">
+              <label className="form-label">Phone Number</label>
+              <input id="phone" name="contact" className="form-control" type="number" defaultValue={usersData.contact} onChange={(e)=> handleOnkeyup(e)}/>
+            </div>
+          </div>
+          <div className="row">
+        <div className="col-10">
+          <button type="button" className="btn btn-primary float-end" onClick={handleUpdateDetail}>Save Changes</button>
+        </div>
+        <div className="col-2">
+          <button type="button" className="btn btn-warning float-end" onClick={handleExit}>Back</button>
+        </div>
+      </div>
+          
+        </div>
+      </div>
+    </div>
+</div>
+</div>
 
-              <div>  
-            <label>Pincode</label>
-              <input type="text" name="pinCode" defaultValue={filterData.pinCode} onChange={(e)=>handleOnkeyup(e)}/>
-              </div>
+)
 
-              <div>  
-            <label>Contact Number</label>
-              <input type="text" name="Contact" defaultValue={filterData.Contact} onChange={(e)=>handleOnkeyup(e)}/>
-              </div>
-            
-              </Modal.Body>
-              <Modal.Footer>
-                <Button className="btn btn-info" onClick={handleUpdateDetail}>Update</Button>
-              </Modal.Footer>
-            </center>
-            </Modal>
-          </>
-      
-  </>
-);
 }

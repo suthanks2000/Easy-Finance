@@ -1,153 +1,198 @@
-
-import React, { useEffect, useState } from "react";
+import {React ,useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
-import { Form, Button, Card, Container, Row, Col, Alert, Spinner } from "react-bootstrap";
-import { collection, getDocs } from "firebase/firestore";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { db, auth } from "../FirebaseConfig";
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap';  
-import { setLoginData, setuserdata, setIsLogin } from "../Redux-Toolkit/slices/RegLogCounter";
-import "./index.css"; // Import your custom styles if any
-import 'bootstrap/dist/css/bootstrap.min.css';
-
+import {Spinner} from "react-bootstrap";
+import {setLoginData} from "../Redux-Toolkit/slices/RegLogCounter";
+import "./index.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import axios from "axios";
+import LoginNavbar from "./loginNavbar.js";
 
 export default function Login() {
   const [adminData, setAdminData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({});
 
   const logData = useSelector((state) => state.regisLogin.loginData);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    fetchAdminData();
-    dispatch(setLoginData({}));
-  }, []);
-
-  const fetchAdminData = async () => {
-    try {
-      const querySnapshot = await getDocs(collection(db, "AdminId"));
-      const adData = [];
-      querySnapshot.forEach((doc) => {
-        adData.push(doc.data());
-      });
-      setAdminData(adData);
-    } catch (error) {
-      console.error("Error fetching admin data: ", error);
-    }
-  };
+  const backgroundImage =
+    "url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signin-ill.jpg')";
 
   const handleLogin = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent default
     setLoading(true);
     setError("");
+    setFieldErrors({});
 
-    const checkAdminData = adminData.find(
-      (e) => e.Email === logData.Email && e.Password === logData.Password
-    );
+    const newFieldErrors = {};
+    if (!logData.Email) newFieldErrors.Email = "Please fill out this field.";
+    if (!logData.Password)
+      newFieldErrors.Password = "Please fill out this field.";
 
-    if (checkAdminData) {
+    if (Object.keys(newFieldErrors).length > 0) {
+      setFieldErrors(newFieldErrors);
       setLoading(false);
-      navigate("/admin");
-      alert("Login success");
-    } else if (!logData.Email || !logData.Password) {
-      setLoading(false);
-      setError("Please fill in all fields");
-    } else {
-      try {
-        const userCredential = await signInWithEmailAndPassword(auth, logData.Email, logData.Password);
-        const user = userCredential.user;
-        localStorage.setItem("userToken", user.accessToken);
-        dispatch(setuserdata(user));
-        dispatch(setIsLogin(true));
-        setLoading(false);
-        alert("Login success");
-        navigate("/category");
-      } catch (error) {
-        setLoading(false);
-        console.error("Error during login: ", error.code, error.message);
-        setError("Invalid login credentials");
-      }
+      return;
     }
+
+    const formData = new FormData();
+    formData.append("email", logData.Email);
+    formData.append("password", logData.Password);
+
+    await axios
+      .post("https://suthanks.pythonanywhere.com/loginUser", formData)
+
+      .then((response) => {
+        if (response.data.message) {
+          if (response.data.message === "Incomplete personal detail") {
+            localStorage.setItem("Token", response.data.token);
+            localStorage.setItem(
+              "loginUserId",
+              JSON.stringify(response.data.uid)
+            );
+            navigate("/register/personaldetail");
+          }
+          setLoading(false);
+        } else {
+          alert("You are authenticated!");
+          alert(`Token: ${response.data.token}`);
+          alert(`UID: ${response.data.uid}`);
+
+          localStorage.setItem("Token", response.data.token);
+          localStorage.setItem(
+            "loginUserId",
+            JSON.stringify(response.data.uid)
+          );
+
+          setLoading(false);
+          navigate("/category");
+        }
+      })
+      .catch((err) => {
+        console.error("Login error:", err);
+        setLoading(false);
+      });
   };
 
   return (
-  <div className="2">
-    <div  >
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-      <Link className="navbar-brand fs-3" to="/">Easy Finance</Link>
-      <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span className="navbar-toggler-icon"></span>
-      </button>
-      <div className="collapse navbar-collapse" id="navbarNav">
-        <ul className="navbar-nav justify-content-end flex-grow-1 pe-1 mb-2 mb-lg-0">
-          <li className="nav-item dropdown">
-            <Link className="nav-link dropdown-toggle" to="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Invite
-            </Link>
-            <ul className="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
-              <li>
-                <Link className="dropdown-item text-capitalize text-white bg-dark" to="/banker/register">Request from banker</Link>
-              </li>
-            </ul>
-          </li>
-          <li className="nav-item">
-            {/* <button type="button" className="button mt-1 " onClick={()=>navigate('/register')}>signUp</button> */}
-            <Link className="nav-link " to="/register">Register</Link>
-          </li>
-        </ul>
+    <>
+      <div className="container position-sticky z-index-sticky mt-0 ">
+        <div className="row">
+          <div className="col-12">
+            <LoginNavbar />
+          </div>
+        </div>
       </div>
-    </nav>
-    </div>
-    <Container className="d-flex justify-content-center align-items-center bg-white" style={{ minHeight: "100vh" }}>
-      <Row className="w-100">
-        <Col md={{ span: 6, offset: 3 }}>
-          <Card className="bg-white p-4">
-            <Card.Body>
-              <h2 className="text-center mb-4">Login</h2>
-              {error && <Alert variant="danger">{error}</Alert>}
-              <Form>
-                <Form.Group className="mb-3 form-floating">
-                  <Form.Control
-                    type="email"
-                    placeholder="Email"
-                    required
-                    onChange={(e) => dispatch(setLoginData({ ...logData, Email: e.target.value }))}
-                    isInvalid={!!error}
-                  />
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control.Feedback type="invalid">
-                    {error && "Please provide a valid email."}
-                  </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group className="mb-3 form-floating">
-                  <Form.Control
-                    type="password"
-                    placeholder="Password"
-                    required
-                    onChange={(e) => dispatch(setLoginData({ ...logData, Password: e.target.value }))}
-                    isInvalid={!!error}
-                  />
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control.Feedback type="invalid">
-                    {error && "Please provide a valid password."}
-                  </Form.Control.Feedback>
-                </Form.Group>
-                <Button className="w-100 mt-3 col-sm-8 col-md-6 col-lg-4" type="submit" disabled={loading} onClick={() => { handleLogin(); }}>
-  {loading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : "Login"}
-</Button>
 
-              </Form>
-              <div className="w-100 text-center mt-2">
-                Don't have an account? <Link to="/register">Register here!</Link>
+      <main className="main-content  mt-0">
+        <section>
+          <div className="page-header min-vh-100">
+            <div className="container">
+              <div className="row">
+                <div className="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto mb-lg-0 mb-5">
+                  <div className="card card-plain border-0 mb-5">
+                    <div className="card-header pb-0 text-start border-0">
+                      <h4 className="font-weight-bolder">Sign In</h4>
+                      <p className="mb-0">
+                        Enter your email and password to sign in
+                      </p>
+                    </div>
+                    <div className="card-body">
+                      <form role="form" onSubmit={handleLogin}>
+                        <label>Email</label>
+                        <div className="mb-3">
+                          <input
+                            type="email"
+                            className="form-control form-control-lg"
+                            placeholder="Email"
+                            aria-label="Email"
+                            style={{ fontSize: "16px" }}
+                            onChange={(e) =>
+                              dispatch(
+                                setLoginData({
+                                  ...logData,
+                                  Email: e.target.value,
+                                })
+                              )
+                            }
+                            required
+                          />
+                        </div>
+
+                        <label>Password</label>
+                        <div className="mb-3">
+                          <input
+                            type="password"
+                            className="form-control form-control-lg"
+                            placeholder="Password"
+                            aria-label="Password"
+                            style={{ fontSize: "16px" }}
+                            onChange={(e) =>
+                              dispatch(
+                                setLoginData({
+                                  ...logData,
+                                  Password: e.target.value,
+                                })
+                              )
+                            }
+                            required
+                          />
+                        </div>
+
+                        <div className="text-center">
+                          <button
+                            type="submit"
+                            className="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0"
+                            disabled={loading}
+                          >
+                            {loading ? (
+                              <Spinner animation="border" size="sm" />
+                            ) : (
+                              "Sign in"
+                            )}
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+
+                    <div className="card-footer text-center pt-0 px-lg-2 px-1">
+                      <p className="mb-4 text-sm mx-auto">
+                        Don't have an account?
+                        <Link
+                          to="/register"
+                          className="text-primary text-gradient font-weight-bold"
+                        >
+                          Sign up
+                        </Link>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-6 d-lg-flex d-none h-100 my-auto pe-5 position-absolute top-0 end-0 text-center justify-content-center flex-column">
+                  <div
+                    className="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden"
+                    style={{
+                      backgroundImage: backgroundImage,
+                      backgroundSize: "cover",
+                    }}
+                  >
+                    <span className="mask bg-gradient-primary opacity-6"></span>
+                    <h4 className="mt-5 text-white font-weight-bolder position-relative">
+                      "Attention is the new currency"
+                    </h4>
+                    <p className="text-white position-relative">
+                      The more effortless the writing looks, the more effort the
+                      writer actually put into the process.
+                    </p>
+                  </div>
+                </div>
               </div>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
-
+            </div>
+          </div>
+        </section>
+      </main>
+    </>
   );
 }

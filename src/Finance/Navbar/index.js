@@ -1,13 +1,12 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function Navbar() {
+  const Navigate =useNavigate();
   return  (
-    
     <>
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-      <Link className="navbar-brand fs-3" to="/">Easy Finance</Link>
+      <Link className="navbar-brand fs-3" to="/category">Easy Finance</Link>
       <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#myNavbar" aria-controls="myNavbar" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
       </button>
@@ -56,7 +55,9 @@ export default function Navbar() {
       <li className="nav-item">
         <Link className="nav-link" href="#">About</Link>
       </li>
-      
+      <li className="nav-item">
+      <button type='button' className="btn btn-danger"onClick={()=>Navigate('/')}>SignOut</button>
+    </li>
     </ul>
   </div>
 

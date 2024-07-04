@@ -10,7 +10,14 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
   <React.StrictMode>
+
+  <main className="main-content position-relative border-radius-lg ">
+    <div className="">
     <App />
+    </div>
+    </main>
+
+    
   </React.StrictMode>
   </Provider>
 );

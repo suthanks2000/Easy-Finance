@@ -1,186 +1,169 @@
 import React, { useState } from "react";
+
 import { useSelector, useDispatch } from "react-redux";
-import { setRegisterData, setuserdata, setIsLogin } from "../Redux-Toolkit/slices/RegLogCounter";
-import { auth, db } from "../FirebaseConfig";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { setRegisterData } from "../Redux-Toolkit/slices/RegLogCounter";
 import { useNavigate, Link } from "react-router-dom";
-import { Modal, Button, Form, Container, Row, Col, Alert, Spinner } from "react-bootstrap";
-import { collection, addDoc } from "firebase/firestore";
 import Swal from "sweetalert2";
-import './index.css';
-import InputDropdown from "./InputComponents/InputDropdown";
-import InputRadio from "./InputComponents/InputRadio";
-import InputText from "./InputComponents/InputText";
+import axios from "axios";
+import { Spinner } from "react-bootstrap";
+import "./index.css";
+import { RegisterNav } from "../registerNav";
 
 export default function Register() {
-  const userdata = useSelector((state) => state.regisLogin.userdata);
   const regData = useSelector((state) => state.regisLogin.registerData);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [personalDetailPopup, setPersonalDetailPopup] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [fieldErrors, setFieldErrors] = useState({});
-
-  const { personalInfo, inputInfo } = useSelector((state) => state.personalDetail);
-
-  const personalDetailInput = inputInfo.map((ele) => {
-    if (ele.inputType === "text" || ele.inputType === "number" || ele.inputType === "email") {
-      return <InputText key={ele.id} ele={ele} />;
-    }
-    if (ele.inputType === "dropdown") {
-      return <InputDropdown key={ele.id} ele={ele} />;
-    }
-    if (ele.inputType === "radio") {
-      return <InputRadio key={ele.id} ele={ele} />;
-    }
-    return null;
-  });
 
   const handleCreate = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError("");
-    setFieldErrors({});
 
-    const newFieldErrors = {};
-    if (!regData.Name) newFieldErrors.Name = "Please fill out this field.";
-    if (!regData.Email) newFieldErrors.Email = "Please fill out this field.";
-    if (!regData.Password) newFieldErrors.Password = "Please fill out this field.";
-
-    if (Object.keys(newFieldErrors).length > 0) {
-      setFieldErrors(newFieldErrors);
+    const requestData = new FormData();
+    requestData.append('username', regData.Name);
+    requestData.append('useremail', regData.Email);
+    requestData.append('userpassword', regData.Password);
+  
+   
+      await axios.post("https://suthanks.pythonanywhere.com/userRegister", requestData).then((res)=>{
+  
+      if (res.data.existing) {
+        alert(res.data.existing);
+      } else if (res.data.uid && res.data.token) {
+        alert(`Registration successful. Your UID: ${res.data.uid}`);
+        alert(res.data.token)
+        localStorage.setItem("loginUserId", JSON.stringify(res.data.uid));
+        localStorage.setItem("Token",res.data.token)
+        setLoading(false);
+        navigate("/register/personaldetail");
+      }})
+     .catch ((error) => {
       setLoading(false);
-      return;
-    }
-
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, regData.Email, regData.Password);
-      const user = userCredential.user;
-      localStorage.setItem("userToken", user.accessToken);
-      dispatch(setuserdata(user));
-      dispatch(setIsLogin(true));
-      setLoading(false);
-      setPersonalDetailPopup(true);
-    } catch (error) {
-      setLoading(false);
-      if (error.code === "auth/email-already-in-use") {
-        setError("You are already a user. Please go and login.");
-      } else {
-        setError(error.message);
-      }
-    }
-  };
-
-  const handlePersonalDetail = async () => {
-    const requiredFields = [
-      "firstName",
-      "lastName",
-      "fatherName",
-      "Age",
-      "maritalStatus",
-      "Gender",
-      "Email",
-      "District",
-      "City",
-      "pinCode",
-      "Contact"
-    ];
-
-    const newFieldErrors = {};
-    requiredFields.forEach(field => {
-      if (!personalInfo[field]) {
-        newFieldErrors[field] = "Please fill out this field.";
-      }
-    });
-
-    if (Object.keys(newFieldErrors).length > 0) {
-      setFieldErrors(newFieldErrors);
-      Swal.fire({
-        icon: "error",
-        title: "Something went wrong!",
-        text: "Please fill out the highlighted fields.",
-      });
-      return;
-    }
-
-    await addDoc(collection(db, "personalDetails"), {
-      ...personalInfo,
-      uid: userdata.uid,
-    });
-
-    Swal.fire({
-      title: "Good job!",
-      text: "Successfully submitted Personal Details",
-      icon: "success",
-    });
-
-    navigate("/category");
-  };
+  })}
 
   return (
     <>
-      <Container className="container-center">
-        <Row className="row-center">
-          <Col xs={12} sm={10} md={8} lg={6} xl={5} xxl={4} className="mx-auto">
-            <h2 className="form-title">Register</h2>
-            {error && <Alert variant="danger">{error}</Alert>}
-            <Form onSubmit={handleCreate}>
-              <div className="col-lg-12 form-input">
-              <label>Name:</label>
-                <input
-                  className="form-control p-lg-2"
-                  type="text"
-                  placeholder="Enter Your Name"
-                  onKeyUp={(e) => dispatch(setRegisterData({ ...regData, Name: e.target.value }))}
-                />
-                {fieldErrors.Name && <div className="text-danger">{fieldErrors.Name}</div>}
-              </div>
-              <div className="col-lg-12 form-input">
-              <label>Email:</label>
-                <input
-                  className="form-control p-lg-2"
-                  type="email"
-                  placeholder="Enter Your Email"
-                  onKeyUp={(e) => dispatch(setRegisterData({ ...regData, Email: e.target.value }))}
-                />
-                {fieldErrors.Email && <div className="text-danger">{fieldErrors.Email}</div>}
-              </div>
-              <div className="col-lg-12 form-input">
-              <label>Password:</label>
-                <input
-                  className="form-control p-lg-2"
-                  type="password"
-                  placeholder="Enter Your Password"
-                  onKeyUp={(e) => dispatch(setRegisterData({ ...regData, Password: e.target.value }))}
-                />
-                {fieldErrors.Password && <div className="text-danger">{fieldErrors.Password}</div>}
-              </div>
-              <Button className="btn-register" type="submit" disabled={loading}>
-                {loading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : "Register"}
-              </Button>
-            </Form>
-            <div className="text-center">
-              Already have an account? <Link to="/">Login Here!</Link>
-            </div>
-          </Col>
-        </Row>
-      </Container>
+      <div className="container position-sticky z-index-sticky top-0">
+        <div className="row">
+          <div className="col-12">{<RegisterNav />}</div>
+        </div>
+      </div>
+      <main className="main-content mt-0">
+        <section>
+          <div className="page-header min-vh-100">
+            <div className="container">
+              <div className="row">
+                <div className="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
+                  <div className="card card-plain" style={{ border: "none" }}>
+                    <div
+                      className="card-header pb-0 text-left"
+                      style={{ border: "none" }}
+                    >
+                      <h4 className="font-weight-bolder">Sign Up</h4>
+                      <p className="mb-0">
+                        Enter your email and password to register
+                      </p>
+                    </div>
 
-      <Modal show={personalDetailPopup} onHide={() => setPersonalDetailPopup(false)} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Personal Details</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {personalDetailInput}
-          {Object.keys(fieldErrors).map(key => (
-            fieldErrors[key] && <div key={key} className="text-danger">{fieldErrors[key]}</div>
-          ))}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button className="modal-footer-btn" onClick={handlePersonalDetail}>Next</Button>
-        </Modal.Footer>
-      </Modal>
+                    <div className="card-body pb-3">
+                      <form role="form" onSubmit={handleCreate}>
+                        <label for="username" class="form-label">
+                          Name
+                        </label>
+                        <div className="mb-3">
+                          <input
+                            type="text"
+                            placeholder="Name"
+                            class="form-control"
+                            id="username"
+                            onChange={(e) =>
+                              dispatch(
+                                setRegisterData({
+                                  ...regData,
+                                  Name: e.target.value,
+                                })
+                              )
+                            }
+                            required
+                          />
+                        </div>
+
+                        <label for="useremail" class="form-label">
+                          Email
+                        </label>
+                        <div className="mb-3">
+                          <input
+                            type="email"
+                            placeholder="Email Id"
+                            class="form-control"
+                            id="useremail"
+                            onChange={(e) =>
+                              dispatch(
+                                setRegisterData({
+                                  ...regData,
+                                  Email: e.target.value,
+                                })
+                              )
+                            }
+                            required
+                          />
+                        </div>
+                        <label for="userPassword" class="form-label">Password</label>
+                        <div className="mb-3">
+                          <input
+                            type="password"
+                            placeholder="Password"
+                            class="form-control"
+                            id="userPassword"
+                            onChange={(e) =>
+                              dispatch(
+                                setRegisterData({
+                                  ...regData,
+                                  Password: e.target.value,
+                                })
+                              )
+                            }
+                            required
+                          />
+                        </div>
+
+                        <div className="text-center">
+                          <button
+                            type="submit"
+                            className="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0"
+                            disabled={loading}>
+                            {loading ? <Spinner animation="border" size="sm" /> : 'Sign Up'}
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+
+                    <div className="card-footer text-center pt-0 px-sm-4 px-1">
+                      <p className="mb-4 mx-auto">
+                        Already have an account?
+                        <a className="text-primary font-weight-bold">
+                          <Link to="/">Sign In</Link>
+                        </a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
+                  <div className="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden">
+                    <span className="mask bg-primary opacity-4"></span>
+                    <h4 className="mt-5 text-white font-weight-bolder position-relative">
+                      Your journey starts here
+                    </h4>
+                    <p className="text-white position-relative">
+                      Just as it takes a company to sustain a product, it takes
+                      a community to sustain a protocol.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
     </>
   );
 }
