@@ -19,7 +19,7 @@ const AdminLogin = () => {
       alert(JSON.stringify(res.data));
       localStorage.setItem("Token", res.data.token);
       localStorage.setItem("AdminUid", JSON.stringify(res.data.uid));
-      navigate("/admin/banker/alldatas");
+      navigate("/admin");
     } catch (error) {
       console.error(error);
       alert('Login failed: ' + error.message);

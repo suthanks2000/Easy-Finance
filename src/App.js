@@ -1,4 +1,3 @@
-import "./App.css";
 import { Routes, BrowserRouter, Route } from "react-router-dom";
 import Login from "./Finance/Login";
 import Register from "./Finance/Register";

@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import { Table, Modal, Button } from "react-bootstrap";
-import { collection, getDocs, query, where, getDoc, doc, limit } from "firebase/firestore";
-import { db } from "../../FirebaseConfig";
 import jsPDF from "jspdf";
 import AdminNavbar from "../adminNavbar";
 import { useEffect } from "react";

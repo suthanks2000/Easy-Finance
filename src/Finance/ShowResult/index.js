@@ -55,7 +55,7 @@ console.log(renderloaninfo)
       {
         parts: [
           {
-            text: `you own any property? ${youownanyproperty}, you have a CIBIL issue? ${cibilissue}, your monthly income is ${monthlynetincome}, you want a loan amount ${loanamount} and interest is ${interest}%. Which bank sectors provide me ${loantype} and bank names inside bank sectors & probability of percentage and reason one line. Don't need other information.`
+            text: `you own any property? ${youownanyproperty}, you have a CIBIL issue? ${cibilissue}, your monthly income is ${monthlynetincome}, you want a   amount ${loanamount} and interest is ${interest}%. Which bank sectors provide me ${loantype} and bank names inside bank sectors & probability of percentage and reason one line. Don't need other information.`
           }
         ]
       }
